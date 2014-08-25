@@ -18,10 +18,10 @@ Os dados usados serão da 53ª legislatura, que foi de 1 de fevereiro de 2007 at
 disponível por completo (a 54ª vai até 2015). Dividimos as votações entre 70%
 para treino e 30% para teste. A escolha das votações muda em cada execução.
 
-Código | Fator             | Mínimo (-1) | Máximo (1)
------------------------------------------------------
-A      | Algoritmo         | Burro       | Foo
-B      | Amostra de treino | 20%         | 80%
+| Código | Fator             | Mínimo (-1) | Máximo (1) |
+| ------ | ----------------- | ----------- | ---------- |
+| A      | Algoritmo         | Burro       | Foo        |
+| B      | Amostra de treino | 20%         | 80%        |
 
 ## Algoritmo Burro
 
