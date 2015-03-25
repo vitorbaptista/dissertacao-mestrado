@@ -1,0 +1,187 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ultimas modificacoes, 06/02/2012 - Alexandre Duarte 
+%% Baseado no modelo latex de Isaac Maia (COPIN/UFCG)
+%%
+%% Para utilizar ese modelo sao necessarios os seguintes arquivos:
+%%
+%% ppgi.cls
+%% ppgi.sty
+%% mestre.sty
+%%
+%%
+%% Mais detalhes sobre normas ABNT no latex, consultar http://abntex.codigolivre.org.br
+%% Wiki interessante com dicas uteis sobre latex : http://www.tex-br.org
+%%
+%%
+%% Para compilar esse arquivo, e' sempre importante fazer duas passagens com latex
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,titlepage]{ppgi}
+\usepackage[brazilian,english]{babel}
+\usepackage{ppgi,mestre,epsfig}
+\usepackage{times}
+\usepackage[final]{pdfpages}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,   
+    pdftitle={Monitor legislativo},
+    pdfauthor={Vitor Márcio Paiva de Sousa Baptista}, 
+    pdfsubject={Modelo de Documento Científico},
+    pdfkeywords={Dissertação, Mestrado, PPGI, UFPB, modelo}, 
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=black
+ }
+
+
+%-------------------------- Para usar acentuacaoo em sistemas ISO8859-1 ------------------------------------
+% Se estiver usando o Microsoft Windows ou linux com essa codificacao, descomente essas linhas abaixo
+% e comente as linhas referentes ao UTF8
+%\usepackage[applemac]{inputenc} % Usar acentuacao em sistemas ISO8859-1, comentar a linha com  \usepackage[utf8x {inputenc}
+%-----------------------------------------------------------------------------------------------------
+
+%-------------------------- Para usar acentuacao em sistemas UTF8 ------------------------------------
+% Para a maior parte das distribuicoes linux, usar essa opcao
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+%-----------------------------------------------------------------------------------------------------
+\usepackage{float}      
+\usepackage{fancyvrb}
+\usepackage{fancyheadings}
+\usepackage{graphicx}
+\usepackage{longtable} %tabelas longas, para tabelas que ultrapassam uma pagina
+%\input{psfig.sty}
+% ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
+\usepackage{listings}
+\lstset{numbers=left,
+stepnumber=1,
+firstnumber=1,
+numberstyle=\scriptsize,
+extendedchars=true,
+breaklines=true,
+frame=tb,
+basicstyle=\scriptsize,
+stringstyle=\ttfamily,
+showstringspaces=false
+}
+\renewcommand{\lstlistingname}{C\'odigo Fonte}
+\renewcommand{\lstlistlistingname}{Lista de C\'odigos Fonte}
+
+% ---------------------------------------------------------------------------------------------------
+
+\selectlanguage{brazilian}
+\sloppy
+
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Titulo{Monitor legislativo}
+\Autor{Vitor Márcio Paiva de Sousa Baptista}
+\Data{06 de Março de 2012}
+\Area{Ciência da Computação}
+\Pesquisa{Computação Distribuída | Sinais, Sistemas Digitais e Gráficos}
+\Orientadores{Alexandre Nóbrega Duarte\\ (Orientador)}
+
+\newpage
+\cleardoublepage
+\PaginadeRosto
+
+\newpage
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{resumo} 
+\input{resumo.tex}
+\end{resumo}
+%\newpage
+%\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{summary}
+\input{abstract.tex}
+\end{summary}
+
+%\newpage
+%\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TMP: Agradecimentos
+\begin{agradecimentos}
+\input{agradecimentos.tex}
+\end{agradecimentos}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definicao do cabecalho: secao do lado esquerdo e numero da pagina do lado direito
+\pagestyle{fancy}
+\addtolength{\headwidth}{\marginparsep}\addtolength{\headwidth}{\marginparwidth}\headwidth = \textwidth
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}\lhead[\fancyplain{}{\bfseries\thepage}]%
+	     {\fancyplain{}{\emph{\rightmark}}}\rhead[\fancyplain{}{\bfseries\leftmark}]%
+             {\fancyplain{}{\bfseries\thepage}}\cfoot{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\selectlanguage{brazilian}
+
+\Sumario
+\ListadeSimbolos
+\listoffigures
+\listoftables
+\lstlistoflistings %lista de codigos fonte - Para inserir a listagem de
+% codigos fonte
+
+\newpage
+\cleardoublepage
+\Introducao
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Hifenizacao - Colocar lista de palavras que nao devem ser separadas e que 
+% nao estao no dicionario brazilian.
+% As palavras do dicionario brazilian ja sao separadas corretamente pelo lateX
+%
+\hyphenation{ gLite OurGrid GridDoctor }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% A partir daqui coloque seus capitulos. Sugere-se que eles sejam inseridos com o comando \input
+%% Da seguinte maneira:
+%% 
+\input{01-introducao}
+\input{02-fundamentacao-teorica}
+\input{03-trabalhos-relacionados}
+\input{04-miolo}
+\input{05-avaliacao-experimental}
+\input{06-conclusao}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIbliografia
+%% Coloque suas referencias no arquivo ref.bib
+
+\bibliographystyle{abnt-alf} % estilo de bibliografia   plain,unsrt,alpha,abbrv.
+\bibliography{ref} % arquivos com as entradas bib.
+
+%Faz aparecer a referencia bibliografica no indice
+\addcontentsline{toc}{section}{\numberline{}Referências Bibliográficas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Apendice
+% Caso seja necessario algum apendice
+
+\appendix
+%\input{apendice-a}
+%\input{apendice-b}
+%\input{apendice-c}
+%\input{apendice-d}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
