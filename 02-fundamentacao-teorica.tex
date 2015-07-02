@@ -1,3 +1,4 @@
+
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
 \section{Índice de Rice}
@@ -97,40 +98,66 @@ voto da maioria \cite{Figueiredo1995}, preferimos usar o voto da maioria.
 
 \section{Modelos espaciais de votação}
 
-Considere que o salário mínimo atual seja R\$ 1.000, e que há um projeto de Lei em votação propondo aumentá-lo para R\$ 1.200. Um modelo espacial de votação mapearia essas duas opções (manter o \emph{status quo} atual ou modificá-lo) em um espaço euclidiano. Por simplificação, usarei um espaço unidimensional (uma reta), mas a mesma ideia é extensível para um espaço com \emph{n} dimensões.
 
-Nessa reta, temos uma marcação em R\$ 1.000 (o \emph{status quo}) e outra em R\$ 1.200 (a proposta). Usualmente se considera que cada parlamentar tem uma única preferência no espaço de alternativas possíveis. Por exemplo, podem haver parlamentares que prefiram o salário mínimo a R\$ 1.000, outros em R\$ 1.100, R\$ 1.200 e R\$ 1.500. Essa preferência é chamada de ponto ideal.
 
-% Que pulo foi esse?!
+Os modelos espaciais representam o conjunto de alternativas de uma votação em
+um espaço euclidiano e estimam as preferências dos parlamentares dentro desse
+espaço. A ideia básica desses modelos é que um legislador vota na alternativa
+mais próxima da sua preferência.
 
-A ideia básica de todos os modelos espaciais de votação é que o voto de um legislador é baseado na distância entre seu ponto ideal e a proposta em votação. Ou seja, o legislador vota na opção mais próxima da sua preferência (ponto ideal). Quando isso não ocorre e ele vota de uma forma contrária as suas preferências, temos um ``erro''. % FONTE: Capítulo 5 do Handbook of legislative studies
+Considere um exemplo onde 5 parlamentares votam em
+dois projetos de Lei: um propondo a redução da maioridade penal de
+18 para 16 anos e outra
+propondo o aumento do salário-mínimo de R\$ 1000 para
+R\$ 1200. Suponha que cada um tem uma única preferência
+(\emph{single-peakedness}), conhecido como seu ponto ideal, e vota sinceramente
+de acordo com ela. Considere também que as preferências são simétricas. Isto é,
+dado duas escolhas a uma mesma distância do ponto ideal de um parlamentar, ele
+será indiferente a qualquer uma delas.
 
-Sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo respectivamente a um voto ``sim'' e um voto ``não'' na votação $j$ ($j = 1, ..., q$), definimos $Z_j$ como:
+Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde os pontos
+representam as preferências dos legisladores sobre cada votação, representados
+como as dimensões nesse espaço euclidiano. As linhas são chamadas linhas de
+corte. Elas passam pelo ponto médio entre as duas alternativas em votação: a de
+votar sim e a de votar não. Em outras palavras, se as escolhas são entre uma
+maioridade penal de 16 ou
+18, a linha de corte passa em $\frac{16 + 18}{2}$,
+ou seja, $17$. Ela divide os legisladores que irão votar não, que estão a
+esquerda da linha, dos que irão votar sim, que estão a direita da mesma. Caso
+esteja em cima da linha de corte, ele é indiferente as alternativas. Caso algum
+legislador não siga essa previsão, ele é considerado um ``erro'' do modelo.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
+\end{figure}
+
+
+\end{knitrout}
+
+Formalmente, sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo
+respectivamente a um voto ``sim'' e um voto ``não'' na votação $j$ ($j = 1,
+..., q$), definimos $Z_j$ como: 
 
 \begin{equation}\label{eq:cutpoint}
   Z_j = \frac{O_{jy} + O_{jn}}{2}
 \end{equation}
 
-Em uma dimensão, $Z_j$ define um ponto de corte (\emph{cutting point}) que divide os votos a favor dos votos contra (existem outros pontos de corte). Em uma votação perfeita, todos os legisladores a esquerda de $Z_j$ votariam de uma forma, e os a direita votariam pelo oposto. Em duas dimensões, $Z_j$ define uma linha de corte (\emph{cutting line}).
+O $Z_j$ pode definir um ponto, linha, plano ou hiperplano, dependendo do número
+de dimensões que estamos tratando. Ele é conhecido como ponto (ou linha, etc.)
+de corte.
 
+% Introdução
 
+%% O que são de modelos de votação?
 
-% ---
+%% Por que os modelos espaciais de votação foram criados?
 
+%% Por que não usar os votos diretamente?
 
-% ---
+% Desenvolvimento
 
-Considere também que cada parlamentar tem uma opinião sobre qual seria o salário mínimo ideal. Alguns preferem mantê-lo em R\$ 1.000; outros acham que o aumento é muito grande, e que o ideal seria modificá-lo para R\$ 1.100; outros ainda acham que o aumento é pouco, e que ele deveria ir para R\$ 1.500. Graficamente, temos a situação da figura XXX.
-
-Se os parlamentares votarem sinceramente, de acordo com suas convicções sobre qual o melhor salário mínimo, então eles devem escolher a opção mais próxima do seu ideal. Se a escolha é entre R\$ 1.000 e R\$ 1.200, e o meu ideal seria R\$ 1.500, então eu votarei em R\$ 1.200. Não é o valor que eu queria, mas é melhor do que R\$ 1.000.
-
-
-
-Tomando um projeto de Lei para aumento do salário mínimo como exemplo, considere que as alternativas sejam mapeadas como pontos em uma linha. As preferências de cada legislador também estão colocadas nessa mesma linha. De acordo com a teoria de modelos espaciais de votação, cada legislador então votaria na alternativa mais próxima de seu "ponto ideal".
-
-O que esses 
-
-Modelos espaciais de votação são um conjunto de técnicas que mapeiam as alternativas políticas como pontos em um espaço euclidiano -- uma linha, plano ou hiperplano. Os legisladores, por sua vez, têm suas preferências definidas sobre essas alternativas. Em geral, assume-se que dentre todas as alternativas possíveis, apenas uma é a preferida do legislador. Isto é, suas preferências são de pico único. Dizemos que este é seu ponto ideal. O que essas técnicas fazem é 
+% Conclusão
 
 \section{Processo legislativo}
 
