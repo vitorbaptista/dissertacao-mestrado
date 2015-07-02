@@ -395,20 +395,14 @@ fitControl <- trainControl(method = "repeatedcv",
                            classProbs = TRUE,
                            summaryFunction = twoClassSummary)
 
-grid <- expand.grid(interaction.depth = seq(1, 10, by=2),
-                    n.trees = seq(50, 1000, by=50),
-                    shrinkage = c(0.001, 0.01, 0.1),
-                    n.minobsinnode = c(10))
-
 model <- train(changed_coalition ~ before * before.sd * after * after.sd * diff,
                data = resultTrain,
-               method = "gbm",
+               method = "rf",
                trControl = fitControl,
-               tuneGrid = grid,
                metric = "ROC",
-               #allowParallel = TRUE,
-               #class.stratify.cv = TRUE,
-               #tuneLength = 50,
+               allowParallel = TRUE,
+               class.stratify.cv = TRUE,
+               tuneLength = 50,
                verbose = FALSE)
 
 model_results = model$results[model$results$mtry == as.numeric(model$bestTune),]

@@ -302,22 +302,24 @@ precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gbm\\\#\# Loading required package: survival\\\#\# \\\#\# Attaching package: 'survival'\\\#\# \\\#\# The following object is masked from 'package:caret':\\\#\# \\\#\#\ \ \ \  cluster\\\#\# \\\#\# Loading required package: splines\\\#\# Loaded gbm 2.1.1}}\end{kframe}
+\begin{verbatim}
+## note: only 30 unique complexity parameters in default grid. Truncating the grid to 30 .
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
 a interação entre eles. Analisamos diversos números de preditores e, como pode
 ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
-sob a curva ROC usou 350, 1, 0.01, 10 preditores e chegou a área de
- com desvio-padrão de .
+sob a curva ROC usou 14 preditores e chegou a área de
+0.86 com desvio-padrão de 0.06.
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/roc-vs-mtry-1} \caption[ROC como função do número de preditores]{ROC como função do número de preditores.}\label{fig:roc-vs-mtry}
+\end{figure}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, : invalid 'digits' argument}}\end{kframe}
 \end{knitrout}
 
 Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
@@ -331,10 +333,7 @@ especificidades, com mínimos e máximos dentro de margem de confiança de
 TODO: explicar melhor}.
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gbm\\\#\# Loading required package: survival\\\#\# \\\#\# Attaching package: 'survival'\\\#\# \\\#\# The following object is masked from 'package:caret':\\\#\# \\\#\#\ \ \ \  cluster\\\#\# \\\#\# Loading required package: splines\\\#\# Loaded gbm 2.1.1}}\end{kframe}\begin{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \includegraphics[width=\maxwidth]{figure/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
 \end{figure}
 
@@ -349,31 +348,27 @@ TODO: explicar melhor}.
 \hline
 cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.high\\
 \hline
-0.82787476650719 & 0.00 & 0.13 & 0.33 & 0.96 & 0.99 & 1.00\\
+0.917 & 0.00 & 0.13 & 0.33 & 0.96 & 0.99 & 1.00\\
 \hline
-0.777863502303279 & 0.00 & 0.20 & 0.40 & 0.94 & 0.97 & 1.00\\
+0.877 & 0.00 & 0.20 & 0.40 & 0.94 & 0.97 & 1.00\\
 \hline
-0.403157521070924 & 0.13 & 0.33 & 0.60 & 0.87 & 0.94 & 0.99\\
+0.599 & 0.07 & 0.27 & 0.53 & 0.91 & 0.96 & 1.00\\
 \hline
-0.293869656569407 & 0.20 & 0.40 & 0.67 & 0.85 & 0.91 & 0.96\\
+0.429 & 0.13 & 0.33 & 0.60 & 0.81 & 0.88 & 0.95\\
 \hline
-0.264296949579162 & 0.20 & 0.47 & 0.73 & 0.81 & 0.88 & 0.95\\
+0.424 & 0.20 & 0.40 & 0.67 & 0.79 & 0.87 & 0.94\\
 \hline
-0.249162599449092 & 0.27 & 0.53 & 0.80 & 0.77 & 0.85 & 0.92\\
+0.273 & 0.33 & 0.60 & 0.87 & 0.74 & 0.83 & 0.91\\
 \hline
-0.22097362201497 & 0.33 & 0.60 & 0.87 & 0.68 & 0.78 & 0.87\\
+0.25 & 0.53 & 0.73 & 0.93 & 0.72 & 0.81 & 0.88\\
 \hline
-0.202833409138698 & 0.40 & 0.67 & 0.87 & 0.65 & 0.76 & 0.85\\
+0.212 & 0.60 & 0.80 & 1.00 & 0.67 & 0.77 & 0.86\\
 \hline
-0.174243617535229 & 0.47 & 0.73 & 0.93 & 0.58 & 0.69 & 0.79\\
+0.136 & 0.67 & 0.87 & 1.00 & 0.55 & 0.67 & 0.77\\
 \hline
-0.157624089731641 & 0.60 & 0.80 & 1.00 & 0.58 & 0.68 & 0.78\\
+0.108 & 0.80 & 0.93 & 1.00 & 0.51 & 0.63 & 0.72\\
 \hline
-0.143219846299609 & 0.67 & 0.87 & 1.00 & 0.46 & 0.58 & 0.69\\
-\hline
-0.0971263319791297 & 0.80 & 0.93 & 1.00 & 0.27 & 0.37 & 0.49\\
-\hline
-0.0747345740755651 & 1.00 & 1.00 & 1.00 & 0.18 & 0.27 & 0.37\\
+0.035 & 1.00 & 1.00 & 1.00 & 0.37 & 0.47 & 0.58\\
 \hline
 \end{tabular}
 
