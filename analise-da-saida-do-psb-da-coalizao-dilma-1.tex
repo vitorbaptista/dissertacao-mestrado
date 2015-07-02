@@ -1,0 +1,384 @@
+
+
+\chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
+
+\section{Introdução}
+
+O PSB esteve na base de apoio do governo do PT desde que o partido conquistou a
+Presidência da República com Lula em 2003. Dez anos depois, em 2013, penúltimo
+ano do primeiro governo de Dilma, o PSB anuncia a candidatura de Eduardo Campos
+para a presidência, rompendo a aliança com o PT.
+
+Para entender a repercussão dessa mudança na Câmara dos Deputados, analisaremos
+as votações nominais ocorridas naquela legislatura (54\textordfeminine, que
+durou de 2011 até 2015) seguindo a metodologia proposta por Keith Poole em
+\emph{Spatial models of parliamentary voting} \cite{Poole2005}.
+% Não estamos entendendo a repercussão da mudança na CD como um todo, mas sim
+% só no comportamento de votação dos parlamentares.
+
+\section{Metodologia}{\label{sec:analise-saida-psb:metodologia}
+
+Para entender a influência da saída do PSB no comportamento de votação dos
+parlamentares, precisamos de uma forma de comparar o comportamento deles antes
+e depois dessa mudança. Este é um problema complicado, estudado por diversos
+autores (CITATION NEEDED). Nesta análise seguimos a metodologia de
+\cite{Poole2005}.
+
+Considerando um parlamentar por vez, o substituímos por dois parlamentares
+``virtuais'' na tabela de votações, um com os votos antes da mudança e outro
+com os votos depois dela, e executamos o algoritmo W-NOMINATE nessa nova
+tabela. Esse procedimento é repetido para cada parlamentar separadamente,
+enquanto mantém todos os outros sem modificações. Ao final, teremos dois pontos
+para cada parlamentar: um para antes e outro para depois da mudança. A
+diferença entre esses pontos representa o nível da mudança de comportamento no
+período de análise. 
+
+Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
+contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
+comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
+parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
+\ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
+Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
+depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
+a sua posição antes, e outro depois da mudança (ver figura
+\ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
+uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
+de cada parlamentar, podemos determinar se a mudança é significante ou não.
+
+% TODO: Falar sobre o parametric bootstrap
+% TODO: Falar sobre os problemas em comparar esses valores.
+% \begin{quote}
+%   ``(...) all matrices have the same number of nonmissing entries, and they
+%   differ only in the fact that each has a different senator divided into two
+%   records. Consequently, I believe it's safe to capture the 72 distances with
+%   each other, because the differences between the configurations will be
+%   trivial.''\cite{Poole2005}
+% \end{quote}
+
+\begin{table}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara & Sim & Sim & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados originais de votação}
+    \label{table:exemplo-mudanca-de-comportamento}
+  \end{minipage}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara 1 & Sim & Sim & & \\
+      Samara 2 & & & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados de votação com Romário dividido no meio}
+    \label{table:exemplo-parlamentar-virtual}
+  \end{minipage}
+\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/exemplo-mudanca-de-comportamento-1} \caption[Posições dos parlamentares antes e depois da data em análise]{Posições dos parlamentares antes e depois da data em análise}\label{fig:exemplo-mudanca-de-comportamento}
+\end{figure}
+
+
+\end{knitrout}
+
+% Pseudocódigo
+%
+% \begin{enumerate}
+%   \item Para cada parlamentar, faça:
+%   \begin{enumerate}
+%     \item Crie dois parlamentares ``virtuais'', um com os votos do parlamentar
+%       antes da mudança, e o outro com os votos depois dela;
+%     \item Execute o W-NOMINATE na matriz completa de votações com todos os
+%       parlamentares e o parlamentar em análise substituído pelos parlamentares
+%       ``virtuais'';
+%     \item Guarde o resultado;
+%   \end{enumerate}
+%   \item Compara a mudança de cada parlamentar de interesse com todos os outros,
+%     para descobrir se ela (a mudança) foi significativa.
+% \end{enumerate}
+
+\section{Extração dos dados}
+
+
+
+Os dados das votações nominais foram extraídos a partir da API disponibilizada
+no site da Câmara dos Deputados. Eles compreendem 131552 votos
+proferidos por 644 parlamentares em 432
+votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
+votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
+de deputados federais por partido. Só consideramos votos \verb|Sim| ou
+\verb|Não|.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/votacoes-por-mes-1} \caption[Distribuição de votações por mês na 54\textordfeminine{} legislatura]{Distribuição de votações por mês na 54\textordfeminine{} legislatura}\label{fig:votacoes-por-mes}
+\end{figure}
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/deputados-por-partido-1} \caption[Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura]{Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura}\label{fig:deputados-por-partido}
+\end{figure}
+
+
+\end{knitrout}
+
+\section{Análise}
+
+
+
+Seguindo a metodologia descrita na sessão
+\ref{sec:analise-saida-psb:metodologia}, dividimos a
+54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
+no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
+os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
+primeira votação depois dessa data ocorreu em
+08/10/2013 (identificador
+367), relacionada ao MPV 621/2013. Houve
+303 votações antes da ruptura e
+133 votações após. Dos 643
+parlamentares que votaram ao menos uma vez nesse período,
+470 passaram pelo nosso filtro de
+participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
+
+A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
+entre as posições dos parlamentares antes e depois da saída do PSB da base do
+governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
+sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
+mais governista, quem sai se torna mais oposicionista, e os outros mantém sua
+posição, mas existem diversos \emph{outliers}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/boxplot-diff-coalizao-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:boxplot-diff-coalizao}
+\end{figure}
+
+
+\end{knitrout}
+
+Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
+de posição em valores absolutos. Desses, analisemos os que não entraram nem
+saíram da coalizão: 
+
+\begin{description}
+\item[Dudimar Paxiuba] Apesar de continuar fora da coalizão, ele saiu do PSDB
+para o PROS em 2013, o que explicaria essa aproximação ao
+governo\footnote{\url{http://www2.camara.leg.br/deputados/pesquisa/layouts_deputados_biografia?pk=193033&tipo=0}}.
+\item[Rebecca Garcia] Não consegui explicar. A única coisa que encontrei foi
+que ela ia se candidatar a prefeitura de Manaus em 2012, mas desistiu porque
+vazou um áudio de uma conversa dela com seu amante na época, o ex-vereador Ari
+Moutinho. Não me parece ter relação.
+\item[Vicente Candido]Também não encontrei uma razão.
+\item[Dr. Grilo]Saiu do PSL para o Solidariedade, que pode explicar o
+afastamento do governo.
+\end{description}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|l|l|r|r|r}
+\hline
+Nome & Partido & Coalizão & Antes & Depois & Diferença\\
+\hline
+Wladimir Costa & PMDB & saiu & 0.32 & -0.60 & -0.92\\
+\hline
+Dudimar Paxiuba & PROS & nao\_mudou & -0.71 & 0.17 & 0.87\\
+\hline
+Luiz Nishimori & PL+PRONA>PR & entrou & -0.86 & -0.08 & 0.77\\
+\hline
+Domingos Dutra & PT & saiu & 0.52 & -0.16 & -0.68\\
+\hline
+Romário & PSB & saiu & 0.28 & -0.37 & -0.65\\
+\hline
+Genecias Noronha & PMDB & saiu & -0.01 & -0.64 & -0.63\\
+\hline
+Rebecca Garcia & PDS>PP & nao\_mudou & 0.39 & -0.23 & -0.62\\
+\hline
+Antonio Balhmann & PROS & saiu & 0.08 & 0.69 & 0.61\\
+\hline
+Vicente Candido & PT & nao\_mudou & 0.99 & 0.39 & -0.60\\
+\hline
+Dr. Grilo & PSL & nao\_mudou & 0.05 & -0.52 & -0.57\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:top-10-diffs}
+\end{table}
+
+\subsection{Os deputados do PSB mudaram de comportamento?}
+
+
+
+De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
+afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
+mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
+contrário da maioria, se aproximou do governo: Alexandre Toledo, que
+passou de \ensuremath{-0.61} para \ensuremath{-0.1} (diferença
+de 0.51). Analisando este caso, a razão se torna clara: ele
+era do PSDB e passou para o PSB em 2013. Apesar do PSB ter se tornado oposição,
+passando de uma posição mediana \ensuremath{-0.01}
+para \ensuremath{-0.33}, o PSDB é um opositor mais
+ferrenho ao governo, com posição mediana \ensuremath{-0.87}.
+
+Com base nesses dados, podemos concluir que o que já esperávamos: o PSB se
+afastou do governo.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/mudanca-psb-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:mudanca-psb}
+\end{figure}
+
+
+\end{knitrout}
+
+\section{Modelagem}
+
+Nosso objetivo agora é determinar se, baseado somente nas posições dos
+deputados federais de antes e depois da saída do PSB da coalizão, conseguimos
+inferir se um parlamentar mudou de lado (se era governo, se tornou oposição, ou
+vice-versa). Para isso, treinaremos um modelo \emph{Random Forest}.
+
+O primeiro passo é alterar a coluna ``Coalizão'' para somente dois valores: sim
+ou não. Nesse momento, nosso objetivo é determinar se o parlamentar mudou de
+lado, e não pra que lado ele foi\footnote{Sabendo se o parlamentar mudou de
+lado e qual era sua posição anterior, podemos inferir qual é sua nova posição
+(e.x.: se ele era oposição e mudou de lado, agora virou governo).}. Também
+retiraremos informações como nome e partido e parlamentares cuja posição não
+conseguimos estimar pois não houve votos o suficiente, e adicionamos o
+desvio-padrão de cada valor\footnote{Calculados usando parametric bootstrap.
+TODO: Explicar melhor}. No final, teremos uma tabela como a
+\ref{table:clean-data}.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r|r|l}
+\hline
+Antes & Antes SD & Depois & Depois SD & Diferença & Mudou de posição\\
+\hline
+0.32 & 0.17 & -0.60 & 0.16 & -0.92 & Sim\\
+\hline
+-0.71 & 0.12 & 0.17 & 0.08 & 0.87 & Não\\
+\hline
+-0.86 & 0.10 & -0.08 & 0.19 & 0.77 & Sim\\
+\hline
+0.52 & 0.13 & -0.16 & 0.13 & -0.68 & Sim\\
+\hline
+0.28 & 0.10 & -0.37 & 0.20 & -0.65 & Sim\\
+\hline
+-0.01 & 0.12 & -0.64 & 0.15 & -0.63 & Sim\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:clean-data}
+\end{table}
+
+Com os dados nesse formato, agora precisamos dividí-lo em dois grupos: um para
+treino e um para teste. Precisamos fazer isso para que as estimativas de
+precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino e
+20\% para testes. Também usamos o \emph{10-fold stratified cross validation}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gbm\\\#\# Loading required package: survival\\\#\# \\\#\# Attaching package: 'survival'\\\#\# \\\#\# The following object is masked from 'package:caret':\\\#\# \\\#\#\ \ \ \  cluster\\\#\# \\\#\# Loading required package: splines\\\#\# Loaded gbm 2.1.1}}\end{kframe}
+\end{knitrout}
+
+O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
+a interação entre eles. Analisamos diversos números de preditores e, como pode
+ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
+sob a curva ROC usou 350, 1, 0.01, 10 preditores e chegou a área de
+ com desvio-padrão de .
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, : invalid 'digits' argument}}\end{kframe}
+\end{knitrout}
+
+Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
+mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
+para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
+como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
+e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
+máximos locais dos pontos de corte e as respectivas sensibilidades e
+especificidades, com mínimos e máximos dentro de margem de confiança de
+95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.
+TODO: explicar melhor}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gbm\\\#\# Loading required package: survival\\\#\# \\\#\# Attaching package: 'survival'\\\#\# \\\#\# The following object is masked from 'package:caret':\\\#\# \\\#\#\ \ \ \  cluster\\\#\# \\\#\# Loading required package: splines\\\#\# Loaded gbm 2.1.1}}\end{kframe}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
+\end{figure}
+
+
+\end{knitrout}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|r|r|r|r|r|r}
+\hline
+cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.high\\
+\hline
+0.82787476650719 & 0.00 & 0.13 & 0.33 & 0.96 & 0.99 & 1.00\\
+\hline
+0.777863502303279 & 0.00 & 0.20 & 0.40 & 0.94 & 0.97 & 1.00\\
+\hline
+0.403157521070924 & 0.13 & 0.33 & 0.60 & 0.87 & 0.94 & 0.99\\
+\hline
+0.293869656569407 & 0.20 & 0.40 & 0.67 & 0.85 & 0.91 & 0.96\\
+\hline
+0.264296949579162 & 0.20 & 0.47 & 0.73 & 0.81 & 0.88 & 0.95\\
+\hline
+0.249162599449092 & 0.27 & 0.53 & 0.80 & 0.77 & 0.85 & 0.92\\
+\hline
+0.22097362201497 & 0.33 & 0.60 & 0.87 & 0.68 & 0.78 & 0.87\\
+\hline
+0.202833409138698 & 0.40 & 0.67 & 0.87 & 0.65 & 0.76 & 0.85\\
+\hline
+0.174243617535229 & 0.47 & 0.73 & 0.93 & 0.58 & 0.69 & 0.79\\
+\hline
+0.157624089731641 & 0.60 & 0.80 & 1.00 & 0.58 & 0.68 & 0.78\\
+\hline
+0.143219846299609 & 0.67 & 0.87 & 1.00 & 0.46 & 0.58 & 0.69\\
+\hline
+0.0971263319791297 & 0.80 & 0.93 & 1.00 & 0.27 & 0.37 & 0.49\\
+\hline
+0.0747345740755651 & 1.00 & 1.00 & 1.00 & 0.18 & 0.27 & 0.37\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
+\label{table:roc}
+\end{table}

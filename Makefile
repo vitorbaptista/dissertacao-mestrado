@@ -1,5 +1,8 @@
 all:
-	latexmk -pdf dissertacao.tex
+	latexmk -shell-escape -pdf dissertacao.tex
 
 watch:
-	latexmk -pdf -pvc dissertacao.tex
+	latexmk -shell-escape -pdf -pvc -interaction=nonstopmode dissertacao.tex
+
+watch-knitr:
+	knitr *.Rnw

@@ -1,0 +1,468 @@
+<<echo=FALSE>>=
+suppressMessages(library(knitr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(caret))
+suppressMessages(library(doParallel))
+suppressMessages(library(randomForest))
+
+opts_chunk$set(echo = FALSE, fig.height = 4)
+
+formata_data <- function(data) {
+  format(as.POSIXct(data), "%d/%m/%Y")
+}
+
+setwd("~/Projetos/Mestrado/theRealPipeline")
+votes <- read.csv("54.csv", header = TRUE, check.names = FALSE)
+votes_metadata <- read.csv("54-votacoes.csv", header = TRUE, check.names = FALSE)
+@
+
+\chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
+
+\section{Introdução}
+
+O PSB esteve na base de apoio do governo do PT desde que o partido conquistou a
+Presidência da República com Lula em 2003. Dez anos depois, em 2013, penúltimo
+ano do primeiro governo de Dilma, o PSB anuncia a candidatura de Eduardo Campos
+para a presidência, rompendo a aliança com o PT.
+
+Para entender a repercussão dessa mudança na Câmara dos Deputados, analisaremos
+as votações nominais ocorridas naquela legislatura (54\textordfeminine, que
+durou de 2011 até 2015) seguindo a metodologia proposta por Keith Poole em
+\emph{Spatial models of parliamentary voting} \cite{Poole2005}.
+% Não estamos entendendo a repercussão da mudança na CD como um todo, mas sim
+% só no comportamento de votação dos parlamentares.
+
+\section{Metodologia}{\label{sec:analise-saida-psb:metodologia}
+
+Para entender a influência da saída do PSB no comportamento de votação dos
+parlamentares, precisamos de uma forma de comparar o comportamento deles antes
+e depois dessa mudança. Este é um problema complicado, estudado por diversos
+autores (CITATION NEEDED). Nesta análise seguimos a metodologia de
+\cite{Poole2005}.
+
+Considerando um parlamentar por vez, o substituímos por dois parlamentares
+``virtuais'' na tabela de votações, um com os votos antes da mudança e outro
+com os votos depois dela, e executamos o algoritmo W-NOMINATE nessa nova
+tabela. Esse procedimento é repetido para cada parlamentar separadamente,
+enquanto mantém todos os outros sem modificações. Ao final, teremos dois pontos
+para cada parlamentar: um para antes e outro para depois da mudança. A
+diferença entre esses pontos representa o nível da mudança de comportamento no
+período de análise. 
+
+Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
+contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
+comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
+parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
+\ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
+Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
+depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
+a sua posição antes, e outro depois da mudança (ver figura
+\ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
+uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
+de cada parlamentar, podemos determinar se a mudança é significante ou não.
+
+% TODO: Falar sobre o parametric bootstrap
+% TODO: Falar sobre os problemas em comparar esses valores.
+% \begin{quote}
+%   ``(...) all matrices have the same number of nonmissing entries, and they
+%   differ only in the fact that each has a different senator divided into two
+%   records. Consequently, I believe it's safe to capture the 72 distances with
+%   each other, because the differences between the configurations will be
+%   trivial.''\cite{Poole2005}
+% \end{quote}
+
+\begin{table}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara & Sim & Sim & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados originais de votação}
+    \label{table:exemplo-mudanca-de-comportamento}
+  \end{minipage}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara 1 & Sim & Sim & & \\
+      Samara 2 & & & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados de votação com Romário dividido no meio}
+    \label{table:exemplo-parlamentar-virtual}
+  \end{minipage}
+\end{table}
+
+<<exemplo-mudanca-de-comportamento, fig.cap="Posições dos parlamentares antes e depois da data em análise">>=
+data = data.frame(
+  nome = rep(c("Samara", "Pedro", "Maria")),
+  valor = c(1, 0.8, -0.8, -1, 1, -1),
+  periodo = rep(c("Antes", "Depois"), 3)
+)
+ggplot(data, aes(x = valor, y = nome, shape = periodo)) +
+  geom_point() +
+  theme_bw() +
+  theme(legend.title = element_blank()) +
+  labs(x = "", y = "")
+@
+
+% Pseudocódigo
+%
+% \begin{enumerate}
+%   \item Para cada parlamentar, faça:
+%   \begin{enumerate}
+%     \item Crie dois parlamentares ``virtuais'', um com os votos do parlamentar
+%       antes da mudança, e o outro com os votos depois dela;
+%     \item Execute o W-NOMINATE na matriz completa de votações com todos os
+%       parlamentares e o parlamentar em análise substituído pelos parlamentares
+%       ``virtuais'';
+%     \item Guarde o resultado;
+%   \end{enumerate}
+%   \item Compara a mudança de cada parlamentar de interesse com todos os outros,
+%     para descobrir se ela (a mudança) foi significativa.
+% \end{enumerate}
+
+\section{Extração dos dados}
+
+<<>>=
+num_votes <- sum(!is.na(votes[, 5:ncol(votes)]))
+num_votacoes <- ncol(votes) - 4
+@
+
+Os dados das votações nominais foram extraídos a partir da API disponibilizada
+no site da Câmara dos Deputados. Eles compreendem \Sexpr{num_votes} votos
+proferidos por \Sexpr{nrow(votes)} parlamentares em \Sexpr{num_votacoes}
+votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
+votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
+de deputados federais por partido. Só consideramos votos \verb|Sim| ou
+\verb|Não|.  
+
+<<votacoes-por-mes, fig.cap="Distribuição de votações por mês na 54\\textordfeminine{} legislatura">>=
+votes_by_month_count = table(format(as.POSIXct(votes_metadata$data), "%Y-%m-01"))
+votes_by_month_count = data.frame(date = as.POSIXct(names(votes_by_month_count)),
+                                  count = as.vector(votes_by_month_count))
+ggplot(votes_by_month_count, aes(x = date, y = count)) +
+  geom_bar(stat = "identity") +
+  theme_bw() +
+  labs(x = "", y = "Votações")
+
+@
+
+<<deputados-por-partido, fig.height=5, fig.cap="Distribuição de Deputados Federais por partido na 54\\textordfeminine{} legislatura">>=
+parties_count = table(votes$party)
+parties_count = data.frame(party = factor(names(parties_count), levels = names(sort(parties_count))),
+                           count = as.vector(parties_count))
+ggplot(parties_count, aes(x = party, y = count)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  theme_bw() +
+  labs(x = "", y = "Deputados Federais")
+@
+
+\section{Análise}
+
+<<>>=
+setwd("~/Projetos/Mestrado/theRealPipeline")
+votacao_divisoria = votes_metadata[which(colnames(votes) == 368),]
+num_votacoes_antes = which(colnames(votes) == votacao_divisoria$id) - 4 - 1
+num_votacoes_depois = ncol(votes) - num_votacoes_antes
+
+library(data.table)
+library(plyr)
+
+result <- readRDS("output.rds")
+changed_coalitions <- read.csv("parties_and_coalitions_changes.csv",
+                               header = TRUE,
+                               check.names = FALSE)
+changed_coalitions$rollcall_date <- as.POSIXct(changed_coalitions$rollcall_date)
+
+coords <- rbindlist(
+  lapply(result, function (res) {
+    output = res$legislators[1:2,]
+    same_party_legislators = res$legislators[res$legislators$id != output[1, "id"] & res$legislators$party == output[1, "party"],]
+    output$party.median = median(same_party_legislators$coord1D, na.rm = TRUE)
+    output$party.mean = mean(same_party_legislators$coord1D, na.rm = TRUE)
+    output$party.sd = sd(same_party_legislators$coord1D, na.rm = TRUE)
+    output$party.count = nrow(same_party_legislators)
+    output
+  })
+)
+clean_coords = ddply(coords, .(id), function (rows) {
+  name = substr(rows[1, "name"], 1, nchar(rows[1, "name"]) - nchar(rows[1, "party"]) - 3)
+  data.frame(name = name,
+             party = rows[1, "party"],
+             state = rows[1, "state"],
+             before = rows[1, "coord1D"],
+             before.sd = rows[1, "se1D"],
+             after = rows[2, "coord1D"],
+             after.sd = rows[2, "se1D"],
+             diff = diff(rows[, "coord1D"]))
+})
+
+for (i in 1:nrow(clean_coords)) {
+  row = clean_coords[i,]
+  same_party_legislators = clean_coords[clean_coords$id != row$id & clean_coords$party == row$party,]
+  clean_coords[i, "before.party.mean"] = mean(same_party_legislators$before, na.rm = TRUE)
+  clean_coords[i, "before.party.median"] = median(same_party_legislators$before, na.rm = TRUE)
+  clean_coords[i, "before.party.sd"] = sd(same_party_legislators$before, na.rm = TRUE)
+  clean_coords[i, "after.party.mean"] = mean(same_party_legislators$after, na.rm = TRUE)
+  clean_coords[i, "after.party.median"] = median(same_party_legislators$after, na.rm = TRUE)
+  clean_coords[i, "after.party.sd"] = sd(same_party_legislators$after, na.rm = TRUE)
+  clean_coords[i, "diff.party.blah"] = median(same_party_legislators$after - same_party_legislators$before, na.rm = T)
+}
+clean_coords$diff.party.median = clean_coords$after.party.median - clean_coords$before.party.median
+clean_coords$diff_legislator_party = clean_coords$diff - clean_coords$diff.party.median
+
+mudancas_de_partidos <- read.csv("mudancas-de-partido-54-legislatura.csv")
+clean_coords <- merge(clean_coords, mudancas_de_partidos[, c("id", "numero_de_partidos")], by = "id")
+
+changed_coalitions_in_period = changed_coalitions[between(changed_coalitions$rollcall_date,
+                                                          as.POSIXct("2011-02-01"),
+                                                          as.POSIXct("2015-02-12")),]
+clean_coords$changed_coalition <- "nao_mudou"
+clean_coords[which(clean_coords$id %in% changed_coalitions_in_period[changed_coalitions_in_period$coalition_after == "False",]$id),]$changed_coalition <- "saiu"
+clean_coords[which(clean_coords$id %in% changed_coalitions_in_period[changed_coalitions_in_period$coalition_after == "True",]$id),]$changed_coalition <- "entrou"
+clean_coords$changed_coalition <- as.factor(clean_coords$changed_coalition)                                   
+
+clean_coords$name <- factor(clean_coords$name)
+clean_coords$name <- reorder(clean_coords$name, clean_coords$diff)
+clean_coords <- clean_coords[order(abs(clean_coords$diff_legislator_party)),]
+@
+
+Seguindo a metodologia descrita na sessão
+\ref{sec:analise-saida-psb:metodologia}, dividimos a
+54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
+no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
+os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
+primeira votação depois dessa data ocorreu em
+\Sexpr{formata_data(votacao_divisoria$data)} (identificador
+\Sexpr{votacao_divisoria$id}), relacionada ao MPV 621/2013. Houve
+\Sexpr{num_votacoes_antes} votações antes da ruptura e
+\Sexpr{num_votacoes_depois} votações após. Dos \Sexpr{nrow(clean_coords)}
+parlamentares que votaram ao menos uma vez nesse período,
+\Sexpr{sum(!is.na(clean_coords$diff))} passaram pelo nosso filtro de
+participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
+
+A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
+entre as posições dos parlamentares antes e depois da saída do PSB da base do
+governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
+sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
+mais governista, quem sai se torna mais oposicionista, e os outros mantém sua
+posição, mas existem diversos \emph{outliers}.
+
+<<boxplot-diff-coalizao, fig.cap="Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo">>=
+order = c("entrou", "nao_mudou", "saiu")
+labels = c("Entrou na coalizão", "Não mudou", "Saiu da coalizão")
+ggplot(clean_coords[!is.na(clean_coords$diff),], aes(x = changed_coalition, y = diff)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = order, labels = labels) +
+  theme_bw() +
+  labs(x = "", y = "Distância entre posições")
+@
+
+Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
+de posição em valores absolutos. Desses, analisemos os que não entraram nem
+saíram da coalizão: 
+
+\begin{description}
+\item[Dudimar Paxiuba] Apesar de continuar fora da coalizão, ele saiu do PSDB
+para o PROS em 2013, o que explicaria essa aproximação ao
+governo\footnote{\url{http://www2.camara.leg.br/deputados/pesquisa/layouts_deputados_biografia?pk=193033&tipo=0}}.
+\item[Rebecca Garcia] Não consegui explicar. A única coisa que encontrei foi
+que ela ia se candidatar a prefeitura de Manaus em 2012, mas desistiu porque
+vazou um áudio de uma conversa dela com seu amante na época, o ex-vereador Ari
+Moutinho. Não me parece ter relação.
+\item[Vicente Candido]Também não encontrei uma razão.
+\item[Dr. Grilo]Saiu do PSL para o Solidariedade, que pode explicar o
+afastamento do governo.
+\end{description}
+
+\begin{table}
+\centering
+<<>>=
+table_columns = c("name", "party", "changed_coalition", "before", "after", "diff")
+table_columns_labels = c("Nome", "Partido", "Coalizão", "Antes", "Depois", "Diferença")
+table_ordering = order(abs(clean_coords$diff), decreasing = TRUE)
+table_data = head(clean_coords[table_ordering, table_columns], 10)
+kable(table_data,
+      row.names = FALSE,
+      col.names = table_columns_labels)
+@
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:top-10-diffs}
+\end{table}
+
+\subsection{Os deputados do PSB mudaram de comportamento?}
+
+<<>>=
+deputados_psb = clean_coords[clean_coords$party == "PSB",]
+deputados_psdb = clean_coords[clean_coords$party == "PSDB",]
+outlier_psb = deputados_psb[which.max(deputados_psb$diff),]
+@
+
+De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
+afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
+mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
+contrário da maioria, se aproximou do governo: \Sexpr{outlier_psb$name}, que
+passou de \Sexpr{outlier_psb$before} para \Sexpr{outlier_psb$after} (diferença
+de \Sexpr{outlier_psb$diff}). Analisando este caso, a razão se torna clara: ele
+era do PSDB e passou para o PSB em 2013. Apesar do PSB ter se tornado oposição,
+passando de uma posição mediana \Sexpr{median(deputados_psb$before, na.rm = T)}
+para \Sexpr{median(deputados_psb$after, na.rm = T)}, o PSDB é um opositor mais
+ferrenho ao governo, com posição mediana \Sexpr{median(deputados_psdb$before,
+na.rm = T)}.
+
+Com base nesses dados, podemos concluir que o que já esperávamos: o PSB se
+afastou do governo.
+
+<<mudanca-psb, fig.cap="Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo">>=
+ggplot(clean_coords[!is.na(clean_coords$diff),], aes(x = ifelse(party == "PSB",
+"PSB", "Outros"), y = diff)) +
+  geom_boxplot() +
+  theme_bw() +
+  scale_x_discrete(limits = c("PSB", "Outros")) +
+  labs(x = "", y = "Distância entre posições")
+@
+
+\section{Modelagem}
+
+Nosso objetivo agora é determinar se, baseado somente nas posições dos
+deputados federais de antes e depois da saída do PSB da coalizão, conseguimos
+inferir se um parlamentar mudou de lado (se era governo, se tornou oposição, ou
+vice-versa). Para isso, treinaremos um modelo \emph{Random Forest}.
+
+O primeiro passo é alterar a coluna ``Coalizão'' para somente dois valores: sim
+ou não. Nesse momento, nosso objetivo é determinar se o parlamentar mudou de
+lado, e não pra que lado ele foi\footnote{Sabendo se o parlamentar mudou de
+lado e qual era sua posição anterior, podemos inferir qual é sua nova posição
+(e.x.: se ele era oposição e mudou de lado, agora virou governo).}. Também
+retiraremos informações como nome e partido e parlamentares cuja posição não
+conseguimos estimar pois não houve votos o suficiente, e adicionamos o
+desvio-padrão de cada valor\footnote{Calculados usando parametric bootstrap.
+TODO: Explicar melhor}. No final, teremos uma tabela como a
+\ref{table:clean-data}.
+
+\begin{table}
+\centering
+<<>>=
+cols = c("before", "before.sd", "after", "after.sd", "diff", "changed_coalition")
+table_columns_labels = c("Antes", "Antes SD", "Depois", "Depois SD", "Diferença", "Mudou de posição")
+clean_data = clean_coords[order(abs(clean_coords$diff), decreasing = TRUE), cols]
+clean_data$changed_coalition = factor(ifelse(clean_data$changed_coalition == "nao_mudou", "Não", "Sim"),
+                                      levels = c("Sim", "Não"))
+clean_data = clean_data[!is.na(clean_data$diff),]
+
+write.csv(clean_data, "/tmp/clean_data.csv")
+table_data = head(clean_data)
+kable(table_data,
+      row.names = FALSE,
+      col.names = table_columns_labels)
+@
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:clean-data}
+\end{table}
+
+Com os dados nesse formato, agora precisamos dividí-lo em dois grupos: um para
+treino e um para teste. Precisamos fazer isso para que as estimativas de
+precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino e
+20\% para testes. Também usamos o \emph{10-fold stratified cross validation}.
+
+<<cache=TRUE>>=
+set.seed(1)
+
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
+
+data <- clean_data
+trainIndex <- createDataPartition(data$changed_coalition,
+                                  p = .8,
+                                  list = FALSE,
+                                  times = 1)
+resultTrain <- data[ trainIndex,]
+resultTest <- data[ -trainIndex,]
+
+fitControl <- trainControl(method = "repeatedcv",
+                           number = 10,
+                           repeats = 10,
+                           classProbs = TRUE,
+                           summaryFunction = twoClassSummary)
+
+grid <- expand.grid(interaction.depth = seq(1, 10, by=2),
+                    n.trees = seq(50, 1000, by=50),
+                    shrinkage = c(0.001, 0.01, 0.1),
+                    n.minobsinnode = c(10))
+
+model <- train(changed_coalition ~ before * before.sd * after * after.sd * diff,
+               data = resultTrain,
+               method = "gbm",
+               trControl = fitControl,
+               tuneGrid = grid,
+               metric = "ROC",
+               #allowParallel = TRUE,
+               #class.stratify.cv = TRUE,
+               #tuneLength = 50,
+               verbose = FALSE)
+
+model_results = model$results[model$results$mtry == as.numeric(model$bestTune),]
+@
+
+O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
+a interação entre eles. Analisamos diversos números de preditores e, como pode
+ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
+sob a curva ROC usou \Sexpr{model$bestTune} preditores e chegou a área de
+\Sexpr{model_results$ROC} com desvio-padrão de \Sexpr{model_results$ROCSD}.
+
+<<roc-vs-mtry, fig.cap="ROC como função do número de preditores.">>=
+plot(model)
+@
+
+Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
+mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
+para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
+como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
+e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
+máximos locais dos pontos de corte e as respectivas sensibilidades e
+especificidades, com mínimos e máximos dentro de margem de confiança de
+95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.
+TODO: explicar melhor}.
+
+<<roc, fig.cap="Curva ROC com ponto ``ideal'' marcado.">>=
+suppressMessages(library(randomForest))
+suppressMessages(library(pROC))
+roc0 = invisible(roc(resultTest$changed_coalition, 
+    predict(model, newdata = resultTest, type = "prob")[,1],
+    plot = TRUE,
+    ci = TRUE,
+    of = "thresholds",
+    thresholds = "best",
+    print.thres = "best",
+    print.auc = TRUE,
+    ylab = "Sensibilidade",
+    xlab = "Especificidade"
+))
+@
+
+\begin{table}
+\centering
+<<>>=
+ci0 = as.data.frame(ci(roc0, of="thresholds", thresholds="local maxima"))
+ci0$cutpoint = rownames(ci0)
+table_columns = c(7, 1, 2, 3, 4, 5, 6)
+table_columns_labels = c("cutpoint",
+                         "sens.low", "sens.median", "sens.high",
+                         "spec.low", "spec.median", "spec.high")
+kable(ci0[2:nrow(ci0), table_columns],
+      row.names = FALSE,
+      col.names = table_columns_labels)
+@
+\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
+\label{table:roc}
+\end{table}

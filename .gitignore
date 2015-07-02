@@ -80,6 +80,7 @@ acs-*.bib
 *-concordance.tex
 *.tikz
 *-tikzDictionary
+cache/
 
 # listings
 *.lol

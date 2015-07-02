@@ -1,4 +1,34 @@
+<<echo=FALSE>>=
+suppressMessages(library(knitr))
+suppressMessages(library(ggplot2))
 
+opts_chunk$set(echo = FALSE, fig.height = 4)
+options(digits = 2)
+
+formata_data <- function(data) {
+  format(as.POSIXct(data), "%d/%m/%Y")
+}
+
+knit_hooks$set(inline = function(x) {
+  if (is.numeric(x)) {
+    num = ifelse(x == round(x), sprintf("%d", x), sprintf("%.2f", x))
+    prettyNum(num, decimal.mark = ",", big.mark = ".")
+  }
+})
+
+setwd("data")
+
+legislatures = c(50, 51, 52, 53, 54)
+votes = list()
+votes_metadata = list()
+
+for (legislature in legislatures) {
+  votes[[legislature]] = read.csv(paste(legislature, ".csv", sep=""),
+                                  header = TRUE, check.names = FALSE)
+  votes_metadata[[legislature]] = read.csv(paste(legislature, "-votacoes.csv", sep=""),
+                                           header = TRUE, check.names = FALSE)
+}
+@
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
@@ -27,28 +57,9 @@ dois arquivos: um com os dados dos parlamentares e seus votos (tabela
 
 \begin{table}
 \centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|l|l|l|r|r|r|r|r}
-\hline
-id & name & party & state & 76 & 273 & 271 & 272 & 485\\
-\hline
-3151 & Jairo Ataíde & PFL>DEM & MG & NA & 0 & NA & 0 & NA\\
-\hline
-4929 & Joseph Bandeira & PT & BA & NA & NA & NA & NA & NA\\
-\hline
-4930 & Silvio Costa & PSC & PE & 1 & 0 & 0 & 0 & 0\\
-\hline
-4931 & Izalci & PL+PRONA>PR & DF & 1 & 1 & 0 & 0 & 0\\
-\hline
-62881 & Danilo Forte & PMDB & CE & 1 & 1 & 0 & 0 & NA\\
-\hline
-67138 & Iracema Portella & PDS>PP & PI & 1 & 1 & 0 & 0 & 0\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
+<<>>=
+kable(head(votes[[54]][, c(1:9)]))
+@
 \caption{Dados com detalhes dos parlamentares e seus respectivos votos. Não
 mostramos todos os votos por limitações de espaço.}
 \label{table:votes}
@@ -57,38 +68,15 @@ mostramos todos os votos por limitações de espaço.}
 \begin{landscape}
 \begin{table}
 \centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|r|r|l|l|l}
-\hline
-id & id\_sessao & proposicao\_id & data & resumo & obj\_votacao\\
-\hline
-76 & 4212 & 491974 & 2011-02-15 21:09:00 & Aprovado o Requerime... & URGÊNCIA PARA O PL 3...\\
-\hline
-273 & 4215 & 491872 & 2011-02-16 00:17:00 & Mantida a expressão.... & DVS - Bloco PvPps - ...\\
-\hline
-271 & 4214 & 491872 & 2011-02-16 22:38:00 & Rejeitada a Emenda d... & DVS - PSDB - EMENDA ...\\
-\hline
-272 & 4214 & 491872 & 2011-02-16 23:27:00 & Rejeitada a Emenda d... & DVS - DEM - EMENDA N...\\
-\hline
-485 & 4219 & 485274 & 2011-02-22 17:36:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
-\hline
-486 & 4219 & 485274 & 2011-02-22 19:20:00 & Rejeitado o Requerim... & REQUERIMENTO DE ADIA...\\
-\hline
-487 & 4220 & 485274 & 2011-02-22 20:45:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
-\hline
-955 & 4221 & 485275 & 2011-02-23 17:01:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
-\hline
-1042 & 4251 & 485758 & 2011-04-05 17:02:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
-\hline
-1043 & 4251 & 485758 & 2011-04-05 19:11:00 & Rejeitado o Requerim... & REQUERIMENTO DE CONC...\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
+<<>>=
+max_str_length = 20
+table_data = head(votes_metadata[[54]], 10)
+table_data$resumo = paste0(strtrim(table_data$resumo, max_str_length), "...")
+table_data$obj_votacao = paste0(strtrim(table_data$obj_votacao, max_str_length), "...")
+kable(table_data)
+@
 \caption{Dados com detalhes sobre cada votação. Os campos ``resumo'' e
-``obj\_votacao'' foram limitados a 20 caracteres por
+``obj\_votacao'' foram limitados a \Sexpr{max_str_length} caracteres por
 questões de formatação da página.}
 \label{table:votes-metadata}
 \end{table}
@@ -122,26 +110,22 @@ definidas pela Constituição de 1988.
 
 \begin{table}
 \centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|r|r|r}
-\hline
-Legislatura & Deputados Federais & Votações & Votos\\
-\hline
-50 & 631 & 468 & 178603\\
-\hline
-51 & 624 & 419 & 155737\\
-\hline
-52 & 614 & 451 & 134461\\
-\hline
-53 & 606 & 619 & 192879\\
-\hline
-54 & 644 & 432 & 131552\\
-\hline
-\end{tabular}
+<<>>=
+num_deputados = simplify2array(lapply(votes[legislatures], nrow))
+num_votacoes = simplify2array(lapply(votes[legislatures], ncol)) - 4
+num_votos = simplify2array(lapply(votes[legislatures], function (v) {
+  just_votes = v[, -c(1:4)]
+  sum(just_votes == 0 | just_votes == 1, na.rm = TRUE)
+}))
+data = data.frame(legislature = legislatures,
+                  num_deputados = num_deputados,
+                  num_votacoes = num_votacoes,
+                  num_votos = num_votos)
 
-
-\end{knitrout}
+kable(data,
+      row.names = FALSE,
+      col.names = c("Legislatura", "Deputados Federais", "Votações", "Votos"))
+@
 \caption{Número de deputados federais e votações por legislatura}
 \label{table:estatisticas-legislaturas}
 \end{table}
@@ -150,8 +134,8 @@ Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
 deputados federais e votações por legislatura. Consideramos deputados federais
 todos parlamentares que participaram de alguma votação na Câmara dos Deputados
 no período, por isso o número é maior do que o número de cadeiras. Por
-legislatura, temos em média 623,80 deputados e 477,80
-votações com 332,04 votos cada.
+legislatura, temos em média \Sexpr{mean(num_deputados)} deputados e \Sexpr{mean(num_votacoes)}
+votações com \Sexpr{mean(num_votos) / mean(num_votacoes)} votos cada.
 
 \section{Componentes}
 

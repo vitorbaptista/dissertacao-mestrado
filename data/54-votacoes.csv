@@ -1,0 +1,456 @@
+id,id_sessao,proposicao_id,data,resumo,obj_votacao
+76,4212,491974,2011-02-15 21:09:00,Aprovado o Requerimento. Sim: 391; não:22; abstenção: 3; total: 416.,URGÊNCIA PARA O PL 382/2011
+273,4215,491872,2011-02-16 00:17:00,Mantida a expressão. Sim: 350; não:117; abstenção: 2; total: 469.,"DVS - Bloco PvPps - EXPR: ""por meio de decreto"" - ART. 3º DO PL 382/2011 (...)"
+271,4214,491872,2011-02-16 22:38:00,Rejeitada a Emenda de Plenário de n.º 1. Sim: 106; não: 376; abstenção: 7; total: 489.,DVS - PSDB - EMENDA Nº 1
+272,4214,491872,2011-02-16 23:27:00,Rejeitada a Emenda de Plenário de n.º 22. Sim: 120; não: 361; abstenção: 11; total: 492.,DVS - DEM - EMENDA Nº 22
+485,4219,485274,2011-02-22 17:36:00,Rejeitado o Requerimento. Sim: 2; não: 269; abstenção:4; total: 275.,REQUERIMENTO DE RETIRADA DE PAUTA
+486,4219,485274,2011-02-22 19:20:00,Rejeitado o Requerimento. Sim: 5; não: 282; abstenção: 3; total: 290.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 1 SESSÃO
+487,4220,485274,2011-02-22 20:45:00,Rejeitado o Requerimento. Sim: 14; não: 309; abstenção: 02; total: 325.,REQUERIMENTO DE RETIRADA DE PAUTA
+955,4221,485275,2011-02-23 17:01:00,Rejeitado o Requerimento. Não: 276; abstenção: 3; total: 279.,REQUERIMENTO DE RETIRADA DE PAUTA
+1042,4251,485758,2011-04-05 17:02:00,Rejeitado o Requerimento. Sim: 07; não: 248; abstenção: 02; total: 257.,REQUERIMENTO DE RETIRADA DE PAUTA
+1043,4251,485758,2011-04-05 19:11:00,Rejeitado o Requerimento. Sim: 12; não: 298; abstenção: 04;  total: 314.,REQUERIMENTO DE CONCESSÃO DE PRAZO
+1044,4252,485758,2011-04-05 20:25:00,Rejeitado o Requerimento. Sim 07; não: 267; abstenção: 04; total: 278.,REQUERIMENTO DE RETIRADA DE PAUTA
+1045,4252,485758,2011-04-05 22:14:00,,REQUERIMENTO DE ENCERRAMENTO DA DISCUSSÃO E ENCAMINHAMENTO
+1046,4253,485758,2011-04-06 17:10:00,Mantida a expressão. Sim: 213; não: 68; total: 281.,"DVS - PSDB - EXPR. ""autoriza... ETAV"" CONST. DO ART. 1º DO PLV"
+1047,4253,485758,2011-04-06 19:06:00,Mantido o art. 23 do Projeto de Lei de Conversão. Sim: 203; não: 68; total: 271.,DVS - DEM - ART. 23 DO PLV
+1739,4254,491963,2011-04-06 19:54:00,Aprovado o Requerimento. Sim: 336; não: 24; abstenção: 03; total: 363.,URGÊNCIA PARA PDC Nº 2600/2010
+1232,4254,476031,2011-04-06 20:57:00,Rejeitado o Requerimento. Sim: 11; não: 286; abstenção: 02; total: 299.,REQUERIMENTO DE RETIRADA DE PAUTA
+1233,4254,476031,2011-04-06 22:17:00,Rejeitado o Requerimento. Sim: 09; não: 270; abstenção: 02; total: 281.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 1 SESSÃO
+1234,4254,476031,2011-04-06 23:31:00,"Aprovado o Projeto de Decreto Legislativo n.º 2.600, de 2010. Sim: 285; não: 54; total: 339.",PROJETO DE DECRETO LEGISLATIVO
+440,4261,487868,2011-04-13 15:57:00,Mantido o texto. Sim: 333; não: 41; abstenção: 07; total: 381.,DVS - PT - § 7º DO ART. 11-B CONSTANTE DO ART. 1º DO PLV
+441,4261,487868,2011-04-13 17:50:00,Suprimido o artigo: Sim: 156; não: 220; abstenção: 04; total: 380.,DVS - PV - ART. 2º  DO  PLV
+1928,4272,487966,2011-04-26 18:22:00,Mantido o texto. Sim: 272; não:72; total: 344.,DVS - PSDB -  ART. 5º DO PLV
+1512,4273,488607,2011-04-27 18:41:00,Rejeitado o Requerimento. Sim:55; não: 339; abstenção:02; total: 396.,REQ. DE CONCESSÃO DE PRAZO POR 1 SESSÃO
+1530,4280,488582,2011-05-03 22:47:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 399; não: 18; abstenção: 1; total: 418.
+DCD 04/05/11 PÁG 21338 COL 02.",URGÊNCIA PARA O PL Nº 1876/1999
+200,4287,490387,2011-05-10 16:50:00,Rejeitado o Requerimento. Sim: 17; não: 263; abstenção: 04; total: 284.,REQUERIMENTO DE RETIRADA DE PAUTA
+238,4292,17338,2011-05-11 00:00:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+826,4299,490375,2011-05-18 13:48:00,Rejeitado o Requerimento. Sim: 11; não: 269; abstenção: 03; total: 283.,REQUERIMENTO DE RETIRADA DE PAUTA
+239,4305,17338,2011-05-24 20:52:00,"Aprovada a Emenda Substitutiva Global de Plenário n.º 186, com parecer favorável, ressalvados os destaques. Sim: 410; não: 63; abstenção: 01; total: 474.",EMENDA SUBSTITUTIVA GLOBAL DE PLENÁRIO Nº 186
+240,4305,17338,2011-05-24 23:50:00,Aprovada a Emenda de Plenário n.º 164. Sim: 273; não: 182; abstenção: 02; total: 457.,DVS - PMDB - EMENDA Nº 164
+827,4308,490375,2011-05-25 16:25:00,Mantido o texto. Sim: 270; não: 101; abstenção: 2; total: 373.,DVS - PSDB - ART. 20 DO PLV
+828,4308,490375,2011-05-25 17:15:00,Rejeitada a Emenda. Sim: 94; não: 257; total: 351.,DVS - PV-PPS - EMENDA 64
+829,4308,490375,2011-05-25 18:07:00,Mantido o artigo. Sim: 265; não: 118; total: 383.,DVS - DEM - ART. 24 DO PLV
+356,4325,507762,2011-06-08 20:42:00,Rejeitado o Requerimento. Sim: 60; não: 293; abstenção: 8; total: 361.,MOÇÃO
+225,4331,495378,2011-06-15 18:05:00,Rejeitado o Requerimento. Sim: 07; não: 271; abstenção: 01; total: 279.,REQUERIMENTO DE RETIRADA DE PAUTA
+226,4332,495378,2011-06-15 20:47:00,Rejeitado o Requerimento. Sim: 07; não: 262; abstenção:02; total: 271.,REQUERIMENTO DE RETIRADA DE PAUTA
+227,4332,495378,2011-06-15 23:25:00,"Aprovada a Medida Provisória n.º 527, de 2011, na forma do Projeto de Lei de Conversão apresentado, com alterações, ressalvados os destaques. Sim: 272, não: 76; abstenção: 03; total: 351.
+DCD do dia 16/06/11 PAG 30802 COL 02.",PROJETO DE LEI DE CONVERSÃO
+228,4342,495378,2011-06-28 18:59:00,Mantido o texto. Sim: 264; não: 88; total: 352.,DVS - DEM - CAPÍTULO I DO PLV
+229,4342,495378,2011-06-28 20:23:00,Mantido o texto. Sim: 310; não: 96; abstenção: 02; total: 408.,DVS - PSDB - § 3º DO ART. 8º DO PLV
+230,4343,495378,2011-06-28 21:24:00,Mantido o texto. Sim: 247; não: 83; abstenção: 02; total: 332.,DVS - PSDB - ART. 9º DO PLV
+231,4343,495378,2011-06-28 21:48:00,Mantido o texto. Sim: 238; não: 75; abstenção: 01; total: 314.,"DVS - PSDB - EXPRESSÃO ""básico e"" § 1º DO ART. 9º DO PLV"
+232,4343,495378,2011-06-28 22:31:00,Mantido o texto. Sim: 334; não: 08; abstenção: 03; total: 345.,DVS - DEM - INC. IV DO ART. 24d DA LEI 10.683/03 (ART. 1º DA MP)
+1483,4350,496290,2011-07-05 18:20:00,Rejeitada a Emenda. Sim: 79; não: 229; total: 308.,DVS - PSDB - EMENDA Nº 3
+1484,4350,496290,2011-07-05 19:31:00,Rejeitada a Emenda. Sim: 99; não: 260; abstenção: 01; total: 360.,DVS - DEM - EMENDA Nº 34
+2401,4364,499323,2011-08-03 18:01:00,Rejeitado o Requerimento. Sim: 02; não: 268; abstenção: 01; total: 271.,REQUERIMENTO DE RETIRADA DE PAUTA
+2402,4364,499323,2011-08-03 19:53:00,Rejeitado o Requerimento. Sim: 02; não: 297; total: 299.,REQ. DE CONCESSÃO DO PRAZO DE 1 SESSÃO P/ VOTAÇÃO DO PLV
+2403,4365,499323,2011-08-03 20:51:00,Rejeitado o Requerimento. Sim: 2; não: 318; abstenção: 1; total: 321.,REQUERIMENTO DE RETIRADA DE PAUTA
+1835,4372,422002,2011-08-11 11:35:00,,PROJETO DE DECRETO LEGISLATIVO
+1389,4376,500056,2011-08-16 19:05:00,Rejeitado o Requerimento. Sim: 06; nao: 246; abstenção: 10; total: 262.,REQUERIMENTO DE RETIRADA DE PAUTA
+1390,4378,500056,2011-08-17 17:04:00,Rejeitado o Requerimento. Sim: 4; não: 256; abstenção: 10; total: 270.,REQUERIMENTO DE RETIRADA DE PAUTA
+1391,4378,500056,2011-08-17 19:15:00,Aprovado o Requerimento. Sim: 316; não: 11; abstenção: 3; total: 330.,REQUERIMENTO DE ENCERRAMENTO DA DISCUSSÃO E ENCAMINHAMENTO
+1392,4379,500056,2011-08-17 21:38:00,"Mantido o texto. Sim: 218, não: 151; abstenção: 06; total: 375.",DVS - PSDB - ART. 12 DO PLV
+1393,4383,500056,2011-08-23 18:44:00,Mantido o texto. Sim: 265; não: 128; abstenção: 07; total: 400.,"DVS - DEM - § 3º DO ART. 1º DA MP, CONSTANTE DO ART. 12 DO PLV"
+1394,4383,500056,2011-08-23 19:56:00,,"DVS - PV-PPS - INC. II DO § 3º DO ART. 1º, CONST. DO ART. 12 DO PLV"
+82,4384,514832,2011-08-23 20:43:00,Rejeitado o Requerimento. Sim: 111; não: 286; abstenção: 01; total: 398.,CONVOCAÇÃO DO MINISTRO DA CGU
+1516,4385,501560,2011-08-24 18:08:00,Rejeitado o Requerimento. Sim: 1; não: 283; abstenção: 1; total: 285.,REQUERIMENTO DE RETIRADA DE PAUTA
+1517,4386,501560,2011-08-24 20:38:00,Rejeitado o Requerimento. Sim: 4; não: 286; abstenção: 1; total: 291.,REQUERIMENTO DE RETIRADA DE PAUTA
+1585,4391,495215,2011-08-30 19:13:00,,CONTRA A DEPUTADA JAQUELINE RORIZ - PMN/DF
+1552,4394,500079,2011-08-31 18:18:00,Aprovada a Emenda de Plenário n.º 28. Sim: 198; não :170; abstenção: 02; total: 370.,DVS - DEM - EMENDA Nº 28
+1917,4394,515433,2011-08-31 19:50:00,Aprovado o Projeto de Lei Complementar n.º 87/11. Sim: 316; total: 316.,PROJETO DE LEI COMPLEMENTAR
+1183,4395,497616,2011-09-01 11:32:00,,PROJETO DE DECRETO LEGISLATIVO
+2354,4414,511029,2011-09-20 21:07:00,"Aprovado o Substitutivo adotado pela Comissão Especial, ressalvados os destaques. Sim: 240; não: 112; abstenção: 4; total: 356.",SUBSTITUTIVO DA COMISSÃO ESPECIAL
+2397,4417,394079,2011-09-21 18:33:00,"Suprimido o texto. Sim: 76, não: 355; abstenção: 4; total: 435.",DVS - DEM - ART. 16 DA SUBEMENDA SUBSTITUTIVA GLOBAL DA CFT
+607,4417,500380,2011-09-21 19:26:00,Aprovado o Requerimento. Sim: 351; não: 42; abstenção: 11; total: 404.,URGÊNCIA PARA APRECIAÇÃO DO PL Nº 7376/2010
+39,4433,513172,2011-10-05 19:04:00,Rejeitada a emenda. Sim: 81; não: 252; abstenção: 01; total: 334.,DVS - PSDB - EMENDA Nº 8
+2143,4434,260404,2011-10-05 22:44:00,Rejeitada a Emenda. Sim: 106; não: 181; total: 287.,DVS - PSDB - EMENDA Nº 18
+1466,4439,501821,2011-10-11 12:51:00,,PROJETO DE DECRETO LEGISLATIVO
+780,4445,513514,2011-10-19 18:39:00,Mantido o texto. Sim: 267; não: 88; abstenção: 3; total: 358.,"DVS - DEM - ART. 3º-A DA LEI 9933/99, ART. 13 DO PLV"
+2054,4453,513512,2011-10-26 21:16:00,Mantido o texto. Sim: 213; não: 85; não: 2; total: 300.,DVS - PPS - ART. 46 DO PLV
+1467,4454,501821,2011-10-27 11:24:00,,PROJETO DE DECRETO LEGISLATIVO
+1468,4457,501821,2011-11-01 12:04:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1747,4465,513496,2011-11-08 00:37:00,Aprovado o destaque de preferência para a PEC 61/2011. Sim: 358; não: 13; abstenção: 01; total: 372.,PT - DESTAQUE DE PREFERÊNCIA PARA VOTAÇÃO DA PEC Nº 61/2011
+1748,4465,513496,2011-11-08 01:13:00,Rejeitada a Emenda Modificativa nº 1. Sim: 12; não: 353; abstenção: 01; total: 366.,EMENDA Nº 1
+1749,4465,513496,2011-11-08 01:31:00,"Aprovada a Proposta de Emenda à Constituição n.º 61/11, ressalvados os destaques. Sim: 369; não: 44; total: 413.",PROPOSTA DE EMENDA À CONSTITUIÇÃO
+1750,4465,513496,2011-11-08 02:02:00,Mantido o texto. Sim: 347; não: 43; total: 390.,DVS - DEM - CAPUT DO ART. 76 DO ADCT CONST. DO ART. 1º DA PEC 61/2011
+1751,4465,513496,2011-11-08 02:21:00,Rejeitada a expressão constante da Emenda n.º 2. Sim: 46; não: 333; abstenção: 01; total: 380.,"DVS - DEM - EXP. ""EM 20% NO ANO DE 2012,15% EM 2013, 10% EM 2014 E 5%  2015."
+1743,4464,513496,2011-11-08 18:50:00,Rejeitado o Requerimento. Sim: 10; não: 299; abstenção: 02; total: 311.,REQUERIMENTO DE RETIRADA DE PAUTA
+1744,4464,513496,2011-11-08 20:24:00,Rejeitado o Requerimento. Sim: 09; não: 298; abstenção: 01; total: 308.,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 5 SESSÕES
+1745,4464,513496,2011-11-08 21:37:00,Rejeitado o Requerimento. Sim: 07; não: 291; abstenção: 01; total: 299.,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 4 SESSÕES
+1746,4465,513496,2011-11-08 23:19:00,Rejeitado o Requerimento. Sim: 09; não: 282; abstenção: 02; total: 293.,REQUERIMENTO DE RETIRADA DE PAUTA
+1752,4467,513496,2011-11-09 15:40:00,Rejeitado o Requerimento. Sim: 13; não: 261; abstenção: 01; total: 275.,REQUERIMENTO DE RETIRADA DE PAUTA
+1753,4467,513496,2011-11-09 16:39:00,Rejeitada a expressão constante da Emenda nº 4. Sim: 43; não: 267; total: 310.,"DVS - PSDB - EXP. ""ATÉ 31 DE DEZEMBRO DE 2013"" EMENDA 4 SUB ART. 76 PEC"
+1754,4467,513496,2011-11-09 17:27:00,Mantida a expressão. Sim: 344; não: 53; abstenção: 02; total: 399.,"DVS - PSDB - EXPRESSÃO ""CONTRIBUIÇÕES SOCIAIS"""
+1755,4467,513496,2011-11-09 18:30:00,Mantido o texto. Sim: 347; não: 56; abstenção: 01; total: 404.,"DVS - PSDB - EXPRESSÃO ""JÁ INSTITUÍDOS"""
+1756,4468,513496,2011-11-09 20:13:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1757,4468,513496,2011-11-09 20:44:00,Rejeitado o dispositivo constante da Emenda nº 1. Sim: 68; não: 356; abstenção: 01; total: 425.,DVS - PV/PPS - §  4º DO ART. 76 CONSTANTE DA EMENDA 1
+1758,4479,513496,2011-11-22 15:59:00,Rejeitado o Requerimento. Sim: 11; não: 264; total: 275.,REQUERIMENTO DE RETIRADA DE PAUTA
+1759,4479,513496,2011-11-22 17:49:00,Rejeitado o Requerimento. Sim: 10; não: 262; abstenção: 01; total: 273.,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+1760,4479,513496,2011-11-22 18:32:00,"Aprovada a Proposta de Emenda à Constituição nº 61, de 2011, em segundo turno, ressalvados os destaques. Sim: 364; não: 61; abstenção: 02; total: 427.",VOTAÇÃO EM SEGUNDO TURNO
+1761,4480,513496,2011-11-22 20:12:00,"Mantida a expressão ""contribuições sociais"", constante do caput do art. 76 do ADCT, objeto do Destaque para votação em separado da bancada do PSDB. Sim: 337; não: 49; total: 386","DVS - PSDB - EXPRESSÃO ""CONTRIBUIÇÕES SOCIAIS"" CAPUT ART. 76"
+1762,4480,513496,2011-11-22 20:55:00,"Mantida a expressão ""e de intervenção de domínio econômico"", constante do caput do art. 76 do ADCT, objeto do Destaque para votação em separado da bancada do DEM. Sim: 344; não:42; abstenção:01; total: 387.","DVS - DEM- EXP "" E DE INTERVENÇÃO DE DOMINIO ECONÔMICO"" CAP ART. 76"
+1763,4480,513496,2011-11-22 21:18:00,"Mantida a expressão ""já instituídos"", constante do caput do art. 76 do ADCT, objeto do Destaque para votação em separado da bancada do PSDB. Sim:348; não: 35; total: 383.","DVS - PSDB - EXPRESSÃO ""JÁ INSTITUIDOS  "" CAPUT  ART. 76"
+1764,4480,513496,2011-11-22 21:30:00,"Mantida a expressão ""ou que vierem a ser criados até a referida data, seus adicionais e respectivos acréscimos legais"", constante do caput do art. 76 do ADCT, objeto do Destaque para votação em separado da bancada do PPS. Sim: 344; não: 37; total: 381.","DVS - PPS - EXP "" OU QUE VIEREM A SER CRIADOS... LEGAIS "" CAPUT ART. 76"
+1765,4480,513496,2011-11-22 21:40:00,"Mantida a expressão ""ou que vierem a ser criados até a referida data"", constante do caput do art. 76 do ADCT, objeto do Destaque para votação em separado da bancada do DEM. Sim: 356; não:40; total: 396.","DVS -DEM- EXP ""OU QUE VIEREM A SER CRIADOS...DATA""   CAPUT ART. 76"
+1507,4481,525391,2011-11-23 18:36:00,,RECURSO
+1285,4487,357094,2011-11-29 19:02:00,Rejeitado o Requerimento. Sim: 27; não: 306; abstenção: 01; total: 334.,REQUERIMENTO DE RETIRADA DE PAUTA
+1286,4487,357094,2011-11-29 20:10:00,"Aprovado o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 98, de 2007, em primeiro turno, ressalvados os destaques. Sim: 395; não: 21; abstenção: 04; total: 420.",VOTAÇÃO EM 1º TURNO DO SUBSTITUTIVO DA COMISSÃO ESPECIAL
+1287,4487,357094,2011-11-29 20:52:00,Mantido o texto. Sim: 342; não: 51; abstenção: 01; total: 394.,"DVS -PDT-EXP:"" SALVO NA ETAPA DE...LASER"", ART. 150, VI, e / ART.1º SUBST."
+1288,4502,357094,2011-12-13 18:42:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 98, de 2007. Sim: 393; não: 06; abstenção: 01; total: 400.",SEGUNDO TURNO
+1086,4502,463268,2011-12-13 19:29:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 445, de 2009. Sim: 405; abstenção: 01; total: 406.",PRIMEIRO TURNO
+1887,4506,401376,2011-12-14 19:03:00,Aprovada a Emenda Aglutinativa Substitutiva Global. Sim: 401; total: 401.,EMENDA AGLUTINATIVA  SUBSTITUTIVA GLOBAL  DE PLENÁRIO Nº 1
+1888,4522,401376,2012-02-14 19:52:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição n.º 270, de 2008. Sim: 428; não: 03; abstenção: 01; total: 432.",SEGUNDO TURNO
+49,4531,366851,2012-02-28 20:26:00,"Aprovada a Subemenda Substitutiva Global oferecida pelo Relator da Comissão de Seguridade Social e Família, ressalvados os destaques. Sim: 318; não: 134; abstenção: 02; total: 454.",SUBEMENDA SUBSTITUTIVA GLOBAL DE PLENÁRIO
+50,4533,366851,2012-02-29 17:59:00,Rejeitado o art. 4º do Projeto original e mantido o texto da Subemenda Substitutiva Global. Sim: 41; não: 273; abstenção: 11; total: 325.,DVS - PSDB - ART. 4º DO PROJETO ORIGINAL (E SEUS CORRESPONDENTES.)...
+51,4533,366851,2012-02-29 18:48:00,"Rejeitada a Emenda nº 43, objeto do Destaque para votação em separado da bancada do PSDB. Sim: 55; não: 292; abstenção: 04; total: 351.",DVS - PSDB - EMENDA 43
+52,4533,366851,2012-02-29 19:09:00,Rejeitada a Emenda nº 26. Sim: 11; não: 275; abstenção:02; total: 388.,DVS - DEM - EMENDA 26
+1087,4540,463268,2012-03-06 20:06:00,"Aprovada a Proposta de Emenda à Constituição nº 445, de 2009. Sim: 407; total: 407.",SEGUNDO TURNO
+1845,4542,536066,2012-03-07 19:57:00,,REQUERIMENTO DE URGÊNCIA PARA O PL Nº 2.330/2011
+1184,4548,527728,2012-03-14 19:00:00,Rejeitada a Emenda nº 19. Sim: 177; não: 192; total: 369.,DVS - PSD - EMENDA 19
+961,4555,435878,2012-03-20 18:57:00,Rejeitado o Requerimento. Sim: 06; não: 283; abstenção: 04; total: 293.,REQUERIMENTO DE RETIRADA DE PAUTA
+2169,4555,343615,2012-03-20 20:07:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 307; não: 18;  abstenção: 04; total: 329.
+DCD do dia 21/03/12 PÁG 7584 COL 02.",REQUERIMENTO DE URGÊNCIA
+447,4556,520245,2012-03-21 17:12:00,Prejudicado o Requerimento. Sim: 08; não: 135; abstenção: 12; total: 155.,REQUERIMENTO DE RETIRADA DE PAUTA
+164,4562,131591,2012-03-27 17:56:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 153, de 2003. Sim: 396; não: 02; abstenção: 01; total: 399.",PRIMEIRO TURNO
+448,4564,520245,2012-03-28 21:17:00,Rejeitada a Emenda. Sim: 178; não: 237; abstenção: 03; total: 418.,DVS - PSDB/PSC/PvPps... -  EMENDA DE PLENÁRIO Nº 1
+449,4565,520245,2012-03-28 22:03:00,Rejeitada a Emenda. Sim: 161; não: 229; abstenção: 01; total: 391.,DVS - PSC - EMENDA Nº 46
+1766,4575,527723,2012-04-10 18:04:00,Suprimida a expressão. Sim: 81; não: 246; abstenção: 02; total: 329.,"DVS - DEM - expressão ""medicamentos"" Art. 8º PLV"
+165,4576,131591,2012-04-10 18:50:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 153, de 2003. Sim: 406; não: 01; abstenção: 02; total: 409.",2º TURNO
+818,4577,528165,2012-04-11 19:48:00,Suprimida a expressão. Sim: 169; não: 231; total: 400.,"DVS - PT - exp. ""provenientes...público"", do Art. 1º do PLV"
+819,4578,528165,2012-04-11 20:23:00,Rejeitada a Emenda. Sim: 74; não: 302; total: 376.,DVS - PSDB - Emenda nº 9
+1435,4586,274311,2012-04-18 18:15:00,Aprovada a Subemenda Substitutiva oferecida pelo Relator da Comissão de Finanças e Tributação. Sim: 354; Não: 02; Abstenção: 01; Total: 357.,SUBEMENDA SUBSTITUTIVA DE PLENÁRIO
+241,4595,17338,2012-04-25 18:05:00,"Rejeitados os dispositivos do Substitutivo do Senado Federal, para os quais o relator deu parecer pela rejeição, ressalvados os destaques. Sim: 184; não: 274; abstenção: 02; total: 460.",SUBSTITUTIVO DO SF - DISPOSITIVOS COM PARECER PELA REJEIÇÃO
+242,4596,17338,2012-04-25 21:06:00,Rejeitado o dispositivo. Sim: 184; não: 228; abstenção: 03; total: 415.,"DVS - PT - § 7º DO ART. 62, P/ FINS DE SUA MANUTENÇÃO"
+983,4609,533505,2012-05-09 18:25:00,Rejeitada a Emenda nº 15. Sim: 183; não: 188; abstenção: 01; total: 372.,DVS - PSDB - EMENDA 15
+2378,4615,533535,2012-05-15 17:48:00,"Aprovado, em apreciação preliminar, o Parecer do Relator, na parte em que manifesta opinião favorável quanto ao atendimento dos pressupostos constitucionais de relevância e urgência e de sua adequação financeira e orçamentária, nos termos do artigo 8º da Resolução nº 01, de 2002-CN. Sim: 229; não: 47; abstenção: 03; total: 279.",PARECER DO RELATOR PELA ADMISSIBILIDADE
+2298,4617,304008,2012-05-15 20:32:00,,SUBSTITUTIVO DA COMISSÃO ESPECIAL - PRIMEIRO TURNO
+1529,4619,528091,2012-05-16 18:47:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 287; não: 120; total: 407.,REQUERIMENTO DE URGÊNCIA
+1173,4625,544136,2012-05-22 17:33:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 294; Não: 14; Total: 308.,REQUERIMENTO DE URGÊNCIA
+27,4625,36162,2012-05-22 18:35:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 438, de 2001. Sim: 360; não: 29; abstenção: 25; total: 414.",SEGUNDO TURNO
+144,4632,325847,2012-05-29 17:40:00,Aprovado o Substitutivo adotado pela Comissão de Finanças e Tributação ao Projeto de Lei Complementar nº 362/2006. Sim: 299; Abstenção: 01; Total: 300.,SUBSTITUTIVO DA CFT AO PLP 362/2006
+1725,4634,290677,2012-05-30 17:48:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial. Sim: 361; Não: 1; Total: 362.",PRIMEIRO TURNO - SUBSTITUTIVO DA COMISSÃO ESPECIAL
+1297,4639,535959,2012-06-05 17:52:00,Rejeitado o Requerimento. Sim: 7; não: 263; abstenção: 01; total: 271.,REQUERIMENTO DE RETIRADA DE PAUTA
+1298,4645,535959,2012-06-12 17:26:00,Rejeitado o Requerimento. Sim: 12; não: 251; abstenção: 2; total: 265.,REQUERIMENTO DE RETIRADA DE PAUTA
+1299,4645,535959,2012-06-12 19:09:00,Rejeitado o Requerimento. Sim: 9; não: 261; abstenção: 3; Total: 273.,REQUERIMENTO DE VOTAÇÃO ARTIGO POR ARTIGO
+1300,4645,535959,2012-06-12 19:53:00,Mantido o texto. Sim: 221; não: 150; abstenção: 3; total: 374.,DVS - PSDB - ART. 28 DO PLV
+605,4648,494004,2012-06-13 18:11:00,Aprovada a Emenda oferecida pelo Relator da Comissão de Constituição e Justiça e de Cidadania. Sim: 236; não: 22; total: 258.,EMENDA DO RELATOR DA CCJC
+1726,4658,290677,2012-06-26 17:42:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 416 de 2005. Sim: 326; não:1; total: 327.",SEGUNDO TURNO
+2350,4660,537339,2012-06-27 18:54:00,"Prejudicado o Requerimento por falta de ""quorum"" (OBSTRUÇÃO).  Sim: 146; não: 35; abstenção: 6; total: 187.",REQUERIMENTO DE RETIRADA DE PAUTA
+2018,4664,542431,2012-07-03 17:05:00,Rejeitado o Requerimento. Sim: 2; Não: 262; Total: 264.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+2019,4664,542431,2012-07-03 18:59:00,Rejeitado o Requerimento. Sim: 1; não: 281; total: 282.,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+2020,4665,542431,2012-07-03 20:37:00,Rejeitado o Requerimento. Sim: 6; não: 256; total: 262.,REQUERIMENTO DE RETIRADA DE PAUTA
+23,4666,543448,2012-07-04 13:59:00,Rejeitado o Requerimento. Não: 262; total: 262.,REQUERIMENTO DE RETIRADA DE PAUTA
+24,4667,543448,2012-07-04 17:21:00,Rejeitado o Requerimento. Sim: 3; não: 253; abstenção: 1; total: 257.,REQUERIMENTO DE RETIRADA DE PAUTA
+25,4667,543448,2012-07-04 19:11:00,Rejeitada a Emenda nº 17. Sim: 70; não: 195; abstenção: 1; total: 266.,DVS - PSDB - EMENDA Nº 17
+110,4675,540142,2012-07-11 11:11:00,,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+111,4675,540142,2012-07-11 13:46:00,,REQUERIMENTO PARA  DISCUSSÃO ARTIGO POR ARTIGO
+112,4676,540142,2012-07-11 16:53:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+113,4676,540142,2012-07-11 19:10:00,,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+114,4677,540142,2012-07-12 11:56:00,Prejudicado o Requerimento. Sim: 3; não:47; total: 50.,REQUERIMENTO DE RETIRADA DE PAUTA
+115,4680,540142,2012-07-16 18:53:00,Rejeitado o Requerimento. Sim: 3; Não: 253; Abstenção:1; Total: 257.,REQUERIMENTO DE RETIRADA DE PAUTA
+116,4680,540142,2012-07-16 20:23:00,"Aprovada a Medida Provisória nº 563/2012, na forma do Projeto de Lei de Conversão nº 18/2012 adotado pela Comissão Mista, com a retificação apresentada pela Comissão, ressalvados os destaques. Sim: 299; total: 299.",PROJETO DE LEI DE CONVERSÃO
+419,4711,544463,2012-09-04 20:49:00,Mantido o dispositivo (sim: 231; não: 97; abstenção: 1; total: 330).,DVS - PSDB - ART. 14 DO PLV
+245,4713,545925,2012-09-05 17:14:00,Prejudicado o Requerimento. (Sim: 6; não: 159; abstenção: 5; total: 170).,REQUERIMENTO DE RETIRADA DE PAUTA
+246,4722,545925,2012-09-18 17:57:00,Rejeitado o Requerimento. Sim: 5; não: 250; abstenção: 2; total: 257.,REQUERIMENTO DE RETIRADA DE PAUTA
+247,4723,545925,2012-09-18 21:26:00,Rejeitada a Emenda. Sim: 61; não: 209; abstenção:1; total: 271.,DVS - DEM - EMENDA 533
+1807,4753,549909,2012-10-30 18:12:00,Rejeitado o Requerimento. Sim: 159; não: 179; abstenção: 2; total: 340.,REQUERIMENTO DE RETIRADA DE PAUTA
+1808,4754,549909,2012-10-31 14:56:00,,DVS - PT - PREFERÊNCIA P/ VOT. DA MP 574/12 SOBRE O PLV
+1809,4755,549909,2012-10-31 16:58:00,,"DVS - PT - EXPR.  ""ESTENDENDO-SE TAMBÉM... 2010"" ART. 2º DO PLV"
+342,4756,508967,2012-10-31 17:56:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 284; não: 14; abstenção: 1; total: 299.,URGÊNCIA PARA O PLP Nº 579/2010
+1850,4756,479328,2012-10-31 18:26:00,Aprovada a Subemenda Substitutiva apresentada pelo Relator da Comissão de Turismo e Desporto. Sim: 304; não: 13; abstenção: 2; total: 319.,SUBEMENDA SUBSTITUTIVA GLOBAL DE PLENÁRIO
+2351,4760,537339,2012-11-06 15:32:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 277; não: 47; abstenção: 1; total: 325.
+DCD do dia 07/11/12 PÁG 35507 COL 02.",REQ. URGÊNCIA P/ PL Nº 2.565/11 DO SENADO FEDERAL
+2203,4761,524645,2012-11-06 19:10:00,"Aprovado o destaque de preferência para votação do PL 2.565/2011, do Senado Federal. Sim: 220; não: 211; abstenção: 1; total: 432.",DVS - DEM - PREFERÊNCIA P/ VOTAÇÃO DO PL 2.565/2011
+2204,4761,524645,2012-11-06 20:04:00,"Aprovado o Projeto de Lei nº 2.565/2011, ressalvados os destaques. Sim: 286; não: 124; total: 410.",PROJETO DE LEI
+2205,4762,524645,2012-11-06 20:53:00,Mantido o texto. Sim: 309; não: 51; abstenção: 8;  total: 368.,DVS - PMDB - ART. 3º
+1190,4763,529011,2012-11-07 12:22:00,Rejeitado o Requerimento. Sim: 5; não: 263; abstenção: 2; total: 270.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+1851,4764,497188,2012-11-07 17:12:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 297; não: 57; total: 354.
+DCD do dia 08/11/12 PÁG 36023 COL 01.",URGÊNCIA PARA APRECIAÇÃO DO PL Nº 865/2011
+904,4764,496725,2012-11-07 19:02:00,"Aprovado o Substitutivo adotado pela Comissão de Trabalho, de Administração e Serviço Público ao Projeto de Lei nº 865/2011, ressalvados os destaques. Sim: 300; não: 45; abstenção: 1; total: 346.",SUBSTITUTIVO DA CTASP
+1706,4772,553247,2012-11-13 17:36:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1939,4778,552689,2012-11-20 17:58:00,Mantido o art. 7º do Projeto de Lei de Conversão. Sim: 195; não: 79; abstenção: 3; total: 277.,DVS - PSDB -  SUPRESSÃO DO ART. 7º DO PLV
+1182,4780,34462,2012-11-20 21:09:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1370,4781,473496,2012-11-21 15:01:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 478/2010. Sim: 359; não: 2; total: 361.",PRIMEIRO TURNO
+1705,4782,529884,2012-11-21 16:27:00,"Aprovado, por unanimidade, o Projeto de Lei Complementar nº 114, de 2011. Sim: 289; total: 289.",PROJETO DE LEI COMPLEMENTAR
+1540,4790,555993,2012-11-28 20:33:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 269; não: 1 abstenção:1; total:271.,URGÊNCIA PARA O  PL 4367/12
+434,4790,561593,2012-11-28 20:47:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 291; não:1; total: 292.,URGÊNCIA PL 2205/11
+1556,4790,561594,2012-11-28 20:57:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim 276; não: 3; abstenções: 2; total: 281.,URGÊNCIA PL 4365/11
+1371,4796,473496,2012-12-04 18:55:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 478, de 2010. Sim: 347; não: 2; abstenção: 2; total: 351.",SEGUNDO TURNO
+1979,4796,554412,2012-12-04 19:41:00,Rejeitado o Requerimento de Urgência (Art. 155 do RICD). Sim: 145; não: 233; abstenção: 6; total: 384.,URGÊNCIA PARA O PL Nº 2154/2011
+924,4808,555727,2012-12-12 20:42:00,Aprovada a Emenda nº 72. Sim: 257; não: 67; abstenção: 2; total: 326.,DVS PDT - EMENDA 72
+925,4808,555727,2012-12-12 22:15:00,Prejudicada a verificação da votação do destaque. Sim: 58; não: 157; total: 215.,DVS - PV/PPS - EMENDA 382
+926,4812,555727,2012-12-18 14:21:00,Rejeitada a Emenda. Sim: 70; não: 191; total: 261.,DVS - PV/PPS - EMENDA 382
+927,4812,555727,2012-12-18 15:14:00,Rejeitada a Emenda. Sim: 91; não: 172; não: 263.,DVS - DEM - EMENDA 135
+1143,4826,556332,2013-02-20 13:03:00,Rejeitado o Requerimento. Sim: 34; não: 228; abstenção: 1; total: 263.,REQUERIMENTO DE RETIRADA DE PAUTA
+1922,4827,565319,2013-02-20 19:11:00,,GARANTIA DE SEGURANÇA FEDERAL À SRA. YOANI SÁNCHES
+2160,4832,559275,2013-02-26 17:39:00,Rejeitada a Emenda nº 52. Sim: 119; não: 226; abstenção: 1; total: 346.,DVS - PSDB - EMENDA Nº 52
+2161,4832,559275,2013-02-26 19:18:00,Aprovada a Emenda n º 44. Sim: 209; não: 191; abstenção: 1; total: 401.,DVS - DEM - EMENDA Nº 44
+1041,4834,538366,2013-02-27 12:36:00,Rejeitado o Requerimento. Sim: 70; não: 265; total: 335.,REQUERIMENTO DE RETIRADA DE PAUTA
+1976,4836,522363,2013-02-28 11:07:00,"Prejudicado o Requerimento por falta de ""quorum"" (Obstrução). Sim: 4; não: 13; abstenção: 6; total: 23.",REQUERIMENTO DE RETIRADA DE PAUTA
+1699,4841,527704,2013-03-06 17:58:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 111, de 2011, ressalvado o destaque. Sim: 388; não: 3; abstenção: 1; total: 392.",SUBSTITUTIVO DA COMISSÃO ESPECIAL - 1º TURNO
+1700,4841,527704,2013-03-06 18:36:00,Rejeitado o dispositivo. Sim: 188; não: 208; abstenção: 4; total: 400.,DVS - PMDB - ART. 3º DO SUBSTITUTIVO
+2341,4842,555286,2013-03-06 20:10:00,,SUBS.  DA COMI. MISTA DE ORÇAMENTO E ADENDO - PLEN.
+792,4846,566744,2013-03-12 19:21:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 344; não: 6; abstenção: 6; total: 356.
+DCD de 13/03/13 PÁG 04413 COL 02.",REQUERIMENTO DE URGÊNCIA PARA O PL 7663/2010
+1831,4847,54307,2013-03-13 17:55:00,Rejeitado o Requerimento. Sim: 74; não: 330; abstenção: 10; total: 414.,REQUERIMENTO DE RETIRADA DE PAUTA
+1832,4847,54307,2013-03-13 19:17:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 544, de 2002. Sim: 347; não: 60; abstenção: 6; total: 413.",1º TURNO - SUBSTITUTIVO DA COMISSÃO ESPECIAL
+2,4853,559465,2013-03-19 19:47:00,Rejeitado o dispositivo. Sim: 209; não: 217; abstenção: 2; total: 428.,DVS - PT - ART. 9º DO PLV
+518,4854,564113,2013-03-20 17:05:00,Aprovada a Emenda nº 1. Sim: 192; não: 179; abstenção: 1; total: 372.,DVS - PSD - EMENDA  Nº 1
+2240,4854,568515,2013-03-20 18:46:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD).Sim: 356; não: 14; abstenção: 4; total: 374.
+DCD de 21/03/13 PÁG 05882 COL 01.",REQUER URGÊNCIA P/ O PRC  Nº 178/2013
+2427,4854,568421,2013-03-20 19:27:00,Rejeitado o Requerimento. Sim: 13; não: 299; abstenção: 4; total: 316.,REQUERIMENTO DE RETIDADA DE PAUTA
+2428,4855,568421,2013-03-20 20:55:00,Rejeitado o Requerimento. Sim: 7; não: 249; abstenção: 9; total: 265.,REQUERIMENTO DE RETIRADA DE PAUTA
+2429,4855,568421,2013-03-20 22:19:00,Rejeitado o Requerimento. Sim: 10; não: 241; abstenção: 5; total: 256.,REQ DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+2430,4855,568421,2013-03-20 23:55:00,,DVS - DEM - ART. 1º
+1319,4860,569181,2013-03-26 19:33:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 324; não: 1; total: 325.
+DCD de 27/03/13 PÁG 06752 COL 01.",URGÊNCIA PARA O PL Nº 6903/2006
+382,4865,347880,2013-04-02 22:03:00,,"DVS - BLOCO PR - ART. 5º, PARA APROVAÇÃO"
+1833,4866,54307,2013-04-03 17:36:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 544, de 2002. Sim: 371; não: 54; abstenção: 6; total: 431.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 2º TURNO
+1836,4867,422002,2013-04-04 10:52:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1243,4871,559706,2013-04-09 18:26:00,Suprimida a expressão. Sim: 120; não: 278; total: 398.,"DVS - PMDB - EXPR. ""NO PRAZO DE ATÉ 48 HORAS"", CONST. NO § 2º DO ART. 8º DO PLV"
+1719,4872,14245,2013-04-09 21:10:00,Prejudicado o requerimento por falta de quórum (Obstrução). Sim: 60; não: 120; abstenção: 10; total: 190.,REQUERIMENTO DE RETIRADA DE PAUTA
+1560,4874,556590,2013-04-10 21:18:00,"Rejeitado o Requerimento de Urgência (Art. 155 do RICD). Sim: 247, não: 20, abstenção: 9; total: 276 .
+DCD de 11/04/13 PÁG 09430 COL 02.",URGÊNCIA PARA O PL Nº 4470/2012
+2431,4874,568421,2013-04-10 22:00:00,"Prejudicada a verificação de votação por falta de ""quorum"" (OBSTRUÇÃO). Sim: 117; não: 1; abstenção 1; total:119.",DVS - DEM - ART. 1º
+519,4875,564113,2013-04-11 10:41:00,"Prejudicada a votação por falta de ""quórum"" (obstrução). Sim: 8; não: 2; abstenção: 2; total: 12.",EMENDAS DO SENADO FEDERAL
+2119,4880,571564,2013-04-16 21:51:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 259; não: 58; abstenção: 4; total: 321.
+DCD de 17/04/13 PÁG 10835 COL 02",URGÊNCIA PARA O PL Nº 4470/2012
+2021,4881,556261,2013-04-17 13:35:00,Rejeitado o Requerimento. Sim: 17; não: 239; abstenção: 2; total: 258.,REQUERIMENTO DE RETIRADA DE PAUTA
+2022,4881,556261,2013-04-17 15:53:00,,REQUERIMENTO DE ADIAMENTO DE DISCUSSÃO POR 2 SESSÃO.
+991,4882,293027,2013-04-17 16:59:00,Aprovado o Substitutivo do Senado Federal ao Projeto de Lei Complementar nº 277/2005. Sim: 361; abstenção: 01; total: 362.,SUBSTITUTIVO DO SENADO FEDERAL
+2023,4882,556261,2013-04-17 17:38:00,Rejeitado o Requerimento. Sim: 21; não: 248; abstenção: 2; total: 271.,REQUERIMENTO DE RETIRADA DE PAUTA
+2024,4882,556261,2013-04-17 19:24:00,"Aprovado o Requerimento. Sim: 271; não: 14; abstenção: 2, total: 287.",REQ. DE  ENCERRAMENTO DA DISCUSSÃO E DO ENCAMINHAMENTO
+2025,4882,556261,2013-04-17 20:50:00,,REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+2026,4883,556261,2013-04-17 22:18:00,,PROJETO DE LEI
+2027,4883,556261,2013-04-17 23:30:00,,DVS - PSDB - EMENDA Nº 2 DE PLENÁRIO
+2028,4887,556261,2013-04-23 17:29:00,Rejeitada a Emenda. Sim: 74; não: 188; total: 262.,DVS - PPS - EMENDA Nº 1 DE PLENÁRIO
+1580,4888,564522,2013-04-23 18:58:00,"Aprovado, em apreciação preliminar, o Parecer da Comissão Mista, na parte em que manifesta opinião favorável quanto ao atendimento dos pressupostos constitucionais de relevância e urgência e de sua adequação financeira e orçamentária, nos termos do artigo 8º da Resolução nº 01, de 2002-CN. Sim: 314; não: 11; abstenção: 4; total: 329.",PARECER DA C.M. P/ ATEND. DOS PRESSUPOSTOS CONSTITUCIONAIS
+169,4889,569182,2013-04-24 18:33:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 306; não: 3; abstenção: 1; total: 310.
+DCD de 25/04/13 PÁG 12414 COL 01.",REQUERIMENTO DE URGÊNCIA PARA O PL Nº 2592/2007
+1281,4899,553474,2013-05-07 19:08:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 399; não: 19; abstenção: 1; total: 419.
+DCD de 08/05/13 PÁG 15687 COL 02.",REQUERIMENTO DE URGÊNCIA PARA O PLP Nº 416/2008
+48,4900,562466,2013-05-08 17:58:00,Suprimido o dispositivo. Sim: 154; não: 237; total: 391.,DVS - PDT - ART. 5º DO PLV
+2432,4901,562615,2013-05-08 20:42:00,Rejeitado o Requerimento. Sim: 107; não: 284; abstenção: 7; total: 398.,REQUERIMENTO DE RETIRADA DE PAUTA
+2438,4909,562615,2013-05-14 00:46:00,Rejeitada a Emenda Aglutinativa nº 8. Sim: 86; não: 203; abstenção:4; total: 293.,EMENDA AGLUTINATIVA Nº 8
+2439,4909,562615,2013-05-14 01:53:00,Rejeitada a Emenda nº 576. Sim: 155; não: 174; abstenção: 3; total: 332.,DVS - DEM - EMENDA Nº 576
+2440,4909,562615,2013-05-14 03:08:00,Suprimida a expressão. Sim: 94; não: 210; abstenção: 4; total: 308.,"DVS - DEM - EXPR. ""VEDADA A EXCLUSÃO DE ÁREA"", CPT DO ART. 15 DO PLV"
+2433,4906,562615,2013-05-14 13:51:00,Prejudicado o Requerimento por falta de quórum (obstrução). Sim: 8; não: 217; abstenção: 4; total: 229.,REQUERIMENTO DE RETIRADA DE PAUTA
+2434,4908,562615,2013-05-14 18:21:00,Rejeitado o Requerimento.Sim: 7; não; 284; abstenção: 2; total: 293.,REQUERIMENTO DE RETIRADA DE PAUTA
+2435,4908,562615,2013-05-14 19:41:00,Rejeitado o Requerimento. Sim: 13; não: 268; abstenção: 2; total: 283.,REQUERIMENTO DE VOTAÇÃO ARTIGO POR ARTIGO
+2436,4908,562615,2013-05-14 21:41:00,Rejeitada a Emenda Aglutinativa nº 4. Sim: 172; não: 210; abstenção: 7; total: 389.,EMENDA AGLUTINATIVA Nº 4
+2437,4909,562615,2013-05-14 23:26:00,Rejeitada a Emenda Aglutinativa nº 12. Sim: 178; não: 233; abstenção: 7; total: 418.,EMENDA AGLUTINATIVA Nº 12
+2449,4913,562615,2013-05-15 00:17:00,Mantido o dispositivo. Sim: 268; não: 11; abstenção: 4; total: 283.,DVS - PSDB - ART. 63 DO PLV
+2450,4913,562615,2013-05-15 01:32:00,Mantido o dispositivo. Sim: 247; não: 8; abstenção: 3; total: 258.,DVS - PMDB - INCISO I DO ART. 75 DO PLV
+2441,4910,562615,2013-05-15 04:28:00,"Prejudicado o Requerimento por falta de ""quorum"" (OBSTRUÇÃO).  Sim: 4; não: 236; abstenção: 2; total: 242.",REQUERIMENTO DE RETIRADA DE PAUTA
+2442,4911,562615,2013-05-15 13:38:00,Rejeitado o Requerimento. Sim: 4; não: 272; abstenção: 5; total: 281.,REQUERIMENTO DE RETIRADA DE PAUTA
+2443,4911,562615,2013-05-15 15:54:00,Mantida a expressão. Sim: 227; não: 79; abstenção: 3; total: 309.,"DVS - PDT - EXPR. ""NOS PORTOS ORGANIZADOS"", CAPUT DO ART. 40 DO PLV"
+2444,4912,562615,2013-05-15 17:18:00,Rejeitado o Requerimento. Sim: 4; não: 257; abstenção: 2; total: 263.,REQUERIMENTO DE RETIRADA DE PAUTA
+2445,4912,562615,2013-05-15 19:03:00,Aprovada a Emenda Aglutinativa nº 30. Sim: 266; não: 23; abstenção: 4; total: 293.,EMENDA AGLUTINATIVA Nº 30
+2446,4912,562615,2013-05-15 20:16:00,Mantido o dispositivo. Sim: 273; não: 3; abstenção: 4; total: 280.,DVS - PP - ART. 58 DO PLV
+2447,4913,562615,2013-05-15 21:44:00,Rejeitado o Requerimento. Sim: 4; não: 271; abstenção: 2; total: 277.,REQUERIMENTO DE RETIRADA DE PAUTA
+2448,4913,562615,2013-05-15 22:55:00,Mantido o texto. Sim: 153; não: 111; abstenção: 6; total: 270.,DVS - BLOCO PR - PARÁGRAFO ÚNICO DO ART. 59 DO PLV
+2451,4914,562615,2013-05-16 05:48:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+2452,4915,562615,2013-05-16 08:40:00,Rejeitado o Requerimento. Sim: 4; não: 255; abstenção: 1; total: 260.,REQUERIMENTO DE RETIRADA DE PAUTA
+2368,4919,564453,2013-05-21 18:41:00,Mantido o texto. Sim: 272; não: 87; total: 359.,"DVS - PSDB - DA 3ª LINHA: ""DE 6.000,01 A 9000,00 7,5% 450,00"""
+30,4920,564520,2013-05-21 21:21:00,Mantido o dispositivo. Sim: 256; não: 126; abstenção: 1; total: 383.,"DVS - PDT - § 1º DO ART. 63 DA LEI 12.462/11, CONST. DO ART. 5º DO PLV"
+255,4920,576895,2013-05-21 22:39:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 321; não: 6; total: 327.
+DCD de 22/05/13 PÁG 19325 COL 01.",REQUERIMENTO DE URGÊNCIA PARA O PLP Nº 200/2012
+233,4920,553112,2013-05-21 23:40:00,"Prejudicada a votação do destaque de preferência por falta de ""quorum"" (obstrução). Sim: 14; não: 90; abstenção: 3; total: 107.",DESTAQUE DE PREFERÊNCIA P/ VOTAR O PLP 200/2012
+1958,4921,577881,2013-05-22 14:26:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 363; não: 4; total: 367.
+DCD de 23/05/13 PÁG 19552 COL 01.",URGÊNCIA PARA VOTAÇÃO DO PLP 271/2005
+55,4922,483808,2013-05-22 19:52:00,Suprimido o dispositivo. Sim: 149; não: 169; abstenção: 1; total: 319.,"DVS - BLOCO PR - ART. 19-B, CONST. NO ART. 4º DA SUBEMENDA SUBST."
+56,4922,483808,2013-05-22 21:38:00,Mantido o dispositivo. Sim: 186; não: 95; abstenção: 4; total: 285.,"DVS - PT - ALÍNEA B, INCISO II DO ART. 22-B DA LEI 11.343/06"
+880,4928,564521,2013-05-27 20:44:00,Prejudicada a votação do Requerimento por falta de quórum (obstrução). Sim: 14; não: 217; abstenção: 2; total: 233.,REQ. DE VOTAÇÃO NOMINAL P/ O REQ. DE PREFERÊNCIA P/ MP Nº 605/2013
+1897,4929,564548,2013-05-28 12:18:00,,DVS - PPS - EMENDA Nº 24
+881,4930,564521,2013-05-28 15:34:00,Rejeitada a Emenda nº 45.  Sim: 47; não: 223; total: 270.,DVS - DEM - EMENDA Nº 45
+846,4937,412854,2013-06-04 21:01:00,"Aprovada a Subemenda Substitutiva Global apresentada ao Projeto de Lei Complementar nº 416/2008, ressalvados os destaques.  Sim: 319; não: 32; abstenção: 2; total: 353.",SUBMENDA SUBSTITUTIVA GLOBAL DE PLENÁRIO
+847,4937,412854,2013-06-04 21:45:00,Rejeitada a Emenda nº 4. Sim: 122; não: 232; abstenção: 1; total: 355.,DVS - PSDB - EMENDA Nº 4
+848,4937,412854,2013-06-04 22:10:00,Rejeitada a Emenda nº 20. Sim: 64; não: 224; abstenção 3: total: 291.,DVS - PMDB - EMENDA Nº 20
+849,4937,412854,2013-06-04 22:25:00,Rejeitada a Emenda nº 8. Sim: 38; não: 228; abstenção: 3; total: 269.,DVS - PMDB - EMENDA Nº 8
+850,4937,412854,2013-06-04 22:37:00,Rejeitada a Emenda nº 10. Sim: 102; não: 219; abstenção: 1; total: 322.,DVS - PMDB - EMENDA Nº 10
+851,4937,412854,2013-06-04 23:06:00,Suprimida a expressão. Sim: 134; não: 219; abstenção: 3; total: 356.,"DVS - PSDB - EXP. ""OU EM ÁREA...FUNDAÇÕES"" ART. 11, IV DO SUBSTITUTIVO"
+403,4943,566891,2013-06-11 17:48:00,Rejeitada a Emenda nº 7. Sim: 108; não: 213; abstenção:2; total:323.,DVS - PSD - EMENDA Nº 7
+404,4943,566891,2013-06-11 19:35:00,Suprimido o dispositivo. Sim: 161; não: 189; abstenção: 1; total: 351.,DVS - PSDB - ART. 14 DO PLV
+405,4944,566891,2013-06-11 20:24:00,Rejeitada a Emenda nº 52. Sim: 85; não: 199; abstenção: 1; total: 285.,DVS - DEM - EMENDA Nº 52
+2303,4944,579713,2013-06-11 21:51:00,"Prejudicada a votação do requerimento por falta de ""quorum"" (obstrução). Sim: 23; não: 15; abstenção: 6; total: 44.",REQ. P/ COMISSÃO EXTERNA EM CAMPO GRANDE/MS
+1892,4945,573516,2013-06-12 13:10:00,"Prejudicada a votação do requerimento por falta de ""quorum"" (obstrução).",REQ. DE PREFERÊNCIA PARA VOTAÇÃO DO ITEM V DA MAT. SOBRE A MESA
+1203,4946,566047,2013-06-12 18:25:00,Rejeitada a Emenda nº 7. Sim: 65; não: 211; total: 276.,DVS PPS - EMENDA Nº 7
+2295,4947,573508,2013-06-12 21:08:00,Aprovado o Destaque de Preferência. Sim: 214; não: 135; abstenção: 2; total: 351.,DEST. DE PREFERÊNCIA PARA A VOTAÇÃO EM SEPARADO DA EMENDA Nº 3
+2296,4947,573508,2013-06-12 21:29:00,Rejeitada a Emenda. Sim: 234; não: 101; abstenção: 2; total: 337.,EMENDA DE PLENÁRIO Nº 3
+2297,4947,573508,2013-06-12 21:59:00,Rejeitado o Projeto de Lei Complementar. Sim:  218; não: 115; abstenção: 1; total: 334.,PROJETO DE LEI COMPLEMENTAR DO SENADO FEDERAL
+1957,4954,580703,2013-06-19 12:33:00,"Prejudicada a votação do requerimento por falta de ""quorum"" (obstrução). Sim: 26; não: 19; abstenção: 8; total: 53.",COMISSÃO EXT. P/ ACOMP. ACONT. EM SANTA CRUZ DO ARARI - PA
+2220,4961,581700,2013-06-25 01:04:00,"Aprovadas as Emendas de Plenário nºs 1 e 2, com parecer pela aprovação. Sim: 341; não: 1; total: 342.",EMENDAS DE PLENÁRIO NºS 1 E 2 COM PARECER PELA APROVAÇÃO
+2221,4961,581700,2013-06-25 01:28:00,"Rejeitada a Emenda de Plenário nº 3, com parecer pela rejeição. Sim: 228; não: 134; abstenção: 2; total: 364.","EMENDA DE PLENÁRIO Nº 3, COM PARECER PELA REJEIÇÃO"
+2222,4961,581700,2013-06-25 01:36:00,Aprovado o Projeto de Lei Complementar nº 288 de 2013. Sim: 344; não: 13; total: 357.,PROJETO DE LEI COMPLEMENTAR
+2282,4960,507965,2013-06-25 21:14:00,Rejeitada a Proposta de Emenda à Constituição nº 37 de 2011. Sim: 9; não: 430; abstenção: 2; total: 441.,PROPOSTA DE EMENDA À CONSTITUIÇÃO - 1º TURNO
+236,4968,582605,2013-07-02 21:34:00,"Rejeitado o Requerimento de Urgência (Art. 155 do RICD). Sim: 150; não: 237; abstenção: 1; total: 388.
+DCD de 03/07/13, PÁG 27721 COL 02.",URGÊNCIA PARA APRECIAÇÃO DO PL Nº 5.844/2013
+234,4969,553112,2013-07-03 18:57:00,Aprovado o Projeto de Lei Complementar nº 200 de 2012. Sim: 315; não: 95; abstenção: 1 total: 411.,PROJETO DE LEI COMPLEMENTAR
+1094,4969,553168,2013-07-03 19:49:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 207 de 2012. Sim: 408; não: 3; abstenção: 1; total: 412.",PROPOSTA DE EMENDA À CONSTITUIÇAO - 1º TURNO
+859,4976,584279,2013-07-09 20:46:00,Aprovado o Requerimento. Sim: 292; não: 86; abstenção: 12; total: 390.,MOÇÃO DE REPÚDIO
+1793,4976,271219,2013-07-09 23:02:00,Mantido o texto. Sim: 268; não: 62; abstenção: 5; total: 335.,DVS - DEM - § 2º DO ART. 23 DO SUBSTITUTIVO DO SENADO FEDERAL
+844,4979,343930,2013-07-10 21:18:00,Rejeitado o Requerimento. Sim: 165; não: 217; abstenção: 1; total: 383.,REQUERIMENTO DE VOTAÇÃO ARTIGO POR ARTIGO
+845,4979,343930,2013-07-10 22:56:00,"Prejudicada a votação do destaque por falta de ""quorum"" (obstrução). Não: 172; abstenção: 2; total: 174.",DVS - PMDB - ART 2º DO SUBSTITUTIVO DO SENADO FEDERAL
+1095,4985,553168,2013-07-16 18:05:00,,SEGUNDO TURNO
+1532,4986,571752,2013-07-17 12:07:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+2122,4993,377011,2013-08-07 19:24:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 190 de 2007. Sim: 355; não: 47; abstenção: 7; total: 409.",SUBSTITUTIVO DA COMISSÃO - 1º TURNO
+1871,4999,332451,2013-08-13 21:05:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 565 de 2006. Sim: 378; Não: 48; Abstenção: 13; Total: 439.",SUBSTITUTIVO DA COMISSÃO ESPECIAL - 1º TURNO
+1872,4999,332451,2013-08-13 22:11:00,,"DVS - PMDB - EXPR. ""OBSERVADO ANEXO... NO ART. 165, II"" (§ 10, ART. 166 DA CF)"
+1437,5007,576000,2013-08-21 17:27:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1873,5014,332451,2013-08-27 18:24:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 565 de 2006. Sim: 376; não: 59; abstenção: 5; total: 440.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 2º TURNO
+2194,5017,582292,2013-08-28 20:29:00,"Rejeitado o Parecer da Comissão de Constituição e Justiça e de Cidadania, que opinava pela procedência no sentido da perda do mandato parlamentar do Senhor Natan Donadon. Sim: 233; não: 131; abstenção: 41; total: 405.",REPRESENTAÇÃO COM PARECER DA CCJC
+1075,5023,28376,2013-09-03 19:34:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 349 de 2001. Sim: 452; total: 452.",SEGUNDO TURNO
+1241,5033,580951,2013-09-10 19:46:00,Mantido o texto do Projeto de Lei de Conversão. Sim: 323; não: 41; abstenção: 1; total: 365.,"DVS - PMDB -INCISO II DO ART. 18-A DA LEI Nº 9615/98, ART. 19 DO PLV"
+435,5043,579869,2013-09-18 19:19:00,Rejeitada a Emenda nº 72. Sim:129; não:200; total:329.,DVS - DEM - EMENDA Nº 72
+2226,5047,537784,2013-09-24 18:07:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+139,5049,580163,2013-09-25 16:51:00,Rejeitado o Requerimento. Sim: 2; não: 269; abstenções: 3; total: 274 .,REQ. VOTAÇÃO NOMINAL DO REQUERIMENTO DE RETIRADA DE PAUTA
+140,5049,580163,2013-09-25 18:09:00,Mantidos os dispositivos destacados. Sim: 201; não: 89; abstenções: 2; total: 292.,"DVS - DEM -ART. 2º DO PLV E, EM DECORRÊNCIA, OS SEUS §§ 1º; 2º; 3º; 4º E 5º"
+141,5049,580163,2013-09-25 19:34:00,Mantido o artigo destacado. Sim: 213; não: 155; total: 368.,DVS - PT - ART. 22 DO PLV
+2123,5050,377011,2013-09-25 22:55:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+303,5051,582791,2013-09-26 11:04:00,,PROJETO DE RESOLUÇÃO
+1301,5055,586411,2013-10-01 18:08:00,Rejeitado o Requerimento. Sim: 8; não: 311; total: 319.,REQUERIMENTO DE RETIRADA DE PAUTA
+992,5055,593650,2013-10-01 19:02:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 258; não: 130; abstenção: 1; total: 389.
+DCD de 02/10/13 PÁG 43982 COL 01.",REQUERIMENTO DE URGÊNCIA PARA O PL Nº 6.397/2013
+1987,5056,592935,2013-10-01 21:48:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+1988,5057,592935,2013-10-02 17:31:00,,REQUERIMENTO DE RETIRADA DE PAUTA
+368,5062,584020,2013-10-08 00:23:00,Rejeitado o Requerimento. Sim:11; não: 270 ; abstenção:1; total: 282 .,DVS - DEM - DESTAQUE DE PREF.  P/ A MPV Nº 621/2013 (TEXTO ORIGINAL)
+364,5061,584020,2013-10-08 17:57:00,Rejeitado o Requerimento. Sim: 15; não: 249; abstenções: 5; total: 269.,VOTAÇÃO NOMINAL DO REQUERIMENTO DE RETIRADA DE PAUTA
+365,5061,584020,2013-10-08 19:52:00,Rejeitado o Requerimento. Sim: 10; não: 285; abstenções: 3; total: 298.,REQUERIMENTO DE DISCUSSÃO POR GRUPO DE ARTIGOS
+366,5062,584020,2013-10-08 21:18:00,Rejeitado o Requerimento. Sim: 8; não: 275; abstenção:1; total: 284.,REQUERIMENTO DE RETIRADA DE PAUTA
+367,5062,584020,2013-10-08 22:51:00,Aprovado o Requerimento. Sim: 266; não: 6; total: 272.,REQUERIMENTO DE ENCERRAMENTO DA DISCUSSÃO E DO ENCAMINHAMENTO
+369,5064,584020,2013-10-09 17:12:00,Mantidos os artigos destacados. Sim: 193; não: 75; abstenções: 3; total: 271.,DVS - PSD - ART. 6º E EM DECORRÊNCIA O ART. 7º DO PLV
+370,5065,584020,2013-10-09 19:39:00,Rejeitada a Emenda nº 285. Sim: 134; não: 224; abstenções: 3; total: 361.,DVS - PDT - EMENDA 285
+371,5065,584020,2013-10-09 21:08:00,Rejeitada a Emenda nº 21. Sim: 46; não: 308; abstenções: 15; total: 369.,DVS - PMDB - EMENDA Nº 21
+1989,5070,592935,2013-10-15 18:37:00,Rejeitado o Requerimento. Sim: 99; não: 183; total: 282.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+1990,5071,592935,2013-10-16 19:17:00,"Aprovado o Substitutivo apresentado pelo Relator da Comissão de Constituição e Justiça e de Cidadania ao Projeto de Lei nº 6.397 de 2013, ressalvados os destaques. Sim: 222; não: 161; abstenção: 1; total: 384.",SUBSTITUTIVO DA CCJC
+1991,5072,592935,2013-10-16 21:11:00,Rejeitada a Emenda de Plenário nº 19. Sim: 132; não: 219; abstenção: 1; total: 352.,DVS - PSB - EMENDA Nº 19
+1992,5072,592935,2013-10-16 22:46:00,,"DVS - PT - § 2º DO ART. 37, CONSTANTE DO ART. 3º DO PL / SUBSTITUTIVO"
+1993,5078,592935,2013-10-22 18:46:00,Mantido o parágrafo destacado. Sim: 165; não: 127; total: 292.,DVS - PT - § 2º DO ART. 37
+1994,5078,592935,2013-10-22 20:35:00,Mantida a expressão. Sim: 186; não: 162; abstenção: 1; total: 349.,"DVS - DEM - EXPR. ""OU RIDICULARIZAR"", INC. IV DO ART. 51 DO SUBSTITUTIVO"
+315,5078,564525,2013-10-22 22:21:00,Rejeitado o Requerimento. Sim: 2; não: 270; abstenções: 3; total: 275.,VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+316,5080,564525,2013-10-23 13:14:00,"Aprovada a Subemenda Substitutiva Global apresentada pelo Relator da Comissão de Finanças e Tributação, ressalvados os destaques. Sim: 334; não: 9; total: 343.",SUBEMENDA SUBSTITUTIVA GLOBAL DE PLENÁRIO
+317,5081,564525,2013-10-23 16:26:00,Rejeitada a Emenda Aglutinativa nº 2. Sim: 64; não: 246; abstenções: 3; total:313.,DVS - DEM - EMENDA AGLUTINATIVA Nº 2
+318,5081,564525,2013-10-23 17:13:00,Aprovada a Emenda Aglutinativa nº 1. Sim: 264; não: 111; abstenção: 1; total: 376.,DVS - PSDB - EMENDA AGLUTINATIVA Nº 1
+319,5081,564525,2013-10-23 18:36:00,Rejeitada a Emenda de Plenário nº 14. Sim: 111; não: 223; abstenção: 1; total:335.,DVS - PSD - EMENDA Nº 14
+320,5081,564525,2013-10-23 19:16:00,Rejeitada a Emenda de Plenário nº 16. Sim: 87; não: 256; total: 343.,DVS - PSB - EMENDA Nº 16
+893,5082,583481,2013-10-23 22:31:00,,REQUERIMENTO DE URGÊNCIA PARA APRECIAÇÃO DO PL Nº 7.495/2006
+625,5082,334331,2013-10-23 23:11:00,"Prejudicado o Requerimento por falta de ""quorum"" (OBSTRUÇÃO). Sim: 5; não: 202; abstenções: 4; total: 211.",REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+2124,5088,377011,2013-10-29 19:47:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 190 de 2007. Sim: 400; não: 4; abstenções: 3; total: 407.",SEGUNDO TURNO
+1096,5096,599236,2013-11-05 18:16:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 346 de 2013, apensada. Sim: 371; Não: 4; Total: 375.",PRIMEIRO TURNO
+1097,5096,599236,2013-11-05 19:00:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 346 de 2013, apensada. Sim: 347; Não: 4; Total: 351.",SEGUNDO TURNO
+1722,5097,302638,2013-11-05 20:53:00,Rejeitado o Requerimento. Sim: 2; não: 270; abstenções: 5; total: 277.,REQUERIMENTO DE RETIRADA DE PAUTA
+1506,5099,599380,2013-11-06 19:23:00,"Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 287; não: 97; abstenções: 6; total: 390.
+DCD 07/11/13 PÁG 52538 COL 02.",URGÊNCIA PARA APRECIAÇÃO DO PDC Nº 1361/2013 DO SF
+529,5099,599142,2013-11-06 20:53:00,Rejeitado o Requerimento. Sim: 73; não: 255; abstenções: 5; total: 333.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR UMA SESSÃO
+530,5122,599142,2013-11-27 21:02:00,Aprovado o Projeto de Decreto Legislativo nº 1.361/2013. Sim: 230; não: 60; abstenções: 8; total: 298.,PROJETO DE DECRETO LEGISLATIVO
+452,5128,436536,2013-12-03 20:52:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 368 de 2009. Sim: 353; Total: 353.",PRIMEIRO TURNO - SUBSTITUTIVO DA COMISSÃO ESPECIAL
+361,5130,522343,2013-12-04 20:12:00,"Rejeitadas as Emendas nºs 1 e 2, com parecer pela rejeição. Sim: 47; não: 281; abstenções: 3; total: 331.","EMENDAS NºS 1 E 2, COM PARECER PELA REJEIÇÃO"
+362,5130,522343,2013-12-04 20:44:00,,PRIMEIRO TURNO
+363,5130,522343,2013-12-04 21:13:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 90 de 2011. Sim: 313; não: 1; abstenção: 1 ; total: 315.
+DCD de 05/12/13 PÁG 57693 COL 01.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+791,5131,584760,2013-12-05 11:34:00,,PROJETO DE DECRETO LEGISLATIVO
+454,5137,590058,2013-12-11 15:30:00,Rejeitado o Requerimento. Sim: 10; não: 257; abstenções: 2; total: 269.,REQUERIMENTO DE RETIRADA DE PAUTA
+453,5138,436536,2013-12-11 18:25:00,,SEGUNDO TURNO
+2346,5138,512308,2013-12-11 18:59:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 55 de 2011. Sim: 340; Total: 340. 
+DCD de 12/12/13 PÁG 59099 COL 01.",SUBSTITUTIVO - PRIMEIRO TURNO
+2347,5138,512308,2013-12-11 19:28:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 55 de 2011. Sim: 383; Total: 383.  
+DCD de 12/12/13 PÁG 59122 COL 01.",SEGUNDO TURNO
+154,5144,604604,2013-12-17 16:23:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 271; não: 18; abstenções: 3; total: 292.,URGÊNCIA PARA APRECIAÇÃO DO PRC Nº 228/2013
+1723,5151,302638,2014-02-04 21:30:00,Mantido o parágrafo. Sim: 206; não: 159; abstenção: 1; total: 366.,DVS - PP - § 19 DO ART. 85 DA EMENDA AGLUTINATIVA
+77,5154,587916,2014-02-05 17:54:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 293 de 2013. Sim: 374 ; Total: 374.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 1º TURNO
+78,5154,587916,2014-02-05 18:44:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 293 de 2013. Sim: 396 ; total: 396.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 2º TURNO
+350,5159,605986,2014-02-11 17:56:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 321; não: 4; abstenção: 1; total: 326.,URGÊNCIA PARA APRECIAÇÃO DO PDC 1263/2013
+1724,5160,302638,2014-02-11 20:57:00,Aprovada a Emenda Aglutinativa nº 7. Sim: 279; não: 102; abstenções: 3; total: 384.,DVS - PTB - EMENDA AGLUTINATIVA Nº 7
+463,5162,590335,2014-02-12 21:23:00,"Aprovado o Parecer do Conselho de Ética e Decoro Parlamentar, pela procedência da Representação nº 22/2013 e perda do mandato parlamentar do Sr. Natan Donadon. Sim: 467; Abst.: 01; Total de votos: 468.",PARECER DO CONSELHO DE ÉTICA E DECORO PARLAMENTAR
+204,5163,543107,2014-02-13 12:12:00,"Prejudicado o Requerimento por falta de ""quorum"" (OBSTRUÇÃO).",REQUERIMENTO DE ADIAMENTO DA VOTAÇÃO POR 2 SESSÕES
+1317,5170,606547,2014-02-19 19:54:00,,REQUERIMENTO DE URGÊNCIA PARA APRECIAÇÃO DO PRC 237/2014
+930,5170,567197,2014-02-19 20:38:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 247 de 2013. Sim: 392; abstenção: 02 ; total: 394.
+DCD de 20/02/14 PÁG 243 COL 01.",1º TURNO - SUBSTITUTIVO DA COMISSÃO ESPECIAL
+984,5175,606381,2014-02-25 19:17:00,Rejeitado o Requerimento. Sim: 80; não: 261; abstenções: 4; total: 345.,REQUERIMENTO DE RETIRADA DE PAUTA
+985,5186,606381,2014-03-11 18:16:00,Rejeitado o Requerimento. Sim: 38; não: 216; abstenções: 11; total: 265.,REQUERIMENTO DE RETIRADA DE PAUTA
+986,5186,606381,2014-03-11 19:54:00,Aprovado o Requerimento de Constituição de Comissão Externa. Sim: 267; não: 28; abstenção: 15; total: 310.,REQUER CRIAÇÃO DE COMISSÃO EXTERNA TEMPORÁRIA
+931,5190,567197,2014-03-12 18:34:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 247 de 2013. Sim: 424; não: 1; abstenção: 1; total: 426.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+773,5197,525239,2014-03-19 20:16:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 103 de 2011, apensada. Sim: 364; Não: 03; Abstenção: 03; Total: 370.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 1º TURNO
+2162,5203,586251,2014-03-25 21:07:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 290 de 2013. Sim: 399; não: 01; total: 400.",SUBSTITUTIVO DA COMISSÃO ESPECIAL - 1º TURNO
+1379,5206,600255,2014-03-26 20:43:00,Aprovado o Projeto de Lei nº 6.738 de 2013. Sim: 314; não: 36; abstenção: 06; total: 356.,PROJETO DE LEI
+305,5206,601914,2014-03-26 22:04:00,,SUBEMENDA AO SUBSTITUTIVO DA COMISSÃO DE EDUCAÇÃO
+1439,5211,600363,2014-04-01 18:14:00,Rejeitado o Requerimento. Sim: 19; não: 253; abstenção: 3; total: 275.,REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+1440,5212,600363,2014-04-01 20:59:00,"Aprovada a Medida Provisória nº 627 de 2013, na forma do Projeto de Lei de Conversão nº 2/2014, ressalvados os destaques. Sim: 331; não: 36; abstenção: 3; total: 370.",PROJETO DE LEI DE CONVERSÃO
+1441,5213,600363,2014-04-02 16:27:00,Aprovado o Requerimento. Sim: 229; não: 77; total: 306.,REQ. PARA VOTAÇÃO EM GLOBO DOS DESTAQUES SIMPLES
+1442,5213,600363,2014-04-02 16:27:00,Aprovada a Emenda Aglutinativa nº 1. Sim: 185; não: 128; total: 313.,REQ. PARA VOTAÇÃO EM GLOBO DOS DESTAQUES SIMPLES
+1443,5213,600363,2014-04-02 18:11:00,,DVS - PSC - EMENDA AGLUTINATIVA Nº 1
+1444,5214,600363,2014-04-02 19:36:00,Mantido o artigo destacado. Sim: 184; não: 175; abstenções: 3; total: 362 .,DVS - DEM - ART. 103 DO PLV
+210,5219,602714,2014-04-07 20:54:00,"Prejudicado o Requerimento por falta de ""quorum"" (obstrução). Sim: 6; não: 193; total: 199.",REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+211,5220,602714,2014-04-08 18:01:00,Rejeitado o Requerimento. Sim: 26; não: 244; abstenções: 4; total: 274.,REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+212,5220,602714,2014-04-08 20:07:00,Rejeitado o Requerimento. Sim: 4; não: 270; abstenção: 1; total: 275.,REQUERIMENTO DE ADIAMENTO DA DISCUSSÃO POR 2 SESSÕES
+922,5222,605324,2014-04-09 19:16:00,Rejeitado o destaque (mantido o texto do Projeto de Lei de Conversão nº 1/2014). Sim: 166; não: 168; total: 334.,DVS - DEM - ART. 1º DA MP P/ SUBSTITUIR O ART. 1º DO PLV
+923,5223,605324,2014-04-09 19:57:00,Mantido o artigo destacado. Sim: 204; não: 137; total: 341.,DVS - PSDB - ART. 1º  DA LEI 12.462/2011
+2111,5223,583317,2014-04-09 21:39:00,"Prejudicada a votação por falta de ""quorum"" (obstrução). Sim: 17; não: 176; abstenção: 2; total: 195.
+DCD de 10/04/14 PÁG 259 COL 01.",URGÊNCIA PARA APRECIAÇÃO DO PL Nº 4471/2012
+1918,5232,586949,2014-04-22 18:23:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD).Sim: 307; não: 16; abstenção: 3; total: 326.,URGÊNCIA PARA APRECIAÇÃO DO PL Nº 5.943/2013
+31,5232,597748,2014-04-22 19:21:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 310; não: 3; total: 313.,URGÊNCIA PARA APRECIAÇÃO DO PLP Nº 276/2002
+145,5233,325847,2014-04-22 20:48:00,"Aprovado o Substitutivo do Senado Federal ao Projeto de Lei Complementar nº 362 de 2006, ressalvados os destaques. Sim: 304; total: 304.",SUBSTITUTIVO DO SENADO FEDERAL
+146,5233,325847,2014-04-22 21:07:00,"Votação do § 3º do artigo 7º da Lei Complementar nº 93/98, constante do artigo 1º do Substitutivo do Senado Federal, objeto do destaque para votação em separado da bancada do PT.",DVS - PT - § 3º DO ART. 7º - ART. 1º DO SUBSTITUTIVO
+147,5233,325847,2014-04-22 21:17:00,"Votação do artigo 2º do Substitutivo do Senado Federal, objeto do destaque para votação em separado da bancada do PT.",DVS - PT - ART. 2º DO SUBSTITUTIVO DO SENADO FEDERAL
+817,5233,43617,2014-04-22 21:36:00,Aprovado o Projeto de Lei Complementar nº 275 de 2001. Sim: 343; não: 13; abstenção: 2; total: 358.,PROJETO DE LEI COMPLEMENTAR
+878,5234,44196,2014-04-23 17:37:00,Aprovada a Emenda Substitutiva Global de Plenário nº 3 ao Projeto de Lei Complementar nº 276 de 2002. Sim: 270; não: 1; total: 271.,EMENDA SUBSTITUTIVA GLOBAL  DE PLENÁRIO Nº 3
+1736,5236,564547,2014-04-23 18:51:00,"Aprovado o Parecer do Conselho de Ética e Decoro Parlamentar, que conclui pela procedência parcial, com a aplicação de pena de suspensão por 90 (noventa) dias do exercício do mandato do Deputado Carlos Alberto Leréia. Sim: 353; não: 26; total: 379.",PARECER DO CONSELHO DE ÉTICA
+1701,5237,527704,2014-04-23 19:29:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 111 de 2011. Sim: 357; não: 1; abstenção: 2; total: 360.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+2163,5237,586251,2014-04-23 19:53:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 290 de 2013. Sim: 354; abstenção: 1; total: 355.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+520,5243,552295,2014-04-29 20:14:00,Mantido o artigo destacado. Sim: 267; não: 72; abstenção: 1; total: 340.,"DVS - PCdoB - ART. 235-C, CONST. DO ART. 6º DO SUBSTITUTIVO"
+2299,5249,304008,2014-05-06 22:31:00,Aprovado o Requerimento. Sim: 252; não: 105; abstenção: 01; total: 358. *** Passa-se à apreciação da PEC nº 358/2013.,INVERSÃO DE PAUTA
+2300,5249,304008,2014-05-06 22:31:00,"*** Aprovado o requerimento do Dep. Ivan Valente, Líder do PSOL, que solicita preferência para votação da PEC nº 358/2013, item 4 da pauta, sobre a PEC nº 471/2005, item 3. Sim: 252; não: 105; abstenção: 01; total: 358.",INVERSÃO DE PAUTA
+471,5249,602633,2014-05-06 23:47:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 358 de 2013, ressalvados os destaques. Sim: 384; não: 06; total: 390.",SUBSTITUTIVO DA COMISSÃO ESPECIAL - PRIMEIRO TURNO
+1781,5251,559036,2014-05-07 19:11:00,"Aprovada a Subemenda Substitutiva Global apresentada pelo Relator da Comissão Especial ao Projeto de Lei Complementar nº 221 de 2012, ressalvados os destaques. Sim: 417; total: 417.",SUBEMENDA SUBSTITUIVA GLOBAL
+1782,5257,559036,2014-05-13 17:57:00,,"DVS - PSDB - EXPR. ""QUANDO  NA MODALIDADE FLUVIAL OU"""
+1783,5257,559036,2014-05-13 19:19:00,Rejeitada a Emenda nº 1. Sim: 201; não: 131; abstenção: 2; total: 334.,DVS - PP/PROS - EMENDA Nº 1
+1784,5257,559036,2014-05-13 19:56:00,Rejeitada a Emenda nº 20. Sim: 212; não: 131; abstenção: 1; total: 344.,DVS - PP/PROS - EMENDA Nº 20
+2223,5265,605327,2014-05-20 18:03:00,Mantido o artigo destacado. Sim: 183 ; Não: 75 ; Abstenção:1; Total: 259.,DVS - DEM - ART. 24 DO PLV
+1470,5266,605333,2014-05-20 20:08:00,Aprovada a Emenda nº 23. Sim: 273; Não: 112; Abstenção: 1; Total: 386.,DVS - PSB - EMENDA Nº 23
+1134,5269,605330,2014-05-21 21:05:00,Rejeitada a Emenda nº 5. Sim: 69; não: 238; abstenção: 1; total: 308.,DVS DEM - EMENDA Nº 5
+1135,5269,605330,2014-05-21 21:58:00,Mantido o artigo destacado. Sim: 192; não: 73; total: 265.,DVS - PP/PROS - ART 3º DO PLV
+1482,5275,609196,2014-05-27 18:21:00,"Rejeitadas as Emendas nºs 2, 3 e 4, com parecer pela rejeição.Sim: 9 ; Não: 270; Abstenção: 1; Total:  280.",EMENDAS DE PLENÁRIO Nºs 2 A 4 COM PARECER PELA REJEIÇÃO
+484,5275,609198,2014-05-27 19:11:00,"Aprovada a Medida Provisória nº 640 de 2014, na forma do Projeto de Lei de Conversão nº 9/2014, ressalvado o destaque. Sim: 215 ; Não:101; Abstenção:1; Total: 317 .",PROJETO DE LEI DE CONVERSÃO
+1930,5285,490116,2014-06-03 17:43:00,,DVS - PDT - §5º DO ART. 5º ACRESC. AO SUBSTITUTIVO DO S.F.
+1785,5286,559036,2014-06-03 19:27:00,Aprovada a Emenda nº 7. Sim: 381; Não: 2; Abstenção: 1; Total: 384.,DVS - PSD - EMENDA Nº 7
+1786,5286,559036,2014-06-03 20:53:00,Rejeitado o destaque (rejeitada a inclusão dos referidos artigos). Sim: 136; Não: 219; Abstenção: 2; Total: 357.,DVS - PSDB - ARTIGOS: 1º E 2º
+1787,5286,559036,2014-06-03 21:35:00,Aprovada a Emenda Aglutinativa nº 2. Sim: 341; Não: 9; Abstenção: 2; Total: 352.,DVS - PSD/SD/PDT/PSC - EMENDA AGLUTINATIVA Nº 2
+1788,5286,559036,2014-06-03 22:06:00,Aprovada a Emenda nº 17. Sim: 313; Não: 1; Total: 314.,DVS - PMDB - EMENDA DE PLENÁRIO Nº 17
+1789,5286,559036,2014-06-03 22:23:00,Mantido o artigo destacado. Sim: 288; Não: 5; Total: 293.,DVS - PRB - ART. 87-A DA LEI COMPLEMENTAR Nº 123/2006
+1790,5286,559036,2014-06-03 22:51:00,Suprimido o artigo destacado. Sim: 137; Não: 165; Total: 302.,DVS - PV - ART. 10 DA SUBEMENDA SUBSTITUTIVA APRESENTADA AO PLP 221/2012
+774,5287,525239,2014-06-04 18:22:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 103 de 2011. Sim: 366; não: 2; abstenção: 3; total: 371.",PROPOSTA DE EMENDA À CONSTITUIÇÃO  - SEGUNDO TURNO
+460,5288,615815,2014-06-04 20:17:00,Aprovado o Substitutivo apresentado pelo Relator da Comissão de Constituição e Justiça e de Cidadania ao Projeto de Lei Complementar nº 397 de 2014. Sim: 343; não: 30; abstenção: 1; total: 374.,SUSBSTITUTIVO DA CCJC
+461,5288,615815,2014-06-04 21:34:00,Rejeitada a Emenda de Plenário nº 1. Sim: 210; não: 108; abstenção: 2; total: 320.,EMENDA DE PLENÁRIO Nº 1
+411,5293,19319,2014-06-10 18:50:00,"Prejudicada a votação do requerimento por falta de ""quorum"" (OBSTRUÇÃO).  Sim: 3; não: 210; abstenção: 3; total: 216.",REQUERIMENTO DE RETIRADA DE PAUTA
+28,5310,613950,2014-07-15 16:52:00,Aprovado o Projeto de Decreto Legislativo nº 1.472 de 2014. Sim: 270; não: 7; abstenções: 3; total: 280.,ELEIÇÃO PARA O CARGO DE MINISTRO DO TCU
+587,5310,617857,2014-07-15 18:48:00,Aprovado o Requerimento de Urgência (Art. 155 do RICD). Sim: 294; não: 54; abstenções: 3; total: 351.,URGÊNCIA PARA APRECIAÇÃO DO PDC Nº 1.491/2014
+546,5317,617737,2014-08-05 21:09:00,,REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+150,5357,619236,2014-10-07 20:07:00,Rejeitada a  Emenda Aglutinativa nº 1. Sim: 114; não: 134; abstenção: 8; total da votação: 256 (art. 17 do RICD: 1; total quórum: 257).,DVS - BLOCO PR - EMENDA AGLUTINATIVA N° 1
+547,5372,617737,2014-10-28 20:02:00,"Rejeitado o Requerimento. Sim: 4; não: 253, abstenção: 2; total: 259.",REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+548,5372,617737,2014-10-28 21:33:00,Rejeitado o Requerimento. Sim: 3; não: 247; abstenção: 7; total: 257.,REQUERIMENTO PARA VOTAÇÃO DE ARTIGO POR ARTIGO
+258,5378,621806,2014-11-04 18:59:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 426 de 2014. Sim: 367; total: 367.",PRIMEIRO TURNO
+1471,5379,623330,2014-11-04 21:49:00,Rejeitado o destaque. Sim: 101; não: 215; abstenção: 1; total: 317.,"DVS - PT - § 2º  DO ART. 2-A DA LEI 9266/96, NA REDAÇÃO PROPOSTA PELA EMENDA 54"
+1854,5386,551712,2014-11-11 20:50:00,"Aprovado, em primeiro turno, o Substitutivo adotado pela Comissão Especial à Proposta de Emenda à Constituição nº 197 de 2012. Sim: 337; não: 03; abstenção: 01; total: 341.",SUBSTITUTIVO DA COMISSÃO ESPECIAL - PRIMEIRO TURNO
+1855,5386,551712,2014-11-11 21:05:00,Aprovada a Emenda Aglutinativa nº 1. Sim: 325; não: 01; abstenção: 01; total: 327.,DVS - PSDB - EMENDA AGLUTINATIVA Nº 1
+476,5387,620901,2014-11-12 18:03:00,Rejeitado o Requerimento. Sim: 14; não: 254; abstenção: 1; total: 269.,REQ. DE VOTAÇÃO NOMINAL DO REQ. DE RETIRADA DE PAUTA
+259,5401,621806,2014-11-26 17:57:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 426 de 2014. Sim: 349; não: 1; total: 350.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - 2º TURNO
+1089,5407,744763,2014-12-02 00:51:00,,REQ. DE ENCERRAMENTO DA DISCUSSÃO
+1090,5407,744763,2014-12-02 01:47:00,,VOTAÇÃO DOS DESTAQUES EM GLOBO
+1091,5407,744763,2014-12-02 03:24:00,,SUBSTITUTIVO DA COMISSÃO MISTA DE ORÇAMENTO
+1092,5407,744763,2014-12-02 03:38:00,,SUBSTITUTIVO DA COMISSÃO MISTA DE ORÇAMENTO
+2399,5407,623649,2014-12-02 20:22:00,,REQUERIMENTO DE ENCERRAMENTO DA DISCUSSÃO
+2400,5407,623649,2014-12-02 20:43:00,,REQUERIMENTO DE ENCERRAMENTO DA DISCUSSÃO
+630,5407,597414,2014-12-02 22:26:00,,CONSULTA AO PLENÁRIO PARA MODIFICAÇÃO DA PAUTA
+964,5412,808884,2014-12-09 16:35:00,Aprovado o Projeto de Decreto Legislativo nº 1.612 de 2014. Sim: 313; não: 8; abstenção: 8; total: 329 (Aprova a indicação do Sr. Vital do Rêgo Filho para o cargo de Ministro do Tribunal de Contas da União).,ESCOLHE  O SR. VITAL DO REGO FILHO PARA O CARGO DE MINISTRO DO TCU
+1093,5413,744763,2014-12-09 19:36:00,,DVS - PSDB - EMENDA Nº 69
+1694,5415,611593,2014-12-10 14:38:00,"Aprovado o Parecer do Conselho de Ética e Decoro Parlamentar, pela procedência da Representação nº 25/2014 e pela perda do mandato parlamentar do Dep. André Vargas. Sim: 359; Não: 1; Abst.: 6; Total de votos: 368.
+DCD de 11/12/14 PÁG 74 COL 01.",REPRESENTAÇÃO EM DESFAVOR DO DEPUTADO FEDERAL ANDRÉ VARGAS
+2265,5415,786713,2014-12-10 15:42:00,"Aprovada, em primeiro turno, a Proposta de Emenda à Constituição nº 434 de 2014, apensada. Sim: 369; total: 369.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - PRIMEIRO TURNO
+1071,5423,622854,2014-12-16 00:57:00,,DVS DEM  - EMENDA Nº 230
+2266,5421,786713,2014-12-16 16:34:00,"Aprovada, em segundo turno, a Proposta de Emenda à Constituição nº 434 de 2014. Sim: 398; total: 398.",PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+472,5421,602633,2014-12-16 19:22:00,Mantido o texto destacado. Sim: 349; não: 59; abstenção: 3; total: 411.,"DVS DEM -  ART. 198 DA CF CONST.ART 1º, § 10 DO ART 166, ART. 1º, 2º, 3º E 4º"
+473,5422,602633,2014-12-16 20:37:00,Mantido o texto. Sim: 354; não: 30; abstenção: 4; total: 388.,DVS - PCdoB - SUPRIMA-SE O ART. 3º DO SUBSTITUTIVO
+270,5422,858585,2014-12-16 21:53:00,,URGÊNCIA PARA APRECIAÇÃO DO PRC 266/2014
+1856,5426,551712,2014-12-17 18:31:00,,PROPOSTA DE EMENDA À CONSTITUIÇÃO - SEGUNDO TURNO
+1386,5427,619150,2014-12-17 21:31:00,,REQ. DE RETIRADA DE PAUTA
