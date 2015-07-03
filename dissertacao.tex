@@ -67,7 +67,7 @@
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
-\usepackage[brazilian,english]{babel}
+\usepackage[portuges,english]{babel}
 \usepackage{ppgi,mestre,epsfig}
 \usepackage{times}
 \usepackage[final]{pdfpages}
@@ -95,7 +95,7 @@
 %-------------------------- Para usar acentuacao em sistemas UTF8 ------------------------------------
 % Para a maior parte das distribuicoes linux, usar essa opcao
 \usepackage{ucs}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 %-----------------------------------------------------------------------------------------------------
 \usepackage{float}      
@@ -106,13 +106,14 @@
 \usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
 \usepackage{glossaries} % Gerar glossário
+
 \makeglossaries
 \newacronym{IR}{IR}{Índice de Rice}
 \newacronym{PT}{PT}{Partido dos Trabalhadores}
 \newacronym{PSOL}{PSOL}{Partido Socialismo e Liberdade}
 \newacronym{API}{API}{Application Programming Interface}
 \newacronym{XML}{XML}{eXtensible Markup Language}
-
+\newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
@@ -133,8 +134,12 @@ showstringspaces=false
 
 % ---------------------------------------------------------------------------------------------------
 
-\selectlanguage{brazilian}
+\selectlanguage{portuges}
 \sloppy
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\usepackage{abnt-alf}
 
 % Centraliza todos os floats
 \makeatletter
@@ -192,10 +197,9 @@ showstringspaces=false
              {\fancyplain{}{\bfseries\thepage}}\cfoot{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectlanguage{brazilian}
 
 \Sumario
-\ListadeSimbolos
+\ListadeSiglas
 \listoffigures
 \listoftables
 \lstlistoflistings %lista de codigos fonte - Para inserir a listagem de
@@ -209,8 +213,8 @@ showstringspaces=false
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Hifenizacao - Colocar lista de palavras que nao devem ser separadas e que 
-% nao estao no dicionario brazilian.
-% As palavras do dicionario brazilian ja sao separadas corretamente pelo lateX
+% nao estao no dicionario portuges.
+% As palavras do dicionario portuges ja sao separadas corretamente pelo lateX
 %
 \hyphenation{ gLite OurGrid GridDoctor }
 

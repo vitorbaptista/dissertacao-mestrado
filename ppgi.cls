@@ -154,7 +154,7 @@
 
    \if@rpd
    \else
-\selectlanguage{brazilian}
+\selectlanguage{portuges}
    \parbox[t]{122mm}{ \manuscrito\hspace{1pt} submetida \`{a} Coordena\c{c}\~{a}o do Curso de P\'{o}s-Gradua\c{c}\~{a}o em Inform\'{a}tica da Universidade Federal da Para\'{i}ba como parte dos requisitos necess\'{a}rios para obten\c{c}\~{a}o do grau de \Grau.
 \ \vskip 4em \begin{center} \'Area de
    Concentra\c{c}\~{a}o: \@Area \\
@@ -622,18 +622,28 @@
     \@starttoc{lot}%
     \if@restonecol\twocolumn\fi 
     }
-\newcommand{\ListadeSimbolos}{%
+\newcommand{\ListadeSiglas}{%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-      \IfFileExists{\@currdir simbolos.tex}{
-      \chapter*{Lista de S\'{\i}mbolos\@mkboth{}{}}
-      \input{simbolos.tex}}{}
+      \IfFileExists{\@currdir siglas.tex}{
+      \chapter*{Lista de acr\'{o}nimos e siglas\@mkboth{}{}}
+      \input{siglas.tex}}{}
     \if@restonecol\twocolumn\fi
     }
-
+\newcommand{\ListadeNotacao}{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+      \IfFileExists{\@currdir notacao.tex}{
+      \chapter*{Nota\c {c}\~{a}o\@mkboth{}{}}
+      \input{notacao.tex}}{}
+    \if@restonecol\twocolumn\fi
+    }
 \newcommand{\Introducao}{%
 \newpage\pagenumbering{arabic}\setcounter{page}{1}
     \if@twocolumn
