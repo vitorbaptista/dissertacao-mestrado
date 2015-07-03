@@ -111,10 +111,17 @@ cutlines = data.frame(maioridade_penal = mean(maioridade_penal),
                       salario_minimo = mean(salario_minimo))
 @
 
-Os modelos espaciais representam o conjunto de alternativas de uma votação em
-um espaço euclidiano e estimam as preferências dos parlamentares dentro desse
-espaço. A ideia básica desses modelos é que um legislador vota na alternativa
-mais próxima da sua preferência.
+A ideia básica de modelos espaciais de votação é que o conjunto de alternativas
+políticas de uma votação pode ser tratado como uma dimensão em um espaço
+euclidiano, e cada parlamentar tem preferências de valores nessa dimensão. O
+voto seria então definido pela escolha da alternativa mais próxima da sua
+preferência.
+
+Há diversos modelos para estimar esses valores, como o NOMINATE, W-NOMINATE,
+DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
+não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
+Nosso foco neste trabalho é no W-NOMINATE.
+\cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
 
 Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em
 dois projetos de Lei: um propondo a redução da maioridade penal de
