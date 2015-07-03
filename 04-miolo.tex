@@ -20,10 +20,18 @@ Os dados são retornados no formato \gls{XML}. De posse deles, desenvolvemos um
 programa em
 Python\footnote{\url{https://github.com/vitorbaptista/codigo-mestrado}} para
 transformá-los e importá-los em um banco de dados
-SQLite\footnote{\url{https://www.sqlite.org/}}. Com os dados no banco, geramos
-dois arquivos: um com os dados dos parlamentares e seus votos (tabela
-\ref{table:votes}) e outro com os detalhes das votações (tabela
+SQLite\footnote{\url{https://www.sqlite.org/}}. A partir desse banco, geramos
+dois arquivos por legislatura: um com os dados dos parlamentares e seus votos
+(tabela \ref{table:votes}) e outro com os detalhes das votações (tabela
 \ref{table:votes-metadata}).
+
+Os nomes dos partidos foram normalizados para evitar que consideremos fusões ou
+mudanças de nomes de partidos como um novo partido. Seguimos o padrão adotado
+pelo \gls{CEBRAP}, onde mudanças de nome são identificados pela primeira e
+última sigla (ex.: PJ se torna PRN que se torna PJC, então temos PJ>PTC) e
+fusões são identificados pelo maior partido na data da fusão e o novo nome
+(ex.: PL e PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no
+apêndice \ref{apendice:lista-partidos}.
 
 \begin{table}
 \centering
