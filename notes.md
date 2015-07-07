@@ -19,3 +19,25 @@ PSDB mudou de comportamento ou a agenda mudou. Como distinguir entre os dois?
 
 Passando para modelos espaciais, digamos que num primeiro momento o PT estava
 na posição 0.8, o PSDB em -0.3, e o DEM (nossa ponte) em -0.9. 
+
+
+
+
+Três modelos possíveis: a mudança se deu porque o parlamentar em estudo mudou
+de posicionamento; porque os outros parlamentares mudaram de comportamento, ou;
+porque a agenda legislativa mudou. Ao longo dos anos, diversas técnicas foram
+desenvolvidas para diferenciar entre esses casos.
+
+A forma mais simples é usando métricas de coesão, como por exemplo a taxa de
+governismo, definida como o percentual de votações em que o parlamentar votou
+de acordo com o governo. Uma mudança na taxa de governismo não consegue
+diferenciar entre esses três tipos de mudanças
+
+
+
+# Usos de pontes
+
+Existem dois usos para pontes: analisar mudanças de comportamento ou colocar
+parlamentares que não serviram juntos (por exemplo, senadores e deputados
+federais) em uma dimensão única, que permita comparar a posição dos senadores
+com as dos deputados.

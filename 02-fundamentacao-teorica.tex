@@ -166,38 +166,50 @@ de corte.
 
 % Conclusão
 
-\section{Comparando pontos ideais ao longo do tempo}
+\subsection{Comparando pontos ideais ao longo do tempo}
+\label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
 
-O problema básico em comparar mudanças de comportamento ao longo do tempo é
-distinguir alterações por causa de uma mudança de agenda das causadas por uma
-real mudança das preferências dos parlamentares \cite{Bailey2007}. Em outras
-palavras, se em um momento dois parlamentares estavam respectivamente nas
-posições 0.3 e 0.8 e, em outro momento, mudaram para -0.5 e 0.7, como definir
-se essa mudança ocorreu porque eles mudaram seus posicionamentos, ou
-simplesmente porque a agenda legislativa mudou?
+O principal problema em comparar mudanças nos pontos ideais ao longo do tempo é
+distinguir alterações causadas por mudanças na agenda legislativa das causadas
+por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
+palavras, se o ponto ideal de um deputado federal passa de 0.3 para -0.2 de um ano
+para o outro, como descobrir se isso representa uma mudança real de ideologia ou
+é somente reflexo da diferença na agenda legislativa dos dois períodos?
 
 Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
-usam ``pontes'', que são parlamentares que estiveram presentes em ambos
-momentos cujo posicionamento assume-se ter se mantido estável.
-\citeonline{Poole2005} propõe duas formas de calcular com as pontes. Na
-primeira, dividimos os votos dos parlamentares que queremos mensurar em dois
+usam ``pontes'', que podem ser parlamentares cujo posicionamento assume-se ter
+se mantido estável durante o período de interesse, ou; projetos de Lei que
+foram votados em mais de um momento (nas duas casas legislativas em um sistema
+bicameral, por exemplo). O primeiro é mais usado para comparar as mudanças nos
+posicionamentos dos parlamentares, enquanto o segundo permite unir pessoas que
+não votaram juntas em um mesmo mapa espacial\footnote{Por exemplo,
+\citeonline{Shor2010} colocam todos os legisladores de 11 estados americanos e
+do congresso federal em um período que varia entre 7 e 15 anos, dependendo do
+estado, em um mesmo mapa espacial}. \citeonline{Poole2005} propõe duas formas
+para estimar pontos ideais usando pontes.
+
+Na primeira, batizada de \emph{pooled scaling} por \citeonline{Shor2010},
+dividimos os votos dos parlamentares que queremos mensurar em dois
 parlamentares ``virtuais'', um com os votos antes e outro com os votos depois
 da data de interesse. Unimos esses parlamentares virtuais com os
 parlamentares-ponte, que possuem um registro único, em uma tabela individual e
-executamos o algoritmo de estimação dos pontos ideais (e.x.: W-NOMINATE). Ao
-final, teremos dois pontos para cada parlamentar de interesse e um ponto para
-os pontes. \citeonline{Shor2010} chama esse método de \emph{pooled scaling}.
+executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
+pontos para cada parlamentar de interesse e um ponto para os pontes. Na
+segunda, que \citeonline{Shor2010} chamam de \emph{linear mapping}, estimamos
+os pontos ideias separadamente em cada período e os conectamos usando regressão
+entre os conjuntos de pontos dos parlamentares-ponte. Ambas formas devem gerar
+resultados similares, mas a segunda é computacionalmente mais simples, o que
+pode ser essencial, dependendo da quantidade de parlamentares e votações votos
+em estudo.
 
-A outra forma, que \citeonline{Shor2010} chama de \emph{linear mapping}, é
-estimar os pontos ideias nos dois períodos separadamente e conectá-los a partir
-de uma regressão entre os conjuntos de pontos dos parlamentares-ponte.
-
-Essa forma de análise tem a desvantagem de requerer a definição \emph{a priori}
-de quem são as pontes. No mesmo livro, \citeonline{Poole2005} propõe uma
-metodologia similar, mas capaz de estimar as mudanças de comportamento de todos
-os parlamentares. Ela se dá em dois passos\footnote{Caso usassemos modelos
-Bayesianos, que calculam as medidas de erro junto com as estimativas, essa
-metodologia se simplificaria em um único passo.}:
+\citeonline{Poole2005} ainda descreve uma terceira forma, similar a
+\emph{pooled scaling} descrita acima, que usa para testar se os senadores
+norte-americanos mudam de comportamento nos últimos dois anos de seus mandatos,
+antes de concorrer à reeleição. Neste caso, ele quer calcular a mudança de
+comportamento de todos os legisladores em dois momentos numa mesma legislatura.
+Se usássemos o \emph{pooled scaling} diretamente, precisaríamos escolher alguns
+parlamentares como pontes que, por definição, não teriam mudado de
+comportamento. Ao invés disso, ele segue o seguinte processo:
 
 \begin{enumerate}
   \item Para cada parlamentar, faça:
@@ -213,12 +225,13 @@ parlamentar.
   \item Calcule medidas de incerteza para as estimativas.
 \end{enumerate}
 
-Ao final, teremos dois pontos para cada parlamentar: um representando sua
-posição antes, e outro depois da data de interesse. Note que todas as matrizes
-de votações usadas para gerar os mapas espaciais são diferentes, então eles não
-são estritamente comparáveis. Apesar disso, \citeonline{Poole2005} argumenta
-que como as matrizes só diferem em ter um parlamentar diferente dividido em
-dois, as diferenças entre os mapas serão triviais, logo é seguro compará-los.
+Ao final, ele tem dois pontos para cada senador: um representando sua posição
+nos primeiros 4, e o outro nos últimos 2 anos da legislatura. Note que, como as
+matrizes de votações usadas para gerar os mapas espaciais são diferentes, eles
+não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
+argumenta que como elas possuem o mesmo conjunto de votos, com a única
+diferença de que um dos parlamentares foi dividido em dois, ele considera ser
+seguro compará-las.
 
 \section{Processo legislativo}
 
