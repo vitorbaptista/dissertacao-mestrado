@@ -178,6 +178,60 @@ de corte.
 
 % Conclusão
 
+\section{Comparando pontos ideais ao longo do tempo}
+
+O problema básico em comparar mudanças de comportamento ao longo do tempo é
+distinguir alterações por causa de uma mudança de agenda das causadas por uma
+real mudança das preferências dos parlamentares \cite{Bailey2007}. Em outras
+palavras, se em um momento dois parlamentares estavam respectivamente nas
+posições 0.3 e 0.8 e, em outro momento, mudaram para -0.5 e 0.7, como definir
+se essa mudança ocorreu porque eles mudaram seus posicionamentos, ou
+simplesmente porque a agenda legislativa mudou?
+
+Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
+usam ``pontes'', que são parlamentares que estiveram presentes em ambos
+momentos cujo posicionamento assume-se ter se mantido estável.
+\citeonline{Poole2005} propõe duas formas de calcular com as pontes. Na
+primeira, dividimos os votos dos parlamentares que queremos mensurar em dois
+parlamentares ``virtuais'', um com os votos antes e outro com os votos depois
+da data de interesse. Unimos esses parlamentares virtuais com os
+parlamentares-ponte, que possuem um registro único, em uma tabela individual e
+executamos o algoritmo de estimação dos pontos ideais (e.x.: W-NOMINATE). Ao
+final, teremos dois pontos para cada parlamentar de interesse e um ponto para
+os pontes. \citeonline{Shor2010} chama esse método de \emph{pooled scaling}.
+
+A outra forma, que \citeonline{Shor2010} chama de \emph{linear mapping}, é
+estimar os pontos ideias nos dois períodos separadamente e conectá-los a partir
+de uma regressão entre os conjuntos de pontos dos parlamentares-ponte.
+
+Essa forma de análise tem a desvantagem de requerer a definição \emph{a priori}
+de quem são as pontes. No mesmo livro, \citeonline{Poole2005} propõe uma
+metodologia similar, mas capaz de estimar as mudanças de comportamento de todos
+os parlamentares. Ela se dá em dois passos\footnote{Caso usassemos modelos
+Bayesianos, que calculam as medidas de erro junto com as estimativas, essa
+metodologia se simplificaria em um único passo.}:
+
+\begin{enumerate}
+  \item Para cada parlamentar, faça:
+    \begin{enumerate}
+      \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
+de votos antes, e outro com os depois da data de interesse. Os outros
+parlamentares não são modificados;
+      \item Calcule os pontos ideias;
+      \item Guarde os resultados dos dois parlamentares ``virtuais''. A
+diferença entre suas posições representa a mudança de comportamento do
+parlamentar.
+    \end{enumerate}
+  \item Calcule medidas de incerteza para as estimativas.
+\end{enumerate}
+
+Ao final, teremos dois pontos para cada parlamentar: um representando sua
+posição antes, e outro depois da data de interesse. Note que todas as matrizes
+de votações usadas para gerar os mapas espaciais são diferentes, então eles não
+são estritamente comparáveis. Apesar disso, \citeonline{Poole2005} argumenta
+que como as matrizes só diferem em ter um parlamentar diferente dividido em
+dois, as diferenças entre os mapas serão triviais, logo é seguro compará-los.
+
 \section{Processo legislativo}
 
 Como são criadas as Leis no Brasil? Essa seção pode ser gigantesca, então acho melhor focar no essencial e pontuar as características mais importantes para este trabalho, por exemplo o que são destaques, tipos de votação, tipos de votos, etc.
