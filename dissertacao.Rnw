@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[a4paper,titlepage]{ppgi}
-\usepackage[portuges,english]{babel}
+\usepackage[english,portuges]{babel}
 \usepackage{ppgi,mestre,epsfig}
 \usepackage{times}
 \usepackage[final]{pdfpages}
