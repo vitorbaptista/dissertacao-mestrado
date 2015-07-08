@@ -1,19 +1,6 @@
-<<echo=FALSE>>=
-suppressMessages(library(knitr))
-suppressMessages(library(ggplot2))
-suppressMessages(library(caret))
-suppressMessages(library(doParallel))
-suppressMessages(library(randomForest))
-
-opts_chunk$set(echo = FALSE, fig.height = 4)
-
-formata_data <- function(data) {
-  format(as.POSIXct(data), "%d/%m/%Y")
-}
-
-setwd("~/Projetos/Mestrado/theRealPipeline")
-votes <- read.csv("54.csv", header = TRUE, check.names = FALSE)
-votes_metadata <- read.csv("54-votacoes.csv", header = TRUE, check.names = FALSE)
+<<>>=
+votes <- read.csv("data/54.csv", header = TRUE, check.names = FALSE)
+votes_metadata <- read.csv("data/54-votacoes.csv", header = TRUE, check.names = FALSE)
 @
 
 \chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
@@ -168,7 +155,6 @@ ggplot(parties_count, aes(x = party, y = count)) +
 \section{Análise}
 
 <<>>=
-setwd("~/Projetos/Mestrado/theRealPipeline")
 votacao_divisoria = votes_metadata[which(colnames(votes) == 368),]
 num_votacoes_antes = which(colnames(votes) == votacao_divisoria$id) - 4 - 1
 num_votacoes_depois = ncol(votes) - num_votacoes_antes
@@ -176,8 +162,8 @@ num_votacoes_depois = ncol(votes) - num_votacoes_antes
 library(data.table)
 library(plyr)
 
-result <- readRDS("output.rds")
-changed_coalitions <- read.csv("parties_and_coalitions_changes.csv",
+result <- readRDS("~/Projetos/Mestrado/theRealPipeline/results/output.rds")
+changed_coalitions <- read.csv("data/parties_and_coalitions_changes.csv",
                                header = TRUE,
                                check.names = FALSE)
 changed_coalitions$rollcall_date <- as.POSIXct(changed_coalitions$rollcall_date)
@@ -219,9 +205,6 @@ for (i in 1:nrow(clean_coords)) {
 clean_coords$diff.party.median = clean_coords$after.party.median - clean_coords$before.party.median
 clean_coords$diff_legislator_party = clean_coords$diff - clean_coords$diff.party.median
 
-mudancas_de_partidos <- read.csv("mudancas-de-partido-54-legislatura.csv")
-clean_coords <- merge(clean_coords, mudancas_de_partidos[, c("id", "numero_de_partidos")], by = "id")
-
 changed_coalitions_in_period = changed_coalitions[between(changed_coalitions$rollcall_date,
                                                           as.POSIXct("2011-02-01"),
                                                           as.POSIXct("2015-02-12")),]
@@ -241,7 +224,7 @@ Seguindo a metodologia descrita na sessão
 no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
 os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
 primeira votação depois dessa data ocorreu em
-\Sexpr{formata_data(votacao_divisoria$data)} (identificador
+\Sexpr{format_date(votacao_divisoria$data)} (identificador
 \Sexpr{votacao_divisoria$id}), relacionada ao MPV 621/2013. Houve
 \Sexpr{num_votacoes_antes} votações antes da ruptura e
 \Sexpr{num_votacoes_depois} votações após. Dos \Sexpr{nrow(clean_coords)}
@@ -376,8 +359,6 @@ precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino 
 20\% para testes. Também usamos o \emph{10-fold stratified cross validation}.
 
 <<cache=TRUE>>=
-set.seed(1)
-
 cl <- makeCluster(detectCores())
 registerDoParallel(cl)
 

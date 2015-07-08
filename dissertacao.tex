@@ -223,10 +223,472 @@ showstringspaces=false
 %% Da seguinte maneira:
 %% 
 
+
+
 \input{01-introducao}
-\input{02-fundamentacao-teorica}
+
+\chapter{Fundamentação Teórica}\label{cap:fundamentacao}
+
+\section{Índice de Rice}
+
+O \gls{IR} é uma métrica para o cálculo da coesão\footnote{Neste trabalho
+entendemos por coesão o grau de unidade do partido nas decisões legislativas
+tomadas em votações nominais, independente se isso ocorre porque seus membros
+têm uma ideologia semelhante, ou porque seus líderes conseguem discipliná-los.}
+entre grupos em uma votação. Desde sua introdução em \cite{Rice1924}, ele vem
+sendo amplamente utilizado em estudos legislativos por ser intuitivo, flexível
+e facilmente interpretável \cite{Neiva2011}.
+
+Para uma votação $i$, o seu cálculo se dá pela diferença, em números absolutos,
+entre a quantidade de votos \verb|Sim| e de votos \verb|Não|, dividida pelo
+\verb|Total| de votos, como pode ser visto na fórmula \ref{eq:rice}.
+
+\begin{equation}\label{eq:rice}
+  IR_i = \frac{|Sim - N\tilde{a}o|}{Total}
+\end{equation}
+
+O índice varia de zero, quando metade votou \verb|Sim| e metade votou
+\verb|Não|, até um, quando todos votaram da mesma forma. Para analisar mais de
+uma votação, calculamos a média aritmética dos \gls{IR} das votações no
+período, como mostra a fórmula \ref{eq:rice-media}.
+
+\begin{equation}\label{eq:rice-media}
+  \sum_{i=1}^{n} \frac{IR_i}{n}
+\end{equation}
+
+% TODO: Escrever sobre o problema de só considerar votos Sim ou Não e como
+% resolvemos nesse trabalho (talvez só explicitar o problema, pra manter
+% fundamentação teórica só como fundamentação teórica).
+% Figueiredo/Limongi 1995 só consideram votos Sim e Não, então talvez posso
+% dizer que estou seguindo o exemplo deles :)
+% ---
+% O primeiro problema enfrentado em usar o índice de Rice no contexto brasileiro
+% é que ele considera só os indivíduos que votaram, ignorando os ausentes, os que
+% se abstiveram e os que obstruíram.
+
+Um problema descrito por Desposato (2005) é que índices de coesão em geral
+(o de Rice em particular) são fortemente enviesados. Partidos pequenos têm uma
+coesão esperada maior do que partidos grandes, o que invalidaria comparações
+entre grupos de tamanhos diferentes, pois diferenças na coesão podem ser
+resultado de uma característica do índice usado, e não no comportamento dos
+parlamentares. Este problema é especialmente grave no Brasil por existir uma
+grande variação no tamanho dos partidos.\nocite{Desposato2005}
+
+Ele propôs uma solução simples: diminuir o tamanho dos partidos.
+Especificamente, ele sugere trocar o índice de coesão $C_{ij}$ de cada
+partido por $E(C_{ijr})$, que é a coesão esperada de uma amostra de $r$ votos
+tomados sem reposição do partido $i$ na votação $j$. O tamanho da amostra $r$
+pode variar entre 2 e o tamanho do menor partido, mas ele sugere escolhermos $r
+= 2$, que funciona em todos os casos.\nocite{Desposato2005}
+
+Com essa escolha, a interpretação de $E(C_{ij2})$ é simples: é a probabilidade
+de que dois membros do partido $i$ escolhidos aleatoriamente votaram juntos na
+votação $j$. O cálculo também fica simplificado, sendo feito pela fórmula
+\ref{eq:rice-adj}, onde $Y$ é o número de votos ``sim'' e $R$ é o tamanho do
+partido.\nocite{Desposato2005}
+
+\begin{equation}\label{eq:rice-adj}
+  E(C_{ij2}|Y, R) = \frac{Y(Y - 1) + (R - Y)(R - Y - 1)}{R(R - 1)}
+\end{equation}
+
+Caso o índice $C$ já seja conhecido, a fórmula pode ser reduzida a
+\ref{eq:adj-known-metric}.\nocite{Desposato2005}
+
+\begin{equation}\label{eq:adj-known-metric}
+  E(C_2|Y, R) = \frac{RC^2 + R + 2}{2(R - 1)}
+\end{equation}
+
+\subsection{Calculando coesão entre partidos}
+
+Encontramos um problema ao calcular a coesão entre partidos. Caso simplesmente
+calculássemos o \gls{IR} entre o conjunto de parlamentares dos partidos
+que queremos analisar, estaríamos mostrando um resultado errado caso todos os
+partidos não tivessem o mesmo número de parlamentares votando em cada votação.
+
+Por exemplo, considere que queremos calcular a coesão entre o \gls{PT} e o \gls{PSOL} na
+Câmara dos Deputados na 54a legislatura. Nesse período, o \gls{PT} contava com XXX
+deputados federais, enquanto o \gls{PSOL} contava com 3. Se simplesmente calcularmos
+a coesão considerando o conjunto de deputados do \gls{PT} com o do \gls{PSOL}, o índice
+seria muito influenciado pela diferença de parlamentares.
+
+Para resolver esse problema, não consideramos o voto de cada parlamentar de
+cada partido individualmente, mas sim o voto de um ``parlamentar médio'' do
+partido. O voto do parlamentar médio é definido como o voto da maioria do
+partido. Dessa forma, conseguimos comparar partidos independente de seus
+tamanhos.
+
+Poderíamos ter definido o ``parlamentar médio'' como a indicação do líder do
+partido, mas neste caso teríamos que desconsiderar as votações em que o líder
+libera sua bancada e não conseguiríamos calcular para partidos cujo líder não
+pode indicar voto (de acordo como o Regimento Interno). Dado essas
+desvantagens, e o fato que há poucas diferenças entre a indicação do líder e o
+voto da maioria \cite{Figueiredo1995}, preferimos usar o voto da maioria.
+
+\section{Modelos espaciais de votação}
+
+
+
+A ideia básica de modelos espaciais de votação é que o conjunto de alternativas
+políticas de uma votação pode ser tratado como uma dimensão em um espaço
+euclidiano, e cada parlamentar tem preferências de valores nessa dimensão. O
+voto seria então definido pela escolha da alternativa mais próxima da sua
+preferência.
+
+Há diversos modelos para estimar esses valores, como o NOMINATE, W-NOMINATE,
+DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
+não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
+Nosso foco neste trabalho é no W-NOMINATE.
+\cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
+
+Considere um exemplo onde 5 parlamentares votam em
+dois projetos de Lei: um propondo a redução da maioridade penal de
+18 para 16 anos e outra
+propondo o aumento do salário-mínimo de R\$ 1.000 para
+R\$ 1.200. Suponha que cada um tem uma única preferência
+(\emph{single-peakedness}), conhecido como seu ponto ideal, e vota sinceramente
+de acordo com ela. Considere também que as preferências são simétricas. Isto é,
+dado duas escolhas a uma mesma distância do ponto ideal de um parlamentar, ele
+será indiferente a qualquer uma delas.
+
+Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde os pontos
+representam as preferências dos legisladores sobre cada votação, representados
+como as dimensões nesse espaço euclidiano. As linhas são chamadas linhas de
+corte. Elas passam pelo ponto médio entre as duas alternativas em votação: a de
+votar sim e a de votar não. Em outras palavras, se as escolhas são entre uma
+maioridade penal de 16 ou
+18, a linha de corte passa em $\frac{16 + 18}{2}$,
+ou seja, $17$. Ela divide os legisladores que irão votar não, que estão a
+esquerda da linha, dos que irão votar sim, que estão a direita da mesma. Caso
+esteja em cima da linha de corte, ele é indiferente as alternativas. Caso algum
+legislador não siga essa previsão, ele é considerado um ``erro'' do modelo.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
+\end{figure}
+
+
+\end{knitrout}
+
+Formalmente, sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo
+respectivamente a um voto ``sim'' e um voto ``não'' na votação $j$ ($j = 1,
+..., q$), definimos $Z_j$ como: 
+
+\begin{equation}\label{eq:cutpoint}
+  Z_j = \frac{O_{jy} + O_{jn}}{2}
+\end{equation}
+
+O $Z_j$ pode definir um ponto, linha, plano ou hiperplano, dependendo do número
+de dimensões que estamos tratando. Ele é conhecido como ponto (ou linha, etc.)
+de corte.
+
+% Introdução
+
+%% O que são de modelos de votação?
+
+%% Por que os modelos espaciais de votação foram criados?
+
+%% Por que não usar os votos diretamente?
+
+% Desenvolvimento
+
+% Conclusão
+
+\subsection{Comparando pontos ideais ao longo do tempo}
+\label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
+
+O principal problema em comparar mudanças nos pontos ideais ao longo do tempo é
+distinguir alterações causadas por mudanças na agenda legislativa das causadas
+por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
+palavras, se o ponto ideal de um deputado federal passa de 0.3 para -0.2 de um ano
+para o outro, como descobrir se isso representa uma mudança real de ideologia ou
+é somente reflexo da diferença na agenda legislativa dos dois períodos?
+
+Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
+usam ``pontes'', que podem ser parlamentares cujo posicionamento assume-se ter
+se mantido estável durante o período de interesse, ou; projetos de Lei que
+foram votados em mais de um momento (nas duas casas legislativas em um sistema
+bicameral, por exemplo). O primeiro é mais usado para comparar as mudanças nos
+posicionamentos dos parlamentares, enquanto o segundo permite unir pessoas que
+não votaram juntas em um mesmo mapa espacial\footnote{Por exemplo,
+\citeonline{Shor2010} colocam todos os legisladores de 11 estados americanos e
+do congresso federal em um período que varia entre 7 e 15 anos, dependendo do
+estado, em um mesmo mapa espacial}. \citeonline{Poole2005} propõe duas formas
+para estimar pontos ideais usando pontes.
+
+Na primeira, batizada de \emph{pooled scaling} por \citeonline{Shor2010},
+dividimos os votos dos parlamentares que queremos mensurar em dois
+parlamentares ``virtuais'', um com os votos antes e outro com os votos depois
+da data de interesse. Unimos esses parlamentares virtuais com os
+parlamentares-ponte, que possuem um registro único, em uma tabela individual e
+executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
+pontos para cada parlamentar de interesse e um ponto para os pontes. Na
+segunda, que \citeonline{Shor2010} chamam de \emph{linear mapping}, estimamos
+os pontos ideias separadamente em cada período e os conectamos usando regressão
+entre os conjuntos de pontos dos parlamentares-ponte. Ambas formas devem gerar
+resultados similares, mas a segunda é computacionalmente mais simples, o que
+pode ser essencial, dependendo da quantidade de parlamentares e votações votos
+em estudo.
+
+\citeonline{Poole2005} ainda descreve uma terceira forma, similar a
+\emph{pooled scaling} descrita acima, que usa para testar se os senadores
+norte-americanos mudam de comportamento nos últimos dois anos de seus mandatos,
+antes de concorrer à reeleição. Neste caso, ele quer calcular a mudança de
+comportamento de todos os legisladores em dois momentos numa mesma legislatura.
+Se usássemos o \emph{pooled scaling} diretamente, precisaríamos escolher alguns
+parlamentares como pontes que, por definição, não teriam mudado de
+comportamento. Ao invés disso, ele segue o seguinte processo:
+
+\begin{enumerate}
+  \item Para cada parlamentar, faça:
+    \begin{enumerate}
+      \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
+de votos antes, e outro com os depois da data de interesse. Os outros
+parlamentares não são modificados;
+      \item Calcule os pontos ideias;
+      \item Guarde os resultados dos dois parlamentares ``virtuais''. A
+diferença entre suas posições representa a mudança de comportamento do
+parlamentar.
+    \end{enumerate}
+  \item Calcule medidas de incerteza para as estimativas.
+\end{enumerate}
+
+Ao final, ele tem dois pontos para cada senador: um representando sua posição
+nos primeiros 4, e o outro nos últimos 2 anos da legislatura. Note que, como as
+matrizes de votações usadas para gerar os mapas espaciais são diferentes, eles
+não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
+argumenta que como elas possuem o mesmo conjunto de votos, com a única
+diferença de que um dos parlamentares foi dividido em dois, ele considera ser
+seguro compará-las.
+
+\section{Processo legislativo}
+
+Como são criadas as Leis no Brasil? Essa seção pode ser gigantesca, então acho melhor focar no essencial e pontuar as características mais importantes para este trabalho, por exemplo o que são destaques, tipos de votação, tipos de votos, etc.
+
+% ALEXANDRE: Acho que senado e câmara podem ser subseções desta seção.
+% Essas subseções não precisam ser muito longas. Devem descrevas basicamente as competências e atribuições de cada casa.
+%
+% Acho que a justificativa da escolha da Câmara pode aparecer mais tarde, na seção do estudo de caso.  
+% Assim a seção de fundamentação teórica fica sendo realmente apenas de fundamentação teórica, sem efeitos colaterais.
+
+\subsection{Senado Federal}
+
+Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estado e Distrito Federal. Os senadores têm mandato de 8 anos e são eleitos pelo sistema majoritário\footnote{No sistema majoritário, o candidato mais votado é eleito. Nos anos em que são eleitos 2 senadores, os dois candidatos mais votados serão eleitos. Ele pressupõe um (ou dois) único candidatos por partido. É o mesmo sistema usado nas eleições para os chefes do Poder Executivo (presidente da República, governadores e prefeitos). Com exceção da eleição de senadores e prefeitos em cidades com menos de 200 mil habitantes, onde há um único turno, as eleições ocorrem em dois turnos. \cite{Netto2013}}. A renovação da casa é parcial, modificando $\frac{1}{3}$ e $\frac{2}{3}$ dos senadores alternadamente de 4 em 4 anos.
+
+\subsection{Câmara dos Deputados}
+
+Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Netto2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
+
+\section{Coesão parlamentar}
+
+Definir o que é coesão e disciplina, e explicar algumas métricas (ou só o índice de Rice)
+
+
+\section{Ciência de dados}
+
+Texto bem geral sobre data science. Pode ser interessante falar sobre algum algoritmo específico que eu vá usar, ou talvez seja melhor explicá-los no miolo da dissertação.
+
+\section{Considerações Finais}
+
+
+
+
+
 \input{03-trabalhos-relacionados}
-\input{04-miolo}
+
+
+
+\chapter{Miolo da sua dissertação}\label{cap:miolo}
+
+Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitetura e como cada parte funciona e pode ser modificada.
+
+\section{Coleta dos dados}
+
+A Câmara dos Deputados disponibiliza em seu site na
+web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}} uma
+\gls{API} para acesso a diversos dados. Para extrair os resultados das
+votações, usamos os métodos
+\emph{ListarProposicoesVotadasEmPlenario}\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/proposicoes-1/ProposicoesVotadasEmPlenario}}
+que a partir de um ano nos retorna a lista de proposições votadas; e o
+\emph{ObterVotacaoProposicao}\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/proposicoes-1/obtervotacaoproposicao}}
+que a partir do tipo, número e ano de uma proposição retorna os resultados das
+votações ocorridas.  
+
+Os dados são retornados no formato \gls{XML}. De posse deles, desenvolvemos um
+programa em
+Python\footnote{\url{https://github.com/vitorbaptista/codigo-mestrado}} para
+transformá-los e importá-los em um banco de dados
+SQLite\footnote{\url{https://www.sqlite.org/}}. A partir desse banco, geramos
+dois arquivos por legislatura: um com os dados dos parlamentares e seus votos
+(tabela \ref{table:votes}) e outro com os detalhes das votações (tabela
+\ref{table:votes-metadata}).
+
+Os nomes dos partidos foram normalizados para evitar que consideremos fusões ou
+mudanças de nomes de partidos como um novo partido. Seguimos o padrão adotado
+pelo \gls{CEBRAP}, onde mudanças de nome são identificados pela primeira e
+última sigla (ex.: PJ se torna PRN que se torna PJC, então temos PJ>PTC) e
+fusões são identificados pelo maior partido na data da fusão e o novo nome
+(ex.: PL e PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no
+apêndice \ref{apendice:lista-partidos}.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|l|l|l|r|r|r|r|r}
+\hline
+id & name & party & state & 76 & 273 & 271 & 272 & 485\\
+\hline
+3151 & Jairo Ataíde & PFL>DEM & MG & NA & 0 & NA & 0 & NA\\
+\hline
+4929 & Joseph Bandeira & PT & BA & NA & NA & NA & NA & NA\\
+\hline
+4930 & Silvio Costa & PSC & PE & 1 & 0 & 0 & 0 & 0\\
+\hline
+4931 & Izalci & PL+PRONA>PR & DF & 1 & 1 & 0 & 0 & 0\\
+\hline
+62881 & Danilo Forte & PMDB & CE & 1 & 1 & 0 & 0 & NA\\
+\hline
+67138 & Iracema Portella & PDS>PP & PI & 1 & 1 & 0 & 0 & 0\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Dados com detalhes dos parlamentares e seus respectivos votos. Não
+mostramos todos os votos por limitações de espaço.}
+\label{table:votes}
+\end{table}
+
+\begin{landscape}
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|l|l|l}
+\hline
+id & id\_sessao & proposicao\_id & data & resumo & obj\_votacao\\
+\hline
+76 & 4212 & 491974 & 2011-02-15 21:09:00 & Aprovado o Requerime... & URGÊNCIA PARA O PL 3...\\
+\hline
+273 & 4215 & 491872 & 2011-02-16 00:17:00 & Mantida a expressão.... & DVS - Bloco PvPps - ...\\
+\hline
+271 & 4214 & 491872 & 2011-02-16 22:38:00 & Rejeitada a Emenda d... & DVS - PSDB - EMENDA ...\\
+\hline
+272 & 4214 & 491872 & 2011-02-16 23:27:00 & Rejeitada a Emenda d... & DVS - DEM - EMENDA N...\\
+\hline
+485 & 4219 & 485274 & 2011-02-22 17:36:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+486 & 4219 & 485274 & 2011-02-22 19:20:00 & Rejeitado o Requerim... & REQUERIMENTO DE ADIA...\\
+\hline
+487 & 4220 & 485274 & 2011-02-22 20:45:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+955 & 4221 & 485275 & 2011-02-23 17:01:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+1042 & 4251 & 485758 & 2011-04-05 17:02:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+1043 & 4251 & 485758 & 2011-04-05 19:11:00 & Rejeitado o Requerim... & REQUERIMENTO DE CONC...\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Dados com detalhes sobre cada votação. Os campos ``resumo'' e
+``obj\_votacao'' foram limitados a 20 caracteres por
+questões de formatação da página.}
+\label{table:votes-metadata}
+\end{table}
+\end{landscape}
+
+% \begin{listing}[ht]
+% \begin{minted}{xml}
+% <proposicoes>
+%   <proposicao>
+%     <codProposicao>19319</codProposicao>
+%     <nomeProposicao>PL 3232/1992</nomeProposicao>
+%     <dataVotacao>10/06/2014</dataVotacao>
+%   </proposicao>
+%   <proposicao>
+%     <codProposicao>43617</codProposicao>
+%     <nomeProposicao>PLP 275/2001</nomeProposicao>
+%     <dataVotacao>22/04/2014</dataVotacao>
+%   </proposicao>
+%   <!-- Continua... -->
+% </proposicoes>
+% \end{minted}
+% \caption{Resultado da API \emph{ListarProposicoesVotadasEmPlenario} usando o ano 2014 como parâmetro}
+% \end{listing}
+
+Restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
+legislatura, que compreende um período de 20 anos, entre o início do primeiro
+governo de Fernando Henrique Cardoso em 1995 até o final do primeiro governo de
+Dilma Rousseff em 2015. Esse recorte foi feito pois é quando, de acordo com
+\cite{Freitas2008}, termina a fase de acomodação dos parlamentares as regras
+definidas pela Constituição de 1988.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r}
+\hline
+Legislatura & Deputados Federais & Votações & Votos\\
+\hline
+50 & 631 & 468 & 178603\\
+\hline
+51 & 624 & 419 & 155737\\
+\hline
+52 & 614 & 451 & 134461\\
+\hline
+53 & 606 & 619 & 192879\\
+\hline
+54 & 644 & 432 & 131552\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
+\end{table}
+
+Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
+deputados federais e votações por legislatura. Consideramos deputados federais
+todos parlamentares que participaram de alguma votação na Câmara dos Deputados
+no período, por isso o número é maior do que o número de cadeiras. Por
+legislatura, temos em média 623,80 deputados e 477,80
+votações com 332,04 votos cada.
+
+\section{Componentes}
+
+Mostrar em linhas gerais como é organizada a ferramenta, indo de um nível de abstração mais alto (como o usuário vê a ferramenta) até uma arquitetura técnica.
+
+
+% ALEXANDRE: Apesar de eu não ser muito fã acho importante apresentar algum tipo de diagrama de componentes nesta seção, para permitir uma visualização da arquitetura da solução.
+
+
+\subsection{Extração dos dados}
+
+Falar sobre as fontes de dados (câmara dos deputados, banco de dados legislativos do Cebrap, etc.), a forma de extração, passos de limpeza, banco de dados, frequência de atualização, se é pull ou push, e como disponibilizamos esses dados para as outras etapas. Ao término dessa seção, o leitor deverá entender nosso processo de data wrangling e saber como ele próprio pode, se quiser, baixar os dados ao final dessa etapa e fazer suas próprias análises. Talvez tenha problema com isso, pois o pessoal da CEBRAP pode não permitir a redistribuição de seus dados.
+
+
+% ALEXANDRE: É interessante destacar que disponibilizar estes dados em um formato mais "amigável" também é uma contribuição do seu trabalho.
+
+\subsection{Análise}
+
+Aqui falarei sobre os algoritmos usados e as métricas escolhidas (coesão parlamentar, número de destaques, etc.). Também é bom frisar que a arquitetura permite adicionar novos algoritmos, talvez até de uma forma reativa. Por exemplo, considerando que a acusação que o PP trancou a pauta para pressionar o Lula a nomear uma pessoa na Petrobrás, poderíamos criar um algoritmo que detectasse trancamentos de pauta por um partido qualquer, para no futuro descobrirmos movimentações parecidas.
+
+\subsection{Notificações/Relatórios}
+
+Falar sobre como os usuários consomem esses dados. Minha ideia atual é gerar um relatório semanal/mensal/quando-aparecer-algo-interessante e enviá-lo por email pra quem se cadastrar. Nesse caso, devo mostrar exemplos desse relatório.
+
+
+(Alexandre) Seria legal considerar também a criação de uma conta que twitaria periódicamente os relatórios.
+
+
+\section{Considerações Finais}
+
+Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, analisa e gera relatórios para os usuários. Cada parte pode ser modificada e expandida, e os dados (e algoritmos) podem ser usados por outras pessoas. Daqui falta validar que os algoritmos na parte de análise geram algo interessante.
 \input{05-avaliacao-experimental}
 \input{06-conclusao}
 
@@ -246,7 +708,389 @@ showstringspaces=false
 
 \appendix
 \input{apendice-lista-dos-partidos}
-\input{analise-da-saida-do-psb-da-coalizao-dilma-1}
+
+
+
+\chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
+
+\section{Introdução}
+
+O PSB esteve na base de apoio do governo do PT desde que o partido conquistou a
+Presidência da República com Lula em 2003. Dez anos depois, em 2013, penúltimo
+ano do primeiro governo de Dilma, o PSB anuncia a candidatura de Eduardo Campos
+para a presidência, rompendo a aliança com o PT.
+
+Para entender a repercussão dessa mudança na Câmara dos Deputados, analisaremos
+as votações nominais ocorridas naquela legislatura (54\textordfeminine, que
+durou de 2011 até 2015) seguindo a metodologia proposta por Keith Poole em
+\emph{Spatial models of parliamentary voting} \cite{Poole2005}.
+% Não estamos entendendo a repercussão da mudança na CD como um todo, mas sim
+% só no comportamento de votação dos parlamentares.
+
+\section{Metodologia}{\label{sec:analise-saida-psb:metodologia}
+
+Para entender a influência da saída do PSB no comportamento de votação dos
+parlamentares, precisamos de uma forma de comparar o comportamento deles antes
+e depois dessa mudança. Este é um problema complicado, estudado por diversos
+autores (CITATION NEEDED). Nesta análise seguimos a metodologia de
+\cite{Poole2005}.
+
+Considerando um parlamentar por vez, o substituímos por dois parlamentares
+``virtuais'' na tabela de votações, um com os votos antes da mudança e outro
+com os votos depois dela, e executamos o algoritmo W-NOMINATE nessa nova
+tabela. Esse procedimento é repetido para cada parlamentar separadamente,
+enquanto mantém todos os outros sem modificações. Ao final, teremos dois pontos
+para cada parlamentar: um para antes e outro para depois da mudança. A
+diferença entre esses pontos representa o nível da mudança de comportamento no
+período de análise. 
+
+Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
+contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
+comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
+parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
+\ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
+Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
+depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
+a sua posição antes, e outro depois da mudança (ver figura
+\ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
+uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
+de cada parlamentar, podemos determinar se a mudança é significante ou não.
+
+% TODO: Falar sobre o parametric bootstrap
+% TODO: Falar sobre os problemas em comparar esses valores.
+% \begin{quote}
+%   ``(...) all matrices have the same number of nonmissing entries, and they
+%   differ only in the fact that each has a different senator divided into two
+%   records. Consequently, I believe it's safe to capture the 72 distances with
+%   each other, because the differences between the configurations will be
+%   trivial.''\cite{Poole2005}
+% \end{quote}
+
+\begin{table}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara & Sim & Sim & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados originais de votação}
+    \label{table:exemplo-mudanca-de-comportamento}
+  \end{minipage}
+  \begin{minipage}{\textwidth}
+    \centering
+    \begin{tabular}{ l l l l l }
+      nome & votação1 & votação2 & votação3 & votação4 \\
+      \hline
+      Samara 1 & Sim & Sim & & \\
+      Samara 2 & & & Não & Não \\
+      Pedro & Sim & Sim & Sim & Sim \\
+      Maria & Não & Não & Não & Não \\
+    \end{tabular}
+    \caption{Dados de votação com Romário dividido no meio}
+    \label{table:exemplo-parlamentar-virtual}
+  \end{minipage}
+\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/exemplo-mudanca-de-comportamento-1} \caption[Posições dos parlamentares antes e depois da data em análise]{Posições dos parlamentares antes e depois da data em análise}\label{fig:exemplo-mudanca-de-comportamento}
+\end{figure}
+
+
+\end{knitrout}
+
+% Pseudocódigo
+%
+% \begin{enumerate}
+%   \item Para cada parlamentar, faça:
+%   \begin{enumerate}
+%     \item Crie dois parlamentares ``virtuais'', um com os votos do parlamentar
+%       antes da mudança, e o outro com os votos depois dela;
+%     \item Execute o W-NOMINATE na matriz completa de votações com todos os
+%       parlamentares e o parlamentar em análise substituído pelos parlamentares
+%       ``virtuais'';
+%     \item Guarde o resultado;
+%   \end{enumerate}
+%   \item Compara a mudança de cada parlamentar de interesse com todos os outros,
+%     para descobrir se ela (a mudança) foi significativa.
+% \end{enumerate}
+
+\section{Extração dos dados}
+
+
+
+Os dados das votações nominais foram extraídos a partir da API disponibilizada
+no site da Câmara dos Deputados. Eles compreendem 131.552 votos
+proferidos por 644 parlamentares em 432
+votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
+votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
+de deputados federais por partido. Só consideramos votos \verb|Sim| ou
+\verb|Não|.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/votacoes-por-mes-1} \caption[Distribuição de votações por mês na 54\textordfeminine{} legislatura]{Distribuição de votações por mês na 54\textordfeminine{} legislatura}\label{fig:votacoes-por-mes}
+\end{figure}
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/deputados-por-partido-1} \caption[Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura]{Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura}\label{fig:deputados-por-partido}
+\end{figure}
+
+
+\end{knitrout}
+
+\section{Análise}
+
+
+
+Seguindo a metodologia descrita na sessão
+\ref{sec:analise-saida-psb:metodologia}, dividimos a
+54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
+no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
+os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
+primeira votação depois dessa data ocorreu em
+08/10/2013 (identificador
+367), relacionada ao MPV 621/2013. Houve
+303 votações antes da ruptura e
+133 votações após. Dos 643
+parlamentares que votaram ao menos uma vez nesse período,
+470 passaram pelo nosso filtro de
+participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
+
+A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
+entre as posições dos parlamentares antes e depois da saída do PSB da base do
+governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
+sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
+mais governista, quem sai se torna mais oposicionista, e os outros mantém sua
+posição, mas existem diversos \emph{outliers}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/boxplot-diff-coalizao-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:boxplot-diff-coalizao}
+\end{figure}
+
+
+\end{knitrout}
+
+Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
+de posição em valores absolutos. Desses, analisemos os que não entraram nem
+saíram da coalizão: 
+
+\begin{description}
+\item[Dudimar Paxiuba] Apesar de continuar fora da coalizão, ele saiu do PSDB
+para o PROS em 2013, o que explicaria essa aproximação ao
+governo\footnote{\url{http://www2.camara.leg.br/deputados/pesquisa/layouts_deputados_biografia?pk=193033&tipo=0}}.
+\item[Rebecca Garcia] Não consegui explicar. A única coisa que encontrei foi
+que ela ia se candidatar a prefeitura de Manaus em 2012, mas desistiu porque
+vazou um áudio de uma conversa dela com seu amante na época, o ex-vereador Ari
+Moutinho. Não me parece ter relação.
+\item[Vicente Candido]Também não encontrei uma razão.
+\item[Dr. Grilo]Saiu do PSL para o Solidariedade, que pode explicar o
+afastamento do governo.
+\end{description}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|l|l|r|r|r}
+\hline
+Nome & Partido & Coalizão & Antes & Depois & Diferença\\
+\hline
+Wladimir Costa & PMDB & saiu & 0.32 & -0.60 & -0.92\\
+\hline
+Dudimar Paxiuba & PROS & nao\_mudou & -0.71 & 0.17 & 0.87\\
+\hline
+Luiz Nishimori & PL+PRONA>PR & entrou & -0.86 & -0.08 & 0.77\\
+\hline
+Domingos Dutra & PT & saiu & 0.52 & -0.16 & -0.68\\
+\hline
+Romário & PSB & saiu & 0.28 & -0.37 & -0.65\\
+\hline
+Genecias Noronha & PMDB & saiu & -0.01 & -0.64 & -0.63\\
+\hline
+Rebecca Garcia & PDS>PP & nao\_mudou & 0.39 & -0.23 & -0.62\\
+\hline
+Antonio Balhmann & PROS & saiu & 0.08 & 0.69 & 0.61\\
+\hline
+Vicente Candido & PT & nao\_mudou & 0.99 & 0.39 & -0.60\\
+\hline
+Dr. Grilo & PSL & nao\_mudou & 0.05 & -0.52 & -0.57\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:top-10-diffs}
+\end{table}
+
+\subsection{Os deputados do PSB mudaram de comportamento?}
+
+
+
+De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
+afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
+mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
+contrário da maioria, se aproximou do governo: Alexandre Toledo, que
+passou de -0,61 para -0,10 (diferença
+de 0,51). Analisando este caso, a razão se torna clara: ele
+era do PSDB e passou para o PSB em 2013. Apesar do PSB ter se tornado oposição,
+passando de uma posição mediana -0,01
+para -0,33, o PSDB é um opositor mais
+ferrenho ao governo, com posição mediana -0,87.
+
+Com base nesses dados, podemos concluir que o que já esperávamos: o PSB se
+afastou do governo.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/mudanca-psb-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:mudanca-psb}
+\end{figure}
+
+
+\end{knitrout}
+
+\section{Modelagem}
+
+Nosso objetivo agora é determinar se, baseado somente nas posições dos
+deputados federais de antes e depois da saída do PSB da coalizão, conseguimos
+inferir se um parlamentar mudou de lado (se era governo, se tornou oposição, ou
+vice-versa). Para isso, treinaremos um modelo \emph{Random Forest}.
+
+O primeiro passo é alterar a coluna ``Coalizão'' para somente dois valores: sim
+ou não. Nesse momento, nosso objetivo é determinar se o parlamentar mudou de
+lado, e não pra que lado ele foi\footnote{Sabendo se o parlamentar mudou de
+lado e qual era sua posição anterior, podemos inferir qual é sua nova posição
+(e.x.: se ele era oposição e mudou de lado, agora virou governo).}. Também
+retiraremos informações como nome e partido e parlamentares cuja posição não
+conseguimos estimar pois não houve votos o suficiente, e adicionamos o
+desvio-padrão de cada valor\footnote{Calculados usando parametric bootstrap.
+TODO: Explicar melhor}. No final, teremos uma tabela como a
+\ref{table:clean-data}.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r|r|l}
+\hline
+Antes & Antes SD & Depois & Depois SD & Diferença & Mudou de posição\\
+\hline
+0.32 & 0.17 & -0.60 & 0.16 & -0.92 & Sim\\
+\hline
+-0.71 & 0.12 & 0.17 & 0.08 & 0.87 & Não\\
+\hline
+-0.86 & 0.10 & -0.08 & 0.19 & 0.77 & Sim\\
+\hline
+0.52 & 0.13 & -0.16 & 0.13 & -0.68 & Sim\\
+\hline
+0.28 & 0.10 & -0.37 & 0.20 & -0.65 & Sim\\
+\hline
+-0.01 & 0.12 & -0.64 & 0.15 & -0.63 & Sim\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:clean-data}
+\end{table}
+
+Com os dados nesse formato, agora precisamos dividí-lo em dois grupos: um para
+treino e um para teste. Precisamos fazer isso para que as estimativas de
+precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino e
+20\% para testes. Também usamos o \emph{10-fold stratified cross validation}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## note: only 30 unique complexity parameters in default grid. Truncating the grid to 30 .
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
+a interação entre eles. Analisamos diversos números de preditores e, como pode
+ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
+sob a curva ROC usou 20 preditores e chegou a área de
+0,86 com desvio-padrão de 0,06.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/roc-vs-mtry-1} \caption[ROC como função do número de preditores]{ROC como função do número de preditores.}\label{fig:roc-vs-mtry}
+\end{figure}
+
+
+\end{knitrout}
+
+Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
+mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
+para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
+como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
+e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
+máximos locais dos pontos de corte e as respectivas sensibilidades e
+especificidades, com mínimos e máximos dentro de margem de confiança de
+95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.
+TODO: explicar melhor}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
+\end{figure}
+
+
+\end{knitrout}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|r|r|r|r|r|r}
+\hline
+cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.high\\
+\hline
+0.755 & 0.00 & 0.20 & 0.40 & 0.91 & 0.96 & 1.00\\
+\hline
+0.592 & 0.07 & 0.27 & 0.53 & 0.87 & 0.94 & 0.99\\
+\hline
+0.449 & 0.13 & 0.33 & 0.60 & 0.83 & 0.90 & 0.96\\
+\hline
+0.362 & 0.20 & 0.47 & 0.73 & 0.77 & 0.85 & 0.91\\
+\hline
+0.321 & 0.27 & 0.53 & 0.80 & 0.76 & 0.83 & 0.91\\
+\hline
+0.281 & 0.33 & 0.60 & 0.87 & 0.73 & 0.82 & 0.90\\
+\hline
+0.256 & 0.40 & 0.67 & 0.87 & 0.72 & 0.81 & 0.88\\
+\hline
+0.237 & 0.53 & 0.73 & 0.93 & 0.68 & 0.78 & 0.87\\
+\hline
+0.165 & 0.60 & 0.80 & 1.00 & 0.62 & 0.72 & 0.81\\
+\hline
+0.143 & 0.67 & 0.87 & 1.00 & 0.55 & 0.65 & 0.76\\
+\hline
+0.093 & 0.80 & 0.93 & 1.00 & 0.47 & 0.59 & 0.69\\
+\hline
+0.057 & 1.00 & 1.00 & 1.00 & 0.41 & 0.53 & 0.64\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
+\label{table:roc}
+\end{table}
+
 %\input{apendice-b}
 %\input{apendice-c}
 %\input{apendice-d}

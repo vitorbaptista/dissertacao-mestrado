@@ -1,4 +1,3 @@
-
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
 \section{Índice de Rice}
@@ -98,7 +97,18 @@ voto da maioria \cite{Figueiredo1995}, preferimos usar o voto da maioria.
 
 \section{Modelos espaciais de votação}
 
-
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{parlamentares} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{maioridade_penal} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{16}\hlstd{,} \hlnum{17}\hlstd{,} \hlnum{15}\hlstd{,} \hlnum{18}\hlstd{,} \hlnum{20}\hlstd{),}
+                           \hlkwc{salario_minimo} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1000}\hlstd{,} \hlnum{900}\hlstd{,} \hlnum{1200}\hlstd{,} \hlnum{1100}\hlstd{,} \hlnum{1500}\hlstd{))}
+\hlstd{maioridade_penal} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{16}\hlstd{,} \hlnum{18}\hlstd{)}
+\hlstd{salario_minimo} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{1200}\hlstd{,} \hlnum{1000}\hlstd{)}
+\hlstd{cutlines} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{maioridade_penal} \hlstd{=} \hlkwd{mean}\hlstd{(maioridade_penal),}
+                      \hlkwc{salario_minimo} \hlstd{=} \hlkwd{mean}\hlstd{(salario_minimo))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 A ideia básica de modelos espaciais de votação é que o conjunto de alternativas
 políticas de uma votação pode ser tratado como uma dimensão em um espaço
@@ -135,11 +145,18 @@ esteja em cima da linha de corte, ele é indiferente as alternativas. Caso algum
 legislador não siga essa previsão, ele é considerado um ``erro'' do modelo.
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
-\end{figure}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{(parlamentares,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= maioridade_penal,} \hlkwc{y} \hlstd{= salario_minimo))} \hlopt{+}
+  \hlkwd{geom_vline}\hlstd{(}\hlkwd{aes}\hlstd{(}\hlkwc{xintercept} \hlstd{= cutlines}\hlopt{$}\hlstd{maioridade_penal))} \hlopt{+}
+  \hlkwd{geom_hline}\hlstd{(}\hlkwd{aes}\hlstd{(}\hlkwc{yintercept} \hlstd{= cutlines}\hlopt{$}\hlstd{salario_minimo))} \hlopt{+}
+  \hlkwd{geom_point}\hlstd{(}\hlkwc{size} \hlstd{=} \hlnum{3}\hlstd{)} \hlopt{+}
+  \hlkwd{theme_bw}\hlstd{()} \hlopt{+}
+  \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"Maioridade penal"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Salário mínimo"}\hlstd{)}
+\end{alltt}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}ggplot"{}}}\end{kframe}
 \end{knitrout}
 
 Formalmente, sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo

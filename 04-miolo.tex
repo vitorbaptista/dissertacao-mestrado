@@ -1,4 +1,19 @@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{legislatures} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{51}\hlstd{,} \hlnum{52}\hlstd{,} \hlnum{53}\hlstd{,} \hlnum{54}\hlstd{)}
+\hlstd{votes} \hlkwb{=} \hlkwd{list}\hlstd{()}
+\hlstd{votes_metadata} \hlkwb{=} \hlkwd{list}\hlstd{()}
 
+\hlkwa{for} \hlstd{(legislature} \hlkwa{in} \hlstd{legislatures) \{}
+  \hlstd{votes[[legislature]]} \hlkwb{=} \hlkwd{read.csv}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"data/"}\hlstd{, legislature,} \hlstr{".csv"}\hlstd{,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{),}
+                                  \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{check.names} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+  \hlstd{votes_metadata[[legislature]]} \hlkwb{=} \hlkwd{read.csv}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"data/"}\hlstd{, legislature,} \hlstr{"-votacoes.csv"}\hlstd{,} \hlkwc{sep}\hlstd{=}\hlstr{""}\hlstd{),}
+                                           \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{check.names} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
@@ -36,7 +51,11 @@ apêndice \ref{apendice:lista-partidos}.
 \begin{table}
 \centering
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{kable}\hlstd{(}\hlkwd{head}\hlstd{(votes[[}\hlnum{54}\hlstd{]][,} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{9}\hlstd{)]))}
+\end{alltt}
+\end{kframe}
 \begin{tabular}{r|l|l|l|r|r|r|r|r}
 \hline
 id & name & party & state & 76 & 273 & 271 & 272 & 485\\
@@ -66,7 +85,15 @@ mostramos todos os votos por limitações de espaço.}
 \begin{table}
 \centering
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{max_str_length} \hlkwb{=} \hlnum{20}
+\hlstd{table_data} \hlkwb{=} \hlkwd{head}\hlstd{(votes_metadata[[}\hlnum{54}\hlstd{]],} \hlnum{10}\hlstd{)}
+\hlstd{table_data}\hlopt{$}\hlstd{resumo} \hlkwb{=} \hlkwd{paste0}\hlstd{(}\hlkwd{strtrim}\hlstd{(table_data}\hlopt{$}\hlstd{resumo, max_str_length),} \hlstr{"..."}\hlstd{)}
+\hlstd{table_data}\hlopt{$}\hlstd{obj_votacao} \hlkwb{=} \hlkwd{paste0}\hlstd{(}\hlkwd{strtrim}\hlstd{(table_data}\hlopt{$}\hlstd{obj_votacao, max_str_length),} \hlstr{"..."}\hlstd{)}
+\hlkwd{kable}\hlstd{(table_data)}
+\end{alltt}
+\end{kframe}
 \begin{tabular}{r|r|r|l|l|l}
 \hline
 id & id\_sessao & proposicao\_id & data & resumo & obj\_votacao\\
@@ -131,7 +158,24 @@ definidas pela Constituição de 1988.
 \begin{table}
 \centering
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{num_deputados} \hlkwb{=} \hlkwd{simplify2array}\hlstd{(}\hlkwd{lapply}\hlstd{(votes[legislatures], nrow))}
+\hlstd{num_votacoes} \hlkwb{=} \hlkwd{simplify2array}\hlstd{(}\hlkwd{lapply}\hlstd{(votes[legislatures], ncol))} \hlopt{-} \hlnum{4}
+\hlstd{num_votos} \hlkwb{=} \hlkwd{simplify2array}\hlstd{(}\hlkwd{lapply}\hlstd{(votes[legislatures],} \hlkwa{function} \hlstd{(}\hlkwc{v}\hlstd{) \{}
+  \hlstd{just_votes} \hlkwb{=} \hlstd{v[,} \hlopt{-}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{)]}
+  \hlkwd{sum}\hlstd{(just_votes} \hlopt{==} \hlnum{0} \hlopt{|} \hlstd{just_votes} \hlopt{==} \hlnum{1}\hlstd{,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{\}))}
+\hlstd{data} \hlkwb{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{legislature} \hlstd{= legislatures,}
+                  \hlkwc{num_deputados} \hlstd{= num_deputados,}
+                  \hlkwc{num_votacoes} \hlstd{= num_votacoes,}
+                  \hlkwc{num_votos} \hlstd{= num_votos)}
+
+\hlkwd{kable}\hlstd{(data,}
+      \hlkwc{row.names} \hlstd{=} \hlnum{FALSE}\hlstd{,}
+      \hlkwc{col.names} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Legislatura"}\hlstd{,} \hlstr{"Deputados Federais"}\hlstd{,} \hlstr{"Votações"}\hlstd{,} \hlstr{"Votos"}\hlstd{))}
+\end{alltt}
+\end{kframe}
 \begin{tabular}{r|r|r|r}
 \hline
 Legislatura & Deputados Federais & Votações & Votos\\
@@ -158,8 +202,8 @@ Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
 deputados federais e votações por legislatura. Consideramos deputados federais
 todos parlamentares que participaram de alguma votação na Câmara dos Deputados
 no período, por isso o número é maior do que o número de cadeiras. Por
-legislatura, temos em média 623,80 deputados e 477,80
-votações com 332,04 votos cada.
+legislatura, temos em média 623.8 deputados e 477.8
+votações com 332.0351612 votos cada.
 
 \section{Componentes}
 

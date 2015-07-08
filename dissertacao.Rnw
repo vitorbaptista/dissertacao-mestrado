@@ -174,10 +174,35 @@ showstringspaces=false
 %% Da seguinte maneira:
 %% 
 
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+library(ggplot2)
+library(caret)
+library(doParallel)
+library(randomForest)
+
+opts_chunk$set(echo = FALSE, fig.height = 4)
+options(digits = 2)
+set.seed(1)
+
+knit_hooks$set(inline = function(x) {
+  if (is.numeric(x)) {
+    num = ifelse(x == round(x), sprintf("%d", x), sprintf("%.2f", x))
+    prettyNum(num, decimal.mark = ",", big.mark = ".")
+  } else {
+    x
+  }
+})
+
+format_date <- function(date) {
+  format(as.POSIXct(date), "%d/%m/%Y")
+}
+@
+
 \input{01-introducao}
-\input{02-fundamentacao-teorica}
+\Sexpr{knit_child('02-fundamentacao-teorica.Rnw')}
 \input{03-trabalhos-relacionados}
-\input{04-miolo}
+\Sexpr{knit_child('04-miolo.Rnw')}
 \input{05-avaliacao-experimental}
 \input{06-conclusao}
 
@@ -197,7 +222,8 @@ showstringspaces=false
 
 \appendix
 \input{apendice-lista-dos-partidos}
-\input{analise-da-saida-do-psb-da-coalizao-dilma-1}
+\Sexpr{knit_child('analise-da-saida-do-psb-da-coalizao-dilma-1.Rnw')}
+
 %\input{apendice-b}
 %\input{apendice-c}
 %\input{apendice-d}

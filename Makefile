@@ -5,4 +5,4 @@ watch:
 	latexmk -shell-escape -pdf -pvc -interaction=nonstopmode dissertacao.tex
 
 watch-knitr:
-	knitr *.Rnw
+	knitr dissertacao.Rnw

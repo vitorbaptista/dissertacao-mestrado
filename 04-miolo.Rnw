@@ -1,31 +1,12 @@
-<<echo=FALSE>>=
-suppressMessages(library(knitr))
-suppressMessages(library(ggplot2))
-
-opts_chunk$set(echo = FALSE, fig.height = 4)
-options(digits = 2)
-
-formata_data <- function(data) {
-  format(as.POSIXct(data), "%d/%m/%Y")
-}
-
-knit_hooks$set(inline = function(x) {
-  if (is.numeric(x)) {
-    num = ifelse(x == round(x), sprintf("%d", x), sprintf("%.2f", x))
-    prettyNum(num, decimal.mark = ",", big.mark = ".")
-  }
-})
-
-setwd("data")
-
+<<>>=
 legislatures = c(50, 51, 52, 53, 54)
 votes = list()
 votes_metadata = list()
 
 for (legislature in legislatures) {
-  votes[[legislature]] = read.csv(paste(legislature, ".csv", sep=""),
+  votes[[legislature]] = read.csv(paste("data/", legislature, ".csv", sep=""),
                                   header = TRUE, check.names = FALSE)
-  votes_metadata[[legislature]] = read.csv(paste(legislature, "-votacoes.csv", sep=""),
+  votes_metadata[[legislature]] = read.csv(paste("data/", legislature, "-votacoes.csv", sep=""),
                                            header = TRUE, check.names = FALSE)
 }
 @
