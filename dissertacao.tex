@@ -512,32 +512,51 @@ Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitet
 
 \section{Os dados}
 
-Nessa seção descreverei o processo de extração, transformação e
-carga\footnote{Do inglês, \footnote{extract, transform, load} (ETL)} dos dados.
+Para deesenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
+resultados das votações nominais na Câmara dos Deputados e informações sobre as
+coalizões governamentais. Nessa seção descreverei o processo de extração,
+transformação e carga\footnote{Do inglês, \footnote{extract, transform, load}
+(ETL)} desses dados, desde suas fontes até estarem prontos para uso no modelo.
 
 \subsection{Extração}
 \label{sec:miolo:extracao}
 
-A Câmara dos Deputados disponibiliza em sua página na
-web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}}
-diversos conjuntos de dados em formatos abertos. Até a data de escrita deste
-trabalho, as votações nominais e votos só estavam disponíveis por proposição através
-de uma \gls{API}, o que nos obrigou a desenvolver um software para automatizar
-esse processo.
+O \gls{CEBRAP} reúne diversos dados sobre o legislativo brasileiro. Para este
+trabalho, extraímos a lista das coalizões governamentais do Brasil.
+\citeonline{Figueiredo2007} se inspirou no trabalho de \citeonline{Muller2000}
+para definir os critérios de início de uma nova coalizão. Eles são: i) a
+mudança da legislatura, e; ii) alterações no conjunto de partidos que controlam
+os ministérios. Com base nisso e pesquisando em fontes oficiais e
+jornalísticas, \citeauthor{Figueiredo2007} listou as coalizões formadas
+durante as duas últimas constituições democráticas, nos períodos de 1946 até
+1964, e de 1988 até os dias atuais.
+
+De posse desses dados, também precisamos do resultado das votações nominais
+ocorridas na Câmara Federal. O banco de dados do \gls{CEBRAP} possui essas
+informações, mas como o modelo desenvolvido foi pensado para ser usado
+continuamente, monitorando o comportamento dos deputados federais, preferimos
+buscá-los diretamente da fonte.
+
+A Câmara disponibiliza diversos conjuntos de dados em seu sua página na
+web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}}.
+Dentre eles está o histórico dos resultados das votações nominais que
+precisamos. Infelizmente, até a data de escrita deste trabalho, esses dados só
+estavam disponíveis para consulta individualmente através de uma \gls{API}, mas
+precisávamos do conjunto completo para análise local.  Isto nos obrigou a
+desenvolver um software que busca, uma a uma, as votações ocorridas no nosso
+período de interesse.
 
 Esse software\footnote{Disponível em:
-\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}, conhecido como \emph{crawler} (do inglês, ``raspador''), usa os
-métodos \emph{ListarProposicoesVotadasEmPlenario}, que a partir de um ano
-retorna a lista de proposições votadas, e \emph{ObterVotacaoProposicao}, que
-retorna todas as votações ocorridas em uma proposição a partir do seu tipo,
-número e ano. Ele foi desenvolvido em Python usando a biblioteca Scrapy
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}, conhecido
+como \emph{crawler} (do inglês, ``raspador''), usa os métodos
+\emph{ListarProposicoesVotadasEmPlenario}, que a partir de um ano retorna a
+lista de proposições votadas, e \emph{ObterVotacaoProposicao}, que retorna
+todas as votações ocorridas em uma proposição a partir do seu tipo, número e
+ano. Ele foi desenvolvido em Python usando a biblioteca Scrapy
 \cite{Python276,Scrapy}. Além de baixar os dados, ele também converte a lista
 de proposições votadas em um \gls{CSV} e as votações por proposição em um
-\gls{JSON}, a partir do original em \gls{XML}, pois há um melhor suporte
-ferramental para esses formatos\footnote{Poderia se argumentar que essa etapa
-pertence a subseção \ref{sec:miolo:transformacao}, transformação. Preferimos
-mantê-la na subseção \ref{sec:miolo:extracao} pela separação dos programas que
-executam essas etapas.}
+\gls{JSON}, a partir do original em \gls{XML}, pois mais ferramentas suportam
+esses formatos.
 
 \subsection{Transformação}
 \label{sec:miolo:transformacao}
