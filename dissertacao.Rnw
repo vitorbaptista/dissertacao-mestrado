@@ -18,6 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[a4paper,titlepage]{ppgi}
+\usepackage[portuguese,ruled,linesnumbered]{algorithm2e}
 \usepackage[english,portuges]{babel}
 \usepackage{ppgi,mestre,epsfig}
 \usepackage{times}
@@ -36,6 +37,11 @@
     urlcolor=black
  }
 
+% Corrige bug no algorithm2e que usa termos em espanhol ao invés de português
+\SetKwFor{Para}{para}{fa\c{c}a}{fim para}
+\SetKwFor{ParaPar}{para}{fa\c{c}a em paralelo}{fim para}
+\SetKwFor{ParaCada}{para cada}{fa\c{c}a}{fim para cada}
+\SetKwFor{ParaTodo}{para todo}{fa\c{c}a}{fim para todo}
 
 %-------------------------- Para usar acentuacaoo em sistemas ISO8859-1 ------------------------------------
 % Se estiver usando o Microsoft Windows ou linux com essa codificacao, descomente essas linhas abaixo
@@ -62,8 +68,10 @@
 \newacronym{IR}{IR}{Índice de Rice}
 \newacronym{PT}{PT}{Partido dos Trabalhadores}
 \newacronym{PSOL}{PSOL}{Partido Socialismo e Liberdade}
-\newacronym{API}{API}{Application Programming Interface}
-\newacronym{XML}{XML}{eXtensible Markup Language}
+\newacronym{API}{API}{\emph{Application Programming Interface}}
+\newacronym{XML}{XML}{\emph{eXtensible Markup Language}}
+\newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
+\newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
 
 %\input{psfig.sty}

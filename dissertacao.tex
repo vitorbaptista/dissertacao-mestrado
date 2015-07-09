@@ -67,6 +67,7 @@
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
+\usepackage[portuguese,ruled,linesnumbered]{algorithm2e}
 \usepackage[english,portuges]{babel}
 \usepackage{ppgi,mestre,epsfig}
 \usepackage{times}
@@ -85,6 +86,11 @@
     urlcolor=black
  }
 
+% Corrige bug no algorithm2e que usa termos em espanhol ao invés de português
+\SetKwFor{Para}{para}{fa\c{c}a}{fim para}
+\SetKwFor{ParaPar}{para}{fa\c{c}a em paralelo}{fim para}
+\SetKwFor{ParaCada}{para cada}{fa\c{c}a}{fim para cada}
+\SetKwFor{ParaTodo}{para todo}{fa\c{c}a}{fim para todo}
 
 %-------------------------- Para usar acentuacaoo em sistemas ISO8859-1 ------------------------------------
 % Se estiver usando o Microsoft Windows ou linux com essa codificacao, descomente essas linhas abaixo
@@ -111,8 +117,10 @@
 \newacronym{IR}{IR}{Índice de Rice}
 \newacronym{PT}{PT}{Partido dos Trabalhadores}
 \newacronym{PSOL}{PSOL}{Partido Socialismo e Liberdade}
-\newacronym{API}{API}{Application Programming Interface}
-\newacronym{XML}{XML}{eXtensible Markup Language}
+\newacronym{API}{API}{\emph{Application Programming Interface}}
+\newacronym{XML}{XML}{\emph{eXtensible Markup Language}}
+\newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
+\newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
 
 %\input{psfig.sty}
@@ -502,34 +510,59 @@ Texto bem geral sobre data science. Pode ser interessante falar sobre algum algo
 
 Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitetura e como cada parte funciona e pode ser modificada.
 
-\section{Coleta dos dados}
+\section{Os dados}
 
-A Câmara dos Deputados disponibiliza em seu site na
-web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}} uma
-\gls{API} para acesso a diversos dados. Para extrair os resultados das
-votações, usamos os métodos
-\emph{ListarProposicoesVotadasEmPlenario}\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/proposicoes-1/ProposicoesVotadasEmPlenario}}
-que a partir de um ano nos retorna a lista de proposições votadas; e o
-\emph{ObterVotacaoProposicao}\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/proposicoes-1/obtervotacaoproposicao}}
-que a partir do tipo, número e ano de uma proposição retorna os resultados das
-votações ocorridas.  
+Nessa seção descreverei o processo de extração, transformação e
+carga\footnote{Do inglês, \footnote{extract, transform, load} (ETL)} dos dados.
 
-Os dados são retornados no formato \gls{XML}. De posse deles, desenvolvemos um
-programa em
-Python\footnote{\url{https://github.com/vitorbaptista/codigo-mestrado}} para
-transformá-los e importá-los em um banco de dados
-SQLite\footnote{\url{https://www.sqlite.org/}}. A partir desse banco, geramos
-dois arquivos por legislatura: um com os dados dos parlamentares e seus votos
-(tabela \ref{table:votes}) e outro com os detalhes das votações (tabela
+\subsection{Extração}
+\label{sec:miolo:extracao}
+
+A Câmara dos Deputados disponibiliza em sua página na
+web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}}
+diversos conjuntos de dados em formatos abertos. Até a data de escrita deste
+trabalho, as votações nominais e votos só estavam disponíveis por proposição através
+de uma \gls{API}, o que nos obrigou a desenvolver um software para automatizar
+esse processo.
+
+Esse software\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}, conhecido como \emph{crawler} (do inglês, ``raspador''), usa os
+métodos \emph{ListarProposicoesVotadasEmPlenario}, que a partir de um ano
+retorna a lista de proposições votadas, e \emph{ObterVotacaoProposicao}, que
+retorna todas as votações ocorridas em uma proposição a partir do seu tipo,
+número e ano. Ele foi desenvolvido em Python usando a biblioteca Scrapy
+\cite{Python276,Scrapy}. Além de baixar os dados, ele também converte a lista
+de proposições votadas em um \gls{CSV} e as votações por proposição em um
+\gls{JSON}, a partir do original em \gls{XML}, pois há um melhor suporte
+ferramental para esses formatos\footnote{Poderia se argumentar que essa etapa
+pertence a subseção \ref{sec:miolo:transformacao}, transformação. Preferimos
+mantê-la na subseção \ref{sec:miolo:extracao} pela separação dos programas que
+executam essas etapas.}
+
+\subsection{Transformação}
+\label{sec:miolo:transformacao}
+
+Usando outro programa também desenvolvido em Python\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/codigo-mestrado}}, dividimos a
+transformação em duas etapas. Primeiramente, a partir dos arquivos gerados na
+fase anterior, fazemos:
+
+\begin{itemize}
+  \item Retiramos espaços em branco no começo ou final dos campos;
+  \item Normalizamos os nomes dos partidos seguindo o padrão adotado pelo
+\gls{CEBRAP}, onde mudanças de nome são identificados pela primeira e última
+sigla (ex.: PJ se torna PRN que se torna PJC, então temos PJ>PTC) e fusões são
+identificados pelo maior partido na data da fusão e o novo nome (ex.: PL e
+PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no apêndice
+\ref{apendice:lista-partidos}.
+\end{itemize}
+
+O resultado dessa etapa é guardado em um banco de dados SQLite com o auxílio da
+biblioteca SQLAlchemy
+\cite{SQLite3,SQLAlchemy}. A partir daí, geramos dois arquivos \gls{CSV} por
+legislatura: um contendo os dados dos parlamentares e seus votos (tabela
+\ref{table:votes}) e outro contendo os detalhes das votações (tabela
 \ref{table:votes-metadata}).
-
-Os nomes dos partidos foram normalizados para evitar que consideremos fusões ou
-mudanças de nomes de partidos como um novo partido. Seguimos o padrão adotado
-pelo \gls{CEBRAP}, onde mudanças de nome são identificados pela primeira e
-última sigla (ex.: PJ se torna PRN que se torna PJC, então temos PJ>PTC) e
-fusões são identificados pelo maior partido na data da fusão e o novo nome
-(ex.: PL e PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no
-apêndice \ref{apendice:lista-partidos}.
 
 \begin{table}
 \centering
@@ -555,8 +588,7 @@ id & name & party & state & 76 & 273 & 271 & 272 & 485\\
 
 
 \end{knitrout}
-\caption{Dados com detalhes dos parlamentares e seus respectivos votos. Não
-mostramos todos os votos por limitações de espaço.}
+\caption{Exemplo da tabela com detalhes dos parlamentares e seus respectivos votos.}
 \label{table:votes}
 \end{table}
 
@@ -593,12 +625,36 @@ id & id\_sessao & proposicao\_id & data & resumo & obj\_votacao\\
 
 
 \end{knitrout}
-\caption{Dados com detalhes sobre cada votação. Os campos ``resumo'' e
+\caption{Exemplo da tabela com detalhes das votações. Os campos ``resumo'' e
 ``obj\_votacao'' foram limitados a 20 caracteres por
 questões de formatação da página.}
 \label{table:votes-metadata}
 \end{table}
 \end{landscape}
+
+Esses arquivos, por sua vez, são usados juntamente com os dados das coalizões
+advindos do banco de dados legislativos do \gls{CEBRAP} em um programa escrito
+em R que faz 
+
+\begin{algorithm}[H]
+ \Entrada{Votações, votos e lista de parlamentares que entraram ou saíram da coalizão}
+ \Saida{Variáveis dependentes e independentes}
+ initialization\;
+ $resultado \longleftarrow ()$\;
+ $legislaturas \longleftarrow (50, 51, 52, 53, 54)$\;
+ \ParaCada{$legislatura$ em $legislaturas$}{
+   \Para{$i \longleftarrow 100, 110, ..., numero\_de\_votacoes_{\text{legislatura}}$}{
+     $votos \longleftarrow votos_{\text{legislatura}}(1..i)$\;
+     $indice\_votacao\_media \longleftarrow floor(i / 2)$\;
+     \ParaCada{$parlamentar$ em $votos$}{
+       divida os votos do $parlamentar$ de $1..indice\_votacao\_media$ e $indice\_votacao\_media..i$\;
+       execute o $wnominate$ usando $votos$ 10 vezes para gerar os erros-padrão\;
+       guarde os dois resultados do $parlamentar$\;
+     }
+   }
+ }
+ \caption{How to write algorithms}
+\end{algorithm}
 
 % \begin{listing}[ht]
 % \begin{minted}{xml}
@@ -658,6 +714,20 @@ todos parlamentares que participaram de alguma votação na Câmara dos Deputado
 no período, por isso o número é maior do que o número de cadeiras. Por
 legislatura, temos em média 623,80 deputados e 477,80
 votações com 332,04 votos cada.
+
+\section{Construção do modelo}
+
+% TODO: Preciso falar sobre a variável de coalizão, de onde ela veio, como é
+% definida e como a usamos. Também preciso falar do período de estudo (100
+% votações).
+
+\subsection{Variável independente}
+
+A variável independente indica se o parlamentar entrou ou saiu da coalizão do
+governo no período de estudo. Ela pode tomar os valores \verb|N|, caso ele
+tenha se mantido no governo ou oposição, ou \verb|S| caso tenha trocado de
+lado. Um favor importante é como definimos o período de estudo. Em outras
+palavras, suponha que 
 
 \section{Componentes}
 
