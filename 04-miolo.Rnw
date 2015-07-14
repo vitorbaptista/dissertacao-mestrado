@@ -17,24 +17,46 @@ Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitet
 
 \section{Os dados}
 
-Para deesenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
+Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
 resultados das votações nominais na Câmara dos Deputados e informações sobre as
 coalizões governamentais. Nessa seção descreverei o processo de extração,
-transformação e carga\footnote{Do inglês, \footnote{extract, transform, load}
+transformação e carga\footnote{Do inglês, \emph{extract, transform and load}
 (ETL)} desses dados, desde suas fontes até estarem prontos para uso no modelo.
+Nosso objetivo é criar uma tabela como a \ref{table:dataset-final}, com os
+valores dos pontos ideais dos deputados federais (nossas variáveis
+independentes) e uma coluna definindo se eles mudaram de posicionamento ou não
+no período (nossa variável dependente).
+
+Nos restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
+legislatura, que compreende o período de 20 anos entre o início do primeiro
+governo de Fernando Henrique Cardoso (FHC) em 1995 até o final do primeiro
+governo de Dilma Rousseff em 2015. Escolhemos começar a análise no governo de
+FHC pois é quando, de acordo com \citeonline{Freitas2008}, termina a fase de
+acomodação dos parlamentares as regras definidas pela Constituição de 1988.
+
+\begin{table}
+\centering
+<<>>=
+data = data.frame(antes = c(0.55, 0.9, -0.3),
+                  depois = c(-0.4, 0.85, 0.4),
+                  mudou_coalizao = c("Sim", "Não", "Sim"))
+kable(data)
+@
+\caption{Exemplo da tabela usada para treinar o algoritmo.}
+\label{table:dataset-final}
+\end{table}
 
 \subsection{Extração}
 \label{sec:miolo:extracao}
 
 O \gls{CEBRAP} reúne diversos dados sobre o legislativo brasileiro. Para este
-trabalho, extraímos a lista das coalizões governamentais do Brasil.
+trabalho, extraímos dele a lista das coalizões governamentais do Brasil.
 \citeonline{Figueiredo2007} se inspirou no trabalho de \citeonline{Muller2000}
 para definir os critérios de início de uma nova coalizão. Eles são: i) a
 mudança da legislatura, e; ii) alterações no conjunto de partidos que controlam
-os ministérios. Com base nisso e pesquisando em fontes oficiais e
-jornalísticas, \citeauthor{Figueiredo2007} listou as coalizões formadas
-durante as duas últimas constituições democráticas, nos períodos de 1946 até
-1964, e de 1988 até os dias atuais.
+os ministérios. Com base nisso, \citeauthor{Figueiredo2007} listou as coalizões
+formadas durante as duas últimas constituições democráticas, nos períodos de
+1946 até 1964, e de 1988 até os dias atuais.  
 
 De posse desses dados, também precisamos do resultado das votações nominais
 ocorridas na Câmara Federal. O banco de dados do \gls{CEBRAP} possui essas
@@ -63,13 +85,11 @@ de proposições votadas em um \gls{CSV} e as votações por proposição em um
 \gls{JSON}, a partir do original em \gls{XML}, pois mais ferramentas suportam
 esses formatos.
 
-\subsection{Transformação}
-\label{sec:miolo:transformacao}
+\subsection{Limpeza}
 
 Usando outro programa também desenvolvido em Python\footnote{Disponível em:
-\url{https://github.com/vitorbaptista/codigo-mestrado}}, dividimos a
-transformação em duas etapas. Primeiramente, a partir dos arquivos gerados na
-fase anterior, fazemos:
+\url{https://github.com/vitorbaptista/codigo-mestrado}}, limpamos os dados
+extraídos fazendo:
 
 \begin{itemize}
   \item Retiramos espaços em branco no começo ou final dos campos;
@@ -82,11 +102,10 @@ PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no apêndice
 \end{itemize}
 
 O resultado dessa etapa é guardado em um banco de dados SQLite com o auxílio da
-biblioteca SQLAlchemy
-\cite{SQLite3,SQLAlchemy}. A partir daí, geramos dois arquivos \gls{CSV} por
-legislatura: um contendo os dados dos parlamentares e seus votos (tabela
-\ref{table:votes}) e outro contendo os detalhes das votações (tabela
-\ref{table:votes-metadata}).
+biblioteca SQLAlchemy \cite{SQLite3,SQLAlchemy}. A partir daí, geramos dois
+arquivos \gls{CSV} por legislatura: um contendo os dados dos parlamentares e
+seus votos (tabela \ref{table:votes}) e outro contendo os detalhes das votações
+(tabela \ref{table:votes-metadata}). São esses arquivos 
 
 \begin{table}
 \centering
@@ -114,55 +133,36 @@ questões de formatação da página.}
 \end{table}
 \end{landscape}
 
-Esses arquivos, por sua vez, são usados juntamente com os dados das coalizões
-advindos do banco de dados legislativos do \gls{CEBRAP} em um programa escrito
-em R que faz 
+\subsection{Transformação}
+\label{sec:miolo:transformacao}
 
-\begin{algorithm}[H]
- \Entrada{Votações, votos e lista de parlamentares que entraram ou saíram da coalizão}
- \Saida{Variáveis dependentes e independentes}
- initialization\;
- $resultado \longleftarrow ()$\;
- $legislaturas \longleftarrow (50, 51, 52, 53, 54)$\;
- \ParaCada{$legislatura$ em $legislaturas$}{
-   \Para{$i \longleftarrow 100, 110, ..., numero\_de\_votacoes_{\text{legislatura}}$}{
-     $votos \longleftarrow votos_{\text{legislatura}}(1..i)$\;
-     $indice\_votacao\_media \longleftarrow floor(i / 2)$\;
-     \ParaCada{$parlamentar$ em $votos$}{
-       divida os votos do $parlamentar$ de $1..indice\_votacao\_media$ e $indice\_votacao\_media..i$\;
-       execute o $wnominate$ usando $votos$ 10 vezes para gerar os erros-padrão\;
-       guarde os dois resultados do $parlamentar$\;
-     }
-   }
- }
- \caption{How to write algorithms}
-\end{algorithm}
+Nesta etapa, calculamos a mudança na posição dos pontos ideais dos deputados
+federais entre os dois períodos de interesse e definimos se, segundo os dados
+do \gls{CEBRAP}, houve ou não uma alteração na coalizão no período.
 
-% \begin{listing}[ht]
-% \begin{minted}{xml}
-% <proposicoes>
-%   <proposicao>
-%     <codProposicao>19319</codProposicao>
-%     <nomeProposicao>PL 3232/1992</nomeProposicao>
-%     <dataVotacao>10/06/2014</dataVotacao>
-%   </proposicao>
-%   <proposicao>
-%     <codProposicao>43617</codProposicao>
-%     <nomeProposicao>PLP 275/2001</nomeProposicao>
-%     <dataVotacao>22/04/2014</dataVotacao>
-%   </proposicao>
-%   <!-- Continua... -->
-% </proposicoes>
-% \end{minted}
-% \caption{Resultado da API \emph{ListarProposicoesVotadasEmPlenario} usando o ano 2014 como parâmetro}
-% \end{listing}
+O cálculo da mudança nos pontos ideais é feito segundo a metologia de
+\citeonline{Poole2005} descrita na sessão
+\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}. Para isso,
+desenvolvemos um programa\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/codigo-mestrado}} na linguagem R usando e
+as bibliotecas wnominate e pscl \cite{R,R:wnominate,R:pscl}.
 
-Restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
-legislatura, que compreende um período de 20 anos, entre o início do primeiro
-governo de Fernando Henrique Cardoso em 1995 até o final do primeiro governo de
-Dilma Rousseff em 2015. Esse recorte foi feito pois é quando, de acordo com
-\cite{Freitas2008}, termina a fase de acomodação dos parlamentares as regras
-definidas pela Constituição de 1988.
+Existem duas variáveis que precisam ser definidas para usarmos a metodologia de
+\citeauthor{Poole2005}: os períodos de análise da mudança de comportamento e o
+número de repetições para cálculo do erro das estimativas. Com relação ao
+cálculo do erro, \citeauthor{Poole2005} recomenda 101 repetições. Apesar disso,
+nos limitamos a 10 repetições por restrições na nossa capacidade de
+processamento.
+
+Para definir os períodos de análise, levamos em consideração os critérios de
+escolha de votações do W-NOMINATE, que exige ao menos 20 votações com no mínimo
+2,5\% de votos contrários a maioria. Definimos períodos de 12 meses dentro de
+uma mesma legislatura, divididos em duas partes de mesmo tamanho (o primeiro e
+o último semestre). Esses períodos iniciam no primeiro dia de cada mês, desde o
+01/Fev do primeiro ano da legislatura até o do penúltimo. Por exemplo, na
+54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
+01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
+01/Fev/2015. Existem 37 desses períodos por legislatura.
 
 \begin{table}
 \centering
@@ -190,8 +190,9 @@ Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
 deputados federais e votações por legislatura. Consideramos deputados federais
 todos parlamentares que participaram de alguma votação na Câmara dos Deputados
 no período, por isso o número é maior do que o número de cadeiras. Por
-legislatura, temos em média \Sexpr{mean(num_deputados)} deputados e \Sexpr{mean(num_votacoes)}
-votações com \Sexpr{mean(num_votos) / mean(num_votacoes)} votos cada.
+legislatura, temos em média \Sexpr{mean(num_deputados)} deputados e
+\Sexpr{mean(num_votacoes)} votações com \Sexpr{mean(num_votos) /
+mean(num_votacoes)} votos cada.
 
 \section{Construção do modelo}
 
@@ -199,13 +200,39 @@ votações com \Sexpr{mean(num_votos) / mean(num_votacoes)} votos cada.
 % definida e como a usamos. Também preciso falar do período de estudo (100
 % votações).
 
-\subsection{Variável independente}
+\subsection{Variável dependente}
 
-A variável independente indica se o parlamentar entrou ou saiu da coalizão do
+A variável dependente indica se o parlamentar entrou ou saiu da coalizão do
 governo no período de estudo. Ela pode tomar os valores \verb|N|, caso ele
 tenha se mantido no governo ou oposição, ou \verb|S| caso tenha trocado de
-lado. Um favor importante é como definimos o período de estudo. Em outras
-palavras, suponha que 
+lado. Um favor importante é como definimos o período de estudo, ou seja, quando
+consideramos que um parlamentar mudou de lado?
+
+Se considerarmos que ele mudou de lado somente quando seu partido entrou (ou
+saiu) da coalizão, o objetivo deste trabalho, de prever quando um parlamentar
+vai mudar de posicionamento com base no padrão de votação, é impossível. Se um
+parlamentar só muda de comportamento depois de entrar (ou sair) oficialmente da
+coalizão, na melhor hipótese nosso algoritmo conseguiria detectar as datas de
+entrada (ou saída). Em outras palavras, não conseguiríamos prever essa mudança.
+Por isso, a hipótese essencial para nosso trabalho é que os parlamentares mudam
+de comportamento antes de entrarem (ou saírem) da coalizão. Mas quanto antes?
+
+Se escolhermos um período maior do que o real, estaremos ``ensinando'' nosso
+algoritmo algo errado. Se, por outro lado, escolhermos um período menor, também
+teremos problemas. Como complicador, é provável que não exista um valor correto
+em todas as ocasiões. Algumas vezes, a mudança de comportamento pode acontecer
+2 meses antes da mudança oficial de posicionamento; outras, ela pode ocorrer 10
+meses antes. Como escolher, então?
+
+Não há uma resposta fácil para esta pergunta. Neste trabalho, considerei os 6
+meses antes da mudança oficial de posicionamento. Obtive bons resultados, mas
+este é um ponto que pode ser melhor estudado, tanto usando outros valores,
+quanto analisando se esses valores mudam dependendo da legislatura.
+
+\subsection{Variáveis independentes}
+
+Usamos os pontos ideais do parlamentar estimado usando o W-NOMINATE e seus
+respectivos erros-padrão como variáveis independentes.
 
 \section{Componentes}
 
