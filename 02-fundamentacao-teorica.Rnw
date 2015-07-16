@@ -1,100 +1,5 @@
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
-\section{Índice de Rice}
-
-O \gls{IR} é uma métrica para o cálculo da coesão\footnote{Neste trabalho
-entendemos por coesão o grau de unidade do partido nas decisões legislativas
-tomadas em votações nominais, independente se isso ocorre porque seus membros
-têm uma ideologia semelhante, ou porque seus líderes conseguem discipliná-los.}
-entre grupos em uma votação. Desde sua introdução em \cite{Rice1924}, ele vem
-sendo amplamente utilizado em estudos legislativos por ser intuitivo, flexível
-e facilmente interpretável \cite{Neiva2011}.
-
-Para uma votação $i$, o seu cálculo se dá pela diferença, em números absolutos,
-entre a quantidade de votos \verb|Sim| e de votos \verb|Não|, dividida pelo
-\verb|Total| de votos, como pode ser visto na fórmula \ref{eq:rice}.
-
-\begin{equation}\label{eq:rice}
-  IR_i = \frac{|Sim - N\tilde{a}o|}{Total}
-\end{equation}
-
-O índice varia de zero, quando metade votou \verb|Sim| e metade votou
-\verb|Não|, até um, quando todos votaram da mesma forma. Para analisar mais de
-uma votação, calculamos a média aritmética dos \gls{IR} das votações no
-período, como mostra a fórmula \ref{eq:rice-media}.
-
-\begin{equation}\label{eq:rice-media}
-  \sum_{i=1}^{n} \frac{IR_i}{n}
-\end{equation}
-
-% TODO: Escrever sobre o problema de só considerar votos Sim ou Não e como
-% resolvemos nesse trabalho (talvez só explicitar o problema, pra manter
-% fundamentação teórica só como fundamentação teórica).
-% Figueiredo/Limongi 1995 só consideram votos Sim e Não, então talvez posso
-% dizer que estou seguindo o exemplo deles :)
-% ---
-% O primeiro problema enfrentado em usar o índice de Rice no contexto brasileiro
-% é que ele considera só os indivíduos que votaram, ignorando os ausentes, os que
-% se abstiveram e os que obstruíram.
-
-Um problema descrito por Desposato (2005) é que índices de coesão em geral
-(o de Rice em particular) são fortemente enviesados. Partidos pequenos têm uma
-coesão esperada maior do que partidos grandes, o que invalidaria comparações
-entre grupos de tamanhos diferentes, pois diferenças na coesão podem ser
-resultado de uma característica do índice usado, e não no comportamento dos
-parlamentares. Este problema é especialmente grave no Brasil por existir uma
-grande variação no tamanho dos partidos.\nocite{Desposato2005}
-
-Ele propôs uma solução simples: diminuir o tamanho dos partidos.
-Especificamente, ele sugere trocar o índice de coesão $C_{ij}$ de cada
-partido por $E(C_{ijr})$, que é a coesão esperada de uma amostra de $r$ votos
-tomados sem reposição do partido $i$ na votação $j$. O tamanho da amostra $r$
-pode variar entre 2 e o tamanho do menor partido, mas ele sugere escolhermos $r
-= 2$, que funciona em todos os casos.\nocite{Desposato2005}
-
-Com essa escolha, a interpretação de $E(C_{ij2})$ é simples: é a probabilidade
-de que dois membros do partido $i$ escolhidos aleatoriamente votaram juntos na
-votação $j$. O cálculo também fica simplificado, sendo feito pela fórmula
-\ref{eq:rice-adj}, onde $Y$ é o número de votos ``sim'' e $R$ é o tamanho do
-partido.\nocite{Desposato2005}
-
-\begin{equation}\label{eq:rice-adj}
-  E(C_{ij2}|Y, R) = \frac{Y(Y - 1) + (R - Y)(R - Y - 1)}{R(R - 1)}
-\end{equation}
-
-Caso o índice $C$ já seja conhecido, a fórmula pode ser reduzida a
-\ref{eq:adj-known-metric}.\nocite{Desposato2005}
-
-\begin{equation}\label{eq:adj-known-metric}
-  E(C_2|Y, R) = \frac{RC^2 + R + 2}{2(R - 1)}
-\end{equation}
-
-\subsection{Calculando coesão entre partidos}
-
-Encontramos um problema ao calcular a coesão entre partidos. Caso simplesmente
-calculássemos o \gls{IR} entre o conjunto de parlamentares dos partidos
-que queremos analisar, estaríamos mostrando um resultado errado caso todos os
-partidos não tivessem o mesmo número de parlamentares votando em cada votação.
-
-Por exemplo, considere que queremos calcular a coesão entre o \gls{PT} e o \gls{PSOL} na
-Câmara dos Deputados na 54a legislatura. Nesse período, o \gls{PT} contava com XXX
-deputados federais, enquanto o \gls{PSOL} contava com 3. Se simplesmente calcularmos
-a coesão considerando o conjunto de deputados do \gls{PT} com o do \gls{PSOL}, o índice
-seria muito influenciado pela diferença de parlamentares.
-
-Para resolver esse problema, não consideramos o voto de cada parlamentar de
-cada partido individualmente, mas sim o voto de um ``parlamentar médio'' do
-partido. O voto do parlamentar médio é definido como o voto da maioria do
-partido. Dessa forma, conseguimos comparar partidos independente de seus
-tamanhos.
-
-Poderíamos ter definido o ``parlamentar médio'' como a indicação do líder do
-partido, mas neste caso teríamos que desconsiderar as votações em que o líder
-libera sua bancada e não conseguiríamos calcular para partidos cujo líder não
-pode indicar voto (de acordo como o Regimento Interno). Dado essas
-desvantagens, e o fato que há poucas diferenças entre a indicação do líder e o
-voto da maioria \cite{Limongi1995}, preferimos usar o voto da maioria.
-
 \section{Modelos espaciais de votação}
 
 <<>>=
@@ -290,18 +195,8 @@ Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estad
 
 Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Netto2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
 
-\section{Coesão parlamentar}
-
-Definir o que é coesão e disciplina, e explicar algumas métricas (ou só o índice de Rice)
-
-
 \section{Ciência de dados}
 
 Texto bem geral sobre data science. Pode ser interessante falar sobre algum algoritmo específico que eu vá usar, ou talvez seja melhor explicá-los no miolo da dissertação.
 
 \section{Considerações Finais}
-
-
-
-
-
