@@ -108,6 +108,8 @@
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
 \usepackage{graphicx}
+\graphicspath{{figure/}}
+\setkeys{Gin}{width=0.5\textwidth}
 \usepackage{longtable} %tabelas longas, para tabelas que ultrapassam uma pagina
 \usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
@@ -237,100 +239,78 @@ showstringspaces=false
 
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
-\section{Índice de Rice}
+\section{Ciência de Dados}
 
-O \gls{IR} é uma métrica para o cálculo da coesão\footnote{Neste trabalho
-entendemos por coesão o grau de unidade do partido nas decisões legislativas
-tomadas em votações nominais, independente se isso ocorre porque seus membros
-têm uma ideologia semelhante, ou porque seus líderes conseguem discipliná-los.}
-entre grupos em uma votação. Desde sua introdução em \cite{Rice1924}, ele vem
-sendo amplamente utilizado em estudos legislativos por ser intuitivo, flexível
-e facilmente interpretável \cite{Neiva2011}.
+Segundo \citeonline{Stanton2012}, o termo Ciência de Dados (do inglês
+\emph{Data Science}) é usado para definir uma área emergente que se ocupa da
+coleta, preparo, análise, visualização, gestão e preservação de conjuntos de
+dados com o objetivo de extrair conhecimento. Ela usa a ciência da computação
+como ferramenta para extrair modelos estatísticos a partir de dados relativos a
+uma área fim, como a ciência política.
 
-Para uma votação $i$, o seu cálculo se dá pela diferença, em números absolutos,
-entre a quantidade de votos \verb|Sim| e de votos \verb|Não|, dividida pelo
-\verb|Total| de votos, como pode ser visto na fórmula \ref{eq:rice}.
+Por ser uma área interdisciplinar e relativamente recente (especialmente no
+Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
+computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
+diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
+\ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
+relação as outras áreas.
 
-\begin{equation}\label{eq:rice}
-  IR_i = \frac{|Sim - N\tilde{a}o|}{Total}
-\end{equation}
+\begin{figure}[h]
+\includegraphics{ciencia-de-dados-diagrama-venn}
+\label{fig:ciencia-de-dados-venn}
+\caption{Diagrama de Venn mostrando as habilidades necessárias para um
+cientista de dados}
+\end{figure}
 
-O índice varia de zero, quando metade votou \verb|Sim| e metade votou
-\verb|Não|, até um, quando todos votaram da mesma forma. Para analisar mais de
-uma votação, calculamos a média aritmética dos \gls{IR} das votações no
-período, como mostra a fórmula \ref{eq:rice-media}.
+Com as técnicas da ciência de dados, podemos responder perguntas como ``Qual a
+melhor rota para chegar até meu trabalho?'', ``Vai chover hoje?'', ``Quais são
+minhas chances de desenvolver câncer nos próximos 10 anos?''. Neste trabalho,
+estamos interessados nas técnicas de desenvolvimento de modelos preditivos que,
+baseados nos dados e conhecimento que temos do assunto, determinam a
+probabilidade de acontecimentos futuros.
 
-\begin{equation}\label{eq:rice-media}
-  \sum_{i=1}^{n} \frac{IR_i}{n}
-\end{equation}
+\subsection{Modelos preditivos}
 
-% TODO: Escrever sobre o problema de só considerar votos Sim ou Não e como
-% resolvemos nesse trabalho (talvez só explicitar o problema, pra manter
-% fundamentação teórica só como fundamentação teórica).
-% Figueiredo/Limongi 1995 só consideram votos Sim e Não, então talvez posso
-% dizer que estou seguindo o exemplo deles :)
-% ---
-% O primeiro problema enfrentado em usar o índice de Rice no contexto brasileiro
-% é que ele considera só os indivíduos que votaram, ignorando os ausentes, os que
-% se abstiveram e os que obstruíram.
+\citeonline{Geisser1993} define modelagem preditiva como sendo ``o processo
+pelo qual um modelo é criado ou escolhido para tentar melhor prever a
+probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
+processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
+previsão precisa''.
 
-Um problema descrito por Desposato (2005) é que índices de coesão em geral
-(o de Rice em particular) são fortemente enviesados. Partidos pequenos têm uma
-coesão esperada maior do que partidos grandes, o que invalidaria comparações
-entre grupos de tamanhos diferentes, pois diferenças na coesão podem ser
-resultado de uma característica do índice usado, e não no comportamento dos
-parlamentares. Este problema é especialmente grave no Brasil por existir uma
-grande variação no tamanho dos partidos.\nocite{Desposato2005}
+Independente da definição, modelos preditivos fazem parte do dia-a-dia da
+sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
+buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
+definir que ações comprar ou vender; seguradoras usam para definir qual o risco
+e, consequentemente, o preço do seguro de um carro, entre outros
+\cite{Levy2010}.
 
-Ele propôs uma solução simples: diminuir o tamanho dos partidos.
-Especificamente, ele sugere trocar o índice de coesão $C_{ij}$ de cada
-partido por $E(C_{ijr})$, que é a coesão esperada de uma amostra de $r$ votos
-tomados sem reposição do partido $i$ na votação $j$. O tamanho da amostra $r$
-pode variar entre 2 e o tamanho do menor partido, mas ele sugere escolhermos $r
-= 2$, que funciona em todos os casos.\nocite{Desposato2005}
+Existem duas principais categorias de problemas que podem ser resolvidos por
+modelos preditivos: regressão e classificação. A diferença entre eles está no
+tipo de resposta que queremos prever, se é contínua ou categórica, que
+influencia nos tipos de modelos que podem ser usados e na forma de avaliá-los.
+Por exemplo, ao analisarmos modelos que preveem o preço de um imóvel a partir
+da sua área, buscamos o que chegue mais próximo do valor real\footnote{Esta é
+uma simplificação. Existem diversas outras características a serem analisados
+ao escolher um modelo, como facilidade de interpretação, velocidade de
+execução, entre outras. Aqui consideramos que a única diferença entre eles seja
+o resultado previsto.}. Já ao avaliar modelos que classifiquem imagens dos
+dígitos 0 a 9, só nos interessamos na classificação correta; dois modelos que
+identifiquem a imagem do número 1 como sendo do número 3 e 8 estão igualmente
+errados. O que classificou como 3 não está ``menos errado'' do que o que
+classificou como 8 \cite{Kuhn2013,Zumel2014}. Neste trabalho, nosso foco é em
+classificação.
 
-Com essa escolha, a interpretação de $E(C_{ij2})$ é simples: é a probabilidade
-de que dois membros do partido $i$ escolhidos aleatoriamente votaram juntos na
-votação $j$. O cálculo também fica simplificado, sendo feito pela fórmula
-\ref{eq:rice-adj}, onde $Y$ é o número de votos ``sim'' e $R$ é o tamanho do
-partido.\nocite{Desposato2005}
+\subsubsection{Modelos de classificação}
 
-\begin{equation}\label{eq:rice-adj}
-  E(C_{ij2}|Y, R) = \frac{Y(Y - 1) + (R - Y)(R - Y - 1)}{R(R - 1)}
-\end{equation}
+% TODO: Concluir
 
-Caso o índice $C$ já seja conhecido, a fórmula pode ser reduzida a
-\ref{eq:adj-known-metric}.\nocite{Desposato2005}
+% % Treinamento de algoritmos
+% % Regressão VS Classificação
 
-\begin{equation}\label{eq:adj-known-metric}
-  E(C_2|Y, R) = \frac{RC^2 + R + 2}{2(R - 1)}
-\end{equation}
+% Random Forest
+% % Árvores de decisão
 
-\subsection{Calculando coesão entre partidos}
-
-Encontramos um problema ao calcular a coesão entre partidos. Caso simplesmente
-calculássemos o \gls{IR} entre o conjunto de parlamentares dos partidos
-que queremos analisar, estaríamos mostrando um resultado errado caso todos os
-partidos não tivessem o mesmo número de parlamentares votando em cada votação.
-
-Por exemplo, considere que queremos calcular a coesão entre o \gls{PT} e o \gls{PSOL} na
-Câmara dos Deputados na 54a legislatura. Nesse período, o \gls{PT} contava com XXX
-deputados federais, enquanto o \gls{PSOL} contava com 3. Se simplesmente calcularmos
-a coesão considerando o conjunto de deputados do \gls{PT} com o do \gls{PSOL}, o índice
-seria muito influenciado pela diferença de parlamentares.
-
-Para resolver esse problema, não consideramos o voto de cada parlamentar de
-cada partido individualmente, mas sim o voto de um ``parlamentar médio'' do
-partido. O voto do parlamentar médio é definido como o voto da maioria do
-partido. Dessa forma, conseguimos comparar partidos independente de seus
-tamanhos.
-
-Poderíamos ter definido o ``parlamentar médio'' como a indicação do líder do
-partido, mas neste caso teríamos que desconsiderar as votações em que o líder
-libera sua bancada e não conseguiríamos calcular para partidos cujo líder não
-pode indicar voto (de acordo como o Regimento Interno). Dado essas
-desvantagens, e o fato que há poucas diferenças entre a indicação do líder e o
-voto da maioria \cite{Limongi1995}, preferimos usar o voto da maioria.
+% Validação cruzada
 
 \section{Modelos espaciais de votação}
 
@@ -371,7 +351,7 @@ esteja em cima da linha de corte, ele é indiferente as alternativas.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
+\includegraphics[width=\maxwidth]{figure/tmp/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
 \end{figure}
 
 
@@ -519,21 +499,11 @@ Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estad
 
 Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Netto2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
 
-\section{Coesão parlamentar}
-
-Definir o que é coesão e disciplina, e explicar algumas métricas (ou só o índice de Rice)
-
-
 \section{Ciência de dados}
 
 Texto bem geral sobre data science. Pode ser interessante falar sobre algum algoritmo específico que eu vá usar, ou talvez seja melhor explicá-los no miolo da dissertação.
 
 \section{Considerações Finais}
-
-
-
-
-
 \input{03-trabalhos-relacionados}
 
 
@@ -544,15 +514,17 @@ Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitet
 
 \section{Os dados}
 
+% TODO: Explicar as características dos dados
+
 Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
 resultados das votações nominais na Câmara dos Deputados e informações sobre as
 coalizões governamentais. Nessa seção descreverei o processo de extração,
-transformação e carga\footnote{Do inglês, \emph{extract, transform and load}
-(ETL)} desses dados, desde suas fontes até estarem prontos para uso no modelo.
-Nosso objetivo é criar uma tabela como a \ref{table:dataset-final}, com os
-valores dos pontos ideais dos deputados federais (nossas variáveis
-independentes) e uma coluna definindo se eles mudaram de posicionamento ou não
-no período (nossa variável dependente).
+limpeza, transformação e carga\footnote{Do inglês, \emph{extract, clean,
+transform and load} (ECTL)} desses dados, desde suas fontes até estarem prontos
+para uso no modelo. Nosso objetivo é criar uma tabela como a
+\ref{table:dataset-final}, com os valores dos pontos ideais dos deputados
+federais (nossas variáveis independentes) e uma coluna definindo se eles
+mudaram de posicionamento ou não no período (nossa variável dependente).
 
 Nos restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
 legislatura, que compreende o período de 20 anos entre o início do primeiro
@@ -816,33 +788,6 @@ quanto analisando se esses valores mudam dependendo da legislatura.
 Usamos os pontos ideais do parlamentar estimado usando o W-NOMINATE e seus
 respectivos erros-padrão como variáveis independentes.
 
-\section{Componentes}
-
-Mostrar em linhas gerais como é organizada a ferramenta, indo de um nível de abstração mais alto (como o usuário vê a ferramenta) até uma arquitetura técnica.
-
-
-% ALEXANDRE: Apesar de eu não ser muito fã acho importante apresentar algum tipo de diagrama de componentes nesta seção, para permitir uma visualização da arquitetura da solução.
-
-
-\subsection{Extração dos dados}
-
-Falar sobre as fontes de dados (câmara dos deputados, banco de dados legislativos do Cebrap, etc.), a forma de extração, passos de limpeza, banco de dados, frequência de atualização, se é pull ou push, e como disponibilizamos esses dados para as outras etapas. Ao término dessa seção, o leitor deverá entender nosso processo de data wrangling e saber como ele próprio pode, se quiser, baixar os dados ao final dessa etapa e fazer suas próprias análises. Talvez tenha problema com isso, pois o pessoal da CEBRAP pode não permitir a redistribuição de seus dados.
-
-
-% ALEXANDRE: É interessante destacar que disponibilizar estes dados em um formato mais "amigável" também é uma contribuição do seu trabalho.
-
-\subsection{Análise}
-
-Aqui falarei sobre os algoritmos usados e as métricas escolhidas (coesão parlamentar, número de destaques, etc.). Também é bom frisar que a arquitetura permite adicionar novos algoritmos, talvez até de uma forma reativa. Por exemplo, considerando que a acusação que o PP trancou a pauta para pressionar o Lula a nomear uma pessoa na Petrobrás, poderíamos criar um algoritmo que detectasse trancamentos de pauta por um partido qualquer, para no futuro descobrirmos movimentações parecidas.
-
-\subsection{Notificações/Relatórios}
-
-Falar sobre como os usuários consomem esses dados. Minha ideia atual é gerar um relatório semanal/mensal/quando-aparecer-algo-interessante e enviá-lo por email pra quem se cadastrar. Nesse caso, devo mostrar exemplos desse relatório.
-
-
-(Alexandre) Seria legal considerar também a criação de uma conta que twitaria periódicamente os relatórios.
-
-
 \section{Considerações Finais}
 
 Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, analisa e gera relatórios para os usuários. Cada parte pode ser modificada e expandida, e os dados (e algoritmos) podem ser usados por outras pessoas. Daqui falta validar que os algoritmos na parte de análise geram algo interessante.
@@ -953,7 +898,7 @@ de cada parlamentar, podemos determinar se a mudança é significante ou não.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/exemplo-mudanca-de-comportamento-1} \caption[Posições dos parlamentares antes e depois da data em análise]{Posições dos parlamentares antes e depois da data em análise}\label{fig:exemplo-mudanca-de-comportamento}
+\includegraphics[width=\maxwidth]{figure/tmp/exemplo-mudanca-de-comportamento-1} \caption[Posições dos parlamentares antes e depois da data em análise]{Posições dos parlamentares antes e depois da data em análise}\label{fig:exemplo-mudanca-de-comportamento}
 \end{figure}
 
 
@@ -989,7 +934,7 @@ de deputados federais por partido. Só consideramos votos \verb|Sim| ou
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/votacoes-por-mes-1} \caption[Distribuição de votações por mês na 54\textordfeminine{} legislatura]{Distribuição de votações por mês na 54\textordfeminine{} legislatura}\label{fig:votacoes-por-mes}
+\includegraphics[width=\maxwidth]{figure/tmp/votacoes-por-mes-1} \caption[Distribuição de votações por mês na 54\textordfeminine{} legislatura]{Distribuição de votações por mês na 54\textordfeminine{} legislatura}\label{fig:votacoes-por-mes}
 \end{figure}
 
 
@@ -997,7 +942,7 @@ de deputados federais por partido. Só consideramos votos \verb|Sim| ou
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/deputados-por-partido-1} \caption[Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura]{Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura}\label{fig:deputados-por-partido}
+\includegraphics[width=\maxwidth]{figure/tmp/deputados-por-partido-1} \caption[Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura]{Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura}\label{fig:deputados-por-partido}
 \end{figure}
 
 
@@ -1030,7 +975,7 @@ posição, mas existem diversos \emph{outliers}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/boxplot-diff-coalizao-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:boxplot-diff-coalizao}
+\includegraphics[width=\maxwidth]{figure/tmp/boxplot-diff-coalizao-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:boxplot-diff-coalizao}
 \end{figure}
 
 
@@ -1110,7 +1055,7 @@ afastou do governo.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/mudanca-psb-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:mudanca-psb}
+\includegraphics[width=\maxwidth]{figure/tmp/mudanca-psb-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:mudanca-psb}
 \end{figure}
 
 
@@ -1179,12 +1124,12 @@ precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino 
 O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
 a interação entre eles. Analisamos diversos números de preditores e, como pode
 ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
-sob a curva ROC usou 23 preditores e chegou a área de
+sob a curva ROC usou 25 preditores e chegou a área de
 0,86 com desvio-padrão de 0,06.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/roc-vs-mtry-1} \caption[ROC como função do número de preditores]{ROC como função do número de preditores.}\label{fig:roc-vs-mtry}
+\includegraphics[width=\maxwidth]{figure/tmp/roc-vs-mtry-1} \caption[ROC como função do número de preditores]{ROC como função do número de preditores.}\label{fig:roc-vs-mtry}
 \end{figure}
 
 
@@ -1202,7 +1147,7 @@ TODO: explicar melhor}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
+\includegraphics[width=\maxwidth]{figure/tmp/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
 \end{figure}
 
 
@@ -1216,27 +1161,31 @@ TODO: explicar melhor}.
 \hline
 cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.high\\
 \hline
-0.767 & 0.00 & 0.20 & 0.40 & 0.91 & 0.96 & 1.00\\
+0.9 & 0.00 & 0.13 & 0.33 & 0.96 & 0.99 & 1.00\\
 \hline
-0.562 & 0.07 & 0.27 & 0.53 & 0.87 & 0.94 & 0.99\\
+0.739 & 0.00 & 0.20 & 0.40 & 0.91 & 0.96 & 1.00\\
 \hline
-0.433 & 0.13 & 0.33 & 0.60 & 0.83 & 0.90 & 0.96\\
+0.556 & 0.07 & 0.27 & 0.53 & 0.86 & 0.92 & 0.97\\
 \hline
-0.389 & 0.20 & 0.40 & 0.67 & 0.77 & 0.85 & 0.92\\
+0.448 & 0.13 & 0.33 & 0.60 & 0.82 & 0.90 & 0.96\\
 \hline
-0.328 & 0.27 & 0.53 & 0.80 & 0.74 & 0.83 & 0.91\\
+0.37 & 0.20 & 0.47 & 0.73 & 0.77 & 0.85 & 0.92\\
 \hline
-0.271 & 0.33 & 0.60 & 0.87 & 0.73 & 0.82 & 0.90\\
+0.329 & 0.27 & 0.53 & 0.80 & 0.74 & 0.83 & 0.91\\
 \hline
-0.23 & 0.53 & 0.73 & 0.93 & 0.69 & 0.78 & 0.87\\
+0.261 & 0.33 & 0.60 & 0.87 & 0.73 & 0.82 & 0.90\\
 \hline
-0.15 & 0.60 & 0.80 & 1.00 & 0.56 & 0.67 & 0.77\\
+0.243 & 0.40 & 0.67 & 0.87 & 0.72 & 0.81 & 0.88\\
 \hline
-0.137 & 0.67 & 0.87 & 1.00 & 0.54 & 0.64 & 0.74\\
+0.232 & 0.53 & 0.73 & 0.93 & 0.71 & 0.79 & 0.88\\
 \hline
-0.09 & 0.80 & 0.93 & 1.00 & 0.46 & 0.56 & 0.67\\
+0.169 & 0.60 & 0.80 & 1.00 & 0.59 & 0.69 & 0.79\\
 \hline
-0.038 & 1.00 & 1.00 & 1.00 & 0.37 & 0.49 & 0.60\\
+0.127 & 0.67 & 0.87 & 1.00 & 0.53 & 0.63 & 0.73\\
+\hline
+0.068 & 0.80 & 0.93 & 1.00 & 0.44 & 0.54 & 0.64\\
+\hline
+0.049 & 1.00 & 1.00 & 1.00 & 0.42 & 0.53 & 0.63\\
 \hline
 \end{tabular}
 

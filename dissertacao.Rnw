@@ -59,6 +59,8 @@
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
 \usepackage{graphicx}
+\graphicspath{{figure/}}
+\setkeys{Gin}{width=0.5\textwidth}
 \usepackage{longtable} %tabelas longas, para tabelas que ultrapassam uma pagina
 \usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
@@ -189,7 +191,7 @@ library(caret)
 library(doParallel)
 library(randomForest)
 
-opts_chunk$set(echo = FALSE, fig.height = 4)
+opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
 options(digits = 2)
 set.seed(1)
 

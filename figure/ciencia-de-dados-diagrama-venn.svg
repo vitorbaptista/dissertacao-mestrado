@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="495.13824"
+   height="494.56683"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ciencia-de-dados-diagrama-venn.pdf">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="156.62336"
+     inkscape:cy="274.38478"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-223.35295,-329.78557)">
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:0.25882353000000002;stroke:none;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3050-3"
+       sodipodi:cx="301.07144"
+       sodipodi:cy="544.14789"
+       sodipodi:rx="154.64285"
+       sodipodi:ry="154.64285"
+       d="m 455.71429,544.14789 a 154.64285,154.64285 0 1 1 -309.2857,0 154.64285,154.64285 0 1 1 309.2857,0 z"
+       transform="matrix(1.0298302,0,0,1.0298302,248.14844,-70.303465)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#0000ff;fill-opacity:0.25882353000000002;stroke:none;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3050-3-7"
+       sodipodi:cx="301.07144"
+       sodipodi:cy="544.14789"
+       sodipodi:rx="154.64285"
+       sodipodi:ry="154.64285"
+       d="m 455.71429,544.14789 a 154.64285,154.64285 0 1 1 -309.2857,0 154.64285,154.64285 0 1 1 309.2857,0 z"
+       transform="matrix(1.0298302,0,0,1.0298302,160.86273,103.69654)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ee3236;fill-opacity:0.25882353000000002;stroke:none;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3050"
+       sodipodi:cx="301.07144"
+       sodipodi:cy="544.14789"
+       sodipodi:rx="154.64285"
+       sodipodi:ry="154.64285"
+       d="m 455.71429,544.14789 a 154.64285,154.64285 0 1 1 -309.2857,0 154.64285,154.64285 0 1 1 309.2857,0 z"
+       transform="matrix(1.0298302,0,0,1.0298302,73.577019,-70.303465)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Texto"
+     transform="translate(-223.35295,-329.78557)">
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="471.37906"
+       y="459.50507"
+       id="text3879"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3881"
+         x="471.37906"
+         y="459.50507"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Sans;-inkscape-font-specification:Sans">Aprendizado</tspan><tspan
+         sodipodi:role="line"
+         x="471.37906"
+         y="484.50507"
+         id="tspan3883"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Sans;-inkscape-font-specification:Sans">de máquina</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-210.05417"
+       y="567.89032"
+       id="text3857"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3859"
+         x="-210.05417"
+         y="567.89032">Computação</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="660.17926"
+       y="-92.008629"
+       id="text3861"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3863"
+         x="660.17926"
+         y="-92.008629">Estatística</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="472.46793"
+       y="725.93359"
+       id="text3865"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="472.46793"
+         y="725.93359"
+         id="tspan3869"
+         style="text-align:center;text-anchor:middle">Área fim</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="470.8566"
+       y="539.07648"
+       id="text3885"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3887"
+         x="470.8566"
+         y="539.07648"
+         style="font-size:20px;text-align:center;text-anchor:middle">Ciência</tspan><tspan
+         sodipodi:role="line"
+         x="470.8566"
+         y="564.07648"
+         id="tspan3889"
+         style="font-size:20px;text-align:center;text-anchor:middle">de Dados</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="387.46008"
+       y="602.94586"
+       id="text3999"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4001"
+         x="387.46008"
+         y="602.94586"
+         style="font-size:20px;text-align:center;text-anchor:middle">Área</tspan><tspan
+         sodipodi:role="line"
+         x="387.46008"
+         y="627.94586"
+         id="tspan4003"
+         style="font-size:20px;text-align:center;text-anchor:middle">perigosa!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="558.99188"
+       y="603.20953"
+       id="text4005"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4007"
+         x="558.99188"
+         y="603.20953"
+         style="font-size:20px;text-align:center;text-anchor:middle">Pesquisa</tspan><tspan
+         sodipodi:role="line"
+         x="558.99188"
+         y="628.20953"
+         id="tspan4009"
+         style="font-size:20px;text-align:center;text-anchor:middle">tradicional</tspan></text>
+  </g>
+</svg>

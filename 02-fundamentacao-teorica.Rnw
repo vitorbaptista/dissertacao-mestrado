@@ -1,5 +1,78 @@
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
+\section{Ciência de Dados}
+
+Segundo \citeonline{Stanton2012}, o termo Ciência de Dados (do inglês
+\emph{Data Science}) é usado para definir uma área emergente que se ocupa da
+coleta, preparo, análise, visualização, gestão e preservação de conjuntos de
+dados com o objetivo de extrair conhecimento. Ela usa a ciência da computação
+como ferramenta para extrair modelos estatísticos a partir de dados relativos a
+uma área fim, como a ciência política.
+
+Por ser uma área interdisciplinar e relativamente recente (especialmente no
+Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
+computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
+diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
+\ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
+relação as outras áreas.
+
+\begin{figure}[h]
+\includegraphics{ciencia-de-dados-diagrama-venn}
+\label{fig:ciencia-de-dados-venn}
+\caption{Diagrama de Venn mostrando as habilidades necessárias para um
+cientista de dados}
+\end{figure}
+
+Com as técnicas da ciência de dados, podemos responder perguntas como ``Qual a
+melhor rota para chegar até meu trabalho?'', ``Vai chover hoje?'', ``Quais são
+minhas chances de desenvolver câncer nos próximos 10 anos?''. Neste trabalho,
+estamos interessados nas técnicas de desenvolvimento de modelos preditivos que,
+baseados nos dados e conhecimento que temos do assunto, determinam a
+probabilidade de acontecimentos futuros.
+
+\subsection{Modelos preditivos}
+
+\citeonline{Geisser1993} define modelagem preditiva como sendo ``o processo
+pelo qual um modelo é criado ou escolhido para tentar melhor prever a
+probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
+processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
+previsão precisa''.
+
+Independente da definição, modelos preditivos fazem parte do dia-a-dia da
+sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
+buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
+definir que ações comprar ou vender; seguradoras usam para definir qual o risco
+e, consequentemente, o preço do seguro de um carro, entre outros
+\cite{Levy2010}.
+
+Existem duas principais categorias de problemas que podem ser resolvidos por
+modelos preditivos: regressão e classificação. A diferença entre eles está no
+tipo de resposta que queremos prever, se é contínua ou categórica, que
+influencia nos tipos de modelos que podem ser usados e na forma de avaliá-los.
+Por exemplo, ao analisarmos modelos que preveem o preço de um imóvel a partir
+da sua área, buscamos o que chegue mais próximo do valor real\footnote{Esta é
+uma simplificação. Existem diversas outras características a serem analisados
+ao escolher um modelo, como facilidade de interpretação, velocidade de
+execução, entre outras. Aqui consideramos que a única diferença entre eles seja
+o resultado previsto.}. Já ao avaliar modelos que classifiquem imagens dos
+dígitos 0 a 9, só nos interessamos na classificação correta; dois modelos que
+identifiquem a imagem do número 1 como sendo do número 3 e 8 estão igualmente
+errados. O que classificou como 3 não está ``menos errado'' do que o que
+classificou como 8 \cite{Kuhn2013,Zumel2014}. Neste trabalho, nosso foco é em
+classificação.
+
+\subsubsection{Modelos de classificação}
+
+% TODO: Concluir
+
+% % Treinamento de algoritmos
+% % Regressão VS Classificação
+
+% Random Forest
+% % Árvores de decisão
+
+% Validação cruzada
+
 \section{Modelos espaciais de votação}
 
 <<>>=

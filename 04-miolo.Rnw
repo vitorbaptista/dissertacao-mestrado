@@ -17,15 +17,17 @@ Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitet
 
 \section{Os dados}
 
+% TODO: Explicar as características dos dados
+
 Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
 resultados das votações nominais na Câmara dos Deputados e informações sobre as
 coalizões governamentais. Nessa seção descreverei o processo de extração,
-transformação e carga\footnote{Do inglês, \emph{extract, transform and load}
-(ETL)} desses dados, desde suas fontes até estarem prontos para uso no modelo.
-Nosso objetivo é criar uma tabela como a \ref{table:dataset-final}, com os
-valores dos pontos ideais dos deputados federais (nossas variáveis
-independentes) e uma coluna definindo se eles mudaram de posicionamento ou não
-no período (nossa variável dependente).
+limpeza, transformação e carga\footnote{Do inglês, \emph{extract, clean,
+transform and load} (ECTL)} desses dados, desde suas fontes até estarem prontos
+para uso no modelo. Nosso objetivo é criar uma tabela como a
+\ref{table:dataset-final}, com os valores dos pontos ideais dos deputados
+federais (nossas variáveis independentes) e uma coluna definindo se eles
+mudaram de posicionamento ou não no período (nossa variável dependente).
 
 Nos restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
 legislatura, que compreende o período de 20 anos entre o início do primeiro
