@@ -277,7 +277,7 @@ probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
 processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
 previsão precisa''.
 
-Independente da definição, modelos preditivos fazem parte do dia-a-dia da
+Independente da definição usada, modelos preditivos fazem parte do dia-a-dia da
 sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
 buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
 definir que ações comprar ou vender; seguradoras usam para definir qual o risco
@@ -499,10 +499,6 @@ Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estad
 
 Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Netto2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
 
-\section{Ciência de dados}
-
-Texto bem geral sobre data science. Pode ser interessante falar sobre algum algoritmo específico que eu vá usar, ou talvez seja melhor explicá-los no miolo da dissertação.
-
 \section{Considerações Finais}
 \input{03-trabalhos-relacionados}
 
@@ -510,11 +506,149 @@ Texto bem geral sobre data science. Pode ser interessante falar sobre algum algo
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
-Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitetura e como cada parte funciona e pode ser modificada.
+Neste capítulo apresentaremos o processo de desenvolvimento, partindo da
+definição dos objetivos e período de estudo, passando pela extração, limpeza e
+transformação dos dados, que serão brevemente analisados para entendermos suas
+características e, a partir delas, escolher possíveis modelos preditivos que
+serão validados para chegar ao modelo final.
+
+O objetivo final deste trabalho é detectar mudanças de comportamento no padrão
+de votações dos deputados federais que indiquem sua entrada ou saída da
+% TODO: Esses são os critérios de uma nova coalizão, mas não definem
+% (diretamente) quais são os partidos que pertencem a mesma
+coalizão do governo. Os critérios de pertencimento a coalizão são: i) a mudança
+da legislatura, e; ii) alterações no conjunto de partidos que controlam os
+ministérios. Eles foram definidos por \citeonline{Figueiredo2007}, inspirada no
+trabalho de \citeonline{Muller2000}.
+
+O período de estudo considerado vai da 50\textordfeminine{} até a
+54\textordfeminine{} legislatura, que compreende o período de 20 anos entre
+1995 e 2015 do início do primeiro governo de Fernando Henrique Cardoso (FHC)
+até o final do primeiro governo de Dilma Rousseff. Esta escolha foi feita por
+ser quando, de acordo com \citeonline{Freitas2008}, termina a fase de
+acomodação dos parlamentares as novas regras definidas pela constituição de
+1998 e vai até a última legislatura completa disponível.
+
+A lista das coalizões nesse período foi obtida através do banco de dados
+legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e os partidos
+que a compõe. Como esta análise trabalha com o parlamentar individualmente,
+gerei outra lista que contém todas as entradas e saídas dos parlamentares na
+coalizão dentro de uma mesma legislatura. Por exemplo, o deputado Arlindo
+Chinaglia (PT/SP) é filiado ao PT desde sua fundação em 1980 e mantém seu cargo
+na Câmara desde 1995. Apesar dele passar de oposição a governo em 2003 com a
+eleição de Lula, não consideramos isso uma mudança pois ela ocorreu entre
+legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quando seu partido se
+tornou oposição em 2013 é considerada, pois ocorreu durante uma mesma
+legislatura.
+
+A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
+890 entradas e saídas da coalizão do período de
+estudo agrupados por mês. Podemos perceber que há meses nos quais um número
+excepcionalmente alto de deputados trocam de posicionamento. Marcamos também a
+data da Resolução n\textordmasculine{} 22.600 do TSE, que alterou o
+entendimento das regras de fidelidade partidária, tornando-as mais restritas
+\cite{TSE2007}. Percebe-se que essa mudança alterou a frequência de entradas e
+saídas da coalizão, o que pode influenciar na acurácia do nosso modelo.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-mensais-de-coalizao-1} \caption[Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas]{Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas.}\label{fig:mudancas-mensais-de-coalizao}
+\end{figure}
+
+
+\end{knitrout}
+
+As listas de votações e votos foram extraídas diretamente do site da Câmara dos
+Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
+dados através de um programa, até a data de escrita deste trabalho esta
+consulta só poderiam ser feitas individualmente, votação por votação. Para
+desenvolver o modelo preditivo, precisamos ter acesso a todos os dados
+localmente, então desenvolvi um programa\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
+linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
+votações \cite{Python276,Scrapy}.
+\nocite{CEBRAP2015,CamaraDosDeputados2015}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r}
+\hline
+Legislatura & Deputados Federais & Votações & Votos\\
+\hline
+50 & 631 & 468 & 178603\\
+\hline
+51 & 624 & 419 & 155737\\
+\hline
+52 & 614 & 451 & 134461\\
+\hline
+53 & 606 & 619 & 192879\\
+\hline
+54 & 644 & 432 & 131552\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
+\end{table}
+
+A tabela \ref{table:estatisticas-legislaturas} mostra o número de deputados
+federais, votações e votos por legislatura. Consideramos todos parlamentares
+que participaram de alguma votação na Câmara dos Deputados no período, por isso
+o número é maior do que o número de cadeiras. Por legislatura, temos em média
+623,80 deputados e 332,04 votos em 477,80 votações. Só
+consideramos votos ``sim'' ou ``não''. % FIXME: Por que?
+
+Os nomes dos partidos foram alterados seguindo o padrão adotado pelo
+\gls{CEBRAP} onde mudanças de nome são identificados pela primeira e última
+sigla (e.x.: o PJ que se tornou PRN que se tornou PJC é renomeado para PJ>PTC)
+e fusões são identificados pelo maior partido na data da fusão e o novo nome
+(e.x.: PL e PRONA se uniram formando o PR, então temos PL>PR)
+\cite{Freitas2008}. A lista completa pode ser consultada no apêndice
+\ref{apendice:lista-partidos}.
+
+O próximo passo é determinar o período em que analisamos a mudança de
+comportamento. Ele precisa ser longo o suficiente para evitar que
+votações anômalas influenciem demais o resultado, mas curto o suficiente para
+detectarmos as mudanças rapidamente, e levar em conta que o W-NOMINATE, por
+padrão, só considera parlamentares que participaram de pelo menos 20 votações
+com no mínimo 2,5\% de votos contrários a maioria\footnote{Esses valores podem
+ser alterados, mas preferi manter o padrão. POR QUE, ANIMAL?!}.  Baseado nisso,
+defini períodos de 12 meses dentro de uma mesma legislatura divididos em duas
+partes de mesmo tamanho. Esses períodos iniciam no primeiro dia de cada mês,
+desde o 01/Fev do primeiro ano da legislatura até o do penúltimo. Por exemplo,
+na 54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
+01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
+01/Fev/2015. Existem 37 desses períodos por legislatura.
+
+% Objetivo
+% % Quais dados precisamos?
+% % Qual o período de estudo?
+% % Devo definir o período de 1 ano dividido no meio aqui?
+
+% ETL
+% % CEBRAP + Câmara dos Deputados
+% % Normalização dos partidos
+% % Ignora abstenções
+% % Considera todos que já votaram ao menos 20 vezes
+% % Votações não-unânimes
+
+% Data Analysis
+% % Mostrar informações gerais sobre o conjunto de dados
+
+% Modelagem
+% % Vou usar só Random Forests? Por que? Se sim, por que não gbm?
+
+% Validação
+% % Talvez fosse bom treinar com as legislaturas 50~53 e testar com a 54, ou
+% %   com partes dela, pra demonstrar como ele seria usado no dia-a-dia.
+
+% Conclusão
 
 \section{Os dados}
-
-% TODO: Explicar as características dos dados
 
 Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
 resultados das votações nominais na Câmara dos Deputados e informações sobre as
@@ -715,32 +849,6 @@ o último semestre). Esses períodos iniciam no primeiro dia de cada mês, desde
 01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
 01/Fev/2015. Existem 37 desses períodos por legislatura.
 
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|r|r|r}
-\hline
-Legislatura & Deputados Federais & Votações & Votos\\
-\hline
-50 & 631 & 468 & 178603\\
-\hline
-51 & 624 & 419 & 155737\\
-\hline
-52 & 614 & 451 & 134461\\
-\hline
-53 & 606 & 619 & 192879\\
-\hline
-54 & 644 & 432 & 131552\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Número de deputados federais e votações por legislatura}
-\label{table:estatisticas-legislaturas}
-\end{table}
-
 Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
 deputados federais e votações por legislatura. Consideramos deputados federais
 todos parlamentares que participaram de alguma votação na Câmara dos Deputados
@@ -811,390 +919,6 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
 \appendix
 \input{apendice-lista-dos-partidos}
 
-
-
-\chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
-
-\section{Introdução}
-
-O PSB esteve na base de apoio do governo do PT desde que o partido conquistou a
-Presidência da República com Lula em 2003. Dez anos depois, em 2013, penúltimo
-ano do primeiro governo de Dilma, o PSB anuncia a candidatura de Eduardo Campos
-para a presidência, rompendo a aliança com o PT.
-
-Para entender a repercussão dessa mudança na Câmara dos Deputados, analisaremos
-as votações nominais ocorridas naquela legislatura (54\textordfeminine, que
-durou de 2011 até 2015) seguindo a metodologia proposta por Keith Poole em
-\emph{Spatial models of parliamentary voting} \cite{Poole2005}.
-% Não estamos entendendo a repercussão da mudança na CD como um todo, mas sim
-% só no comportamento de votação dos parlamentares.
-
-\section{Metodologia}{\label{sec:analise-saida-psb:metodologia}
-
-Para entender a influência da saída do PSB no comportamento de votação dos
-parlamentares, precisamos de uma forma de comparar o comportamento deles antes
-e depois dessa mudança. Este é um problema complicado, estudado por diversos
-autores (CITATION NEEDED). Nesta análise seguimos a metodologia de
-\cite{Poole2005}.
-
-Considerando um parlamentar por vez, o substituímos por dois parlamentares
-``virtuais'' na tabela de votações, um com os votos antes da mudança e outro
-com os votos depois dela, e executamos o algoritmo W-NOMINATE nessa nova
-tabela. Esse procedimento é repetido para cada parlamentar separadamente,
-enquanto mantém todos os outros sem modificações. Ao final, teremos dois pontos
-para cada parlamentar: um para antes e outro para depois da mudança. A
-diferença entre esses pontos representa o nível da mudança de comportamento no
-período de análise. 
-
-Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
-contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
-comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
-parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
-\ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
-Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
-depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
-a sua posição antes, e outro depois da mudança (ver figura
-\ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
-uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
-de cada parlamentar, podemos determinar se a mudança é significante ou não.
-
-% TODO: Falar sobre o parametric bootstrap
-% TODO: Falar sobre os problemas em comparar esses valores.
-% \begin{quote}
-%   ``(...) all matrices have the same number of nonmissing entries, and they
-%   differ only in the fact that each has a different senator divided into two
-%   records. Consequently, I believe it's safe to capture the 72 distances with
-%   each other, because the differences between the configurations will be
-%   trivial.''\cite{Poole2005}
-% \end{quote}
-
-\begin{table}
-  \begin{minipage}{\textwidth}
-    \centering
-    \begin{tabular}{ l l l l l }
-      nome & votação1 & votação2 & votação3 & votação4 \\
-      \hline
-      Samara & Sim & Sim & Não & Não \\
-      Pedro & Sim & Sim & Sim & Sim \\
-      Maria & Não & Não & Não & Não \\
-    \end{tabular}
-    \caption{Dados originais de votação}
-    \label{table:exemplo-mudanca-de-comportamento}
-  \end{minipage}
-  \begin{minipage}{\textwidth}
-    \centering
-    \begin{tabular}{ l l l l l }
-      nome & votação1 & votação2 & votação3 & votação4 \\
-      \hline
-      Samara 1 & Sim & Sim & & \\
-      Samara 2 & & & Não & Não \\
-      Pedro & Sim & Sim & Sim & Sim \\
-      Maria & Não & Não & Não & Não \\
-    \end{tabular}
-    \caption{Dados de votação com Romário dividido no meio}
-    \label{table:exemplo-parlamentar-virtual}
-  \end{minipage}
-\end{table}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/exemplo-mudanca-de-comportamento-1} \caption[Posições dos parlamentares antes e depois da data em análise]{Posições dos parlamentares antes e depois da data em análise}\label{fig:exemplo-mudanca-de-comportamento}
-\end{figure}
-
-
-\end{knitrout}
-
-% Pseudocódigo
-%
-% \begin{enumerate}
-%   \item Para cada parlamentar, faça:
-%   \begin{enumerate}
-%     \item Crie dois parlamentares ``virtuais'', um com os votos do parlamentar
-%       antes da mudança, e o outro com os votos depois dela;
-%     \item Execute o W-NOMINATE na matriz completa de votações com todos os
-%       parlamentares e o parlamentar em análise substituído pelos parlamentares
-%       ``virtuais'';
-%     \item Guarde o resultado;
-%   \end{enumerate}
-%   \item Compara a mudança de cada parlamentar de interesse com todos os outros,
-%     para descobrir se ela (a mudança) foi significativa.
-% \end{enumerate}
-
-\section{Extração dos dados}
-
-
-
-Os dados das votações nominais foram extraídos a partir da API disponibilizada
-no site da Câmara dos Deputados. Eles compreendem 131.552 votos
-proferidos por 644 parlamentares em 432
-votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
-votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
-de deputados federais por partido. Só consideramos votos \verb|Sim| ou
-\verb|Não|.  
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/votacoes-por-mes-1} \caption[Distribuição de votações por mês na 54\textordfeminine{} legislatura]{Distribuição de votações por mês na 54\textordfeminine{} legislatura}\label{fig:votacoes-por-mes}
-\end{figure}
-
-
-\end{knitrout}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/deputados-por-partido-1} \caption[Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura]{Distribuição de Deputados Federais por partido na 54\textordfeminine{} legislatura}\label{fig:deputados-por-partido}
-\end{figure}
-
-
-\end{knitrout}
-
-\section{Análise}
-
-
-
-Seguindo a metodologia descrita na sessão
-\ref{sec:analise-saida-psb:metodologia}, dividimos a
-54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
-no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
-os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
-primeira votação depois dessa data ocorreu em
-08/10/2013 (identificador
-367), relacionada ao MPV 621/2013. Houve
-303 votações antes da ruptura e
-133 votações após. Dos 643
-parlamentares que votaram ao menos uma vez nesse período,
-470 passaram pelo nosso filtro de
-participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
-
-A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
-entre as posições dos parlamentares antes e depois da saída do PSB da base do
-governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
-sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
-mais governista, quem sai se torna mais oposicionista, e os outros mantém sua
-posição, mas existem diversos \emph{outliers}.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/boxplot-diff-coalizao-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:boxplot-diff-coalizao}
-\end{figure}
-
-
-\end{knitrout}
-
-Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
-de posição em valores absolutos. Desses, analisemos os que não entraram nem
-saíram da coalizão: 
-
-\begin{description}
-\item[Dudimar Paxiuba] Apesar de continuar fora da coalizão, ele saiu do PSDB
-para o PROS em 2013, o que explicaria essa aproximação ao
-governo\footnote{\url{http://www2.camara.leg.br/deputados/pesquisa/layouts_deputados_biografia?pk=193033&tipo=0}}.
-\item[Rebecca Garcia] Não consegui explicar. A única coisa que encontrei foi
-que ela ia se candidatar a prefeitura de Manaus em 2012, mas desistiu porque
-vazou um áudio de uma conversa dela com seu amante na época, o ex-vereador Ari
-Moutinho. Não me parece ter relação.
-\item[Vicente Candido]Também não encontrei uma razão.
-\item[Dr. Grilo]Saiu do PSL para o Solidariedade, que pode explicar o
-afastamento do governo.
-\end{description}
-
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{l|l|l|r|r|r}
-\hline
-Nome & Partido & Coalizão & Antes & Depois & Diferença\\
-\hline
-Wladimir Costa & PMDB & saiu & 0.32 & -0.60 & -0.92\\
-\hline
-Dudimar Paxiuba & PROS & nao\_mudou & -0.71 & 0.17 & 0.87\\
-\hline
-Luiz Nishimori & PL+PRONA>PR & entrou & -0.86 & -0.08 & 0.77\\
-\hline
-Domingos Dutra & PT & saiu & 0.52 & -0.16 & -0.68\\
-\hline
-Romário & PSB & saiu & 0.28 & -0.37 & -0.65\\
-\hline
-Genecias Noronha & PMDB & saiu & -0.01 & -0.64 & -0.63\\
-\hline
-Rebecca Garcia & PDS>PP & nao\_mudou & 0.39 & -0.23 & -0.62\\
-\hline
-Antonio Balhmann & PROS & saiu & 0.08 & 0.69 & 0.61\\
-\hline
-Vicente Candido & PT & nao\_mudou & 0.99 & 0.39 & -0.60\\
-\hline
-Dr. Grilo & PSL & nao\_mudou & 0.05 & -0.52 & -0.57\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
-antes e depois da saída do PSB da base do governo.}
-\label{table:top-10-diffs}
-\end{table}
-
-\subsection{Os deputados do PSB mudaram de comportamento?}
-
-
-
-De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
-afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
-mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
-contrário da maioria, se aproximou do governo: Alexandre Toledo, que
-passou de -0,61 para -0,10 (diferença
-de 0,51). Analisando este caso, a razão se torna clara: ele
-era do PSDB e passou para o PSB em 2013. Apesar do PSB ter se tornado oposição,
-passando de uma posição mediana -0,01
-para -0,33, o PSDB é um opositor mais
-ferrenho ao governo, com posição mediana -0,87.
-
-Com base nesses dados, podemos concluir que o que já esperávamos: o PSB se
-afastou do governo.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/mudanca-psb-1} \caption[Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo]{Distribuição do nível de mudança da posição dos deputados federais antes e depois da saída do PSB da coalizão do governo}\label{fig:mudanca-psb}
-\end{figure}
-
-
-\end{knitrout}
-
-\section{Modelagem}
-
-Nosso objetivo agora é determinar se, baseado somente nas posições dos
-deputados federais de antes e depois da saída do PSB da coalizão, conseguimos
-inferir se um parlamentar mudou de lado (se era governo, se tornou oposição, ou
-vice-versa). Para isso, treinaremos um modelo \emph{Random Forest}.
-
-O primeiro passo é alterar a coluna ``Coalizão'' para somente dois valores: sim
-ou não. Nesse momento, nosso objetivo é determinar se o parlamentar mudou de
-lado, e não pra que lado ele foi\footnote{Sabendo se o parlamentar mudou de
-lado e qual era sua posição anterior, podemos inferir qual é sua nova posição
-(e.x.: se ele era oposição e mudou de lado, agora virou governo).}. Também
-retiraremos informações como nome e partido e parlamentares cuja posição não
-conseguimos estimar pois não houve votos o suficiente, e adicionamos o
-desvio-padrão de cada valor\footnote{Calculados usando parametric bootstrap.
-TODO: Explicar melhor}. No final, teremos uma tabela como a
-\ref{table:clean-data}.
-
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|r|r|r|r|l}
-\hline
-Antes & Antes SD & Depois & Depois SD & Diferença & Mudou de posição\\
-\hline
-0.32 & 0.17 & -0.60 & 0.16 & -0.92 & Sim\\
-\hline
--0.71 & 0.12 & 0.17 & 0.08 & 0.87 & Não\\
-\hline
--0.86 & 0.10 & -0.08 & 0.19 & 0.77 & Sim\\
-\hline
-0.52 & 0.13 & -0.16 & 0.13 & -0.68 & Sim\\
-\hline
-0.28 & 0.10 & -0.37 & 0.20 & -0.65 & Sim\\
-\hline
--0.01 & 0.12 & -0.64 & 0.15 & -0.63 & Sim\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
-antes e depois da saída do PSB da base do governo.}
-\label{table:clean-data}
-\end{table}
-
-Com os dados nesse formato, agora precisamos dividí-lo em dois grupos: um para
-treino e um para teste. Precisamos fazer isso para que as estimativas de
-precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino e
-20\% para testes. Também usamos o \emph{10-fold stratified cross validation}.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-## note: only 30 unique complexity parameters in default grid. Truncating the grid to 30 .
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
-a interação entre eles. Analisamos diversos números de preditores e, como pode
-ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
-sob a curva ROC usou 25 preditores e chegou a área de
-0,86 com desvio-padrão de 0,06.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/roc-vs-mtry-1} \caption[ROC como função do número de preditores]{ROC como função do número de preditores.}\label{fig:roc-vs-mtry}
-\end{figure}
-
-
-\end{knitrout}
-
-Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
-mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
-para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
-como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
-e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
-máximos locais dos pontos de corte e as respectivas sensibilidades e
-especificidades, com mínimos e máximos dentro de margem de confiança de
-95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.
-TODO: explicar melhor}.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/roc-1} \caption[Curva ROC com ponto ``ideal'' marcado]{Curva ROC com ponto ``ideal'' marcado.}\label{fig:roc}
-\end{figure}
-
-
-\end{knitrout}
-
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{l|r|r|r|r|r|r}
-\hline
-cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.high\\
-\hline
-0.9 & 0.00 & 0.13 & 0.33 & 0.96 & 0.99 & 1.00\\
-\hline
-0.739 & 0.00 & 0.20 & 0.40 & 0.91 & 0.96 & 1.00\\
-\hline
-0.556 & 0.07 & 0.27 & 0.53 & 0.86 & 0.92 & 0.97\\
-\hline
-0.448 & 0.13 & 0.33 & 0.60 & 0.82 & 0.90 & 0.96\\
-\hline
-0.37 & 0.20 & 0.47 & 0.73 & 0.77 & 0.85 & 0.92\\
-\hline
-0.329 & 0.27 & 0.53 & 0.80 & 0.74 & 0.83 & 0.91\\
-\hline
-0.261 & 0.33 & 0.60 & 0.87 & 0.73 & 0.82 & 0.90\\
-\hline
-0.243 & 0.40 & 0.67 & 0.87 & 0.72 & 0.81 & 0.88\\
-\hline
-0.232 & 0.53 & 0.73 & 0.93 & 0.71 & 0.79 & 0.88\\
-\hline
-0.169 & 0.60 & 0.80 & 1.00 & 0.59 & 0.69 & 0.79\\
-\hline
-0.127 & 0.67 & 0.87 & 1.00 & 0.53 & 0.63 & 0.73\\
-\hline
-0.068 & 0.80 & 0.93 & 1.00 & 0.44 & 0.54 & 0.64\\
-\hline
-0.049 & 1.00 & 1.00 & 1.00 & 0.42 & 0.53 & 0.63\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
-\label{table:roc}
-\end{table}
-
 \chapter{Versões dos softwares utilizados}
 
 \begin{itemize}\raggedright
@@ -1202,20 +926,19 @@ cutpoint & sens.low & sens.median & sens.high & spec.low & spec.median & spec.hi
   \item Locale: \verb|LC_CTYPE=en_US.UTF-8|, \verb|LC_NUMERIC=C|, \verb|LC_TIME=pt_BR.UTF-8|, \verb|LC_COLLATE=en_US.UTF-8|, \verb|LC_MONETARY=pt_BR.UTF-8|, \verb|LC_MESSAGES=en_US.UTF-8|, \verb|LC_PAPER=pt_BR.UTF-8|, \verb|LC_NAME=C|, \verb|LC_ADDRESS=C|, \verb|LC_TELEPHONE=C|, \verb|LC_MEASUREMENT=pt_BR.UTF-8|, \verb|LC_IDENTIFICATION=C|
   \item Base packages: base, datasets, graphics, grDevices,
     methods, parallel, stats, utils
-  \item Other packages: caret~6.0-47, data.table~1.9.4,
-    doParallel~1.0.8, foreach~1.4.2, ggplot2~1.0.1,
-    iterators~1.0.7, knitr~1.9, lattice~0.20-31, plyr~1.8.2,
-    pROC~1.8, randomForest~4.6-10
+  \item Other packages: caret~6.0-47, doParallel~1.0.8,
+    foreach~1.4.2, ggplot2~1.0.1, iterators~1.0.7, knitr~1.9,
+    lattice~0.20-31, randomForest~4.6-10
   \item Loaded via a namespace (and not attached):
-    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, chron~2.3-45,
+    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
     codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
     evaluate~0.5.5, formatR~1.2, grid~3.2.1, gtable~0.1.2,
     gtools~3.4.2, highr~0.5, labeling~0.3, lme4~1.1-7,
     MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6, minqa~1.2.4,
     munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, nnet~7.3-10,
-    pbkrtest~0.4-2, proto~0.3-10, quantreg~5.11, Rcpp~0.11.4,
-    reshape2~1.4.1, scales~0.2.4, SparseM~1.6, splines~3.2.1,
-    stringr~0.6.2, tools~3.2.1
+    pbkrtest~0.4-2, plyr~1.8.2, proto~0.3-10, quantreg~5.11,
+    Rcpp~0.11.4, reshape2~1.4.1, scales~0.2.4, SparseM~1.6,
+    splines~3.2.1, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

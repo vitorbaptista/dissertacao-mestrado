@@ -38,7 +38,7 @@ probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
 processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
 previsão precisa''.
 
-Independente da definição, modelos preditivos fazem parte do dia-a-dia da
+Independente da definição usada, modelos preditivos fazem parte do dia-a-dia da
 sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
 buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
 definir que ações comprar ou vender; seguradoras usam para definir qual o risco
@@ -267,9 +267,5 @@ Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estad
 \subsection{Câmara dos Deputados}
 
 Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Netto2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
-
-\section{Ciência de dados}
-
-Texto bem geral sobre data science. Pode ser interessante falar sobre algum algoritmo específico que eu vá usar, ou talvez seja melhor explicá-los no miolo da dissertação.
 
 \section{Considerações Finais}

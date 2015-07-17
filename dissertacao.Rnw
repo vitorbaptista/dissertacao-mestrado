@@ -193,6 +193,7 @@ library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
 options(digits = 2)
+setwd("data/")
 set.seed(1)
 
 knit_hooks$set(inline = function(x) {
@@ -232,7 +233,6 @@ format_date <- function(date) {
 
 \appendix
 \input{apendice-lista-dos-partidos}
-\Sexpr{knit_child('analise-da-saida-do-psb-da-coalizao-dilma-1.Rnw')}
 \Sexpr{knit_child('apendice-session-info.Rnw')}
 
 %\input{apendice-b}

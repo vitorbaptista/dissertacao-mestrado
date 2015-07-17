@@ -9,15 +9,161 @@ for (legislature in legislatures) {
   votes_metadata[[legislature]] = read.csv(paste("data/", legislature, "-votacoes.csv", sep=""),
                                            header = TRUE, check.names = FALSE)
 }
+
+coalition_changes = read.csv("data/parties_and_coalitions_changes.csv",
+                             header = TRUE, check.names = FALSE)
+coalition_changes$rollcall_date = as.POSIXct(coalition_changes$rollcall_date)
+coalition_changes = coalition_changes[coalition_changes$rollcall_date >= as.POSIXct("1995-02-01") &
+                                      coalition_changes$rollcall_date <= as.POSIXct("2015-01-31"),]
 @
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
-Nessa parte pretendo falar sobre a ferramenta desenvolvida, mostrar sua arquitetura e como cada parte funciona e pode ser modificada.
+Neste capítulo apresentaremos o processo de desenvolvimento, partindo da
+definição dos objetivos e período de estudo, passando pela extração, limpeza e
+transformação dos dados, que serão brevemente analisados para entendermos suas
+características e, a partir delas, escolher possíveis modelos preditivos que
+serão validados para chegar ao modelo final.
+
+O objetivo final deste trabalho é detectar mudanças de comportamento no padrão
+de votações dos deputados federais que indiquem sua entrada ou saída da
+% TODO: Esses são os critérios de uma nova coalizão, mas não definem
+% (diretamente) quais são os partidos que pertencem a mesma
+coalizão do governo. Os critérios de pertencimento a coalizão são: i) a mudança
+da legislatura, e; ii) alterações no conjunto de partidos que controlam os
+ministérios. Eles foram definidos por \citeonline{Figueiredo2007}, inspirada no
+trabalho de \citeonline{Muller2000}.
+
+O período de estudo considerado vai da 50\textordfeminine{} até a
+54\textordfeminine{} legislatura, que compreende o período de 20 anos entre
+1995 e 2015 do início do primeiro governo de Fernando Henrique Cardoso (FHC)
+até o final do primeiro governo de Dilma Rousseff. Esta escolha foi feita por
+ser quando, de acordo com \citeonline{Freitas2008}, termina a fase de
+acomodação dos parlamentares as novas regras definidas pela constituição de
+1998 e vai até a última legislatura completa disponível.
+
+A lista das coalizões nesse período foi obtida através do banco de dados
+legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e os partidos
+que a compõe. Como esta análise trabalha com o parlamentar individualmente,
+gerei outra lista que contém todas as entradas e saídas dos parlamentares na
+coalizão dentro de uma mesma legislatura. Por exemplo, o deputado Arlindo
+Chinaglia (PT/SP) é filiado ao PT desde sua fundação em 1980 e mantém seu cargo
+na Câmara desde 1995. Apesar dele passar de oposição a governo em 2003 com a
+eleição de Lula, não consideramos isso uma mudança pois ela ocorreu entre
+legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quando seu partido se
+tornou oposição em 2013 é considerada, pois ocorreu durante uma mesma
+legislatura.
+
+A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
+\Sexpr{nrow(coalition_changes)} entradas e saídas da coalizão do período de
+estudo agrupados por mês. Podemos perceber que há meses nos quais um número
+excepcionalmente alto de deputados trocam de posicionamento. Marcamos também a
+data da Resolução n\textordmasculine{} 22.600 do TSE, que alterou o
+entendimento das regras de fidelidade partidária, tornando-as mais restritas
+\cite{TSE2007}. Percebe-se que essa mudança alterou a frequência de entradas e
+saídas da coalizão, o que pode influenciar na acurácia do nosso modelo.
+
+<<mudancas-mensais-de-coalizao, fig.cap="Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas.">>=
+coalition_changes_by_month = table(format(coalition_changes$rollcall_date, "%Y-%m-01"))
+coalition_changes_by_month = data.frame(date = as.POSIXct(names(coalition_changes_by_month)),
+                                        count = as.vector(coalition_changes_by_month))
+data_resolucao_infidelidade = as.POSIXct("2007-10-25")
+ggplot(coalition_changes_by_month, aes(x = date, y = count)) +
+  geom_bar(stat = "identity") +
+  geom_vline(xintercept = as.numeric(data_resolucao_infidelidade), linetype = "dashed") +
+  annotate("text", x = data_resolucao_infidelidade, y = 85, label = "Resolução do TSE\nsobre infidelidade partidária") +
+  theme_bw() +
+  labs(x = "", y = "Entradas e saídas da coalizão")
+@
+
+As listas de votações e votos foram extraídas diretamente do site da Câmara dos
+Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
+dados através de um programa, até a data de escrita deste trabalho esta
+consulta só poderiam ser feitas individualmente, votação por votação. Para
+desenvolver o modelo preditivo, precisamos ter acesso a todos os dados
+localmente, então desenvolvi um programa\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
+linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
+votações \cite{Python276,Scrapy}.
+\nocite{CEBRAP2015,CamaraDosDeputados2015}
+
+\begin{table}
+\centering
+<<>>=
+num_deputados = simplify2array(lapply(votes[legislatures], nrow))
+num_votacoes = simplify2array(lapply(votes[legislatures], ncol)) - 4
+num_votos = simplify2array(lapply(votes[legislatures], function (v) {
+  just_votes = v[, -c(1:4)]
+  sum(just_votes == 0 | just_votes == 1, na.rm = TRUE)
+}))
+data = data.frame(legislature = legislatures,
+                  num_deputados = num_deputados,
+                  num_votacoes = num_votacoes,
+                  num_votos = num_votos)
+
+kable(data,
+      row.names = FALSE,
+      col.names = c("Legislatura", "Deputados Federais", "Votações", "Votos"))
+@
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
+\end{table}
+
+A tabela \ref{table:estatisticas-legislaturas} mostra o número de deputados
+federais, votações e votos por legislatura. Consideramos todos parlamentares
+que participaram de alguma votação na Câmara dos Deputados no período, por isso
+o número é maior do que o número de cadeiras. Por legislatura, temos em média
+\Sexpr{mean(num_deputados)} deputados e \Sexpr{sum(num_votos) /
+sum(num_votacoes)} votos em \Sexpr{mean(num_votacoes)} votações. Só
+consideramos votos ``sim'' ou ``não''. % FIXME: Por que?
+
+Os nomes dos partidos foram alterados seguindo o padrão adotado pelo
+\gls{CEBRAP} onde mudanças de nome são identificados pela primeira e última
+sigla (e.x.: o PJ que se tornou PRN que se tornou PJC é renomeado para PJ>PTC)
+e fusões são identificados pelo maior partido na data da fusão e o novo nome
+(e.x.: PL e PRONA se uniram formando o PR, então temos PL>PR)
+\cite{Freitas2008}. A lista completa pode ser consultada no apêndice
+\ref{apendice:lista-partidos}.
+
+O próximo passo é determinar o período em que analisamos a mudança de
+comportamento. Ele precisa ser longo o suficiente para evitar que
+votações anômalas influenciem demais o resultado, mas curto o suficiente para
+detectarmos as mudanças rapidamente, e levar em conta que o W-NOMINATE, por
+padrão, só considera parlamentares que participaram de pelo menos 20 votações
+com no mínimo 2,5\% de votos contrários a maioria\footnote{Esses valores podem
+ser alterados, mas preferi manter o padrão. POR QUE, ANIMAL?!}.  Baseado nisso,
+defini períodos de 12 meses dentro de uma mesma legislatura divididos em duas
+partes de mesmo tamanho. Esses períodos iniciam no primeiro dia de cada mês,
+desde o 01/Fev do primeiro ano da legislatura até o do penúltimo. Por exemplo,
+na 54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
+01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
+01/Fev/2015. Existem 37 desses períodos por legislatura.
+
+% Objetivo
+% % Quais dados precisamos?
+% % Qual o período de estudo?
+% % Devo definir o período de 1 ano dividido no meio aqui?
+
+% ETL
+% % CEBRAP + Câmara dos Deputados
+% % Normalização dos partidos
+% % Ignora abstenções
+% % Considera todos que já votaram ao menos 20 vezes
+% % Votações não-unânimes
+
+% Data Analysis
+% % Mostrar informações gerais sobre o conjunto de dados
+
+% Modelagem
+% % Vou usar só Random Forests? Por que? Se sim, por que não gbm?
+
+% Validação
+% % Talvez fosse bom treinar com as legislaturas 50~53 e testar com a 54, ou
+% %   com partes dela, pra demonstrar como ele seria usado no dia-a-dia.
+
+% Conclusão
 
 \section{Os dados}
-
-% TODO: Explicar as características dos dados
 
 Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
 resultados das votações nominais na Câmara dos Deputados e informações sobre as
@@ -165,28 +311,6 @@ o último semestre). Esses períodos iniciam no primeiro dia de cada mês, desde
 54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
 01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
 01/Fev/2015. Existem 37 desses períodos por legislatura.
-
-\begin{table}
-\centering
-<<>>=
-num_deputados = simplify2array(lapply(votes[legislatures], nrow))
-num_votacoes = simplify2array(lapply(votes[legislatures], ncol)) - 4
-num_votos = simplify2array(lapply(votes[legislatures], function (v) {
-  just_votes = v[, -c(1:4)]
-  sum(just_votes == 0 | just_votes == 1, na.rm = TRUE)
-}))
-data = data.frame(legislature = legislatures,
-                  num_deputados = num_deputados,
-                  num_votacoes = num_votacoes,
-                  num_votos = num_votos)
-
-kable(data,
-      row.names = FALSE,
-      col.names = c("Legislatura", "Deputados Federais", "Votações", "Votos"))
-@
-\caption{Número de deputados federais e votações por legislatura}
-\label{table:estatisticas-legislaturas}
-\end{table}
 
 Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
 deputados federais e votações por legislatura. Consideramos deputados federais
