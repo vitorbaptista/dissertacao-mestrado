@@ -187,12 +187,14 @@ showstringspaces=false
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 library(ggplot2)
+library(ggthemes)
 library(caret)
 library(doParallel)
 library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
 options(digits = 2)
+theme_set(theme_few())
 setwd("data/")
 set.seed(1)
 

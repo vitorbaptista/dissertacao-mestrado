@@ -94,7 +94,6 @@ data = data.frame(
 )
 ggplot(data, aes(x = valor, y = nome, shape = periodo)) +
   geom_point() +
-  theme_bw() +
   theme(legend.title = element_blank()) +
   labs(x = "", y = "")
 @
@@ -136,7 +135,6 @@ votes_by_month_count = data.frame(date = as.POSIXct(names(votes_by_month_count))
                                   count = as.vector(votes_by_month_count))
 ggplot(votes_by_month_count, aes(x = date, y = count)) +
   geom_bar(stat = "identity") +
-  theme_bw() +
   labs(x = "", y = "Votações")
 
 @
@@ -148,7 +146,6 @@ parties_count = data.frame(party = factor(names(parties_count), levels = names(s
 ggplot(parties_count, aes(x = party, y = count)) +
   geom_bar(stat = "identity") +
   coord_flip() +
-  theme_bw() +
   labs(x = "", y = "Deputados Federais")
 @
 
@@ -245,7 +242,6 @@ labels = c("Entrou na coalizão", "Não mudou", "Saiu da coalizão")
 ggplot(clean_coords[!is.na(clean_coords$diff),], aes(x = changed_coalition, y = diff)) +
   geom_boxplot() +
   scale_x_discrete(limits = order, labels = labels) +
-  theme_bw() +
   labs(x = "", y = "Distância entre posições")
 @
 
@@ -309,7 +305,6 @@ afastou do governo.
 ggplot(clean_coords[!is.na(clean_coords$diff),], aes(x = ifelse(party == "PSB",
 "PSB", "Outros"), y = diff)) +
   geom_boxplot() +
-  theme_bw() +
   scale_x_discrete(limits = c("PSB", "Outros")) +
   labs(x = "", y = "Distância entre posições")
 @

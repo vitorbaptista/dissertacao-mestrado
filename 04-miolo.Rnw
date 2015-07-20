@@ -72,7 +72,6 @@ ggplot(coalition_changes_by_month, aes(x = date, y = count)) +
   geom_bar(stat = "identity") +
   geom_vline(xintercept = as.numeric(data_resolucao_infidelidade), linetype = "dashed") +
   annotate("text", x = data_resolucao_infidelidade, y = 85, label = "Resolução do TSE\nsobre infidelidade partidária") +
-  theme_bw() +
   labs(x = "", y = "Entradas e saídas da coalizão")
 @
 

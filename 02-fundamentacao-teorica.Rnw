@@ -122,7 +122,6 @@ ggplot(parlamentares, aes(x = maioridade_penal, y = salario_minimo)) +
   geom_vline(aes(xintercept = cutlines$maioridade_penal)) +
   geom_hline(aes(yintercept = cutlines$salario_minimo)) +
   geom_point(size = 3) +
-  theme_bw() + 
   labs(x = "Maioridade penal", y = "Salário mínimo")
 @
 
