@@ -17,7 +17,57 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[a4paper,titlepage]{ppgi}
+\documentclass[a4paper,titlepage]{ppgi}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{amsmath}
+\usepackage{alltt}
 \usepackage[portuguese,ruled,linesnumbered]{algorithm2e}
 \usepackage[english,portuges]{babel}
 \usepackage{ppgi,mestre,epsfig}
@@ -106,7 +156,7 @@ showstringspaces=false
 \makeatletter
 \g@addto@macro\@floatboxreset\centering
 \makeatother
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 
@@ -186,3 +236,896 @@ showstringspaces=false
 
 
 
+\input{01-introducao}
+
+\chapter{Fundamentação Teórica}\label{cap:fundamentacao}
+
+\section{Ciência de Dados}
+
+Segundo \citeonline{Stanton2012}, o termo Ciência de Dados (do inglês
+\emph{Data Science}) é usado para definir uma área emergente que se ocupa da
+coleta, preparo, análise, visualização, gestão e preservação de conjuntos de
+dados com o objetivo de extrair conhecimento. Ela usa a ciência da computação
+como ferramenta para extrair modelos estatísticos a partir de dados relativos a
+uma área fim, como a ciência política.
+
+Por ser uma área interdisciplinar e relativamente recente (especialmente no
+Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
+computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
+diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
+\ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
+relação as outras áreas.
+
+\begin{figure}[h]
+\includegraphics{ciencia-de-dados-diagrama-venn}
+\label{fig:ciencia-de-dados-venn}
+\caption{Diagrama de Venn mostrando as habilidades necessárias para um
+cientista de dados}
+\end{figure}
+
+Com as técnicas da ciência de dados, podemos responder perguntas como ``Qual a
+melhor rota para chegar até meu trabalho?'', ``Vai chover hoje?'', ``Quais são
+minhas chances de desenvolver câncer nos próximos 10 anos?''. Neste trabalho,
+estamos interessados nas técnicas de desenvolvimento de modelos preditivos que,
+baseados nos dados e conhecimento que temos do assunto, determinam a
+probabilidade de acontecimentos futuros.
+
+\subsection{Modelos preditivos}
+
+\citeonline{Geisser1993} define modelagem preditiva como sendo ``o processo
+pelo qual um modelo é criado ou escolhido para tentar melhor prever a
+probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
+processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
+previsão precisa''.
+
+Independente da definição usada, modelos preditivos fazem parte do dia-a-dia da
+sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
+buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
+definir que ações comprar ou vender; seguradoras usam para definir qual o risco
+e, consequentemente, o preço do seguro de um carro, entre outros
+\cite{Levy2010}.
+
+Existem duas principais categorias de problemas que podem ser resolvidos por
+modelos preditivos: regressão e classificação. A diferença entre eles está no
+tipo de resposta que queremos prever, se é contínua ou categórica, que
+influencia nos tipos de modelos que podem ser usados e na forma de avaliá-los.
+Por exemplo, ao analisarmos modelos que preveem o preço de um imóvel a partir
+da sua área, buscamos o que chegue mais próximo do valor real\footnote{Esta é
+uma simplificação. Existem diversas outras características a serem analisados
+ao escolher um modelo, como facilidade de interpretação, velocidade de
+execução, entre outras. Aqui consideramos que a única diferença entre eles seja
+o resultado previsto.}. Já ao avaliar modelos que classifiquem imagens dos
+dígitos 0 a 9, só nos interessamos na classificação correta; dois modelos que
+identifiquem a imagem do número 1 como sendo do número 3 e 8 estão igualmente
+errados. O que classificou como 3 não está ``menos errado'' do que o que
+classificou como 8 \cite{Kuhn2013,Zumel2014}. Neste trabalho, nosso foco é em
+classificação.
+
+\subsubsection{Modelos de classificação}
+
+% TODO: Concluir
+
+% % Treinamento de algoritmos
+% % Regressão VS Classificação
+
+% Random Forest
+% % Árvores de decisão
+
+% Validação cruzada
+
+\section{Modelos espaciais de votação}
+
+
+
+A ideia básica de modelos espaciais de votação é que o conjunto de alternativas
+políticas de uma votação pode ser tratado como uma dimensão em um espaço
+euclidiano, e cada parlamentar tem preferências de valores nessa dimensão. O
+voto seria então definido pela escolha da alternativa mais próxima da sua
+preferência.
+
+Há diversos modelos para estimar esses valores, como o NOMINATE, W-NOMINATE,
+DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
+não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
+Nosso foco neste trabalho é no W-NOMINATE.
+\cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
+
+Considere um exemplo onde 5 parlamentares votam em
+dois projetos de Lei: um propondo a redução da maioridade penal de
+18 para 16 anos e outra
+propondo o aumento do salário-mínimo de R\$ 1.000 para
+R\$ 1.200. Suponha que cada um tem uma única preferência
+(\emph{single-peakedness}), conhecido como seu ponto ideal, e vota sinceramente
+de acordo com ela. Considere também que as preferências são simétricas. Isto é,
+dado duas escolhas a uma mesma distância do ponto ideal de um parlamentar, ele
+será indiferente a qualquer uma delas.
+
+Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde os pontos
+representam as preferências dos legisladores sobre cada votação, representados
+como as dimensões nesse espaço euclidiano. As linhas são chamadas linhas de
+corte. Elas passam pelo ponto médio entre as duas alternativas em votação: a de
+votar sim e a de votar não. Em outras palavras, se as escolhas são entre uma
+maioridade penal de 16 ou
+18, a linha de corte passa em $\frac{16 + 18}{2}$,
+ou seja, $17$. Ela divide os legisladores que irão votar não, que estão a
+esquerda da linha, dos que irão votar sim, que estão a direita da mesma. Caso
+esteja em cima da linha de corte, ele é indiferente as alternativas.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:modelo-espacial-votacao}
+\end{figure}
+
+
+\end{knitrout}
+
+Nesse exemplo estamos mostrando duas dimensões, mas o algoritmo é capaz de
+estimar os pontos ideais em qualquer número de dimensões.
+
+O comportamento dos parlamentares é assumido como sendo formado por dois
+componentes: um determinístico e outro estocástico. Formalmente, definimos a
+utilidade do legislador $i$ na consequência política do resultado ``sim'' da
+votação $j$ como sendo:
+
+\begin{equation}
+  U_{ijy} = u_{ijy} + \epsilon_{ijy}
+\end{equation}
+
+onde $u_{ijy}$ é a parte determinística e $\epsilon_{ijy}$ é a parte
+estocástica da função utilidade. Se não houver erro, o legislador vota sim se
+$U_{ijy} > U_{ijn}$ e não se $U_{ijy} < U_{ijn}$. Caso $U_{ijy} = U_{ijn}$, ele
+é indiferente para qualquer resultado.
+
+\begin{description}
+\item[$s$] o número de dimensões indexado por $k = 1, ..., s$;
+\item[$p$] o número de parlamentares indexado por $i = 1, ..., p$;
+\item[$q$] o número de votações indexado por $j = 1, ..., q$;
+\item[$X_i$] o ponto ideal do parlamentar $i$ em um vetor de comprimento $s$;
+\item[$Z_{jy}$ e $Z_{jn}$] a representação de cada votação em um vetor de comprimento
+$s$, onde $y$ e $n$ são as consequências políticas dos resultados ``Sim'' e
+``Não'', respectivamente.
+\end{description}
+
+A utilidade do parlamentar $i$ para a consequência $y$ em uma votação $j$ é:
+
+\begin{equation}
+  U_{ijy} = \beta \exp^{\left( - \frac{1}{2} \sum\limits_{k=1}^s w_k^2 d_{ijky}^2 \right)}
+\end{equation}
+
+Formalmente, sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo
+respectivamente a um voto ``sim'' e um voto ``não'' na votação $j$ ($j = 1,
+..., q$), definimos $Z_j$ como: 
+
+\begin{equation}\label{eq:cutpoint}
+  Z_j = \frac{O_{jy} + O_{jn}}{2}
+\end{equation}
+
+O $Z_j$ pode definir um ponto, linha, plano ou hiperplano, dependendo do número
+de dimensões que estamos tratando. Ele é conhecido como ponto (ou linha, etc.)
+de corte.
+
+% Introdução
+
+%% O que são de modelos de votação?
+
+%% Por que os modelos espaciais de votação foram criados?
+
+%% Por que não usar os votos diretamente?
+
+% Desenvolvimento
+
+% Conclusão
+
+\subsection{Comparando pontos ideais ao longo do tempo}
+\label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
+
+O principal problema em comparar mudanças nos pontos ideais ao longo do tempo é
+distinguir alterações causadas por mudanças na agenda legislativa das causadas
+por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
+palavras, se o ponto ideal de um deputado federal passa de 0.3 para -0.2 de um ano
+para o outro, como descobrir se isso representa uma mudança real de ideologia ou
+é somente reflexo da diferença na agenda legislativa dos dois períodos?
+
+Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
+usam ``pontes'', que podem ser parlamentares cujo posicionamento assume-se ter
+se mantido estável durante o período de interesse, ou; projetos de Lei que
+foram votados em mais de um momento (nas duas casas legislativas em um sistema
+bicameral, por exemplo). O primeiro é mais usado para comparar as mudanças nos
+posicionamentos dos parlamentares, enquanto o segundo permite unir pessoas que
+não votaram juntas em um mesmo mapa espacial\footnote{Por exemplo,
+\citeonline{Shor2010} colocam todos os legisladores de 11 estados americanos e
+do congresso federal em um período que varia entre 7 e 15 anos, dependendo do
+estado, em um mesmo mapa espacial}. \citeonline{Poole2005} propõe duas formas
+para estimar pontos ideais usando pontes.
+
+Na primeira, batizada de \emph{pooled scaling} por \citeonline{Shor2010},
+dividimos os votos dos parlamentares que queremos mensurar em dois
+parlamentares ``virtuais'', um com os votos antes e outro com os votos depois
+da data de interesse. Unimos esses parlamentares virtuais com os
+parlamentares-ponte, que possuem um registro único, em uma tabela individual e
+executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
+pontos para cada parlamentar de interesse e um ponto para os pontes. Na
+segunda, que \citeonline{Shor2010} chamam de \emph{linear mapping}, estimamos
+os pontos ideias separadamente em cada período e os conectamos usando regressão
+entre os conjuntos de pontos dos parlamentares-ponte. Ambas formas devem gerar
+resultados similares, mas a segunda é computacionalmente mais simples, o que
+pode ser essencial, dependendo da quantidade de parlamentares e votações votos
+em estudo.
+
+\citeonline{Poole2005} ainda descreve uma terceira forma, similar a
+\emph{pooled scaling} descrita acima, que usa para testar se os senadores
+norte-americanos mudam de comportamento nos últimos dois anos de seus mandatos,
+antes de concorrer à reeleição. Neste caso, ele quer calcular a mudança de
+comportamento de todos os legisladores em dois momentos numa mesma legislatura.
+Se usássemos o \emph{pooled scaling} diretamente, precisaríamos escolher alguns
+parlamentares como pontes que, por definição, não teriam mudado de
+comportamento. Ao invés disso, ele segue o seguinte processo:
+
+\begin{enumerate}
+  \item Para cada parlamentar, faça:
+    \begin{enumerate}
+      \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
+de votos antes, e outro com os depois da data de interesse. Os outros
+parlamentares não são modificados;
+      \item Calcule os pontos ideias;
+      \item Guarde os resultados dos dois parlamentares ``virtuais''. A
+diferença entre suas posições representa a mudança de comportamento do
+parlamentar.
+    \end{enumerate}
+  \item Calcule medidas de incerteza para as estimativas.
+\end{enumerate}
+
+Ao final, ele tem dois pontos para cada senador: um representando sua posição
+nos primeiros 4, e o outro nos últimos 2 anos da legislatura. Note que, como as
+matrizes de votações usadas para gerar os mapas espaciais são diferentes, eles
+não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
+argumenta que como elas possuem o mesmo conjunto de votos, com a única
+diferença de que um dos parlamentares foi dividido em dois, ele considera ser
+seguro compará-las.
+
+\section{Processo legislativo}
+
+Como são criadas as Leis no Brasil? Essa seção pode ser gigantesca, então acho melhor focar no essencial e pontuar as características mais importantes para este trabalho, por exemplo o que são destaques, tipos de votação, tipos de votos, etc.
+
+% ALEXANDRE: Acho que senado e câmara podem ser subseções desta seção.
+% Essas subseções não precisam ser muito longas. Devem descrevas basicamente as competências e atribuições de cada casa.
+%
+% Acho que a justificativa da escolha da Câmara pode aparecer mais tarde, na seção do estudo de caso.  
+% Assim a seção de fundamentação teórica fica sendo realmente apenas de fundamentação teórica, sem efeitos colaterais.
+
+\subsection{Senado Federal}
+
+Também chamada de Casa Alta, ela é composta por 81 senadores, 3 por cada Estado e Distrito Federal. Os senadores têm mandato de 8 anos e são eleitos pelo sistema majoritário\footnote{No sistema majoritário, o candidato mais votado é eleito. Nos anos em que são eleitos 2 senadores, os dois candidatos mais votados serão eleitos. Ele pressupõe um (ou dois) único candidatos por partido. É o mesmo sistema usado nas eleições para os chefes do Poder Executivo (presidente da República, governadores e prefeitos). Com exceção da eleição de senadores e prefeitos em cidades com menos de 200 mil habitantes, onde há um único turno, as eleições ocorrem em dois turnos. \cite{Carneiro2013}}. A renovação da casa é parcial, modificando $\frac{1}{3}$ e $\frac{2}{3}$ dos senadores alternadamente de 4 em 4 anos.
+
+\subsection{Câmara dos Deputados}
+
+Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados federais, cujo papel é representar o povo. Cada Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema proporcional\footnote{No sistema proporcional os partidos registram vários candidatos para o mesmo cargo. Os votos recebidos por cada candidato são direcionados ao partido, que precisa atingir uma quantidade mínima de votos (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse sistema, um candidato com menos votos pode se eleger, enquanto outro com mais votos não se elegeu, dependendo do partido de cada um deles. \cite{Carneiro2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é total de 4 em 4 anos.
+
+\section{Considerações Finais}
+\input{03-trabalhos-relacionados}
+
+
+
+\chapter{Miolo da sua dissertação}\label{cap:miolo}
+
+Neste capítulo apresentaremos o processo de desenvolvimento, partindo da
+definição dos objetivos e período de estudo, passando pela extração, limpeza e
+transformação dos dados, que serão brevemente analisados para entendermos suas
+características e, a partir delas, escolher possíveis modelos preditivos que
+serão validados para chegar ao modelo final.
+
+\section{Operacionalização dos dados}
+
+% Universo de votações
+
+O período de análise deste trabalho é composto pela 50\textordfeminine{},
+51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
+54\textordfeminine{} legislaturas, compreendendo o período de 20 anos de 1995
+até 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o final do
+primeiro mandato de Dilma Rousseff. Excluí as 48\textordfeminine{} e
+49\textordfeminine{} legislaturas, iniciadas em 1987 e 1991 respectivamente,
+pois segundo \citeonline{Freitas2008} neste período os parlamentares ainda
+estão se acomodando as novas regras definidas pela Constituição de 1998.
+
+% Universo de parlamentares
+
+A análise se restringe à Câmara dos Deputados pois o número de parlamentares é
+maior (existem 513 deputados federais contra 81 senadores) e os dados estão
+disponíveis mais facilmente no próprio site da Câmara. Considerei todos os
+parlamentares que votaram ao menos uma vez na Câmara, por isso o número é maior
+do que os 513 eleitos por legislatura.
+
+A unidade de análise usada é o parlamentar. Ela foi escolhida pois, apesar de
+grande parte da literatura apontar o papel fundamental dos partidos no
+comportamento do parlamentar \cite{Figueiredo2001,Santos2003}, trabalhar com os
+dados desagregados nos permite perceber movimentações como quando um
+parlamentar deixa um partido governista para entrar em um de oposição (ou
+vice-versa).
+
+% Universo de votos
+
+O método W-NOMINATE usado neste trabalho só interpreta votos a favor ou contra,
+mas os deputados podem votar sim, não, nulo, branco, se abster ou
+obstruir \cite{Carneiro2013}. Isso nos dá duas opções: ou mapeamos os outros
+tipos de votos para votos a favor ou contra (por exemplo, considerando
+abstenções como votos contrários), ou os ignoramos. Para evitar possíveis
+problemas metodológicos ao criar esse tipo de critério, desconsidero
+votos diferentes de sim ou não.
+
+% Composição das coalizões
+
+As coalizões são compostas pelos partidos que controlam ao menos um ministério.
+Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
+ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
+palavras, se um partido que não possuía nenhum ministério passa a ter ao menos
+um, ou se um partido deixa de controlar algum ministério, uma nova coalizão é
+formada. Esses critérios foram definidos por \citeonline{Figueiredo2007},
+inspirada no trabalho de \citeonline{Muller2000}.
+
+
+\section{Origem dos dados}
+
+
+
+% Votações
+Os votos e votações foram extraídos diretamente do site da Câmara dos
+Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
+dados através de um programa, até a data de escrita deste trabalho esta
+consulta só poderia ser feita individualmente, votação por votação. Para
+desenvolver o modelo preditivo, precisamos ter acesso a todos os dados
+localmente, então desenvolvi um programa\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
+linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
+votações \cite{Python276,Scrapy}. A tabela
+\ref{table:estatisticas-legislaturas} mostra o número de deputados federais,
+votos e votações por legislatura. Em média, temos 623,80
+parlamentares e 332,04 votos em
+477,80 votações a cada legislatura.
+\nocite{CamaraDosDeputados2015}
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r}
+\hline
+Legislatura & Deputados Federais & Votações & Votos\\
+\hline
+50 & 631 & 468 & 178603\\
+\hline
+51 & 624 & 419 & 155737\\
+\hline
+52 & 614 & 451 & 134461\\
+\hline
+53 & 606 & 619 & 192879\\
+\hline
+54 & 644 & 432 & 131552\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
+\end{table}
+
+Os nomes dos partidos foram alterados seguindo o padrão adotado pelo
+\gls{CEBRAP} onde mudanças de nome são identificadas pela primeira e última
+sigla (e.x.: o PJ que se tornou PRN que se tornou PJC é renomeado para PJ>PTC)
+e fusões são identificadas pelo nome do maior partido na data da fusão e o novo
+nome (e.x.: PL e PRONA se uniram formando o PR, então temos PL>PR)
+\cite{Freitas2008}. A lista completa pode ser consultada no apêndice
+\ref{apendice:lista-partidos}.
+
+% Coalizão
+A lista das coalizões foi obtida através do banco de dados
+legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e a composição
+partidária de cada coalizão. Como trabalhamos com os parlamentares
+individualmente, gerei outra lista que contém todas as entradas e saídas dos
+deputados federais na coalizão dentro de uma mesma legislatura. Por exemplo, o
+deputado Arlindo Chinaglia (PT/SP) é filiado ao PT desde sua fundação em 1980 e
+mantém seu cargo na Câmara desde 1995. Apesar dele passar de oposição a governo
+em 2003 com a eleição de Lula, não consideramos isso uma mudança pois ela
+ocorreu entre legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quando
+seu partido se tornou oposição em 2013 é considerada, pois ocorreu durante uma
+mesma legislatura.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-mensais-de-coalizao-1} \caption[Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas]{Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas.}\label{fig:mudancas-mensais-de-coalizao}
+\end{figure}
+
+
+\end{knitrout}
+
+A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
+890 entradas e saídas da coalizão durante o período
+de estudo agrupados por mês. Há meses que concentram as mudanças de
+posicionamento, possivelmente um reflexo da sazonalidade das trocas de partido
+\cite{Araujo2000,Melo2004,Freitas2008}. Marcamos também a data da Resolução
+n\textordmasculine{} 22.610 do TSE, que em
+25/10/2007 alterou o entendimento das
+regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
+Percebe-se que essa mudança alterou a frequência de entradas e saídas na
+coalizão, o que pode influenciar na acurácia do nosso modelo.
+
+\section{Estimando os pontos ideais}
+
+Para estimar a mudança de comportamento precisamos definir os períodos
+analisados. Por exemplo, se quisermos analisar a influência da saída do PSB da
+coalizão em outubro de 2013 no comportamento dos parlamentares, precisamos
+definir quais são os períodos ``antes'' e ``depois'' da data onde supomos ter
+havido uma mudança de comportamento. Períodos muito curtos, por
+exemplo uma semana antes e uma semana depois, podem sofrer com a falta de
+votações suficientes ou serem demasiadamente influenciados por votações
+anômalas. Já períodos períodos muito longos, como 5 anos antes e 5 anos
+depois, dificultam a interpretação dos resultados pois podem conter diversas
+mudanças de comportamento. No mínimo, precisamos de um período grande o
+suficiente para que os parlamentares participem de 20 votações com maioria de
+no máximo 97,5\% dos votos\footnote{Estes são os critérios padrão de inclusão
+de parlamentares e votações do W-NOMINATE, que seguimos neste trabalho.}.
+
+Baseado nisso, defini os períodos como tendo 12 meses dentro de uma mesma
+legislatura divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro
+dia de cada mês, desde o 01/Fev do primeiro ano da legislatura até o do
+penúltimo. Por exemplo, na 54\textordfeminine{} legislatura, o primeiro período
+foi de 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de
+01/Fev/2014 até 01/Fev/2015. Existem 37 períodos por legislatura, 185 nas 5
+legislaturas estudadas neste trabalho.
+
+Escolhidos os períodos, o próximo passo é estimar os pontos ideais de cada
+parlamentar em cada um deles. Para isto, seguimos a metodologia de
+\citeonline{Poole2005} descrita em
+\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
+\citeauthor{Poole2005} sugere repetir as estimativas 101 vezes para calcular o
+erro. Entretanto, o volume de dados que estamos trabalhando invibializa essa
+quantidade de repetições com os recursos computacionais que tenho
+disponível\footnote{Por exemplo, usando um núcleo de um processador AMD
+Opteron\texttrademark{} 6238 com 2,6 GHz o processamento dos pontos ideais de
+um parlamentar em um período demora cerca de 1h45m. Considerando somente os 513
+deputados eleitos por legislatura, o cálculo de todos os 37 períodos levaria
+aproximadamente 18 meses. Todas as 5 legislaturas analisadas neste trabalho
+levariam mais de 7 anos. O cálculo é facilmente paralelizável, diminuindo o
+tempo necessário de acordo com o número de processadores, mas ainda assim não
+foi possível usar 101 repetições neste trabalho.}. Por isto, escolhi fazer 10
+repetições, o que diminuiu o tempo necessário em cerca de 90\%.
+
+O modelo que usamos para criar o modelo preditivo é de aprendizagem
+supervisionada. Ao contrário dos não-supervisionados, ele precisa ser treinado
+com exemplos que possuem além das variáveis independentes (preditores), a
+variável dependente (resposta). Para isto, precisamos definir o que
+consideramos ser uma mudança de comportamento em razão de uma mudança de
+posição (entrada ou saída da coalizão). Por exemplo, considere um parlamentar
+que estava na coalizão desde o início da 54\textordfeminine{} legislatura em
+2011, mas saiu dela no início de 2014. Se ao estimarmos sua mudança de
+comportamento entre o primeiro e o segundo semestre de 2011, detectamos que ele
+se afastou do governo, consideramos que essa mudança de comportamento foi um
+indício da sua futura saída da coalizão? E se essa mudança de comportamento
+tivesse ocorrido em 2007? Em outras palavras, precisamos definir o ``raio de
+influência'' de uma saída ou entrada da coalizão.
+
+Não há uma resposta correta. Alguns parlamentares podem mudar de comportamento
+anos antes de deixarem (ou entrarem) na coalizão, enquanto outros podem não
+mudar em momento algum. A hipótese fundamental deste trabalho é que eles mudam
+de comportamento antes de mudar de posicionamento, caso contrário seria
+impossível prever um a partir do outro. Formalmente, temos que se
+$Data_{coaliz\tilde{a}o}$ seja a data da entrada ou saída da coalizão,
+$Data_{mudan\textit{\c{c}}a}$ seja a data do início da mudança do comportamento,
+$Data_{fim}$ seja a data final do período analisado, e $P$ seja a distância
+entre $Data_{mudan\textit{\c{c}}a}$ e $Data_{fim}$, então $Data_{mudan\textit{\c{c}}a}
+< Data_{coaliz\tilde{a}o}$ e o período em que consideramos que uma mudança de
+comportamento esteja relacionada a mudança de posicionamento compreende
+$\left[Data_{fim} - P, Data_{fim} + P\right]$.
+
+Visualmente, temos:
+
+\begin{figure}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-5-1} 
+
+\end{knitrout}
+\end{figure}
+
+% Criação dos preditores (variáveis independentes)
+Neste momento, seguimos a metodologia de \citeonline{Poole2005} descrita
+em \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} para determinar as
+mudanças de comportamento. Calculamos o W-NOMINATE para cada deputado federal
+em cada um dos períodos, repetindo 10 vezes para estimar o erro dos pontos
+ideais\footnote{\citeonline{Poole2005} sugere usarmos 101 repetições,
+entretanto o volume de dados que estamos trabalhando inviabiliza essa
+quantidade com os recursos computacionais que temos disponíveis. Por isto,
+optei por um valor menor de repetições.}. Ao final, teremos uma tabela como a
+\ref{table:dataset-final}, onde cada linha representa um parlamentar em um
+período, e as colunas representam seus pontos ideais antes e depois do período
+de estudo e as estimativas de erro.
+
+\begin{description}
+\item[antes] Ponto ideal no período anterior
+\item[antes.sd] Estimativa de erro do ponto ideal do período anterior
+\item[depois] Ponto ideal no período posterior
+\item[depois.sd] Estimativa de erro do ponto ideal do período posterior
+\item[mudou\_coalizao] Variável dependente que indica se o parlamentar mudou de
+posicionamento no período
+\end{description}
+
+% Variável dependente
+A variável dependente usada indica se o parlamentar entrou ou saiu da coalizão
+no período de estudo. Ela pode ser \verb|N|, caso ele tenha mantido sua
+posição, ou \verb|S| caso a tenha alterado.
+O modelo está sendo desenvolvido usando treinamento supervisionado, isto é, ele
+aprende como detectar o que queremos a partir de exemplos. Para isto,
+precisamos definir o que queremos detectar. Em outras palavras, vamos definir
+quando uma mudança de comportamento indica uma futura mudança de posicionamento
+ou não.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r|l}
+\hline
+antes & antes.sd & depois & depois.sd & mudou\_coalizao\\
+\hline
+0,55 & 0,02 & -0,40 & 0,03 & Sim\\
+\hline
+0,90 & 0,01 & 0,85 & 0,02 & Não\\
+\hline
+-0,30 & 0,01 & 0,40 & 0,01 & Sim\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Exemplo da tabela usada para treinar o algoritmo.}
+\label{table:dataset-final}
+\end{table}
+
+% Analisando os dados
+
+
+
+Ao retirar os parlamentares nos períodos em que não conseguimos estimar seu
+ponto ideal por causa de nossos critérios, ficamos com 47.851
+entradas na tabela. Dessas, 9,73\%
+(4.655) são de deputados que mudaram
+de posicionamento e 90,27\%
+(43.196) que não. A tabela
+\ref{table:changed-coalitions-per-legislature} mostra esses dados separadamente
+para cada legislatura.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|r|r|r}
+\hline
+  & 50 & 51 & 52\\
+\hline
+S & 0,07 & 0,09 & 0,13\\
+\hline
+N & 0,93 & 0,91 & 0,87\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
+\label{table:changed-coalitions-per-legislature}
+\end{table}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-9-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+
+\end{knitrout}
+
+% Construindo os modelos
+
+% Avaliando
+
+
+% Objetivo
+% % Quais dados precisamos?
+% % Qual o período de estudo?
+% % Devo definir o período de 1 ano dividido no meio aqui?
+
+% ETL
+% % CEBRAP + Câmara dos Deputados
+% % Normalização dos partidos
+% % Ignora abstenções
+% % Considera todos que já votaram ao menos 20 vezes
+% % Votações não-unânimes
+
+% Data Analysis
+% % Mostrar informações gerais sobre o conjunto de dados
+
+% Modelagem
+% % Vou usar só Random Forests? Por que? Se sim, por que não gbm?
+
+% Validação
+% % Talvez fosse bom treinar com as legislaturas 50~53 e testar com a 54, ou
+% %   com partes dela, pra demonstrar como ele seria usado no dia-a-dia.
+
+% Conclusão
+
+\section{Os dados}
+
+Para desenvolver o modelo preditivo, precisamos de dois conjuntos de dados: os
+resultados das votações nominais na Câmara dos Deputados e informações sobre as
+coalizões governamentais. Nessa seção descreverei o processo de extração,
+limpeza, transformação e carga\footnote{Do inglês, \emph{extract, clean,
+transform and load} (ECTL)} desses dados, desde suas fontes até estarem prontos
+para uso no modelo. Nosso objetivo é criar uma tabela como a
+\ref{table:dataset-final}, com os valores dos pontos ideais dos deputados
+federais (nossas variáveis independentes) e uma coluna definindo se eles
+mudaram de posicionamento ou não no período (nossa variável dependente).
+
+Nos restringimos a analisar da 50\textordfeminine{} até a 54\textordfeminine{}
+legislatura, que compreende o período de 20 anos entre o início do primeiro
+governo de Fernando Henrique Cardoso (FHC) em 1995 até o final do primeiro
+governo de Dilma Rousseff em 2015. Escolhemos começar a análise no governo de
+FHC pois é quando, de acordo com \citeonline{Freitas2008}, termina a fase de
+acomodação dos parlamentares as regras definidas pela Constituição de 1988.
+
+\subsection{Extração}
+\label{sec:miolo:extracao}
+
+O \gls{CEBRAP} reúne diversos dados sobre o legislativo brasileiro. Para este
+trabalho, extraímos dele a lista das coalizões governamentais do Brasil.
+\citeonline{Figueiredo2007} se inspirou no trabalho de \citeonline{Muller2000}
+para definir os critérios de início de uma nova coalizão. Eles são: i) a
+mudança da legislatura, e; ii) alterações no conjunto de partidos que controlam
+os ministérios. Com base nisso, \citeauthor{Figueiredo2007} listou as coalizões
+formadas durante as duas últimas constituições democráticas, nos períodos de
+1946 até 1964, e de 1988 até os dias atuais.  
+
+De posse desses dados, também precisamos do resultado das votações nominais
+ocorridas na Câmara Federal. O banco de dados do \gls{CEBRAP} possui essas
+informações, mas como o modelo desenvolvido foi pensado para ser usado
+continuamente, monitorando o comportamento dos deputados federais, preferimos
+buscá-los diretamente da fonte.
+
+A Câmara disponibiliza diversos conjuntos de dados em seu sua página na
+web\footnote{\url{http://www2.camara.leg.br/transparencia/dados-abertos}}.
+Dentre eles está o histórico dos resultados das votações nominais que
+precisamos. Infelizmente, até a data de escrita deste trabalho, esses dados só
+estavam disponíveis para consulta individualmente através de uma \gls{API}, mas
+precisávamos do conjunto completo para análise local.  Isto nos obrigou a
+desenvolver um software que busca, uma a uma, as votações ocorridas no nosso
+período de interesse.
+
+Esse software\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}, conhecido
+como \emph{crawler} (do inglês, ``raspador''), usa os métodos
+\emph{ListarProposicoesVotadasEmPlenario}, que a partir de um ano retorna a
+lista de proposições votadas, e \emph{ObterVotacaoProposicao}, que retorna
+todas as votações ocorridas em uma proposição a partir do seu tipo, número e
+ano. Ele foi desenvolvido em Python usando a biblioteca Scrapy
+\cite{Python276,Scrapy}. Além de baixar os dados, ele também converte a lista
+de proposições votadas em um \gls{CSV} e as votações por proposição em um
+\gls{JSON}, a partir do original em \gls{XML}, pois mais ferramentas suportam
+esses formatos.
+
+\subsection{Limpeza}
+
+Usando outro programa também desenvolvido em Python\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/codigo-mestrado}}, limpamos os dados
+extraídos fazendo:
+
+\begin{itemize}
+  \item Retiramos espaços em branco no começo ou final dos campos;
+  \item Normalizamos os nomes dos partidos seguindo o padrão adotado pelo
+\gls{CEBRAP}, onde mudanças de nome são identificados pela primeira e última
+sigla (ex.: PJ se torna PRN que se torna PJC, então temos PJ>PTC) e fusões são
+identificados pelo maior partido na data da fusão e o novo nome (ex.: PL e
+PRONA se tornam PL>PR) \cite{Freitas2008}. A lista completa está no apêndice
+\ref{apendice:lista-partidos}.
+\end{itemize}
+
+O resultado dessa etapa é guardado em um banco de dados SQLite com o auxílio da
+biblioteca SQLAlchemy \cite{SQLite3,SQLAlchemy}. A partir daí, geramos dois
+arquivos \gls{CSV} por legislatura: um contendo os dados dos parlamentares e
+seus votos (tabela \ref{table:votes}) e outro contendo os detalhes das votações
+(tabela \ref{table:votes-metadata}). São esses arquivos 
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|l|l|l|r|r|r|r|r}
+\hline
+id & name & party & state & 76 & 273 & 271 & 272 & 485\\
+\hline
+3151 & Jairo Ataíde & PFL>DEM & MG & NA & 0 & NA & 0 & NA\\
+\hline
+4929 & Joseph Bandeira & PT & BA & NA & NA & NA & NA & NA\\
+\hline
+4930 & Silvio Costa & PSC & PE & 1 & 0 & 0 & 0 & 0\\
+\hline
+4931 & Izalci & PL+PRONA>PR & DF & 1 & 1 & 0 & 0 & 0\\
+\hline
+62881 & Danilo Forte & PMDB & CE & 1 & 1 & 0 & 0 & NA\\
+\hline
+67138 & Iracema Portella & PDS>PP & PI & 1 & 1 & 0 & 0 & 0\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Exemplo da tabela com detalhes dos parlamentares e seus respectivos votos.}
+\label{table:votes}
+\end{table}
+
+\begin{landscape}
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|l|l|l}
+\hline
+id & id\_sessao & proposicao\_id & data & resumo & obj\_votacao\\
+\hline
+76 & 4212 & 491974 & 2011-02-15 21:09:00 & Aprovado o Requerime... & URGÊNCIA PARA O PL 3...\\
+\hline
+273 & 4215 & 491872 & 2011-02-16 00:17:00 & Mantida a expressão.... & DVS - Bloco PvPps - ...\\
+\hline
+271 & 4214 & 491872 & 2011-02-16 22:38:00 & Rejeitada a Emenda d... & DVS - PSDB - EMENDA ...\\
+\hline
+272 & 4214 & 491872 & 2011-02-16 23:27:00 & Rejeitada a Emenda d... & DVS - DEM - EMENDA N...\\
+\hline
+485 & 4219 & 485274 & 2011-02-22 17:36:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+486 & 4219 & 485274 & 2011-02-22 19:20:00 & Rejeitado o Requerim... & REQUERIMENTO DE ADIA...\\
+\hline
+487 & 4220 & 485274 & 2011-02-22 20:45:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+955 & 4221 & 485275 & 2011-02-23 17:01:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+1042 & 4251 & 485758 & 2011-04-05 17:02:00 & Rejeitado o Requerim... & REQUERIMENTO DE RETI...\\
+\hline
+1043 & 4251 & 485758 & 2011-04-05 19:11:00 & Rejeitado o Requerim... & REQUERIMENTO DE CONC...\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Exemplo da tabela com detalhes das votações. Os campos ``resumo'' e
+``obj\_votacao'' foram limitados a 20 caracteres por
+questões de formatação da página.}
+\label{table:votes-metadata}
+\end{table}
+\end{landscape}
+
+\subsection{Transformação}
+\label{sec:miolo:transformacao}
+
+Nesta etapa, calculamos a mudança na posição dos pontos ideais dos deputados
+federais entre os dois períodos de interesse e definimos se, segundo os dados
+do \gls{CEBRAP}, houve ou não uma alteração na coalizão no período.
+
+O cálculo da mudança nos pontos ideais é feito segundo a metologia de
+\citeonline{Poole2005} descrita na sessão
+\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}. Para isso,
+desenvolvemos um programa\footnote{Disponível em:
+\url{https://github.com/vitorbaptista/codigo-mestrado}} na linguagem R usando e
+as bibliotecas wnominate e pscl \cite{R,R:wnominate,R:pscl}.
+
+Existem duas variáveis que precisam ser definidas para usarmos a metodologia de
+\citeauthor{Poole2005}: os períodos de análise da mudança de comportamento e o
+número de repetições para cálculo do erro das estimativas. Com relação ao
+cálculo do erro, \citeauthor{Poole2005} recomenda 101 repetições. Apesar disso,
+nos limitamos a 10 repetições por restrições na nossa capacidade de
+processamento.
+
+Para definir os períodos de análise, levamos em consideração os critérios de
+escolha de votações do W-NOMINATE, que exige ao menos 20 votações com no mínimo
+2,5\% de votos contrários a maioria. Definimos períodos de 12 meses dentro de
+uma mesma legislatura, divididos em duas partes de mesmo tamanho (o primeiro e
+o último semestre). Esses períodos iniciam no primeiro dia de cada mês, desde o
+01/Fev do primeiro ano da legislatura até o do penúltimo. Por exemplo, na
+54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
+01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
+01/Fev/2015. Existem 37 desses períodos por legislatura.
+
+Na tabela \ref{table:estatisticas-legislaturas}, mostramos o número de
+deputados federais e votações por legislatura. Consideramos deputados federais
+todos parlamentares que participaram de alguma votação na Câmara dos Deputados
+no período, por isso o número é maior do que o número de cadeiras. Por
+legislatura, temos em média 623,80 deputados e
+477,80 votações com 332,04 votos cada.
+
+\section{Construção do modelo}
+
+% TODO: Preciso falar sobre a variável de coalizão, de onde ela veio, como é
+% definida e como a usamos. Também preciso falar do período de estudo (100
+% votações).
+
+\subsection{Variável dependente}
+
+A variável dependente indica se o parlamentar entrou ou saiu da coalizão do
+governo no período de estudo. Ela pode tomar os valores \verb|N|, caso ele
+tenha se mantido no governo ou oposição, ou \verb|S| caso tenha trocado de
+lado. Um favor importante é como definimos o período de estudo, ou seja, quando
+consideramos que um parlamentar mudou de lado?
+
+Se considerarmos que ele mudou de lado somente quando seu partido entrou (ou
+saiu) da coalizão, o objetivo deste trabalho, de prever quando um parlamentar
+vai mudar de posicionamento com base no padrão de votação, é impossível. Se um
+parlamentar só muda de comportamento depois de entrar (ou sair) oficialmente da
+coalizão, na melhor hipótese nosso algoritmo conseguiria detectar as datas de
+entrada (ou saída). Em outras palavras, não conseguiríamos prever essa mudança.
+Por isso, a hipótese essencial para nosso trabalho é que os parlamentares mudam
+de comportamento antes de entrarem (ou saírem) da coalizão. Mas quanto antes?
+
+Se escolhermos um período maior do que o real, estaremos ``ensinando'' nosso
+algoritmo algo errado. Se, por outro lado, escolhermos um período menor, também
+teremos problemas. Como complicador, é provável que não exista um valor correto
+em todas as ocasiões. Algumas vezes, a mudança de comportamento pode acontecer
+2 meses antes da mudança oficial de posicionamento; outras, ela pode ocorrer 10
+meses antes. Como escolher, então?
+
+Não há uma resposta fácil para esta pergunta. Neste trabalho, considerei os 6
+meses antes da mudança oficial de posicionamento. Obtive bons resultados, mas
+este é um ponto que pode ser melhor estudado, tanto usando outros valores,
+quanto analisando se esses valores mudam dependendo da legislatura.
+
+\subsection{Variáveis independentes}
+
+Usamos os pontos ideais do parlamentar estimado usando o W-NOMINATE e seus
+respectivos erros-padrão como variáveis independentes.
+
+\section{Considerações Finais}
+
+Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, analisa e gera relatórios para os usuários. Cada parte pode ser modificada e expandida, e os dados (e algoritmos) podem ser usados por outras pessoas. Daqui falta validar que os algoritmos na parte de análise geram algo interessante.
+\input{05-avaliacao-experimental}
+\input{06-conclusao}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIbliografia
+%% Coloque suas referencias no arquivo ref.bib
+
+\bibliographystyle{abnt-alf} % estilo de bibliografia   plain,unsrt,alpha,abbrv.
+\bibliography{ref} % arquivos com as entradas bib.
+
+%Faz aparecer a referencia bibliografica no indice
+\addcontentsline{toc}{section}{\numberline{}Referências Bibliográficas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Apendice
+% Caso seja necessario algum apendice
+
+\appendix
+\input{apendice-lista-dos-partidos}
+
+\chapter{Versões dos softwares utilizados}
+
+\begin{itemize}\raggedright
+  \item R version 3.2.1 (2015-06-18), \verb|x86_64-pc-linux-gnu|
+  \item Locale: \verb|LC_CTYPE=en_US.UTF-8|, \verb|LC_NUMERIC=C|, \verb|LC_TIME=pt_BR.UTF-8|, \verb|LC_COLLATE=en_US.UTF-8|, \verb|LC_MONETARY=pt_BR.UTF-8|, \verb|LC_MESSAGES=en_US.UTF-8|, \verb|LC_PAPER=pt_BR.UTF-8|, \verb|LC_NAME=C|, \verb|LC_ADDRESS=C|, \verb|LC_TELEPHONE=C|, \verb|LC_MEASUREMENT=pt_BR.UTF-8|, \verb|LC_IDENTIFICATION=C|
+  \item Base packages: base, datasets, graphics, grDevices,
+    methods, parallel, stats, utils
+  \item Other packages: caret~6.0-47, doParallel~1.0.8,
+    foreach~1.4.2, ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
+    knitr~1.9, lattice~0.20-31, randomForest~4.6-10
+  \item Loaded via a namespace (and not attached):
+    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
+    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
+    evaluate~0.5.5, formatR~1.2, grid~3.2.1, gtable~0.1.2,
+    gtools~3.4.2, highr~0.5, labeling~0.3, lme4~1.1-7,
+    MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6, minqa~1.2.4,
+    munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, nnet~7.3-10,
+    pbkrtest~0.4-2, plyr~1.8.2, proto~0.3-10, quantreg~5.11,
+    Rcpp~0.11.4, reshape2~1.4.1, scales~0.2.4, SparseM~1.6,
+    splines~3.2.1, stringr~0.6.2, tools~3.2.1
+\end{itemize}
+
+
+%\input{apendice-b}
+%\input{apendice-c}
+%\input{apendice-d}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
