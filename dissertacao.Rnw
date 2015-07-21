@@ -193,7 +193,7 @@ library(doParallel)
 library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
-options(digits = 2)
+options(digits = 2, OutDec = ",")
 theme_set(theme_few())
 setwd("data/")
 set.seed(1)
@@ -209,6 +209,9 @@ knit_hooks$set(inline = function(x) {
 
 format_date <- function(date) {
   format(as.POSIXct(date), "%d/%m/%Y")
+}
+format_percent <- function(number) {
+  paste0(round(number * 100, 2), "\\%")
 }
 @
 

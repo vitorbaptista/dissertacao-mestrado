@@ -25,6 +25,7 @@ transformação dos dados, que serão brevemente analisados para entendermos sua
 características e, a partir delas, escolher possíveis modelos preditivos que
 serão validados para chegar ao modelo final.
 
+% Objetivo
 O objetivo final deste trabalho é detectar mudanças de comportamento no padrão
 de votações dos deputados federais que indiquem sua entrada ou saída da
 % TODO: Esses são os critérios de uma nova coalizão, mas não definem
@@ -34,14 +35,16 @@ da legislatura, e; ii) alterações no conjunto de partidos que controlam os
 ministérios. Eles foram definidos por \citeonline{Figueiredo2007}, inspirada no
 trabalho de \citeonline{Muller2000}.
 
+% Período de estudo
 O período de estudo considerado vai da 50\textordfeminine{} até a
 54\textordfeminine{} legislatura, que compreende o período de 20 anos entre
 1995 e 2015 do início do primeiro governo de Fernando Henrique Cardoso (FHC)
 até o final do primeiro governo de Dilma Rousseff. Esta escolha foi feita por
 ser quando, de acordo com \citeonline{Freitas2008}, termina a fase de
 acomodação dos parlamentares as novas regras definidas pela constituição de
-1998 e vai até a última legislatura completa disponível.
+1988 e vai até a última legislatura completa disponível.
 
+% Origem dos dados
 A lista das coalizões nesse período foi obtida através do banco de dados
 legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e os partidos
 que a compõe. Como esta análise trabalha com o parlamentar individualmente,
@@ -53,15 +56,6 @@ eleição de Lula, não consideramos isso uma mudança pois ela ocorreu entre
 legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quando seu partido se
 tornou oposição em 2013 é considerada, pois ocorreu durante uma mesma
 legislatura.
-
-A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
-\Sexpr{nrow(coalition_changes)} entradas e saídas da coalizão do período de
-estudo agrupados por mês. Podemos perceber que há meses nos quais um número
-excepcionalmente alto de deputados trocam de posicionamento. Marcamos também a
-data da Resolução n\textordmasculine{} 22.600 do TSE, que alterou o
-entendimento das regras de fidelidade partidária, tornando-as mais restritas
-\cite{TSE2007}. Percebe-se que essa mudança alterou a frequência de entradas e
-saídas da coalizão, o que pode influenciar na acurácia do nosso modelo.
 
 <<mudancas-mensais-de-coalizao, fig.cap="Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas.">>=
 coalition_changes_by_month = table(format(coalition_changes$rollcall_date, "%Y-%m-01"))
@@ -75,10 +69,21 @@ ggplot(coalition_changes_by_month, aes(x = date, y = count)) +
   labs(x = "", y = "Entradas e saídas da coalizão")
 @
 
+A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
+\Sexpr{nrow(coalition_changes)} entradas e saídas da coalizão do período de
+estudo agrupados por mês. Percebemos que há meses que concentram as mudanças de
+posicionamento, possivelmente um reflexo da sazonalidade das trocas de partido
+\cite{Araujo2000,Melo2004,Freitas2008}. Marcamos também a data da Resolução
+n\textordmasculine{} 22.600 do TSE, que em
+\Sexpr{format_date(data_resolucao_infidelidade)} alterou o entendimento das
+regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
+Percebe-se que essa mudança alterou a frequência de entradas e saídas da
+coalizão, o que pode influenciar na acurácia do nosso modelo.
+
 As listas de votações e votos foram extraídas diretamente do site da Câmara dos
 Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
 dados através de um programa, até a data de escrita deste trabalho esta
-consulta só poderiam ser feitas individualmente, votação por votação. Para
+consulta só poderia ser feita individualmente, votação por votação. Para
 desenvolver o modelo preditivo, precisamos ter acesso a todos os dados
 localmente, então desenvolvi um programa\footnote{Disponível em:
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
@@ -124,13 +129,13 @@ e fusões são identificados pelo maior partido na data da fusão e o novo nome
 \cite{Freitas2008}. A lista completa pode ser consultada no apêndice
 \ref{apendice:lista-partidos}.
 
+% Período de mudança de comportamento
 O próximo passo é determinar o período em que analisamos a mudança de
 comportamento. Ele precisa ser longo o suficiente para evitar que
 votações anômalas influenciem demais o resultado, mas curto o suficiente para
-detectarmos as mudanças rapidamente, e levar em conta que o W-NOMINATE, por
-padrão, só considera parlamentares que participaram de pelo menos 20 votações
-com no mínimo 2,5\% de votos contrários a maioria\footnote{Esses valores podem
-ser alterados, mas preferi manter o padrão. POR QUE, ANIMAL?!}.  Baseado nisso,
+detectarmos as mudanças rapidamente, levando em conta que seguimos o padrão do
+W-NOMINATE, que só considera parlamentares que participaram de pelo menos
+20 votações com no mínimo 2,5\% de votos contrários a maioria. Baseado nisso,
 defini períodos de 12 meses dentro de uma mesma legislatura divididos em duas
 partes de mesmo tamanho. Esses períodos iniciam no primeiro dia de cada mês,
 desde o 01/Fev do primeiro ano da legislatura até o do penúltimo. Por exemplo,
@@ -138,8 +143,102 @@ na 54\textordfeminine{} legislatura, o primeiro período foi de 01/Fev/2011 até
 01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de 01/Fev/2014 até
 01/Fev/2015. Existem 37 desses períodos por legislatura.
 
-% Objetivo
-% % Quais dados precisamos?
+% Criação dos preditores (variáveis independentes)
+Neste momento, seguimos a metodologia de \citeonline{Poole2005} descrita
+em \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} para determinar as
+mudanças de comportamento. Calculamos o W-NOMINATE para cada deputado federal
+em cada um dos períodos, repetindo 10 vezes para estimar o erro dos pontos
+ideais\footnote{\citeonline{Poole2005} sugere usarmos 101 repetições,
+entretanto o volume de dados que estamos trabalhando inviabiliza essa
+quantidade com os recursos computacionais que temos disponíveis. Por isto,
+optei por um valor menor de repetições.}. Ao final, teremos uma tabela como a
+\ref{table:dataset-final}, onde cada linha representa um parlamentar em um
+período, e as colunas representam seus pontos ideais antes e depois do período
+de estudo e as estimativas de erro.
+
+\begin{description}
+\item[antes] Ponto ideal no período anterior
+\item[antes.sd] Estimativa de erro do ponto ideal do período anterior
+\item[depois] Ponto ideal no período posterior
+\item[depois.sd] Estimativa de erro do ponto ideal do período posterior
+\item[mudou\_coalizao] Variável dependente que indica se o parlamentar mudou de
+posicionamento no período
+\end{description}
+
+% Variável dependente
+A variável dependente usada indica se o parlamentar entrou ou saiu da coalizão
+no período de estudo. Ela pode ser \verb|N|, caso ele tenha mantido sua
+posição, ou \verb|S| caso a tenha alterado.
+O modelo está sendo desenvolvido usando treinamento supervisionado, isto é, ele
+aprende como detectar o que queremos a partir de exemplos. Para isto,
+precisamos definir o que queremos detectar. Em outras palavras, vamos definir
+quando uma mudança de comportamento indica uma futura mudança de posicionamento
+ou não.
+
+\begin{table}
+\centering
+<<>>=
+data = data.frame(antes = c(0.55, 0.9, -0.3),
+                  antes.sd = c(0.02, 0.01, 0.01),
+                  depois = c(-0.4, 0.85, 0.4),
+                  depois.sd = c(0.03, 0.02, 0.01),
+                  mudou_coalizao = c("Sim", "Não", "Sim"))
+kable(data)
+@
+\caption{Exemplo da tabela usada para treinar o algoritmo.}
+\label{table:dataset-final}
+\end{table}
+
+% Analisando os dados
+
+<<>>=
+# Loading data
+data = read.csv("data/data.csv")
+date_columns = c("start_vote_date", "mid_vote_date", "end_vote_date", "coalition_change_closest_to_start_vote", "coalition_change_closest_to_mid_vote", "coalition_change_closest_to_end_vote")
+for (column in date_columns) {
+  data[data[,column] == "", column] = NA
+  data[,column] = as.POSIXct(data[,column])
+}
+data$changed_coalition = factor(data$changed_coalition,
+                                levels = c("S", "N"))
+
+num_changes = nrow(data[data$changed_coalition == "S",])
+num_havent_changed = nrow(data) - num_changes
+
+changed_coalitions_per_legislature = table(data$legislature, data$changed_coalition)
+changed_coalitions_per_legislature = t(changed_coalitions_per_legislature / as.vector(margin.table(changed_coalitions_per_legislature, 1)))
+@
+
+Ao retirar os parlamentares nos períodos em que não conseguimos estimar seu
+ponto ideal por causa de nossos critérios, ficamos com \Sexpr{nrow(data)}
+entradas na tabela. Dessas, \Sexpr{format_percent(num_changes / nrow(data))}
+(\Sexpr{num_changes}) são de deputados que mudaram
+de posicionamento e \Sexpr{format_percent(num_havent_changed / nrow(data))}
+(\Sexpr{num_havent_changed}) que não. A tabela
+\ref{table:changed-coalitions-per-legislature} mostra esses dados separadamente
+para cada legislatura.
+
+\begin{table}
+\centering
+<<>>=
+kable(changed_coalitions_per_legislature)
+@
+\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
+\label{table:changed-coalitions-per-legislature}
+\end{table}
+
+
+<<fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
+ggplot(data, aes(x = diff)) +
+  geom_density(aes(color = changed_coalition , fill = changed_coalition), alpha = 0.3)
+@
+
+% Construindo os modelos
+
+% Avaliando
+
+
+% Objetivo % % Quais dados precisamos?
 % % Qual o período de estudo?
 % % Devo definir o período de 1 ano dividido no meio aqui?
 
@@ -180,18 +279,6 @@ governo de Fernando Henrique Cardoso (FHC) em 1995 até o final do primeiro
 governo de Dilma Rousseff em 2015. Escolhemos começar a análise no governo de
 FHC pois é quando, de acordo com \citeonline{Freitas2008}, termina a fase de
 acomodação dos parlamentares as regras definidas pela Constituição de 1988.
-
-\begin{table}
-\centering
-<<>>=
-data = data.frame(antes = c(0.55, 0.9, -0.3),
-                  depois = c(-0.4, 0.85, 0.4),
-                  mudou_coalizao = c("Sim", "Não", "Sim"))
-kable(data)
-@
-\caption{Exemplo da tabela usada para treinar o algoritmo.}
-\label{table:dataset-final}
-\end{table}
 
 \subsection{Extração}
 \label{sec:miolo:extracao}
