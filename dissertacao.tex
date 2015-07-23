@@ -519,15 +519,18 @@ serão validados para chegar ao modelo final.
 
 O período de análise deste trabalho é composto pela 50\textordfeminine{},
 51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
-54\textordfeminine{} legislaturas, compreendendo o período de 20 anos de 1995
-até 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o final do
-primeiro mandato de Dilma Rousseff. Excluí as 48\textordfeminine{} e
+54\textordfeminine{} legislaturas, compreendendo os 20 anos de 1995 até o
+início de 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o
+final do primeiro mandato de Dilma Rousseff. As 48\textordfeminine{} e
 49\textordfeminine{} legislaturas, iniciadas em 1987 e 1991 respectivamente,
-pois segundo \citeonline{Freitas2008} neste período os parlamentares ainda
-estão se acomodando as novas regras definidas pela Constituição de 1998.
+foram excluídas pois segundo \citeonline{Freitas2008} neste período os
+parlamentares ainda estão se acomodando as novas regras definidas pela
+Constituição de 1998.
 
 % Universo de parlamentares
 
+% FIXME: Essa justificativa está fraca, e está misturada com a explicação de
+% quais parlamentares são considerados.
 A análise se restringe à Câmara dos Deputados pois o número de parlamentares é
 maior (existem 513 deputados federais contra 81 senadores) e os dados estão
 disponíveis mais facilmente no próprio site da Câmara. Considerei todos os
@@ -536,23 +539,23 @@ do que os 513 eleitos por legislatura.
 
 A unidade de análise usada é o parlamentar. Ela foi escolhida pois, apesar de
 grande parte da literatura apontar o papel fundamental dos partidos no
-comportamento do parlamentar \cite{Figueiredo2001,Santos2003}, trabalhar com os
-dados desagregados nos permite perceber movimentações como quando um
+comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}, trabalhar com
+os dados desagregados nos permite perceber movimentações como quando um
 parlamentar deixa um partido governista para entrar em um de oposição (ou
 vice-versa).
 
 % Universo de votos
 
-O método W-NOMINATE usado neste trabalho só interpreta votos a favor ou contra,
-mas os deputados podem votar sim, não, nulo, branco, se abster ou
-obstruir \cite{Carneiro2013}. Isso nos dá duas opções: ou mapeamos os outros
-tipos de votos para votos a favor ou contra (por exemplo, considerando
-abstenções como votos contrários), ou os ignoramos. Para evitar possíveis
-problemas metodológicos ao criar esse tipo de critério, desconsidero
-votos diferentes de sim ou não.
+Os deputados podem votar sim, não, nulo, branco, se abster ou obstruir
+\cite{Carneiro2013}, mas o método W-NOMINATE usado neste trabalho só considera
+votos sim ou não. Isso nos dá duas opções: mapear os outros tipos de votos como
+sendo a favor ou contra (por exemplo, considerando abstenções como votos
+contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
+criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
 
 % Composição das coalizões
 
+% FIXME: Esse texto tá confuso.
 As coalizões são compostas pelos partidos que controlam ao menos um ministério.
 Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
 ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
@@ -567,6 +570,10 @@ inspirada no trabalho de \citeonline{Muller2000}.
 
 
 % Votações
+
+% FIXME: Super confuso. Tentei usar uma linguagem menos técnica, mas falhei
+% miseravelmente. Não ficou claro pra ninguém, nem os que conhecem a linguagem
+% técnica nem os que não conhecem.
 Os votos e votações foram extraídos diretamente do site da Câmara dos
 Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
 dados através de um programa, até a data de escrita deste trabalho esta
@@ -608,12 +615,15 @@ Legislatura & Deputados Federais & Votações & Votos\\
 \label{table:estatisticas-legislaturas}
 \end{table}
 
-Os nomes dos partidos foram alterados seguindo o padrão adotado pelo
-\gls{CEBRAP} onde mudanças de nome são identificadas pela primeira e última
-sigla (e.x.: o PJ que se tornou PRN que se tornou PJC é renomeado para PJ>PTC)
-e fusões são identificadas pelo nome do maior partido na data da fusão e o novo
-nome (e.x.: PL e PRONA se uniram formando o PR, então temos PL>PR)
-\cite{Freitas2008}. A lista completa pode ser consultada no apêndice
+Durante o período de estudo, alguns partidos mudaram de nome ou se fundiram.
+Para evitar que consideremos os parlamentares desses partidos como migrantes,
+normalizamos os nomes dos partidos. No caso de mudanças de nomes usamos a sigla
+do primeiro e do último nome. Por exemplo, o PFL se tornou o DEM, então usamos
+a sigla PFL>DEM. Já no caso de fusões, usamos a sigla do maior partido na data
+da fusão e do novo nome. Por exemplo, o PL se fundiu com o PRONA para formar o
+PR, então temos PL>PR. Esta é a mesma normalização usada pelo \gls{CEBRAP} em
+seu banco de dados legislativo \cite{Freitas2008}. A lista completa dos
+partidos e seus nomes normalizados pode ser consultada no apêndice
 \ref{apendice:lista-partidos}.
 
 % Coalizão
@@ -621,60 +631,63 @@ A lista das coalizões foi obtida através do banco de dados
 legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e a composição
 partidária de cada coalizão. Como trabalhamos com os parlamentares
 individualmente, gerei outra lista que contém todas as entradas e saídas dos
-deputados federais na coalizão dentro de uma mesma legislatura. Por exemplo, o
-deputado Arlindo Chinaglia (PT/SP) é filiado ao PT desde sua fundação em 1980 e
-mantém seu cargo na Câmara desde 1995. Apesar dele passar de oposição a governo
+deputados federais na coalizão dentro de uma mesma legislatura. Por exemplo,
+apesar do deputado Arlindo Chinaglia (PT/SP) passar de oposição a governo
 em 2003 com a eleição de Lula, não consideramos isso uma mudança pois ela
 ocorreu entre legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quando
-seu partido se tornou oposição em 2013 é considerada, pois ocorreu durante uma
-mesma legislatura.
+seu partido se tornou oposição em 2013 é considerada, pois ocorreu dentro de
+uma mesma legislatura.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/mudancas-mensais-de-coalizao-1} \caption[Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas]{Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas.}\label{fig:mudancas-mensais-de-coalizao}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-mensais-de-coalizao-1} \caption[Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agrupados mês a mês]{Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agrupados mês a mês.}\label{fig:mudancas-mensais-de-coalizao}
 \end{figure}
 
 
 \end{knitrout}
 
 A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
-890 entradas e saídas da coalizão durante o período
-de estudo agrupados por mês. Há meses que concentram as mudanças de
-posicionamento, possivelmente um reflexo da sazonalidade das trocas de partido
-\cite{Araujo2000,Melo2004,Freitas2008}. Marcamos também a data da Resolução
-n\textordmasculine{} 22.610 do TSE, que em
+890 entradas e saídas da coalizão agrupadas
+mensalmente que ocorreram durante o período de estudo. Há meses que concentram
+as mudanças de posicionamento, possivelmente um reflexo da sazonalidade das
+trocas de partido \cite{Araujo2000,Melo2004,Freitas2008}. A linha tracejada
+marca a data da Resolução n\textordmasculine{} 22.610 do TSE, que em
 25/10/2007 alterou o entendimento das
 regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
 Percebe-se que essa mudança alterou a frequência de entradas e saídas na
-coalizão, o que pode influenciar na acurácia do nosso modelo.
+coalizão, o que poderá influenciar na acurácia do nosso modelo.
 
 \section{Estimando os pontos ideais}
 
-Para estimar a mudança de comportamento precisamos definir os períodos
-analisados. Por exemplo, se quisermos analisar a influência da saída do PSB da
-coalizão em outubro de 2013 no comportamento dos parlamentares, precisamos
-definir quais são os períodos ``antes'' e ``depois'' da data onde supomos ter
-havido uma mudança de comportamento. Períodos muito curtos, por
-exemplo uma semana antes e uma semana depois, podem sofrer com a falta de
-votações suficientes ou serem demasiadamente influenciados por votações
-anômalas. Já períodos períodos muito longos, como 5 anos antes e 5 anos
-depois, dificultam a interpretação dos resultados pois podem conter diversas
-mudanças de comportamento. No mínimo, precisamos de um período grande o
-suficiente para que os parlamentares participem de 20 votações com maioria de
-no máximo 97,5\% dos votos\footnote{Estes são os critérios padrão de inclusão
-de parlamentares e votações do W-NOMINATE, que seguimos neste trabalho.}.
+O primeiro passo para se analisar uma mudança de comportamento é definir os
+períodos de estudo. Por exemplo, para analisar o efeito da saída do PSB da
+coalizão em outubro de 2013 no comportamento dos parlamentares, poderíamos
+definir o período inicial como sendo do início da legislatura até a data da
+saída do PSB, e o período final como sendo da saída do PSB até o final da
+legislatura. Como o objetivo deste trabalho não é analisar um período
+específico, mas criar um modelo que detecte mudanças na coalizão, não basta
+definir um, mas sim um conjunto de períodos.
 
-Baseado nisso, defini os períodos como tendo 12 meses dentro de uma mesma
-legislatura divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro
-dia de cada mês, desde o 01/Fev do primeiro ano da legislatura até o do
-penúltimo. Por exemplo, na 54\textordfeminine{} legislatura, o primeiro período
-foi de 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último foi de
-01/Fev/2014 até 01/Fev/2015. Existem 37 períodos por legislatura, 185 nas 5
-legislaturas estudadas neste trabalho.
+Ao definir esses períodos precisamos levar em consideração diversos fatores.
+Períodos muito curtos, por exemplo uma semana antes e uma semana depois, podem
+sofrer com a falta de votações suficientes ou serem demasiadamente
+influenciados por votações anômalas. Já períodos períodos muito longos, como 5
+anos antes e 5 anos depois, dificultam a interpretação dos resultados pois
+podem conter diversas mudanças de comportamento. No mínimo, precisamos de um
+período que contenha 20 votações cuja maioria foi de no máximo 97,5\% dos
+votos\footnote{Estes são os critérios padrão de inclusão de parlamentares e
+votações do W-NOMINATE, que seguimos neste trabalho.}.
 
-Escolhidos os períodos, o próximo passo é estimar os pontos ideais de cada
-parlamentar em cada um deles. Para isto, seguimos a metodologia de
-\citeonline{Poole2005} descrita em
+Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
+divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
+mês, desde o 01/Fev do primeiro ano da legislatura até o do penúltimo. Por
+exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
+01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
+01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
+nas 5 legislaturas estudadas neste trabalho.
+
+O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
+Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na sessão
 \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
 \citeauthor{Poole2005} sugere repetir as estimativas 101 vezes para calcular o
 erro. Entretanto, o volume de dados que estamos trabalhando invibializa essa
@@ -689,32 +702,38 @@ tempo necessário de acordo com o número de processadores, mas ainda assim não
 foi possível usar 101 repetições neste trabalho.}. Por isto, escolhi fazer 10
 repetições, o que diminuiu o tempo necessário em cerca de 90\%.
 
-O modelo que usamos para criar o modelo preditivo é de aprendizagem
-supervisionada. Ao contrário dos não-supervisionados, ele precisa ser treinado
-com exemplos que possuem além das variáveis independentes (preditores), a
-variável dependente (resposta). Para isto, precisamos definir o que
-consideramos ser uma mudança de comportamento em razão de uma mudança de
-posição (entrada ou saída da coalizão). Por exemplo, considere um parlamentar
-que estava na coalizão desde o início da 54\textordfeminine{} legislatura em
-2011, mas saiu dela no início de 2014. Se ao estimarmos sua mudança de
-comportamento entre o primeiro e o segundo semestre de 2011, detectamos que ele
-se afastou do governo, consideramos que essa mudança de comportamento foi um
-indício da sua futura saída da coalizão? E se essa mudança de comportamento
-tivesse ocorrido em 2007? Em outras palavras, precisamos definir o ``raio de
-influência'' de uma saída ou entrada da coalizão.
+Até este momento, temos uma tabela onde cada linha representa um parlamentar em
+um período, e nas colunas temos seus pontos ideais e as respectivas estimativas
+de erro. Em outras palavras, temos nossas variáveis independentes, agora
+precisamos determinar a variável dependente: se o parlamentar entrou ou saiu da
+coalizão ou se manteve como estava.
 
-Não há uma resposta correta. Alguns parlamentares podem mudar de comportamento
-anos antes de deixarem (ou entrarem) na coalizão, enquanto outros podem não
-mudar em momento algum. A hipótese fundamental deste trabalho é que eles mudam
-de comportamento antes de mudar de posicionamento, caso contrário seria
-impossível prever um a partir do outro. Formalmente, temos que se
-$Data_{coaliz\tilde{a}o}$ seja a data da entrada ou saída da coalizão,
-$Data_{mudan\textit{\c{c}}a}$ seja a data do início da mudança do comportamento,
-$Data_{fim}$ seja a data final do período analisado, e $P$ seja a distância
-entre $Data_{mudan\textit{\c{c}}a}$ e $Data_{fim}$, então $Data_{mudan\textit{\c{c}}a}
-< Data_{coaliz\tilde{a}o}$ e o período em que consideramos que uma mudança de
-comportamento esteja relacionada a mudança de posicionamento compreende
-$\left[Data_{fim} - P, Data_{fim} + P\right]$.
+Para isto, precisamos definir qual o período antes de uma mudança de
+posicionamento que o parlamentar começa a mudar de comportamento. Por exemplo,
+considere que detectamos que um parlamentar que está fora da coalizão se
+aproximou do governo entre o primeiro e o segundo semestre de 2011, mas só
+entrou na coalizão em 2014. Consideramos que essa aproximação em 2011 foi
+indício da entrada na coalizão em 2014 ou não? E se a entrada tivesse ocorrido
+em 2012? Em outras palavras, precisamos definir qual o ``raio de influência''
+de uma entrada ou saída da coalizão.
+
+Não há uma resposta única. Alguns parlamentares podem mudar de comportamento
+anos antes de saírem (ou entrarem) na coalizão, enquanto outros podem não mudar
+em momento algum. A hipótese fundamental deste trabalho é que eles mudam de
+comportamento antes de mudar de posicionamento, caso contrário seria impossível
+prever um a partir do outro. Formalmente, sendo $Data_{coaliz\tilde{a}o}$ a
+data de entrada ou saída da coalizão, $Data_{mudan\textit{\c{c}}a}$ a data real
+do início da mudança de comportamento, $Data_{in\textit{\'{i}}cio}$ e
+$Data_{fim}$ as datas iniciais e finais do período analisado, e $P =
+Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{fim} -
+Data_{mudan\textit{\c{c}}a}$ é a distância da data inicial até a data de
+mudança que é igual a da data de mudança até a data final, então temos que
+$Data_{mudan\textit{\c{c}}a} < Data_{coaliz\tilde{a}o}$ e o período em que
+consideramos que uma mudança de comportamento esteja relacionada a mudança de
+posicionamento compreende $\left(Data_{fim} - \frac{P}{2}, Data_{fim} +
+\frac{P}{2}\right)$.
+
+% FIXME: Corrigir o gráfico e melhorar a explicação textual.
 
 Visualmente, temos:
 
@@ -726,37 +745,19 @@ Visualmente, temos:
 \end{knitrout}
 \end{figure}
 
-% Criação dos preditores (variáveis independentes)
-Neste momento, seguimos a metodologia de \citeonline{Poole2005} descrita
-em \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} para determinar as
-mudanças de comportamento. Calculamos o W-NOMINATE para cada deputado federal
-em cada um dos períodos, repetindo 10 vezes para estimar o erro dos pontos
-ideais\footnote{\citeonline{Poole2005} sugere usarmos 101 repetições,
-entretanto o volume de dados que estamos trabalhando inviabiliza essa
-quantidade com os recursos computacionais que temos disponíveis. Por isto,
-optei por um valor menor de repetições.}. Ao final, teremos uma tabela como a
-\ref{table:dataset-final}, onde cada linha representa um parlamentar em um
-período, e as colunas representam seus pontos ideais antes e depois do período
-de estudo e as estimativas de erro.
+Ao final desse processo, teremos uma tabela como a \ref{table:dataset-final},
+onde as colunas representam:
 
 \begin{description}
 \item[antes] Ponto ideal no período anterior
 \item[antes.sd] Estimativa de erro do ponto ideal do período anterior
 \item[depois] Ponto ideal no período posterior
 \item[depois.sd] Estimativa de erro do ponto ideal do período posterior
-\item[mudou\_coalizao] Variável dependente que indica se o parlamentar mudou de
-posicionamento no período
+\item[mudou\_posicionamento] Indica se o parlamentar se manteve no seu
+posicionamento, dentro ou fora da coalizão, ou mudou
 \end{description}
 
-% Variável dependente
-A variável dependente usada indica se o parlamentar entrou ou saiu da coalizão
-no período de estudo. Ela pode ser \verb|N|, caso ele tenha mantido sua
-posição, ou \verb|S| caso a tenha alterado.
-O modelo está sendo desenvolvido usando treinamento supervisionado, isto é, ele
-aprende como detectar o que queremos a partir de exemplos. Para isto,
-precisamos definir o que queremos detectar. Em outras palavras, vamos definir
-quando uma mudança de comportamento indica uma futura mudança de posicionamento
-ou não.
+Com essa tabela podemos treinar e validar o modelo.
 
 \begin{table}
 \centering
@@ -780,16 +781,17 @@ antes & antes.sd & depois & depois.sd & mudou\_coalizao\\
 \label{table:dataset-final}
 \end{table}
 
-% Analisando os dados
+
+\section{Desenvolvimento do modelo}
 
 
 
 Ao retirar os parlamentares nos períodos em que não conseguimos estimar seu
-ponto ideal por causa de nossos critérios, ficamos com 47.851
-entradas na tabela. Dessas, 9,73\%
-(4.655) são de deputados que mudaram
-de posicionamento e 90,27\%
-(43.196) que não. A tabela
+ponto ideal por causa de nossos critérios, ficamos com 78.576
+entradas na tabela. Dessas, 3,97\%
+(3.117) são de deputados que mudaram
+de posicionamento e 96,03\%
+(75.459) que não. A tabela
 \ref{table:changed-coalitions-per-legislature} mostra esses dados separadamente
 para cada legislatura.
 
@@ -797,13 +799,13 @@ para cada legislatura.
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{l|r|r|r}
+\begin{tabular}{l|r|r|r|r|r}
 \hline
-  & 50 & 51 & 52\\
+  & 50 & 51 & 52 & 53 & 54\\
 \hline
-S & 0,07 & 0,09 & 0,13\\
+S & 0,04 & 0,04 & 0,07 & 0,02 & 0,03\\
 \hline
-N & 0,93 & 0,91 & 0,87\\
+N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
 \hline
 \end{tabular}
 
