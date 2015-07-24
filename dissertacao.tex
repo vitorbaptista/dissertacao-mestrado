@@ -782,6 +782,73 @@ antes & antes.sd & depois & depois.sd & mudou\_coalizao\\
 \end{table}
 
 
+\section{Preditores}
+
+\subsection{Aspectos temporais}
+
+
+
+% FIXME: Qual é o "período pré-eleitoral"?
+Uma das principais características da migração partidária no Brasil é sua
+distribuição no tempo, que a partir de 1995 se concentra nos meses de fevereiro
+do primeiro e terceiro ano da legislatura e no período pré-eleitoral, que se
+encerra em outubro do ano anterior as eleições
+\cite{Araujo2000,Melo2004,Freitas2008,Lei9504/1997}. Apesar disso, nem toda
+migração partidária implica em uma mudança de posicionamento do parlamentar.
+A troca pode ser entre partidos que estão dentro ou fora da coalizão. Nesta
+sessão, analisaremos se esse padrão se repete também no subconjunto de
+deputados que migram para partidos de posicionamento oposto, entrando ou saindo
+da coalizão.
+
+A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
+deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
+54\textordfeminine{} legislaturas agregados por mês. Dois meses, março e
+outubro, concentram
+36,85\%
+(328) das mudanças, o que pode
+ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
+das mudanças de partido.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-geral-1} \caption[Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês]{Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês.}\label{fig:mudancas-de-posicionamento-geral}
+\end{figure}
+
+
+\end{knitrout}
+
+Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
+o faz, ou mudando de partido. Do total de mudanças de posicionamento no
+período, 50,79\% (452)
+ocorreram por migrações de partido, e
+49,21\% (438)
+pelo partido ter entrado ou saído da coalizão. A figura
+\ref{fig:mudancas-de-posicionamento-geral} mostra essas duas formas, o que pode
+estar mascarando algum padrão.
+
+Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
+deputados que mudaram de posicionamento migrando de partido, dos cujo próprio
+partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
+visivelmente distinto. Os que migraram de partido mudaram de
+comportamento 27,50 vezes por
+mês em mediana com 29,87\%
+(135) ocorrendo em outubro. Houve
+respectivamente 60 e 51 em
+março e fevereiro, os segundo e terceiro meses com mais mudanças. Já os
+parlamentares cujos partidos entraram ou saíram da coalizão mudaram de
+posicionamento 43,80 vezes por mês em mediana
+com janeiro, março e maio concentrando
+62,79\%
+(275) das mudanças.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-1} \caption[Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês]{Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês.}\label{fig:mudancas-de-posicionamento-por-migrantes}
+\end{figure}
+
+
+\end{knitrout}
+
 \section{Desenvolvimento do modelo}
 
 
@@ -818,7 +885,7 @@ N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-9-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-9}
+\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-10-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-10}
 \end{figure}
 
 
@@ -947,7 +1014,7 @@ id & name & party & state & 76 & 273 & 271 & 272 & 485\\
 \hline
 4930 & Silvio Costa & PSC & PE & 1 & 0 & 0 & 0 & 0\\
 \hline
-4931 & Izalci & PL+PRONA>PR & DF & 1 & 1 & 0 & 0 & 0\\
+4931 & Izalci & PL>PR & DF & 1 & 1 & 0 & 0 & 0\\
 \hline
 62881 & Danilo Forte & PMDB & CE & 1 & 1 & 0 & 0 & NA\\
 \hline
@@ -1111,7 +1178,7 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
     methods, parallel, stats, utils
   \item Other packages: caret~6.0-47, doParallel~1.0.8,
     foreach~1.4.2, ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
-    knitr~1.9, lattice~0.20-31, randomForest~4.6-10
+    knitr~1.9, lattice~0.20-31, randomForest~4.6-10, scales~0.2.4
   \item Loaded via a namespace (and not attached):
     BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
     codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
@@ -1120,8 +1187,8 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
     MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6, minqa~1.2.4,
     munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, nnet~7.3-10,
     pbkrtest~0.4-2, plyr~1.8.2, proto~0.3-10, quantreg~5.11,
-    Rcpp~0.11.4, reshape2~1.4.1, scales~0.2.4, SparseM~1.6,
-    splines~3.2.1, stringr~0.6.2, tools~3.2.1
+    Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6, splines~3.2.1,
+    stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

@@ -311,6 +311,93 @@ kable(data)
 \end{table}
 
 
+\section{Preditores}
+
+\subsection{Aspectos temporais}
+
+<<>>=
+coalition_changes$rollcall_month = as.numeric(format(coalition_changes$rollcall_date, "%m"))
+coalition_changes_per_month = table(coalition_changes$rollcall_month)
+coalition_changes_per_month_percent = coalition_changes_per_month / nrow(coalition_changes)
+coalition_changes$migrated = as.character(coalition_changes$party_before) != as.character(coalition_changes$party_after)
+coalition_changes$migrated_label = ifelse(coalition_changes$migrated, "Migrante", "Não-migrante")
+migrators = coalition_changes[coalition_changes$migrated,]
+migrators_per_month = table(migrators$rollcall_month)
+migrators_per_month_percent = migrators_per_month / nrow(migrators)
+non_migrators = coalition_changes[!coalition_changes$migrated,]
+non_migrators_per_month = table(non_migrators$rollcall_month)
+non_migrators_per_month_percent = non_migrators_per_month / nrow(non_migrators)
+@
+
+% FIXME: Qual é o "período pré-eleitoral"?
+Uma das principais características da migração partidária no Brasil é sua
+distribuição no tempo, que a partir de 1995 se concentra nos meses de fevereiro
+do primeiro e terceiro ano da legislatura e no período pré-eleitoral, que se
+encerra em outubro do ano anterior as eleições
+\cite{Araujo2000,Melo2004,Freitas2008,Lei9504/1997}. Apesar disso, nem toda
+migração partidária implica em uma mudança de posicionamento do parlamentar.
+A troca pode ser entre partidos que estão dentro ou fora da coalizão. Nesta
+sessão, analisaremos se esse padrão se repete também no subconjunto de
+deputados que migram para partidos de posicionamento oposto, entrando ou saindo
+da coalizão.
+
+A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
+deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
+54\textordfeminine{} legislaturas agregados por mês. Dois meses, março e
+outubro, concentram
+\Sexpr{format_percent(sum(coalition_changes_per_month_percent[c(3, 10)]))}
+(\Sexpr{sum(coalition_changes_per_month[c(3, 10)])}) das mudanças, o que pode
+ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
+das mudanças de partido.
+
+<<mudancas-de-posicionamento-geral, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por mês.">>=
+ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", coalition_changes$rollcall_month, "-01")))) +
+  geom_histogram(binwidth = 10) +
+  scale_x_date(labels = date_format("%b")) +
+  labs(x = "Mês", y = "Mudanças de posicionamento")
+@
+
+Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
+o faz, ou mudando de partido. Do total de mudanças de posicionamento no
+período, \Sexpr{format_percent(length(which(coalition_changes$migrated)) /
+nrow(coalition_changes))} (\Sexpr{length(which(coalition_changes$migrated))})
+ocorreram por migrações de partido, e
+\Sexpr{format_percent(length(which(!coalition_changes$migrated)) /
+nrow(coalition_changes))} (\Sexpr{length(which(!coalition_changes$migrated))})
+pelo partido ter entrado ou saído da coalizão. A figura
+\ref{fig:mudancas-de-posicionamento-geral} mostra essas duas formas, o que pode
+estar mascarando algum padrão.
+
+Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
+deputados que mudaram de posicionamento migrando de partido, dos cujo próprio
+partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
+visivelmente distinto. Os que migraram de partido mudaram de
+comportamento \Sexpr{median(migrators_per_month)} vezes por
+mês em mediana com \Sexpr{format_percent(migrators_per_month_percent[10])}
+(\Sexpr{migrators_per_month[10]}) ocorrendo em outubro. Houve
+respectivamente \Sexpr{migrators_per_month[3]} e \Sexpr{migrators_per_month[2]} em
+março e fevereiro, os segundo e terceiro meses com mais mudanças. Já os
+parlamentares cujos partidos entraram ou saíram da coalizão mudaram de
+posicionamento \Sexpr{mean(non_migrators_per_month)} vezes por mês em mediana
+com janeiro, março e maio concentrando
+\Sexpr{format_percent(sum(non_migrators_per_month_percent[c(1, 3, 5)]))}
+(\Sexpr{sum(non_migrators_per_month[c(1, 3, 5)])}) das mudanças.
+
+<<mudancas-de-posicionamento-por-migrantes, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por mês.">>=
+migrated_labeller = function (variable, value) {
+  if (variable != "migrated") {
+    stop("The 'migrated_labeller' function only works for the 'migrated' variable")
+  }
+  list("Não-migrante", "Migrante")
+}
+
+ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", rollcall_month, "-01")))) +
+  facet_wrap(~ migrated_label, ncol = 1) +
+  geom_histogram(binwidth = 10) +
+  scale_x_date(labels = date_format("%b")) +
+  labs(x = "", y = "Mudanças de posicionamento")
+@
+
 \section{Desenvolvimento do modelo}
 
 <<>>=
