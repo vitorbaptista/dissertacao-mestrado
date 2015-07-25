@@ -155,11 +155,15 @@ uma mesma legislatura.
 
 <<mudancas-mensais-de-coalizao, fig.cap="Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agrupados mês a mês.">>=
 coalition_changes_by_month = table(format(coalition_changes$date, "%Y-%m-01"))
-coalition_changes_by_month = data.frame(date = as.POSIXct(names(coalition_changes_by_month)),
+coalition_changes_by_month = data.frame(date = as.Date(names(coalition_changes_by_month)),
                                         count = as.vector(coalition_changes_by_month))
-data_resolucao_infidelidade = as.POSIXct("2007-10-25")
+data_resolucao_infidelidade = as.Date("2007-10-25")
 ggplot(coalition_changes_by_month, aes(x = date, y = count)) +
   geom_bar(stat = "identity") +
+  scale_x_date(breaks = as.Date(c("1995-01-01", "1999-01-01",
+                                  "2003-01-01", "2007-01-01",
+                                  "2011-01-01", "2015-01-01")),
+               labels = date_format("%Y")) +
   geom_vline(xintercept = as.numeric(data_resolucao_infidelidade), linetype = "dashed") +
   annotate("text", x = data_resolucao_infidelidade, y = 85, label = "Resolução do TSE\nsobre infidelidade partidária") +
   labs(x = "", y = "Entradas e saídas da coalizão")
