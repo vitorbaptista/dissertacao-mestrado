@@ -165,7 +165,8 @@ ggplot(coalition_changes_by_month, aes(x = date, y = count)) +
                                   "2011-01-01", "2015-01-01")),
                labels = date_format("%Y")) +
   geom_vline(xintercept = as.numeric(data_resolucao_infidelidade), linetype = "dashed") +
-  annotate("text", x = data_resolucao_infidelidade, y = 85, label = "Resolução do TSE\nsobre infidelidade partidária") +
+  annotate("text", x = data_resolucao_infidelidade + 365*3.5, y = 85,
+           label = "Resolução do TSE\nsobre infidelidade\npartidária") +
   labs(x = "", y = "Entradas e saídas da coalizão")
 @
 
