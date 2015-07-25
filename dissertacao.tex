@@ -789,24 +789,37 @@ antes & antes.sd & depois & depois.sd & mudou\_coalizao\\
 
 
 
-% FIXME: Qual é o "período pré-eleitoral"?
 Uma das principais características da migração partidária no Brasil é sua
-distribuição no tempo, que a partir de 1995 se concentra nos meses de fevereiro
-do primeiro e terceiro ano da legislatura e no período pré-eleitoral, que se
-encerra em outubro do ano anterior as eleições
-\cite{Araujo2000,Melo2004,Freitas2008,Lei9504/1997}. Apesar disso, nem toda
-migração partidária implica em uma mudança de posicionamento do parlamentar.
-A troca pode ser entre partidos que estão dentro ou fora da coalizão. Nesta
-sessão, analisaremos se esse padrão se repete também no subconjunto de
-deputados que migram para partidos de posicionamento oposto, entrando ou saindo
-da coalizão.
+distribuição no tempo \cite{Araujo2000,Melo2004,Freitas2008}. A partir de 1995,
+ela se concentra nos meses de fevereiro do primeiro e terceiro ano da
+legislatura e no período pré-eleitoral, que se encerra em outubro do ano
+anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta sessão,
+analisaremos se esse padrão se repete também no subconjunto de deputados que
+migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
+
+Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
+o faz, ou mudando de partido. Das 890 mudanças de
+posicionamento no período de estudo,
+50,79\% (452)
+ocorreram por migrações e
+49,21\% (438)
+pelo partido ter entrado ou saído da coalizão. Consideramos a data de mudança
+de posicionamento de formas diferentes em cada caso. Quando o partido como um
+todo entra ou sai da coalizão, consideramos a data de mudança como a data de
+início da coalizão. Já em uma mudança por migração, usamos a data da primeira
+votação do parlamentar no novo partido\footnote{Idealmente, a data de mudança
+por migração deveria ser a data em que o parlamentar se filiou ao novo partido.
+Infelizmente, essa informação não está disponível através da \gls{API} da
+Câmara para todas as legislaturas analisadas, então usei a data da primeira
+votação no novo partido. Como 99\% dos parlamentares faltam no máximo 35
+votações seguidas, as duas datas são próximas na maioria dos casos.}.
 
 A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
-54\textordfeminine{} legislaturas agregados por mês. Dois meses, março e
+54\textordfeminine{} legislaturas agregados por mês. Três meses, março, abril e
 outubro, concentram
-36,85\%
-(328) das mudanças, o que pode
+52,36\%
+(466) das mudanças, o que pode
 ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
 das mudanças de partido.
 
@@ -818,37 +831,93 @@ das mudanças de partido.
 
 \end{knitrout}
 
-Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
-o faz, ou mudando de partido. Do total de mudanças de posicionamento no
-período, 50,79\% (452)
-ocorreram por migrações de partido, e
-49,21\% (438)
-pelo partido ter entrado ou saído da coalizão. A figura
-\ref{fig:mudancas-de-posicionamento-geral} mostra essas duas formas, o que pode
-estar mascarando algum padrão.
-
 Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
-deputados que mudaram de posicionamento migrando de partido, dos cujo próprio
+deputados que mudaram de posicionamento migrando de partido dos cujo próprio
 partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
-visivelmente distinto. Os que migraram de partido mudaram de
-comportamento 27,50 vezes por
-mês em mediana com 29,87\%
-(135) ocorrendo em outubro. Houve
-respectivamente 60 e 51 em
-março e fevereiro, os segundo e terceiro meses com mais mudanças. Já os
-parlamentares cujos partidos entraram ou saíram da coalizão mudaram de
-posicionamento 43,80 vezes por mês em mediana
-com janeiro, março e maio concentrando
-62,79\%
-(275) das mudanças.
+visivelmente distinto. Os que migraram de partido mudaram de comportamento em
+média 37,67 vezes por mês, com
+29,87\%
+(135) ocorrendo em outubro. Houve respectivamente
+13,27\%
+(60) e
+11,28\%
+(51) em março e fevereiro, os segundo e terceiro
+meses com mais mudanças. Já os parlamentares cujos partidos entraram ou saíram
+da coalizão mudaram de posicionamento em média
+36,50 vezes por mês, com janeiro, março e
+maio concentrando
+46,8\%
+(205) das mudanças.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-1} \caption[Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês]{Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês.}\label{fig:mudancas-de-posicionamento-por-migrantes}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-1} \caption[Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês]{Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês.}\label{fig:mudancas-de-posicionamento-por-migrantes}
 \end{figure}
 
 
 \end{knitrout}
+
+Separamos os dados por legislatura na figura
+\ref{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}. Os
+migrantes continuam com um padrão parecido, com em média
+32,06\%
+das mudanças ocorrendo em outubro,
+14,18\%
+em março e
+10,48\%
+em fevereiro. Os não-migrantes não seguem um padrão único, mudando a cada
+legislatura.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-por-legislatura-1} \caption[Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês e legislatura]{Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês e legislatura.}\label{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}
+\end{figure}
+
+
+\end{knitrout}
+
+Na figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
+agregarmos por ano da legislatura ao invés de mês. A grande maioria das
+mudanças dos migrantes,
+84,07\%
+(380), estão concentradas no
+primeiro e terceiro anos, seguindo o padrão temporal de migração descrito por
+\citeonline{Freitas2008}. Já os não-migrantes continuam sem um padrão claro.
+Como só consideramos mudanças dentro da mesma legislatura, só uma ocorreu no
+primeiro ano, durante o segundo mandato de Lula, quando o PDT entrou na
+coalizão em abril de 2007. As outras mudanças estão razoavelmente bem
+espalhadas do segundo ao último ano das legislaturas, com a maioria ocorrendo
+no segundo ano.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-ano-da-legislatura-1} \caption[Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por ano da legislatura]{Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por ano da legislatura.}\label{fig:mudancas-de-posicionamento-por-ano-da-legislatura}
+\end{figure}
+
+
+\end{knitrout}
+
+Separando os dados por mês e ano da legislatura, temos a figura
+\ref{fig:mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura}. Nos
+migrantes,
+52,55\%
+(103) das mudanças ocorrem
+em outubro do terceiro ano, o limite para se filiar a um partido para concorrer
+nas próximas eleições \cite{Lei9504/1997}. Os não-migrantes continuam sem um
+padrão claro.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura-1} \caption[Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês e ano da legislatura]{Número de deputados que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês e ano da legislatura.}\label{fig:mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura}
+\end{figure}
+
+
+\end{knitrout}
+
+Em suma, os deputados que entram ou saem da coalizão migrando de partido
+seguem um padrão temporal similar ao das migrações partidárias em geral
+descrito por \citeonline{Freitas2008}, enquanto os que mudam de posicionamento
+sem migrar de partido não têm um padrão claro.
 
 \section{Desenvolvimento do modelo}
 
