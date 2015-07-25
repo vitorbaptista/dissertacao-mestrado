@@ -18,9 +18,9 @@ relação as outras áreas.
 
 \begin{figure}[h]
 \includegraphics{ciencia-de-dados-diagrama-venn}
-\label{fig:ciencia-de-dados-venn}
 \caption{Diagrama de Venn mostrando as habilidades necessárias para um
 cientista de dados}
+\label{fig:ciencia-de-dados-venn}
 \end{figure}
 
 Com as técnicas da ciência de dados, podemos responder perguntas como ``Qual a
