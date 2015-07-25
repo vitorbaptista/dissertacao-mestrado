@@ -65,6 +65,7 @@
 \usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
 \usepackage{glossaries} % Gerar glossário
+\usepackage[skip=0pt]{caption} % Diminui distância entre imagens/tabelas e seus captions
 
 \makeglossaries
 \newacronym{IR}{IR}{Índice de Rice}
@@ -195,7 +196,10 @@ library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
 options(digits = 2, OutDec = ",")
-theme_set(theme_few())
+theme = theme_few()
+theme$axis.title.y$vjust = 2
+theme$axis.title.x$vjust = -0.5
+theme_set(theme)
 setwd("data/")
 set.seed(1)
 
