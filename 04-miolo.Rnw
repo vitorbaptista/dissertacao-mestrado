@@ -247,52 +247,69 @@ em momento algum. A hipótese fundamental deste trabalho é que eles mudam de
 comportamento antes de mudar de posicionamento, caso contrário seria impossível
 prever um a partir do outro. Formalmente, sendo $Data_{coaliz\tilde{a}o}$ a
 data de entrada ou saída da coalizão, $Data_{mudan\textit{\c{c}}a}$ a data real
-do início da mudança de comportamento, $Data_{in\textit{\'{i}}cio}$ e
+do início da mudança de comportamento, $Data_{inicial}$ e
 $Data_{fim}$ as datas iniciais e finais do período analisado, e $P =
-Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{fim} -
+Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{final} -
 Data_{mudan\textit{\c{c}}a}$ é a distância da data inicial até a data de
 mudança que é igual a da data de mudança até a data final, então temos que
 $Data_{mudan\textit{\c{c}}a} < Data_{coaliz\tilde{a}o}$ e o período em que
 consideramos que uma mudança de comportamento esteja relacionada a mudança de
-posicionamento compreende $\left(Data_{fim} - \frac{P}{2}, Data_{fim} +
+posicionamento compreende $\left(Data_{final} - \frac{P}{2}, Data_{final} +
 \frac{P}{2}\right)$.
 
 % FIXME: Corrigir o gráfico e melhorar a explicação textual.
 
-Visualmente, temos:
+Visualmente, temos \ref{fig:the-label} e \ref{fig:the-label1}:
 
-\begin{figure}
-<<fig.height = 12>>=
-data = data.frame(x = c(0,  6, 12, 15,
-                        3,  9, 15, 15,
-                        6, 12, 18, 15,
-                        9, 15, 21, 15),
-                  label = c("Data inicial", "Data de mudança", "Data final", "Data coalizão",
-                            "Data inicial", "Data de mudança", "Data final", "Data coalizão",
-                            "Data inicial", "Data de mudança", "Data final", "Data coalizão",
-                            "Data inicial", "Data de mudança", "Data final", "Data coalizão"),
-                  type = c(rep(1, 4),
-                           rep(2, 4),
-                           rep(3, 4),
-                           rep(4, 4)))
-workaround = data.frame(x = rep(c(-1, 25), 4),
-                        label = rep(c("", ""), 4),
-                        type = c(1, 1, 2, 2, 3, 3, 4, 4))
+<<the-label, dev='tikz', fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento 6 meses antes de entrar ou sair da coalizão. Na região branca ele teve um comportamento, e na região verde teve outro.', fig.height=1, fig.subcap=c('A data final está no limite do raio de influência da coalizão', 'O raio de influência da coalizão chega a metade do segundo período', 'A mudança de comportamento influencia blah', 'A mudança de comportamento está na metade do período inicial', 'O período inteiro ocorre depois da mudança de comportamento')>>=
+plot_data = function(data) {
+  p = ggplot(data, aes(x = x, y = c(0))) +
+        theme(axis.text.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              axis.line = element_line(),
+              axis.line.y = element_blank(),
+              panel.border = element_blank(),
+              panel.grid = element_blank()) +
+        labs(x = "", y = "") +
+        geom_rect(xmin = 12, xmax = Inf, ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "green") +
+        geom_rect(xmin = min(data$x), xmax = max(data[1:3,]$x), ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "grey") +
+        scale_x_discrete(breaks = data$x, labels = data$label, limits = 0:24)
 
-ggplot(rbind(data), aes(x = x, y = c(0))) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.line = element_line(),
-        axis.line.y = element_blank(),
-        panel.border = element_blank(),
-        panel.grid = element_blank()) +
-  labs(x = "", y = "") +
-  geom_rect(xmin = 9, xmax = Inf, ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "green") +
-  geom_vline(aes(xintercept = x)) +
-  scale_x_discrete(aes(breaks = x, labels=label), limits = c(-1, 50)) +
-  facet_wrap(~ type, ncol = 1, scales = "free")
+  for (linetype in unique(data$linetype)) {
+    subset = data[data$linetype == linetype,]
+    p = p + geom_vline(xintercept = subset$x, linetype = linetype)
+  }
+
+  p
+}
+
+data_inicial = "$Data_{inicial}$"
+data_mudanca = "$Data_{mudan\\textit{\\c{c}}a}$"
+data_final = "$Data_{final}$"
+data_coalizao = "$Data_{coaliz\\tilde{a}o}$"
+
+t0 = data.frame(x = c(0, 6, 12, 18),
+                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+                linetype = c(rep("solid", 3), "dashed"))
+t1 = data.frame(x = c(3, 9, 15, 18),
+                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+                linetype = c(rep("solid", 3), "dashed"))
+t2 = data.frame(x = c(6, 12, 18),
+                label = c(data_inicial, data_mudanca, paste(data_final, "$=$", data_coalizao)),
+                linetype = rep("solid", 3))
+t3 = data.frame(x = c(9, 15, 21, 18),
+                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+                linetype = c(rep("solid", 3), "dashed"))
+t4 = data.frame(x = c(12, 18, 24),
+                label = c(data_inicial, paste(data_mudanca, "$=$", data_coalizao), data_final),
+                linetype = rep("solid", 3))
+
+plot_data(t0)
+plot_data(t1)
+plot_data(t2)
+plot_data(t3)
+plot_data(t4)
 @
-\end{figure}
 
 Ao final desse processo, teremos uma tabela como a \ref{table:dataset-final},
 onde as colunas representam:

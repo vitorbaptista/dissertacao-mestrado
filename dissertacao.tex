@@ -108,14 +108,16 @@
 \usepackage{float}      
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
+\usepackage{tikz} % Permite usar math mode dentro dos gráficos do knitr
 \usepackage{graphicx}
 \graphicspath{{figure/}}
 \setkeys{Gin}{width=0.5\textwidth}
 \usepackage{longtable} %tabelas longas, para tabelas que ultrapassam uma pagina
-\usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
 \usepackage{glossaries} % Gerar glossário
 \usepackage[skip=0pt]{caption} % Diminui distância entre imagens/tabelas e seus captions
+\usepackage{subcaption}
+\newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
 
 \makeglossaries
 \newacronym{IR}{IR}{Índice de Rice}
@@ -724,27 +726,31 @@ em momento algum. A hipótese fundamental deste trabalho é que eles mudam de
 comportamento antes de mudar de posicionamento, caso contrário seria impossível
 prever um a partir do outro. Formalmente, sendo $Data_{coaliz\tilde{a}o}$ a
 data de entrada ou saída da coalizão, $Data_{mudan\textit{\c{c}}a}$ a data real
-do início da mudança de comportamento, $Data_{in\textit{\'{i}}cio}$ e
+do início da mudança de comportamento, $Data_{inicial}$ e
 $Data_{fim}$ as datas iniciais e finais do período analisado, e $P =
-Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{fim} -
+Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{final} -
 Data_{mudan\textit{\c{c}}a}$ é a distância da data inicial até a data de
 mudança que é igual a da data de mudança até a data final, então temos que
 $Data_{mudan\textit{\c{c}}a} < Data_{coaliz\tilde{a}o}$ e o período em que
 consideramos que uma mudança de comportamento esteja relacionada a mudança de
-posicionamento compreende $\left(Data_{fim} - \frac{P}{2}, Data_{fim} +
+posicionamento compreende $\left(Data_{final} - \frac{P}{2}, Data_{final} +
 \frac{P}{2}\right)$.
 
 % FIXME: Corrigir o gráfico e melhorar a explicação textual.
 
-Visualmente, temos:
+Visualmente, temos \ref{fig:the-label} e \ref{fig:the-label1}:
 
-\begin{figure}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-5-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\subfloat[A data final está no limite do raio de influência da coalizão\label{fig:the-label1}]{\includegraphics[width=\maxwidth]{figure/tmp/the-label-1} }
+\subfloat[O raio de influência da coalizão chega a metade do segundo período\label{fig:the-label2}]{\includegraphics[width=\maxwidth]{figure/tmp/the-label-2} }
+\subfloat[A mudança de comportamento influencia blah\label{fig:the-label3}]{\includegraphics[width=\maxwidth]{figure/tmp/the-label-3} }
+\subfloat[A mudança de comportamento está na metade do período inicial\label{fig:the-label4}]{\includegraphics[width=\maxwidth]{figure/tmp/the-label-4} }
+\subfloat[O período inteiro ocorre depois da mudança de comportamento\label{fig:the-label5}]{\includegraphics[width=\maxwidth]{figure/tmp/the-label-5} }\caption[Diversos períodos de análise de um parlamentar que mudou de comportamento 6 meses antes de entrar ou sair da coalizão]{Diversos períodos de análise de um parlamentar que mudou de comportamento 6 meses antes de entrar ou sair da coalizão. Na região branca ele teve um comportamento, e na região verde teve outro.}\label{fig:the-label}
+\end{figure}
+
 
 \end{knitrout}
-\end{figure}
 
 Ao final desse processo, teremos uma tabela como a \ref{table:dataset-final},
 onde as colunas representam:
@@ -955,7 +961,7 @@ N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-10-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-10}
+\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-9-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-9}
 \end{figure}
 
 
@@ -1248,17 +1254,18 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
     methods, parallel, stats, utils
   \item Other packages: caret~6.0-47, doParallel~1.0.8,
     foreach~1.4.2, ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
-    knitr~1.9, lattice~0.20-31, randomForest~4.6-10, scales~0.2.4
+    knitr~1.9, lattice~0.20-31, randomForest~4.6-10, scales~0.2.4,
+    tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
     BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
     codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
-    evaluate~0.5.5, formatR~1.2, grid~3.2.1, gtable~0.1.2,
-    gtools~3.4.2, highr~0.5, labeling~0.3, lme4~1.1-7,
-    MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6, minqa~1.2.4,
-    munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, nnet~7.3-10,
-    pbkrtest~0.4-2, plyr~1.8.2, proto~0.3-10, quantreg~5.11,
-    Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6, splines~3.2.1,
-    stringr~0.6.2, tools~3.2.1
+    evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
+    gtable~0.1.2, gtools~3.4.2, highr~0.5, labeling~0.3,
+    lme4~1.1-7, MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6,
+    minqa~1.2.4, munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4,
+    nnet~7.3-10, pbkrtest~0.4-2, plyr~1.8.2, proto~0.3-10,
+    quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6,
+    splines~3.2.1, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

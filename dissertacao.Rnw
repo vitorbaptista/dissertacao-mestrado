@@ -58,14 +58,16 @@
 \usepackage{float}      
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
+\usepackage{tikz} % Permite usar math mode dentro dos gráficos do knitr
 \usepackage{graphicx}
 \graphicspath{{figure/}}
 \setkeys{Gin}{width=0.5\textwidth}
 \usepackage{longtable} %tabelas longas, para tabelas que ultrapassam uma pagina
-\usepackage{minted} % Syntax highlighting para código
 \usepackage{pdflscape} % landscape figures
 \usepackage{glossaries} % Gerar glossário
 \usepackage[skip=0pt]{caption} % Diminui distância entre imagens/tabelas e seus captions
+\usepackage{subcaption}
+\newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
 
 \makeglossaries
 \newacronym{IR}{IR}{Índice de Rice}
