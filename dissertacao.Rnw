@@ -226,8 +226,7 @@ format_percent <- function(number) {
 \Sexpr{knit_child('02-fundamentacao-teorica.Rnw')}
 \input{03-trabalhos-relacionados}
 \Sexpr{knit_child('04-miolo.Rnw')}
-\input{05-avaliacao-experimental}
-\input{06-conclusao}
+\input{05-conclusao}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIbliografia
