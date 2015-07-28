@@ -215,7 +215,7 @@ votações do W-NOMINATE, que seguimos neste trabalho.}.
 
 Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
 divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
-mês, partindo de 01/Fev no primeiro ano da legislatura até o do penúltimo. Por
+mês, partindo de 01/Fev no primeiro ano da legislatura até o do último. Por
 exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
 01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
@@ -346,12 +346,19 @@ definitiva entrada ou saída da coalizão. Ao final desse processo, teremos uma
 tabela como a \ref{table:dataset-final}, onde as colunas representam:
 
 \begin{description}
-\item[antes] Ponto ideal no período anterior
-\item[antes.sd] Estimativa de erro do ponto ideal do período anterior
-\item[depois] Ponto ideal no período posterior
-\item[depois.sd] Estimativa de erro do ponto ideal do período posterior
-\item[mudou\_posicionamento] Indica se o parlamentar se manteve no seu
-posicionamento, dentro ou fora da coalizão, ou mudou
+\item[Períodos de análise] Períodos de 1 ano divididos em dois
+subperíodos de 6 meses, iniciando no primeiro dia de cada mês entre fevereiro
+do primeiro ano da legislatura até fevereiro do último. Por legislatura,
+existem 37 desses períodos.
+\item[Critérios de inclusão de parlamentares] Ao menos 20 votações no período;
+\item[Critérios de inclusão de votações] Minoria responsável por ao menos 2,5\%
+dos votos na votação;
+\item[Número de repetições] 10;
+\item[Polaridade] José Genoíno nas 50\textordfeminine{}, 51\textordfeminine{} e
+53\textordfeminine{} legislaturas, Arlindo Chinaglia na 52\textordfeminine{} e
+Luiz Couto na 54\textordfeminine{}. Eles foram escolhidos pois são ligados ao
+PT desde sua fundação ocupando cargos de liderança e participaram de um grande
+número de votações.
 \end{description}
 
 \begin{table}
@@ -370,6 +377,12 @@ kable(sample_dataset)
 
 
 \section{Preditores}
+\label{sec:miolo:preditores}
+
+% FIXME: Melhora esse parágrafo
+Segundo \citeonline{Kuhn2013}, o primeiro passo em qualquer processo de
+desenvolvimento de um modelo é entender os dados. Nas próximas sessões iremos
+analisar os dados.
 
 \subsection{Análise}
 
@@ -395,15 +408,14 @@ casos foram excluídos, ficando no final com \Sexpr{nrow(data)} estimativas.
 Desses valores, \Sexpr{format_percent(num_changes / nrow(data))}
 (\Sexpr{num_changes}) são de momentos em que houve uma mudança de
 posicionamento, enquanto \Sexpr{format_percent(num_havent_changed /
-nrow(data))} (\Sexpr{num_havent_changed}) não. A tabela
-\ref{table:coalition-changes-per-legislature} mostra essa proporção por
-legislatura. Em média,
-\Sexpr{format_percent(mean(coalition_changes_per_legislature["S",]))} dos dados
-são em períodos de mudanças de posicionamento, com o máximo ocorrendo na
-52\textordfeminine{} legislatura
+nrow(data))} (\Sexpr{num_havent_changed}) não. A média por legislatura é de
+\Sexpr{format_percent(mean(coalition_changes_per_legislature["S",]))}, com o
+máximo ocorrendo na 52\textordfeminine{} legislatura
 (\Sexpr{format_percent(max(coalition_changes_per_legislature["S",]))}) e o
 mínimo na 53\textordfeminine{}
 (\Sexpr{format_percent(min(coalition_changes_per_legislature["S",]))}).
+A tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
+todas as legislaturas estudadas.
 
 \begin{table}
 \centering
@@ -414,12 +426,28 @@ kable(coalition_changes_per_legislature)
 \label{table:coalition-changes-per-legislature}
 \end{table}
 
-<<fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
-ggplot(data, aes(x = diff)) +
-  geom_density(aes(color = changed_coalition , fill = changed_coalition), alpha = 0.3)
+A figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
+dos pontos ideais em cada legislatura, com o PT estando a direita do gráfico.
+Na 50\textordfeminine{} e 51\textordfeminine{} legislaturas, durante o governo
+do PSDB, a maior parte dos parlamentares se encontra no lado esquerdo. Com a
+eleição de Lula em 2003 na 52\textordfeminine{}, esse quadro muda, com a
+maioria dos parlamentares estando mais a direita, mas muitos parlamentares
+se mantendo nas posições centrais. Já na 53\textordfeminine{} as posições se
+tornam mais polarizadas, com dois picos claros na direita e na esquerda do
+gráfico. Por final, na 54\textordfeminine{} legislatura, durante o primeiro
+governo de Dilma Rousseff, os pontos ideais se concentram no centro.
+
+<<pontos-ideais-por-legislatura, fig.cap="Distribuição dos pontos ideais agrupados por legislatura.">>=
+pontos_ideais_por_legislatura = data.frame(value = c(data$before, data$after),
+                                           legislature = rep(data$legislature, 2))
+ggplot(pontos_ideais_por_legislatura, aes(x = value)) +
+  labs(x = "Ponto ideal", y = "Densidade") +
+  facet_wrap(~ legislature) +
+  geom_density()
 @
 
 \subsection{Aspectos temporais}
+\label{sec:miolo:aspectos-temporais}
 
 <<>>=
 coalition_changes$date_month = as.numeric(format(coalition_changes$date, "%m"))
@@ -578,6 +606,52 @@ Em suma, os deputados que entram ou saem da coalizão migrando de partido
 seguem um padrão temporal similar ao das migrações partidárias em geral
 descrito por \citeonline{Freitas2008}, enquanto os que mudam de posicionamento
 sem migrar de partido não têm um padrão claro.
+
+\section{Modelagem}
+
+\subsection{Variável independente}
+
+
+\subsection{Variáveis dependentes}
+
+% FIXME: Referenciar sessão de análise
+A partir dos resultados das análises descritas na sessão
+\ref{sec:miolo:preditores}, defini 7 variáveis dependentes, sendo 4 relativas
+as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
+temporais descritos na sessão \ref{sec:miolo:aspectos-temporais}. A tabela
+\ref{table:variaveis-dependentes} contém a descrição e natureza de cada uma
+delas.
+
+\begin{table}
+\centering
+\begin{tabular}{l l c}
+  Variável & Descrição & Natureza \\
+  \hline
+  antes & Estimativa do ponto ideal no momento inicial & Contínua \\
+  antes.sd & Estimativa de erro do ponto ideal no momento inicial& Contínua \\
+  depois & Estimativa do ponto ideal no momento final & Contínua \\
+  depois.sd & Estimativa de erro do ponto ideal no momento final & Contínua \\
+  mês & Mês da data de mudança do período & Discreta \\
+  ano da legislatura & Ano da legislatura na data de mudança do período & Discreta \\
+\end{tabular}
+\caption{Variáveis dependentes usadas na criação dos modelos preditivos.}
+\label{table:variaveis-dependentes}
+\end{table}
+
+<<>>=
+variaveis_dependentes = data.frame(value = c(data$before, data$before.sd,
+                                             data$after, data$after.sd,
+                                             data$mid_vote_month,
+                                             data$mid_vote_legislature_year),
+                                   name = factor(rep(c("antes", "antes.sd",
+                                                       "depois", "depois.sd",
+                                                       "mês", "ano"),
+                                                     each = nrow(data))),
+                                   changed_coalition = rep(data$changed_coalition, 6))
+ggplot(variaveis_dependentes, aes(x = changed_coalition, y = value)) +
+  facet_wrap(~ name, scales = "free_y") +
+  geom_boxplot()
+@
 
 % Construindo os modelos
 
