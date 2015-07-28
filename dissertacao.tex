@@ -521,58 +521,6 @@ transformação dos dados, que serão brevemente analisados para entendermos sua
 características e, a partir delas, escolher possíveis modelos preditivos que
 serão validados para chegar ao modelo final.
 
-\section{Operacionalização dos dados}
-
-% Universo de votações
-
-O período de análise deste trabalho é composto pela 50\textordfeminine{},
-51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
-54\textordfeminine{} legislaturas, compreendendo os 20 anos de 1995 até o
-início de 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o
-final do primeiro mandato de Dilma Rousseff. As 48\textordfeminine{} e
-49\textordfeminine{} legislaturas, iniciadas em 1987 e 1991 respectivamente,
-foram excluídas pois segundo \citeonline{Freitas2008} neste período os
-parlamentares ainda estão se acomodando as novas regras definidas pela
-Constituição de 1998.
-
-% Universo de parlamentares
-
-% FIXME: Essa justificativa está fraca, e está misturada com a explicação de
-% quais parlamentares são considerados.
-A análise se restringe à Câmara dos Deputados pois o número de parlamentares é
-maior (existem 513 deputados federais contra 81 senadores) e os dados estão
-disponíveis mais facilmente no próprio site da Câmara. Considerei todos os
-parlamentares que votaram ao menos uma vez na Câmara, por isso o número é maior
-do que os 513 eleitos por legislatura.
-
-A unidade de análise usada é o parlamentar. Ela foi escolhida pois, apesar de
-grande parte da literatura apontar o papel fundamental dos partidos no
-comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}, trabalhar com
-os dados desagregados nos permite perceber movimentações como quando um
-parlamentar deixa um partido governista para entrar em um de oposição (ou
-vice-versa).
-
-% Universo de votos
-
-Os deputados podem votar sim, não, nulo, branco, se abster ou obstruir
-\cite{Carneiro2013}, mas o método W-NOMINATE usado neste trabalho só considera
-votos sim ou não. Isso nos dá duas opções: mapear os outros tipos de votos como
-sendo a favor ou contra (por exemplo, considerando abstenções como votos
-contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
-criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
-
-% Composição das coalizões
-
-% FIXME: Esse texto tá confuso.
-As coalizões são compostas pelos partidos que controlam ao menos um ministério.
-Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
-ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
-palavras, se um partido que não possuía nenhum ministério passa a ter ao menos
-um, ou se um partido deixa de controlar algum ministério, uma nova coalizão é
-formada. Esses critérios foram definidos por \citeonline{Figueiredo2007},
-inspirada no trabalho de \citeonline{Muller2000}.
-
-
 \section{Origem dos dados}
 
 
@@ -665,7 +613,59 @@ regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
 Percebe-se que essa mudança alterou a frequência de entradas e saídas na
 coalizão, o que poderá influenciar na acurácia do nosso modelo.
 
-\section{Estimando os pontos ideais}
+\section{Operacionalização dos dados}
+
+% Universo de votações
+
+O período de análise deste trabalho é composto pela 50\textordfeminine{},
+51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
+54\textordfeminine{} legislaturas, compreendendo os 20 anos de 1995 até o
+início de 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o
+final do primeiro mandato de Dilma Rousseff. As 48\textordfeminine{} e
+49\textordfeminine{} legislaturas, iniciadas em 1987 e 1991 respectivamente,
+foram excluídas pois segundo \citeonline{Freitas2008} neste período os
+parlamentares ainda estão se acomodando as novas regras definidas pela
+Constituição de 1998.
+
+% Universo de parlamentares
+
+% FIXME: Essa justificativa está fraca, e está misturada com a explicação de
+% quais parlamentares são considerados.
+A análise se restringe à Câmara dos Deputados pois o número de parlamentares é
+maior (existem 513 deputados federais contra 81 senadores) e os dados estão
+disponíveis mais facilmente no próprio site da Câmara. Considerei todos os
+parlamentares que votaram ao menos uma vez na Câmara, por isso o número é maior
+do que os 513 eleitos por legislatura.
+
+A unidade de análise usada é o parlamentar. Ela foi escolhida pois, apesar de
+grande parte da literatura apontar o papel fundamental dos partidos no
+comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}, trabalhar com
+os dados desagregados nos permite perceber movimentações como quando um
+parlamentar deixa um partido governista para entrar em um de oposição (ou
+vice-versa).
+
+% Universo de votos
+
+Os deputados podem votar sim, não, nulo, branco, se abster ou obstruir
+\cite{Carneiro2013}, mas o método W-NOMINATE usado neste trabalho só considera
+votos sim ou não. Isso nos dá duas opções: mapear os outros tipos de votos como
+sendo a favor ou contra (por exemplo, considerando abstenções como votos
+contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
+criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
+
+% Composição das coalizões
+
+% FIXME: Esse texto tá confuso.
+As coalizões são compostas pelos partidos que controlam ao menos um ministério.
+Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
+ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
+palavras, se um partido que não possuía nenhum ministério passa a ter ao menos
+um, ou se um partido deixa de controlar algum ministério, uma nova coalizão é
+formada. Esses critérios foram definidos por \citeonline{Figueiredo2007},
+inspirada no trabalho de \citeonline{Muller2000}.
+
+
+\subsection{Estimando os pontos ideais}
 
 O primeiro passo para se analisar uma mudança de comportamento é definir os
 períodos de estudo. Por exemplo, para analisar o efeito da saída do PSB da
@@ -819,15 +819,15 @@ antes & antes.sd & depois & depois.sd & mudou\_posicionamento\\
 \end{table}
 
 
-\section{Preditores}
-\label{sec:miolo:preditores}
+\section{Análise}
+\label{sec:miolo:analise}
 
 % FIXME: Melhora esse parágrafo
 Segundo \citeonline{Kuhn2013}, o primeiro passo em qualquer processo de
 desenvolvimento de um modelo é entender os dados. Nas próximas sessões iremos
 analisar os dados.
 
-\subsection{Análise}
+\subsection{Pontos ideais}
 
 
 
@@ -1032,7 +1032,7 @@ sem migrar de partido não têm um padrão claro.
 
 % FIXME: Referenciar sessão de análise
 A partir dos resultados das análises descritas na sessão
-\ref{sec:miolo:preditores}, defini 7 variáveis dependentes, sendo 4 relativas
+\ref{sec:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
 as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
 temporais descritos na sessão \ref{sec:miolo:aspectos-temporais}. A tabela
 \ref{table:variaveis-dependentes} contém a descrição e natureza de cada uma
