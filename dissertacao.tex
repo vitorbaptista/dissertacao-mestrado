@@ -506,7 +506,12 @@ Também chamada de Casa Baixa ou Casa do Povo, ela é composta por 513 deputados
 \section{Considerações Finais}
 \input{03-trabalhos-relacionados}
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, data[, column] == "{}"{}, column, value = NA): missing values are not allowed in subscripted assignments of data frames}}\end{kframe}
+\end{knitrout}
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
@@ -748,7 +753,7 @@ a $Data_{final}$.  É a partir desse período que consideramos que o parlamentar
 mudou de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao3}, a
 $Data_{final} = Data_{coaliz\tilde{a}o}$, e a $Data_{mudan\textit{\c{c}}a}$
 estimada se iguala a mudança real de comportamento em $Data_{coaliz\tilde{a}o}
-- P$. Se nossa escolha de $P$ foi correta para este parlamentar, este deve o
+- P$. Se a escolha de $P$ foi correta para este parlamentar, esse deve ser o
 período com a mudança de comportamento mais intensa. A figura
 \ref{fig:raio-de-influencia-coalizao4} mostra o último período em que ainda
 consideramos que houve uma mudança causada pela entrada ou saída da coalizão,
@@ -808,6 +813,57 @@ antes & antes.sd & depois & depois.sd & mudou\_posicionamento\\
 
 
 \section{Preditores}
+
+\subsection{Análise}
+
+
+
+O conjunto de dados gerado possui 113.952 estimativas de mudança
+de comportamento entre dois sub-períodos de seis meses em cada um dos
+185 estudados. Em 31,04\% (35.376) desses períodos, não foi possível
+estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
+participou em votações não-unânimes o suficiente para ser considerado. Esses
+casos foram excluídos, ficando no final com 78.576 estimativas.
+
+Desses valores, 3,98\%
+(3.130) são de momentos em que houve uma mudança de
+posicionamento, enquanto 96,02\% (75.446) não. A tabela
+\ref{table:coalition-changes-per-legislature} mostra essa proporção por
+legislatura. Em média,
+4\% dos dados
+são em períodos de mudanças de posicionamento, com o máximo ocorrendo na
+52\textordfeminine{} legislatura
+(7,07\%) e o
+mínimo na 53\textordfeminine{}
+(1,55\%).
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+  & 50 & 51 & 52 & 53 & 54\\
+\hline
+S & 0,04 & 0,04 & 0,07 & 0,02 & 0,03\\
+\hline
+N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
+\label{table:coalition-changes-per-legislature}
+\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-8-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-8}
+\end{figure}
+
+
+\end{knitrout}
 
 \subsection{Aspectos temporais}
 
@@ -942,48 +998,6 @@ Em suma, os deputados que entram ou saem da coalizão migrando de partido
 seguem um padrão temporal similar ao das migrações partidárias em geral
 descrito por \citeonline{Freitas2008}, enquanto os que mudam de posicionamento
 sem migrar de partido não têm um padrão claro.
-
-\section{Desenvolvimento do modelo}
-
-
-
-Ao retirar os parlamentares nos períodos em que não conseguimos estimar seu
-ponto ideal por causa de nossos critérios, ficamos com 78.576
-entradas na tabela. Dessas, 3,97\%
-(3.117) são de deputados que mudaram
-de posicionamento e 96,03\%
-(75.459) que não. A tabela
-\ref{table:changed-coalitions-per-legislature} mostra esses dados separadamente
-para cada legislatura.
-
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{l|r|r|r|r|r}
-\hline
-  & 50 & 51 & 52 & 53 & 54\\
-\hline
-S & 0,04 & 0,04 & 0,07 & 0,02 & 0,03\\
-\hline
-N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
-\label{table:changed-coalitions-per-legislature}
-\end{table}
-
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-9-1} \caption[Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte]{Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte}\label{fig:unnamed-chunk-9}
-\end{figure}
-
-
-\end{knitrout}
 
 % Construindo os modelos
 

@@ -10,6 +10,17 @@ for (legislature in legislatures) {
                                            header = TRUE, check.names = FALSE)
 }
 
+data = read.csv("data/data.csv")
+date_columns = c("start_vote_date", "mid_vote_date", "end_vote_date", "coalition_change_closest_to_start_vote", "coalition_change_closest_to_mid_vote", "coalition_change_closest_to_end_vote")
+for (column in date_columns) {
+  data[data[,column] == "", column] = NA
+  data[,column] = as.POSIXct(data[,column])
+}
+data$changed_coalition = factor(data$changed_coalition,
+                                levels = c("S", "N"))
+data_null = data[is.na(data$before) | is.na(data$after),]
+data = data[!is.na(data$before) & !is.na(data$after),]
+
 coalition_changes = read.csv("data/parties_and_coalitions_changes.csv",
                              header = TRUE, check.names = FALSE)
 coalition_changes$rollcall_date = as.POSIXct(coalition_changes$rollcall_date)
@@ -269,7 +280,7 @@ a $Data_{final}$.  É a partir desse período que consideramos que o parlamentar
 mudou de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao3}, a
 $Data_{final} = Data_{coaliz\tilde{a}o}$, e a $Data_{mudan\textit{\c{c}}a}$
 estimada se iguala a mudança real de comportamento em $Data_{coaliz\tilde{a}o}
-- P$. Se nossa escolha de $P$ foi correta para este parlamentar, este deve o
+- P$. Se a escolha de $P$ foi correta para este parlamentar, esse deve ser o
 período com a mudança de comportamento mais intensa. A figura
 \ref{fig:raio-de-influencia-coalizao4} mostra o último período em que ainda
 consideramos que houve uma mudança causada pela entrada ou saída da coalizão,
@@ -346,12 +357,12 @@ posicionamento, dentro ou fora da coalizão, ou mudou
 \begin{table}
 \centering
 <<>>=
-data = data.frame(antes = c(0.55, 0.9, -0.3),
-                  antes.sd = c(0.02, 0.01, 0.01),
-                  depois = c(-0.4, 0.85, 0.4),
-                  depois.sd = c(0.03, 0.02, 0.01),
-                  mudou_posicionamento = c("Sim", "Não", "Sim"))
-kable(data)
+sample_dataset = data.frame(antes = c(0.55, 0.9, -0.3),
+                            antes.sd = c(0.02, 0.01, 0.01),
+                            depois = c(-0.4, 0.85, 0.4),
+                            depois.sd = c(0.03, 0.02, 0.01),
+                            mudou_posicionamento = c("Sim", "Não", "Sim"))
+kable(sample_dataset)
 @
 \caption{Exemplo da tabela usada para treinar o algoritmo.}
 \label{table:dataset-final}
@@ -359,6 +370,54 @@ kable(data)
 
 
 \section{Preditores}
+
+\subsection{Análise}
+
+<<>>=
+num_periodos = 37 * length(legislatures)
+num_mudancas = nrow(data) + nrow(data_null)
+
+num_changes = nrow(data[data$changed_coalition == "S",])
+num_havent_changed = nrow(data) - num_changes
+
+coalition_changes_per_legislature = table(data$legislature, data$changed_coalition)
+coalition_changes_per_legislature = t(coalition_changes_per_legislature / as.vector(margin.table(coalition_changes_per_legislature, 1)))
+@
+
+O conjunto de dados gerado possui \Sexpr{num_mudancas} estimativas de mudança
+de comportamento entre dois sub-períodos de seis meses em cada um dos
+\Sexpr{num_periodos} estudados. Em \Sexpr{format_percent(nrow(data_null) /
+num_mudancas)} (\Sexpr{nrow(data_null)}) desses períodos, não foi possível
+estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
+participou em votações não-unânimes o suficiente para ser considerado. Esses
+casos foram excluídos, ficando no final com \Sexpr{nrow(data)} estimativas.
+
+Desses valores, \Sexpr{format_percent(num_changes / nrow(data))}
+(\Sexpr{num_changes}) são de momentos em que houve uma mudança de
+posicionamento, enquanto \Sexpr{format_percent(num_havent_changed /
+nrow(data))} (\Sexpr{num_havent_changed}) não. A tabela
+\ref{table:coalition-changes-per-legislature} mostra essa proporção por
+legislatura. Em média,
+\Sexpr{format_percent(mean(coalition_changes_per_legislature["S",]))} dos dados
+são em períodos de mudanças de posicionamento, com o máximo ocorrendo na
+52\textordfeminine{} legislatura
+(\Sexpr{format_percent(max(coalition_changes_per_legislature["S",]))}) e o
+mínimo na 53\textordfeminine{}
+(\Sexpr{format_percent(min(coalition_changes_per_legislature["S",]))}).
+
+\begin{table}
+\centering
+<<>>=
+kable(coalition_changes_per_legislature)
+@
+\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
+\label{table:coalition-changes-per-legislature}
+\end{table}
+
+<<fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
+ggplot(data, aes(x = diff)) +
+  geom_density(aes(color = changed_coalition , fill = changed_coalition), alpha = 0.3)
+@
 
 \subsection{Aspectos temporais}
 
@@ -519,50 +578,6 @@ Em suma, os deputados que entram ou saem da coalizão migrando de partido
 seguem um padrão temporal similar ao das migrações partidárias em geral
 descrito por \citeonline{Freitas2008}, enquanto os que mudam de posicionamento
 sem migrar de partido não têm um padrão claro.
-
-\section{Desenvolvimento do modelo}
-
-<<>>=
-# Loading data
-data = read.csv("data/data.csv")
-date_columns = c("start_vote_date", "mid_vote_date", "end_vote_date", "coalition_change_closest_to_start_vote", "coalition_change_closest_to_mid_vote", "coalition_change_closest_to_end_vote")
-for (column in date_columns) {
-  data[data[,column] == "", column] = NA
-  data[,column] = as.POSIXct(data[,column])
-}
-data$changed_coalition = factor(data$changed_coalition,
-                                levels = c("S", "N"))
-
-num_changes = nrow(data[data$changed_coalition == "S",])
-num_havent_changed = nrow(data) - num_changes
-
-changed_coalitions_per_legislature = table(data$legislature, data$changed_coalition)
-changed_coalitions_per_legislature = t(changed_coalitions_per_legislature / as.vector(margin.table(changed_coalitions_per_legislature, 1)))
-@
-
-Ao retirar os parlamentares nos períodos em que não conseguimos estimar seu
-ponto ideal por causa de nossos critérios, ficamos com \Sexpr{nrow(data)}
-entradas na tabela. Dessas, \Sexpr{format_percent(num_changes / nrow(data))}
-(\Sexpr{num_changes}) são de deputados que mudaram
-de posicionamento e \Sexpr{format_percent(num_havent_changed / nrow(data))}
-(\Sexpr{num_havent_changed}) que não. A tabela
-\ref{table:changed-coalitions-per-legislature} mostra esses dados separadamente
-para cada legislatura.
-
-\begin{table}
-\centering
-<<>>=
-kable(changed_coalitions_per_legislature)
-@
-\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
-\label{table:changed-coalitions-per-legislature}
-\end{table}
-
-
-<<fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
-ggplot(data, aes(x = diff)) +
-  geom_density(aes(color = changed_coalition , fill = changed_coalition), alpha = 0.3)
-@
 
 % Construindo os modelos
 
