@@ -1025,9 +1025,6 @@ sem migrar de partido não têm um padrão claro.
 
 \section{Modelagem}
 
-\subsection{Variável independente}
-
-
 \subsection{Variáveis dependentes}
 
 % FIXME: Referenciar sessão de análise
@@ -1059,6 +1056,75 @@ delas.
 \includegraphics[width=\maxwidth]{figure/tmp/unnamed-chunk-9-1} 
 
 \end{knitrout}
+
+\subsection{Variável independente}
+
+É o changed\_coalition
+
+\subsection{Divisão da base de dados}
+
+
+
+Existem diversas técnicas capazes de aprender a estrutura de um conjunto de
+dados tão bem que, quando usamos os modelos gerados com o mesmo conjunto de
+dados usado para treiná-lo, eles conseguem prever corretamente 100\% dos casos.
+O problema é que eles aprenderam não só os padrões gerais dos dados, mas também
+seu ruído. Esse tipo de modelo, conhecido como \emph{over-fit}\footnote{Em
+tradução livre, ``super-ajustado''.}, normalmente tem uma baixa performance
+ao ser usado com novos dados. Para evitar esse problema, é necessário validar o
+modelo em um conjunto de dados diferente do que ele foi treinado, o que gera a
+questão sobre como dividir os dados.
+
+A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
+subconjuntos, um para treino e outro para teste. É importante se certificar que
+os subconjuntos possuem características similares, especialmente nos casos onde
+as categorias (mudou ou não de posicionamento) não estão balanceadas como no
+nosso caso. As divisões que levam em conta a proporção de cada categoria são
+chamadas de estratificadas.
+
+Divisões aleatórias partem do princípio de que o padrão dos dados é uniforme,
+logo não há diferença na escolha. Visto que estamos trabalhando com um período
+longo, inclusive com uma alteração nas regras para mudança de partido, essa é
+uma suposição improvável. O que nos interessa medir é a performance do modelo
+em dados atuais. Por isto, separei os dados da 54\textordfeminine{} legislatura
+para teste e restante para treinamento. O conjunto de treino possui
+63.386 (80,67\%) linhas
+com 4,19\% sendo de
+mudanças de posicionamento, enquanto o de teste possui 15.190
+(19,33\%) linhas com
+3,11\% sendo de mudanças de
+posicionamento.
+
+
+% Vou usar duas divisões:
+%   1) repeated 10-fold CV
+%   2) Divisão no tempo
+
+\subsection{Modelos}
+
+\citeonline{Wolpert1996} diz em seu teorema ``No Free Lunch''\footnote{Em
+tradução livre, ``não existe almoço grátis''.} que não há uma única técnica de
+modelagem que seja a melhor em todos casos. Por isso, \citeonline{Kuhn2013}
+sugerem testar diversos tipos de modelos antes de definir em qual focar. Na
+primeira parte desta sessão, analisarei 7 modelos:
+
+\begin{table}
+\centering
+\begin{tabular}{l l c}
+  Natureza & Sigla & Nome \\
+  \hline
+  Linear & GLM & Regressão logística \\
+  Linear & SVM Linear & SVM com kernel linear \\
+  Não-linear & SVM Radial & SVM com kernel radial \\
+  Não-linear & GBM & Stochastic Gradient Boosting \\
+  Não-linear & NB & Naive Bayes \\
+  Não-linear & RF & Random Forest\\
+  Não-linear & C5.0 & C5.0 \\
+\end{tabular}
+\caption{Variáveis dependentes usadas na criação dos modelos preditivos.}
+\label{table:tipos-de-modelos}
+\end{table}
+
 
 % Construindo os modelos
 
