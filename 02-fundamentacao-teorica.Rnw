@@ -61,7 +61,154 @@ errados. O que classificou como 3 não está ``menos errado'' do que o que
 classificou como 8 \cite{Kuhn2013,Zumel2014}. Neste trabalho, nosso foco é em
 classificação.
 
-\subsubsection{Modelos de classificação}
+\subsection{Avaliando performance em modelos de classificação}
+
+O primeiro passo para melhorar algo é conseguir mensurá-lo, ao contrário não
+saberemos se nossas modificações estão melhorando ou piorando a situação. Com
+relação a modelos preditivos, o ideal é ter uma métrica única que defina sua
+performance de acordo com nossos critérios. Dessa forma, a comparação e
+otimização dos modelos é simplificada \cite{Ng2012}.
+
+Uma das formas mais comuns de descrever a perfomance de um modelo de
+classificação é através de uma ``matriz de confusão''. A tabela
+\ref{table:exemplo-matriz-de-confusao} mostra um exemplo de matriz de confusão
+com duas categorias: ``positivo'' e ``negativo''. Na diagonal principal estão
+os valores classificados corretamente, e fora dela estão os erros. Dessa matriz
+podemos extrair diversas métricas, como:
+
+\begin{table}
+\centering
+\begin{tabular}{c c c}
+  Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
+  & \multicolumn{1}{|c}{Positivo} & \multicolumn{1}{c|}{Negativo} \\
+  \hline
+  \multicolumn{1}{|c|}{Positivo} & Verdadeiro positivo (VP) & \multicolumn{1}{c|}{Falso positivo (FP)} \\
+  \multicolumn{1}{|c|}{Negativo} & Falso negativo (FN) & \multicolumn{1}{c|}{Verdadeiro negativo (VN)} \\
+  \hline
+\end{tabular}
+\caption{Matriz de confusão para um problema com duas classes: ``positivo'' e
+``negativo''.}
+\label{table:exemplo-matriz-de-confusao}
+\end{table}
+
+\begin{description}
+\item[Número de amostras positivas]
+\begin{equation}
+\label{eq:positive-rate}
+P = VP + FN
+\end{equation}
+\item[Número de amostras negativas]
+\begin{equation}
+\label{eq:negative-rate}
+N = VN + FP
+\end{equation}
+\item[Acurácia] Proporção de predições corretas
+\begin{equation}
+\label{eq:accuracy}
+ACC = \frac{VP + VN}{P + N}
+\end{equation}
+\item[Sensibilidade] Proporção de elementos da classe positiva classificados
+corretamente com relação ao total de elementos positivos
+\begin{equation}
+\label{eq:sensitivity}
+SENS = \frac{VP}{VP + FN}
+\end{equation}
+\item[Especificidade] Proporção de elementos da classe negativa classificados
+corretamente com relação ao total de elementos negativos
+\begin{equation}
+\label{eq:specificity}
+ESPEC = \frac{VN}{FP + VN}
+\end{equation}
+\end{description}
+
+Dessas métricas, a com interpretação mais simples é a acurácia (equação
+\ref{eq:accuracy}), que mede o percentual de predições corretas. Entretanto,
+ela tem algumas limitações. Primeiramente, ela não leva em consideração o tipo
+do erro. Em diversos problemas, o custo de um falso positivo é diferente do de
+um falso negativo. Por exemplo, num sistema de classificação de spam, é
+preferível que o usuário veja uma propaganda (falso negativo) do que deixe de
+receber um e-mail importante (falso positivo). Além disso, ela também não
+considera a frequência natural de cada classe. Se, por exemplo, 90\% dos
+e-mails que eu receba não sejam spam, um modelo que simplesmente classifique
+todo e-mail como não sendo spam terá 90\% de acurácia \cite{Kuhn2013}.
+
+O \emph{Kappa} é uma métrica que leva em consideração as proporções das
+classes. Ela pode assumir valores entre -1 e 1, sendo que 1 indica que todas as
+predições foram corretas, -1 indica que todas foram erradas, e 0 que o modelo
+tem uma performance igual a um modelo aleatório. A equação \ref{eq:kappa}
+mostra como calculá-la, onde $ACC$ é a acurácia observada e $ACC_{esperada}$ é
+a acurácia esperada \cite{Cohen1960}.
+
+\begin{equation}
+\label{eq:kappa}
+Kappa = \frac{ACC - ACC_{esperada}}{1 - ACC_{esperada}}
+\end{equation}
+
+Em geral, o resultado do uso de modelos de classificação é a probabilidade de
+pertencimento a cada categoria. Por exemplo, um modelo pode, ao analisar um
+e-mail, determinar que ele tem 75\% de chances de ser spam e, consequentemente,
+25\% de chances de não ser. Para transformar essa probabilidade em uma
+categoria, define-se um ponto de corte. Por padrão, ele é definido em grande
+parte das ferramentas como 50\%. Usando esse valor, o exemplo anterior seria
+classificado como spam \cite{Kuhn2013}.
+
+Esse padrão é uma escolha interessante caso o custo de um falso positivo ou
+falso negativo seja o mesmo e as categorias sejam balanceadas. Caso contrário,
+é recomendável testar outros valores. Uma ferramenta para analisar a
+sensibilidade e especificidade de um modelo usando diferentes pontos de corte é
+a curva ROC (\emph{Receiver Operator Characteristic}). Essa visualização mostra
+os valores de sensibilidade e especificidade em diferentes pontos de corte
+\cite{Altman1994,Brown2006,Fawcett2006}.
+
+A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva ROC com os
+valores discriminados em dois pontos. A partir desse gráfico, percebemos a
+troca entre sensibilidade e especificidade (quanto maior um, menor o outro), e
+podemos escolher o melhor ponto de corte para o modelo em questão levando em
+consideração nossos objetivos.
+
+<<exemplo-roc, fig.cap="Curva ROC de um modelo mostrando a área sob a curva (AUC) e dois pontos de corte: 0,5, o mais comum, e 0,614, o mais próximo do canto superior esquerdo.">>=
+set.seed(1)
+training = twoClassSim()
+testing = twoClassSim()
+
+fit = train(Class ~ TwoFactor1 + TwoFactor2 + Linear03,
+            data = training,
+            method = "glm")
+
+roc0 = roc(testing$Class,
+           predict(fit, newdata = testing, type = "prob")[,1],
+           levels = levels(testing$Class),
+           plot = TRUE,
+           print.thres = c(0.5, 0.614),
+           print.auc = TRUE,
+           print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+           xlab = "Especificidade",
+           ylab = "Sensibilidade")
+@
+
+Além de auxiliar na escolha do ponto de corte, a curva ROC também pode ser
+usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
+comparando a área sob suas curvas (AUC). O modelo na figura
+\ref{fig:exemplo-roc} possui AUC 0,787. Quanto mais próximo a curva está do
+canto superior esquerdo, maior é seu AUC e, consequentemente, maior é sua
+performance. O modelo perfeito tem AUC 1, já um modelo aleatório tem AUC
+próximo de 0,5 e segue na diagonal do gráfico. O que caracteriza é um AUC bom
+ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013} definiram uma regra
+geral para avaliação descrita na tabela \ref{table:valores-auc}.
+
+\begin{table}
+\centering
+\begin{tabular}{c l}
+  AUC & \multicolumn{1}{c}{Valor} \\
+  \hline
+  0,5 & Não há discriminação \\
+  Entre 0,7 e 0,8 & Discriminação aceitável \\
+  Entre 0,8 e 0,9 & Discriminação excelente \\
+  Acima de 0,9 & Discriminação excepcional \\
+\end{tabular}
+\caption{Regra geral para avaliação da área sob a curva ROC de \citeonline{HosmerJr2013}.}
+\label{table:valores-auc}
+\end{table}
 
 % TODO: Concluir
 

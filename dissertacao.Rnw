@@ -193,6 +193,7 @@ library(ggplot2)
 library(ggthemes)
 library(scales)
 library(caret)
+library(pROC)
 library(doParallel)
 library(randomForest)
 
