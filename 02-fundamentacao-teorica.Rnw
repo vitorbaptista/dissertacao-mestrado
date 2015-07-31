@@ -262,7 +262,7 @@ maioridade penal de \Sexpr{min(maioridade_penal)} ou
 \Sexpr{max(maioridade_penal)}, a linha de corte passa em $\frac{16 + 18}{2}$,
 ou seja, $17$. Ela divide os legisladores que irão votar não, que estão a
 esquerda da linha, dos que irão votar sim, que estão a direita da mesma. Caso
-esteja em cima da linha de corte, ele é indiferente as alternativas.
+esteja sobre a linha de corte, ele é indiferente as alternativas.
 
 <<modelo-espacial-votacao, fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
 ggplot(parlamentares, aes(x = maioridade_penal, y = salario_minimo)) +
@@ -273,7 +273,10 @@ ggplot(parlamentares, aes(x = maioridade_penal, y = salario_minimo)) +
 @
 
 Nesse exemplo estamos mostrando duas dimensões, mas o algoritmo é capaz de
-estimar os pontos ideais em qualquer número de dimensões.
+estimar os pontos ideais em até dez dimensões.
+
+% FIXME: Descrever as características do W-NOMINATE e (talvez) como ele se
+% diferencia dos outros.
 
 O comportamento dos parlamentares é assumido como sendo formado por dois
 componentes: um determinístico e outro estocástico. Formalmente, definimos a

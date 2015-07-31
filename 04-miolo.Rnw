@@ -498,7 +498,7 @@ por migração deveria ser a data em que o parlamentar se filiou ao novo partido
 Infelizmente, essa informação não está disponível através da \gls{API} da
 Câmara para todas as legislaturas analisadas, então usei a data da primeira
 votação no novo partido. Como 99\% dos parlamentares faltam no máximo 35
-votações seguidas, as duas datas são próximas na maioria dos casos.}.
+votações seguidas, as duas datas devem ser próximas na maioria dos casos.}.
 
 A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
@@ -589,7 +589,7 @@ migrantes,
 \Sexpr{format_percent(migrators_per_month_per_legislature_year_percent[10, 3])}
 (\Sexpr{migrators_per_month_per_legislature_year[10, 3]}) das mudanças ocorrem
 em outubro do terceiro ano, o limite para se filiar a um partido para concorrer
-nas próximas eleições \cite{Lei9504/1997}. Os não-migrantes continuam sem um
+nas eleições seguintes \cite{Lei9504/1997}. Os não-migrantes continuam sem um
 padrão claro.
 
 <<mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por mês e ano da legislatura.">>=
@@ -656,13 +656,25 @@ ggplot(variaveis_dependentes, aes(x = changed_coalition, y = value)) +
 
 \subsection{Divisão da base de dados}
 
-<<>>=
-trainIndex = which(data$legislature != 54)
-train = data[ trainIndex,]
-test = data[ -trainIndex,]
+% FIXME: Falta falar sobre o LGOCV
 
-train_proportions = table(train$changed_coalition)
-test_proportions = table(test$changed_coalition)
+<<>>=
+trainingIndex = which(data$legislature != 54)
+training = data[trainingIndex,]
+remaining = data[-trainingIndex,]
+
+set.seed(1)
+testingIndex = createDataPartition(paste(remaining$changed_coalition,
+                                         remaining$mid_vote_month,
+                                         remaining$mid_vote_legislature_year),
+                                   p = .25,
+                                   list = FALSE)
+testing = remaining[testingIndex,]
+validation = remaining[-testingIndex,]
+
+training_proportions = table(training$changed_coalition) / nrow(training)
+validation_proportions = table(validation$changed_coalition) / nrow(validation)
+testing_proportions = table(testing$changed_coalition) / nrow(testing)
 @
 
 Existem diversas técnicas capazes de aprender a estrutura de um conjunto de
@@ -678,27 +690,67 @@ questão sobre como dividir os dados.
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
 subconjuntos, um para treino e outro para teste. É importante se certificar que
 os subconjuntos possuem características similares, especialmente nos casos onde
-as categorias (mudou ou não de posicionamento) não estão balanceadas como no
+as categorias (mudou ou não de posicionamento) não estão balanceadas, como no
 nosso caso. As divisões que levam em conta a proporção de cada categoria são
 chamadas de estratificadas.
 
 Divisões aleatórias partem do princípio de que o padrão dos dados é uniforme,
 logo não há diferença na escolha. Visto que estamos trabalhando com um período
 longo, inclusive com uma alteração nas regras para mudança de partido, essa é
-uma suposição improvável. O que nos interessa medir é a performance do modelo
-em dados atuais. Por isto, separei os dados da 54\textordfeminine{} legislatura
-para teste e restante para treinamento. O conjunto de treino possui
-\Sexpr{nrow(train)} (\Sexpr{format_percent(nrow(train) / nrow(data))}) linhas
-com \Sexpr{format_percent(train_proportions["S"] / nrow(train))} sendo de
-mudanças de posicionamento, enquanto o de teste possui \Sexpr{nrow(test)}
-(\Sexpr{format_percent(nrow(test) / nrow(data))}) linhas com
-\Sexpr{format_percent(test_proportions["S"] / nrow(test))} sendo de mudanças de
-posicionamento.
+uma suposição improvável. Como é mais importante que o modelo tenha uma boa
+performance nos anos mais recentes, segui a seguinte estratégia
+\cite[Capítulo~12.1]{Kuhn2013}:
 
+\begin{enumerate}
+\item Separa aleatoriamente 25\% dos dados da 54\textordfeminine{} legislatura,
+mantendo as proporções de mudanças de posicionamento e aspectos temporais, para
+estimar a performance. Este é o conjunto de teste;
+\item Treina o modelo com os dados anteriores a 54\textordfeminine{}
+legislatura, chamado de conjunto de treino, ajustando seus parâmetros a partir
+da performance em um subconjunto aleatório dos 75\% restantes da
+54\textordfeminine{} legislatura chamadado de conjunto de validação;
+\item Ao finalizar o ajuste dos parâmetros no passo anterior, treina o modelo
+com esses parâmetros usando os conjuntos de treino e validação juntos;
+\item Estima a performance do modelo no conjunto de teste.
+\end{enumerate}
 
-% Vou usar duas divisões:
-%   1) repeated 10-fold CV
-%   2) Divisão no tempo
+Seguindo esses passos, os \Sexpr{nrow(data)} dados serão separados em
+\Sexpr{format_percent(nrow(training) / nrow(data))} (\Sexpr{nrow(training)})
+para treino, \Sexpr{format_percent(nrow(validation) / nrow(data))}
+(\Sexpr{nrow(validation)}) para validação e \Sexpr{format_percent(nrow(testing)
+/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Eles possuem
+respectivamente \Sexpr{format_percent(training_proportions["S"])},
+\Sexpr{format_percent(validation_proportions["S"])} e
+\Sexpr{format_percent(testing_proportions["S"])} de mudanças de
+posicionamento. É importante se certificar que os conjuntos de validação e
+teste sejam uniformes, tendo não só uma proporção parecida de mudanças de
+posicionamento, mas que elas sigam o mesmo padrão temporal. Na figura
+\ref{fig:densidade-validacao-teste} vemos que os conjuntos são uniformes.
+
+<<densidade-validacao-teste, fig.cap="Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.">>=
+aux = data.frame(changed_coalition = c(validation$changed_coalition,
+                                       testing$changed_coalition),
+                 month = c(validation$mid_vote_month,
+                           testing$mid_vote_month),
+                 legislature_year = c(validation$mid_vote_legislature_year,
+                                      testing$mid_vote_legislature_year),
+                 dataset = c(rep("Validação", nrow(validation)),
+                             rep("Teste", nrow(testing))))
+
+aux$changed_coalition = factor(aux$changed_coalition, labels = c("Sim", "Não"))
+aux$month = as.Date(paste0("2014-", aux$month, "-01"))
+aux$dataset = factor(aux$dataset, levels = c("Validação", "Teste"))
+
+ggplot(aux, aes(x = month, fill = changed_coalition)) +
+  facet_grid(legislature_year ~ dataset) +
+  theme(legend.position="top") +
+  geom_density(aes(colour = changed_coalition), alpha = 0.3) +
+  scale_x_date(breaks = months[c(1, 6, 12)],
+               labels = date_format("%b"),
+               limits = months[c(1, 12)]) +
+  guides(fill=guide_legend(title="Mudou de posicionamento"), colour=FALSE) +
+  labs(x = "Mês", y = "Densidade")
+@
 
 \subsection{Modelos}
 
