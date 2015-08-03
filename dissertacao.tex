@@ -858,26 +858,26 @@ Para isso, precisamos definir qual o período antes de uma mudança de
 posicionamento que o parlamentar começa a mudar de comportamento. Por exemplo,
 considere que detectamos que um parlamentar que está fora da coalizão se
 aproximou do governo entre o primeiro e o segundo semestre de 2011, mas só
-entrou na coalizão em 2014. Consideramos que essa aproximação em 2011 foi
-indício da sua entrada na coalizão em 2014? E se ela tivesse ocorrido em 2012?
-Em outras palavras, precisamos definir qual o ``raio de influência'' de uma
-entrada ou saída da coalizão.
+entrou na coalizão em 2014. Devemos considerar que essa aproximação em 2011 foi
+indício da sua entrada em 2014? E se ela tivesse ocorrido em 2012?  Em outras
+palavras, precisamos definir qual o ``raio de influência'' de uma entrada ou
+saída da coalizão.
 
 Não há uma resposta única. Alguns parlamentares podem mudar de comportamento
-anos antes de saírem (ou entrarem) na coalizão, enquanto outros podem não mudar
-em momento algum. A hipótese fundamental deste trabalho é que eles mudam de
+anos antes de mudarem de comportamento, enquanto outros podem não mudar em
+momento algum. A hipótese fundamental deste trabalho é que eles mudam de
 comportamento antes de mudar de posicionamento, caso contrário seria impossível
 prever um a partir do outro. Formalmente, sendo $Data_{coaliz\tilde{a}o}$ a
 data de entrada ou saída da coalizão, $Data_{mudan\textit{\c{c}}a}$ a data onde
-o parlamentar mudou de comportamento, $Data_{inicial}$ e $Data_{final}$ as datas
-iniciais e finais do período analisado, e $P = Data_{mudan\textit{\c{c}}a} -
-Data_{coaliz\tilde{a}o} = Data_{final} - Data_{mudan\textit{\c{c}}a}$ a
-distância da data inicial até a data de mudança, que é igual a da data de
-mudança até a data final, nossa hipótese é que $Data_{mudan\textit{\c{c}}a} <
-Data_{coaliz\tilde{a}o}$ e o período em que consideramos que uma mudança de
-comportamento esteja relacionada a mudança de posicionamento compreende
-$\left[Data_{mudan\textit{\c{c}}a} - \frac{P}{2}, Data_{mudan\textit{\c{c}}a} +
-\frac{P}{2}\right]$. Precisamos definir $P$.
+o parlamentar mudou de comportamento, $Data_{inicial}$ e $Data_{final}$ as
+datas iniciais e finais do período analisado, e $P =
+Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{final} -
+Data_{mudan\textit{\c{c}}a}$ a distância da data inicial até a data de mudança,
+que é igual a da data de mudança até a data final, nossa hipótese é que
+$Data_{mudan\textit{\c{c}}a} < Data_{coaliz\tilde{a}o}$ e o período em que
+consideramos que uma mudança de comportamento esteja relacionada a mudança de
+posicionamento compreende $\left[Data_{mudan\textit{\c{c}}a} - \frac{P}{2},
+Data_{mudan\textit{\c{c}}a} + \frac{P}{2}\right]$. Precisamos definir $P$.
 
 Para entender melhor, vejamos a figura \ref{fig:raio-de-influencia-coalizao}.
 Nela são mostrados cinco períodos de análise de um parlamentar que mudou de
@@ -1164,6 +1164,7 @@ sem migrar de partido não têm um padrão claro.
 \section{Modelagem}
 
 \subsection{Variáveis dependentes}
+\label{sec:miolo:variaveis-dependentes}
 
 % FIXME: Referenciar sessão de análise
 A partir dos resultados das análises descritas na sessão
@@ -1235,8 +1236,8 @@ mantendo as proporções de mudanças de posicionamento e aspectos temporais, pa
 estimar a performance. Este é o conjunto de teste;
 \item Treina o modelo com os dados anteriores a 54\textordfeminine{}
 legislatura, chamado de conjunto de treino, ajustando seus parâmetros a partir
-da performance em um subconjunto aleatório dos 75\% restantes da
-54\textordfeminine{} legislatura chamadado de conjunto de validação;
+da performance nos 75\% restantes da 54\textordfeminine{} legislatura chamadado
+de conjunto de validação;
 \item Ao finalizar o ajuste dos parâmetros no passo anterior, treina o modelo
 com esses parâmetros usando os conjuntos de treino e validação juntos;
 \item Estima a performance do modelo no conjunto de teste.
