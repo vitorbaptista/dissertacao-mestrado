@@ -14,7 +14,14 @@ Brasil) a distinção do que é ciência de dados e não estatística, matemáti
 computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
 diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
 \ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
-relação as outras áreas.
+relação as outras áreas. Nela, vemos que a ciência de dados está na intersecção
+entre computação, estatística e uma área fim (por exemplo, ciência política). A
+pesquisa tradicional, segundo ele, estaria na intersecção da estatística com a
+área fim, enquanto a pesquisa de aprendizagem de máquina estaria na intersecção
+de estatística com computação. Ele define a área entre ciência da computação e
+a área fim como sendo perigosa, pois apesar do pesquisador ter o ferramental
+para desenvolver sua análise, ele corre o risco de errar na interpretação por
+não entender as características e limites das ferramentas estatísticas usadas.
 
 \begin{figure}[h]
 \includegraphics{ciencia-de-dados-diagrama-venn}
@@ -28,7 +35,7 @@ melhor rota para chegar até meu trabalho?'', ``Vai chover hoje?'', ``Quais são
 minhas chances de desenvolver câncer nos próximos 10 anos?''. Neste trabalho,
 estamos interessados nas técnicas de desenvolvimento de modelos preditivos que,
 baseados nos dados e conhecimento que temos do assunto, determinam a
-probabilidade de acontecimentos futuros.
+probabilidade de um resultado.
 
 \subsection{Modelos preditivos}
 
@@ -47,19 +54,37 @@ e, consequentemente, o preço do seguro de um carro, entre outros
 
 Existem duas principais categorias de problemas que podem ser resolvidos por
 modelos preditivos: regressão e classificação. A diferença entre eles está no
-tipo de resposta que queremos prever, se é contínua ou categórica, que
+tipo de resposta que queremos prever, se é contínua ou categórica, o que
 influencia nos tipos de modelos que podem ser usados e na forma de avaliá-los.
 Por exemplo, ao analisarmos modelos que preveem o preço de um imóvel a partir
 da sua área, buscamos o que chegue mais próximo do valor real\footnote{Esta é
-uma simplificação. Existem diversas outras características a serem analisados
+uma simplificação. Existem diversas outras características a serem analisadas
 ao escolher um modelo, como facilidade de interpretação, velocidade de
-execução, entre outras. Aqui consideramos que a única diferença entre eles seja
-o resultado previsto.}. Já ao avaliar modelos que classifiquem imagens dos
-dígitos 0 a 9, só nos interessamos na classificação correta; dois modelos que
-identifiquem a imagem do número 1 como sendo do número 3 e 8 estão igualmente
-errados. O que classificou como 3 não está ``menos errado'' do que o que
-classificou como 8 \cite{Kuhn2013,Zumel2014}. Neste trabalho, nosso foco é em
-classificação.
+execução, entre outras. Aqui consideramos que a única diferença entre os
+modelos seja o resultado previsto.}. Já ao avaliar modelos que classifiquem
+imagens dos dígitos 0 a 9, só nos interessamos na classificação correta; dois
+modelos que identifiquem a imagem do número 1 como sendo do número 3 e 8 estão
+igualmente errados. O que classificou como 3 não está ``menos errado'' do que o
+que classificou como 8 \cite{Kuhn2013,Zumel2014}. O foco deste trabalho é em
+classificação. A seguir, apresentarei os modelos utilizados.
+
+\subsubsection{glm}
+Foo bar
+
+\subsubsection{SVM}
+Foo bar
+
+\subsubsection{gbm}
+Foo bar
+
+\subsubsection{NB}
+Foo bar
+
+\subsubsection{RF}
+Foo bar
+
+\subsubsection{C5.0}
+Foo bar
 
 \subsection{Avaliando performance em modelos de classificação}
 
@@ -135,9 +160,9 @@ todo e-mail como não sendo spam terá 90\% de acurácia \cite{Kuhn2013}.
 O \emph{Kappa} é uma métrica que leva em consideração as proporções das
 classes. Ela pode assumir valores entre -1 e 1, sendo que 1 indica que todas as
 predições foram corretas, -1 indica que todas foram erradas, e 0 que o modelo
-tem uma performance igual a um modelo aleatório. A equação \ref{eq:kappa}
-mostra como calculá-la, onde $ACC$ é a acurácia observada e $ACC_{esperada}$ é
-a acurácia esperada \cite{Cohen1960}.
+tem uma performance igual a um aleatório. A equação \ref{eq:kappa} mostra como
+calculá-la, onde $ACC$ é a acurácia observada e $ACC_{esperada}$ é a acurácia
+esperada \cite{Cohen1960}.
 
 \begin{equation}
 \label{eq:kappa}
@@ -148,23 +173,20 @@ Em geral, o resultado do uso de modelos de classificação é a probabilidade de
 pertencimento a cada categoria. Por exemplo, um modelo pode, ao analisar um
 e-mail, determinar que ele tem 75\% de chances de ser spam e, consequentemente,
 25\% de chances de não ser. Para transformar essa probabilidade em uma
-categoria, define-se um ponto de corte. Por padrão, ele é definido em grande
-parte das ferramentas como 50\%. Usando esse valor, o exemplo anterior seria
-classificado como spam \cite{Kuhn2013}.
+categoria define-se um ponto de corte \cite{Kuhn2013}.
 
-Esse padrão é uma escolha interessante caso o custo de um falso positivo ou
-falso negativo seja o mesmo e as categorias sejam balanceadas. Caso contrário,
-é recomendável testar outros valores. Uma ferramenta para analisar a
-sensibilidade e especificidade de um modelo usando diferentes pontos de corte é
-a curva ROC (\emph{Receiver Operator Characteristic}). Essa visualização mostra
-os valores de sensibilidade e especificidade em diferentes pontos de corte
-\cite{Altman1994,Brown2006,Fawcett2006}.
+Grande parte das ferramentas usa 50\% por padrão, que geralmente é uma escolha
+interessante caso o custo de um falso positivo e falso negativo seja o mesmo e
+as categorias sejam balanceadas. Caso contrário, é recomendável testar outros
+valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
+modelo usando diferentes pontos de corte é a curva ROC (\emph{Receiver Operator
+Characteristic}) \cite{Altman1994,Brown2006,Fawcett2006}.
 
 A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva ROC com os
-valores discriminados em dois pontos. A partir desse gráfico, percebemos a
-troca entre sensibilidade e especificidade (quanto maior um, menor o outro), e
-podemos escolher o melhor ponto de corte para o modelo em questão levando em
-consideração nossos objetivos.
+valores discriminados em dois pontos: 0,5 e 0,614. A partir desse gráfico,
+percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
+o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
+levando em consideração nossos objetivos.
 
 <<exemplo-roc, fig.cap="Curva ROC de um modelo mostrando a área sob a curva (AUC) e dois pontos de corte: 0,5, o mais comum, e 0,614, o mais próximo do canto superior esquerdo.">>=
 set.seed(1)
@@ -190,11 +212,11 @@ Além de auxiliar na escolha do ponto de corte, a curva ROC também pode ser
 usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
 comparando a área sob suas curvas (AUC). O modelo na figura
 \ref{fig:exemplo-roc} possui AUC 0,787. Quanto mais próximo a curva está do
-canto superior esquerdo, maior é seu AUC e, consequentemente, maior é sua
-performance. O modelo perfeito tem AUC 1, já um modelo aleatório tem AUC
-próximo de 0,5 e segue na diagonal do gráfico. O que caracteriza é um AUC bom
-ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013} definiram uma regra
-geral para avaliação descrita na tabela \ref{table:valores-auc}.
+canto superior esquerdo, maior é seu AUC e, em geral, maior é sua performance.
+O modelo perfeito tem AUC 1, já um modelo aleatório tem AUC próximo de 0,5 e
+segue na diagonal do gráfico. O que caracteriza é um AUC bom ou ruim varia de
+caso a caso, mas \citeonline{HosmerJr2013} definiram uma regra geral para
+avaliação descrita na tabela \ref{table:valores-auc}.
 
 \begin{table}
 \centering
@@ -212,125 +234,132 @@ geral para avaliação descrita na tabela \ref{table:valores-auc}.
 
 % TODO: Concluir
 
-% % Treinamento de algoritmos
-% % Regressão VS Classificação
-
-% Random Forest
-% % Árvores de decisão
-
-% Validação cruzada
-
 \section{Modelos espaciais de votação}
 
 <<>>=
-parlamentares = data.frame(maioridade_penal = c(16, 17, 15, 18, 20),
-                           salario_minimo = c(1000, 900, 1200, 1100, 1500))
+parlamentares = data.frame(maioridade_penal = c(16, 17, 15, 18, 20))
 maioridade_penal = c(16, 18)
-salario_minimo = c(1200, 1000)
-cutlines = data.frame(maioridade_penal = mean(maioridade_penal),
-                      salario_minimo = mean(salario_minimo))
+cutlines = data.frame(xintercept = c(16, 18, 17),
+                      colour = c("blue", "red", "black"),
+                      label = c("Alternativa sim", "Alternativa não", "Linha de corte"),
+                      linetype = c("solid", "solid", "dashed"))
 @
 
-A ideia básica de modelos espaciais de votação é que o conjunto de alternativas
-políticas de uma votação pode ser tratado como uma dimensão em um espaço
-euclidiano, e cada parlamentar tem preferências de valores nessa dimensão. O
-voto seria então definido pela escolha da alternativa mais próxima da sua
-preferência.
+É comum usar conceitos espaciais para identificar o posicionamento de
+atores políticos. Por exemplo, dizemos que um deputado é de esquerda, enquanto
+outro é de direita. A teoria espacial do voto é uma formalização dessas ideias.
+Ela parte do pressuposto que as preferências individuais e as políticas podem
+ser interpretadas como pontos em um espaço euclidiano. Um parlamentar então
+votaria na política mais próxima da sua preferência, chamada de ponto ideal.
 
-Há diversos modelos para estimar esses valores, como o NOMINATE, W-NOMINATE,
-DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
+As dimensões desse espaço correspondem as áreas temáticas relevantes para os
+atores, que podem ser muitas. Por exemplo, proteção do meio-ambiente, comércio
+exterior, distribuição de renda, etc.
+
+Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em um
+projetos de Lei que propõe a redução da maioridade penal de
+\Sexpr{max(maioridade_penal)} para \Sexpr{min(maioridade_penal)} anos. Suponha
+que cada um tem uma única preferência (\emph{single-peakedness}), que é o seu
+ponto ideal, e vota sinceramente de acordo com ela, e que suas preferências são
+simétricas. Isto é, dado duas escolhas a uma mesma distância do ponto ideal de
+um parlamentar, ele será indiferente a qualquer uma delas.
+
+Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde as curvas
+representam as preferências dos legisladores sobre o assunto dessa votação, com
+a altura representando a intensidade da preferência. Os pontos ideias estão nos
+picos de cada curva. Há também três linhas, a azul representando o resultado de
+um voto ``sim'', a vermelha o de um voto ``não'' (isto é, o \emph{status quo}),
+e a preta representa a ``linha de corte'' dessa votação. As linhas de corte
+passam pelo ponto médio entre as duas alternativas em votação, separando os
+parlamentares que deverão votar sim dos que votarão não. Nesse exemplo, as
+escolhas são entre uma maioridade penal de \Sexpr{min(maioridade_penal)} ou
+\Sexpr{max(maioridade_penal)}, logo a linha de corte passa em $\frac{16 +
+18}{2}$, ou seja, $17$. Caso o ponto ideal de um parlamentar esteja sobre essa
+linha, ele é indiferente as alternativas.
+
+% FIXME: Esse gráfico não funciona em preto e branco
+<<modelo-espacial-votacao, fig.height = 3, fig.cap="Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos.  Parlamentares a esquerda da linha de corte nos 17 anos votam sim, e os a direita votam não. O deputado com preferência sobre a linha de corte é indiferente as duas opções. Neste exemplo, é ele quem desempata a votação.">>=
+p = ggplot(data.frame(x = rnorm(10)), aes(x)) +
+      theme(legend.position = "top",
+            axis.title.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank())
+
+
+for (val in parlamentares$maioridade_penal) {
+  p = p +
+    stat_function(fun = dnorm, args = list(mean = val, sd = 0.5), alpha = 0.3)
+}
+
+p = p +
+  geom_vline(data = cutlines, aes(xintercept = xintercept, colour = label), show_guide = TRUE) +
+  scale_colour_manual(name = "", values = c("Alternativa sim" = "blue",
+                                            "Alternativa não" = "red",
+                                             "Linha de corte" = "black")) +
+  scale_x_continuous("Maioridade penal", limits = c(12, 22),
+                     breaks = c(12, 14, 16, 17, 18, 20, 22))
+p
+@
+
+Há diversos modelos criados para estimar esses valores, como o NOMINATE,
+W-NOMINATE, DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
 não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
 Nosso foco neste trabalho é no W-NOMINATE.
 \cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
 
-Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em
-dois projetos de Lei: um propondo a redução da maioridade penal de
-\Sexpr{max(maioridade_penal)} para \Sexpr{min(maioridade_penal)} anos e outra
-propondo o aumento do salário-mínimo de R\$ \Sexpr{min(salario_minimo)} para
-R\$ \Sexpr{max(salario_minimo)}. Suponha que cada um tem uma única preferência
-(\emph{single-peakedness}), conhecido como seu ponto ideal, e vota sinceramente
-de acordo com ela. Considere também que as preferências são simétricas. Isto é,
-dado duas escolhas a uma mesma distância do ponto ideal de um parlamentar, ele
-será indiferente a qualquer uma delas.
-
-Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde os pontos
-representam as preferências dos legisladores sobre cada votação, representados
-como as dimensões nesse espaço euclidiano. As linhas são chamadas linhas de
-corte. Elas passam pelo ponto médio entre as duas alternativas em votação: a de
-votar sim e a de votar não. Em outras palavras, se as escolhas são entre uma
-maioridade penal de \Sexpr{min(maioridade_penal)} ou
-\Sexpr{max(maioridade_penal)}, a linha de corte passa em $\frac{16 + 18}{2}$,
-ou seja, $17$. Ela divide os legisladores que irão votar não, que estão a
-esquerda da linha, dos que irão votar sim, que estão a direita da mesma. Caso
-esteja sobre a linha de corte, ele é indiferente as alternativas.
-
-<<modelo-espacial-votacao, fig.cap="Preferências de 5 deputados em 2 votações com suas respectivas linhas de corte">>=
-ggplot(parlamentares, aes(x = maioridade_penal, y = salario_minimo)) +
-  geom_vline(aes(xintercept = cutlines$maioridade_penal)) +
-  geom_hline(aes(yintercept = cutlines$salario_minimo)) +
-  geom_point(size = 3) +
-  labs(x = "Maioridade penal", y = "Salário mínimo")
-@
-
-Nesse exemplo estamos mostrando duas dimensões, mas o algoritmo é capaz de
-estimar os pontos ideais em até dez dimensões.
-
-% FIXME: Descrever as características do W-NOMINATE e (talvez) como ele se
-% diferencia dos outros.
-
-O comportamento dos parlamentares é assumido como sendo formado por dois
-componentes: um determinístico e outro estocástico. Formalmente, definimos a
-utilidade do legislador $i$ na consequência política do resultado ``sim'' da
-votação $j$ como sendo:
+O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
+\citeonline{Poole1985}. Eles são baseados no modelo de utilidade aleatória de
+\citeonline{McFadden1976}, que define que a utilidade para um legislador em
+votar de certa forma é formado por dois componentes: um determinístico e outro
+estocástico (erro). Sendo $s$ o número de votações indexadas por $k = 1, ...,
+s$; $p$ o número de legisladores indexados por $i = 1, ..., p$, e; $q$ o número
+de votações indexados por $j = 1, ..., q$, a utilidade para o legislador $i$ da
+consequência política do resultado ``sim'' da votação $j$ é definida como:
 
 \begin{equation}
-  U_{ijy} = u_{ijy} + \epsilon_{ijy}
+\label{eq:random-utility}
+ U_{ijy} = u_{ijy} + \epsilon_{ijy}
 \end{equation}
 
 onde $u_{ijy}$ é a parte determinística e $\epsilon_{ijy}$ é a parte
-estocástica da função utilidade. Se não houver erro, o legislador vota sim se
-$U_{ijy} > U_{ijn}$ e não se $U_{ijy} < U_{ijn}$. Caso $U_{ijy} = U_{ijn}$, ele
-é indiferente para qualquer resultado.
-
-\begin{description}
-\item[$s$] o número de dimensões indexado por $k = 1, ..., s$;
-\item[$p$] o número de parlamentares indexado por $i = 1, ..., p$;
-\item[$q$] o número de votações indexado por $j = 1, ..., q$;
-\item[$X_i$] o ponto ideal do parlamentar $i$ em um vetor de comprimento $s$;
-\item[$Z_{jy}$ e $Z_{jn}$] a representação de cada votação em um vetor de comprimento
-$s$, onde $y$ e $n$ são as consequências políticas dos resultados ``Sim'' e
-``Não'', respectivamente.
-\end{description}
-
-A utilidade do parlamentar $i$ para a consequência $y$ em uma votação $j$ é:
+estocástica da função utilidade $U_{ijy}$. Se não houver erro, o legislador vota sim se
+$U_{ijy} > U_{ijn}$ e não se $U_{ijy} < U_{ijn}$, onde $y$ e $n$ representam as
+consequências de um voto sim ou não, respectivamente. Caso $U_{ijy} = U_{ijn}$,
+ele é indiferente ao resultado. Com o erro, a diferença entre as utilidades é:
 
 \begin{equation}
-  U_{ijy} = \beta \exp^{\left( - \frac{1}{2} \sum\limits_{k=1}^s w_k^2 d_{ijky}^2 \right)}
+U_{ijy} - U_{ijn} = u_{ijy} - u_{ijn} + \epsilon_{ijy} - \epsilon_{ijn}
 \end{equation}
 
-Formalmente, sendo $O_{jy}$ e $O_{jn}$ os resultados correspondendo
-respectivamente a um voto ``sim'' e um voto ``não'' na votação $j$ ($j = 1,
-..., q$), definimos $Z_j$ como: 
+logo, um legislador vota sim se:
 
-\begin{equation}\label{eq:cutpoint}
-  Z_j = \frac{O_{jy} + O_{jn}}{2}
+\begin{equation}
+u_{ijy} - u_{ijn} > \epsilon_{ijy} - \epsilon_{ijn}
 \end{equation}
 
-O $Z_j$ pode definir um ponto, linha, plano ou hiperplano, dependendo do número
-de dimensões que estamos tratando. Ele é conhecido como ponto (ou linha, etc.)
-de corte.
+ou seja, se a diferença das suas utilidades for maior que a diferença dos
+erros. No W-NOMINATE, considera-se que a parte determinística $u_{ijy}$ segue a
+distribuição normal, com os valores concentrados ao redor do ponto ideal do
+legislador, e rapidamente tendendo a zero ao se afastar para qualquer lado. Com
+isso, a equação \ref{eq:random-utility} se torna:
 
-% Introdução
+\begin{equation}
+  U_{ijy} = \beta \exp^{\left( - \frac{1}{2} \sum\limits_{k=1}^s w_k^2 d_{ijky}^2 \right)} + \epsilon_{ijn}
+\end{equation}
 
-%% O que são de modelos de votação?
+onde $\beta$ é uma constante que define o peso da parte determinística na
+equação; $w_k$ é o peso da dimensão $k$, e; $d_{ijky}^2$ é a distância ao
+quadrado na dimensão $k$ do legislador $i$ ($X_{ik}$) a consequência do
+resultado sim na votação $j$ ($O_{jky}$):
 
-%% Por que os modelos espaciais de votação foram criados?
+\begin{equation}
+d_{ijky}^2 = \left(X_{ik} - O_{jky}\right)^2
+\end{equation}
 
-%% Por que não usar os votos diretamente?
+O método então estima os valores de $O_{jky}$, $O_{jkn}$, $X_{ik}$, $\beta$ e
+$w_k$.
 
-% Desenvolvimento
-
-% Conclusão
+% FIXME: Concluir
 
 \subsection{Comparando pontos ideais ao longo do tempo}
 \label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
