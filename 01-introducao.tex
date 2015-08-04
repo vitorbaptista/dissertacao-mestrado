@@ -9,28 +9,25 @@ Basômetro e o Radar Parlamentar. Essas ferramentas são usadas por jornalistas 
 cientistas políticos, como CITAR LIVRO BASÔMETRO E MATERIAS DO ESTADAO. Apesar
 disso, a análise desses dados ainda se dá de forma manual. Com 513 deputados
 federais a cada legislatura, sem contar os suplentes, o volume de dados é muito
-grande, então as análises acabam sendo feitas por partidos, ou em parlamentares
+grande, então as análises acabam sendo feitas por partidos ou com parlamentares
 específicos.
 
-O objetivo desse trabalho é desenvolver um modelo capaz de, baseado nos padrões
-de votação de um parlamentar, prever a chance dele estar saindo ou entrando na
-coalizão do governo. Esse modelo pode ser executado automaticamente, conforme
-novas votações forem surgindo, e alertar algum interessado caso um parlamentar
-mude de comportamento.
+O objetivo desse trabalho é desenvolver um modelo capaz de determinar qual a
+chance de um parlamentar ter mudado de posicionamento em um determinado
+período. Defino uma mudança de posicionamento como sendo a entrada ou saída da
+coalizão. Para isso, o modelo se baseia no padrão de votação, mensurado a
+partir do modelo espacial de votação W-NOMINATE, e em padrões temporais. Ele
+pode ser executado automaticamente, conforme novas votações forem surgindo, e
+alertar algum interessado caso a chance de ter havido uma mudança de
+posicionamento seja superior a algum valor pré-definido (e.x.: 80\%).
 
 \section{Objetivos}
 
 O objetivo geral desta dissertação é o desenvolvimento e validação de um modelo
-capaz de prever quando um deputado federal irá deixar ou entrar na coalizão do
-governo a partir das votações nominais.
+capaz de determinar a chance de um deputado federal ter mudado de
+posicionamento em um determinado período.
 
 \subsection{Objetivos Especificos}
-
-\begin{itemize}
-\item Desenvolver um mecanismo capaz de detectar mudanças no padrão de comportamento dos parlamentares;
-\item Desenvolver um mecanismo capaz de detectar mudanças semelhantes entre grupos de parlamentares (ex.: João e Pedro sempre divergiram em seus votos e de repente passaram a concordar);
-\item Desenvolver um mecanismo capaz de detectar votações importantes/polêmicas (falta definir o que são importante e polêmica)
-\end{itemize}
 
 \section{Problema de pesquisa}
 
@@ -41,11 +38,15 @@ entrar ou sair da coalizão, mas não sabemos se ele muda antes ou depois da
 oficialização dessa mudança. A pergunta que buscamos responder neste trabalho
 é:
 
-\emph{É possível prever se um deputado federal irá mudar de posição, entrando
-ou saindo da coalizão do governo, a partir do seu padrão de votação?}
+% FIXME: A partir dessa frase, parece que o modelo irá dizer "O deputado X vai
+% mudar de posicionamento daqui a 3 meses", o que é errado. Ele vai dizer "Eu
+% tenho 85% de certeza que o deputado X mudou de posicionamento entre os
+% períodos Y1 e Y2".
+\emph{É possível prever se um deputado federal irá mudar de posicionamento,
+entrando ou saindo da coalizão do governo, a partir do seu padrão de votação?}
 
 Para tanto, partimos do pressuposto que os parlamentares mudam de comportamento
-antes de entrar (ou sair) da coalizão. Caso isto esteja errado e eles mudem
+antes de mudar de posicionamento. Caso isto esteja errado e eles mudem
 depois (ou não mudem), não conseguiremos prever essa mudança de posicionamento.
 
 \section{Metodologia}
