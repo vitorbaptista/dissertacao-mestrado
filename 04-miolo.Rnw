@@ -219,7 +219,9 @@ mês, partindo de 01/Fev no primeiro ano da legislatura até o do último. Por
 exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
 01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
-nas 5 legislaturas estudadas neste trabalho.
+nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
+uma limitação deste trabalho, que será melhor analisada na sessão
+\ref{cap:conclusao:limitacoes}.
 
 O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
 Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na sessão
@@ -345,7 +347,12 @@ plot_data(t4)
 
 Neste trabalho, defini $P$ como sendo 6 meses. Em outras palavras, os
 parlamentares começariam a mudar de comportamento a partir de 6 meses antes da
-definitiva entrada ou saída da coalizão. Ao final desse processo, teremos uma
+definitiva entrada ou saída da coalizão. Por ser uma escolha arbitrária, esta é
+uma limitação do trabalho. Na sessão \ref{cap:conclusao:limitacoes}
+discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
+remediá-los em um trabalho futuro.
+
+Ao final desse processo, teremos uma
 tabela como a \ref{table:dataset-final}, onde as colunas representam:
 
 \begin{description}

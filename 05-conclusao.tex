@@ -1,2 +1,32 @@
 \chapter{Conclusão}\label{cap:conclusao}
 
+\section{Limitações}
+\label{cap:conclusao:limitacoes}
+
+\subsection{Definição dos períodos de análise}
+
+Na sessão \ref{cap:miolo:estimando-pontos-ideais}, descrevi a metodologia usada
+para analisar mudanças de comportamento baseado na de \citeonline{Poole2005}
+descrita na sessão \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
+Nela, levantei três limitações deste trabalho: a definição da duração dos
+períodos de análise, o número de repetições da estimativa dos pontos ideais para
+calcular seu erro, e a definição do ``raio de influência'' de uma mudança de
+posicionamento. Nesta sessão falarei sobre cada uma delas.
+
+\subsubsection*{Duração dos períodos de análise}
+
+Como o objetivo final deste trabalho não é análise, mas sim o desenvolvimento
+de um modelo preditivo, precisei definir um conjunto de períodos de análise,
+cujo tamanho foi definido arbitrariamente como um ano dividido em dois momentos
+de seis meses. Uma forma possivelmente melhor seria analisar os dados para
+encontrar o menor período que contenha o número de votações não-unânimes mínimo
+definidos para o cálculo dos pontos ideais (neste trabalho, 20 votações com no
+máximo 97,5\% votos para a maioria).
+
+\subsubsection*{Raio de influência da mudança de posicionamento}
+
+Uma vez definida a duração do período de análise, pode-se definir o raio de
+influência buscando a maior mudança de comportamento entre os momentos dentro
+do período. Por exemplo, digamos que o período definido seja de 12 meses
+divididos em dois momentos de 6 meses cada. Poderíamos estimar os pontos ideais
+nessa janela de tempo, buscando em que momento ocorre a maior alteração.
