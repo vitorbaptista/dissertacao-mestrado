@@ -197,7 +197,8 @@ library(pROC)
 library(doParallel)
 library(randomForest)
 
-opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
+opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/",
+               cache = TRUE, autodep = TRUE)
 options(digits = 2)
 theme = theme_few()
 theme$axis.title.y$vjust = 2
