@@ -198,7 +198,7 @@ library(doParallel)
 library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/")
-options(digits = 2, OutDec = ",")
+options(digits = 2)
 theme = theme_few()
 theme$axis.title.y$vjust = 2
 theme$axis.title.x$vjust = -0.5

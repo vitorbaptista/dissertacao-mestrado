@@ -66,7 +66,6 @@
 \definecolor{errorcolor}{rgb}{1, 0, 0}
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
-\usepackage{amsmath}
 \usepackage{alltt}
 \usepackage[portuguese,ruled,linesnumbered]{algorithm2e}
 \usepackage[english,portuges]{babel}
@@ -1038,11 +1037,11 @@ número de votações.
 \hline
 antes & antes.sd & depois & depois.sd & mudou\_posicionamento\\
 \hline
-0,55 & 0,02 & -0,40 & 0,03 & Sim\\
+0.55 & 0.02 & -0.40 & 0.03 & Sim\\
 \hline
-0,90 & 0,01 & 0,85 & 0,02 & Não\\
+0.90 & 0.01 & 0.85 & 0.02 & Não\\
 \hline
--0,30 & 0,01 & 0,40 & 0,01 & Sim\\
+-0.30 & 0.01 & 0.40 & 0.01 & Sim\\
 \hline
 \end{tabular}
 
@@ -1067,19 +1066,19 @@ analisar os dados.
 
 O conjunto de dados gerado possui 113.952 estimativas de mudança
 de comportamento entre dois sub-períodos de seis meses em cada um dos
-185 estudados. Em 31,04\% (35.376) desses períodos, não foi possível
+185 estudados. Em 31.04\% (35.376) desses períodos, não foi possível
 estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
 participou em votações não-unânimes o suficiente para ser considerado. Esses
 casos foram excluídos, ficando no final com 78.576 estimativas.
 
-Desses valores, 3,98\%
+Desses valores, 3.98\%
 (3.130) são de momentos em que houve uma mudança de
-posicionamento, enquanto 96,02\% (75.446) não. A média por legislatura é de
+posicionamento, enquanto 96.02\% (75.446) não. A média por legislatura é de
 4\%, com o
 máximo ocorrendo na 52\textordfeminine{} legislatura
-(7,07\%) e o
+(7.07\%) e o
 mínimo na 53\textordfeminine{}
-(1,55\%).
+(1.55\%).
 A tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
@@ -1091,9 +1090,9 @@ todas as legislaturas estudadas.
 \hline
   & 50 & 51 & 52 & 53 & 54\\
 \hline
-S & 0,04 & 0,04 & 0,07 & 0,02 & 0,03\\
+S & 0.04 & 0.04 & 0.07 & 0.02 & 0.03\\
 \hline
-N & 0,96 & 0,96 & 0,93 & 0,98 & 0,97\\
+N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
 \hline
 \end{tabular}
 
@@ -1138,9 +1137,9 @@ migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
 Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
 o faz, ou mudando de partido. Das 890 mudanças de
 posicionamento no período de estudo,
-50,79\% (452)
+50.79\% (452)
 ocorreram por migrações e
-49,21\% (438)
+49.21\% (438)
 pelo partido ter entrado ou saído da coalizão. Consideramos a data de mudança
 de posicionamento de formas diferentes em cada caso. Quando o partido como um
 todo entra ou sai da coalizão, consideramos a data de mudança como a data de
@@ -1156,7 +1155,7 @@ A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
 54\textordfeminine{} legislaturas agregados por mês. Três meses, março, abril e
 outubro, concentram
-52,36\%
+52.36\%
 (466) das mudanças, o que pode
 ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
 das mudanças de partido.
@@ -1174,17 +1173,17 @@ deputados que mudaram de posicionamento migrando de partido dos cujo próprio
 partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
 visivelmente distinto. Os que migraram de partido mudaram de comportamento em
 média 37,67 vezes por mês, com
-29,87\%
+29.87\%
 (135) ocorrendo em outubro. Houve respectivamente
-13,27\%
+13.27\%
 (60) e
-11,28\%
+11.28\%
 (51) em março e fevereiro, os segundo e terceiro
 meses com mais mudanças. Já os parlamentares cujos partidos entraram ou saíram
 da coalizão mudaram de posicionamento em média
 36,50 vezes por mês, com janeiro, março e
 maio concentrando
-46,8\%
+46.8\%
 (205) das mudanças.
 
 \begin{knitrout}
@@ -1198,11 +1197,11 @@ maio concentrando
 Separamos os dados por legislatura na figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}. Os
 migrantes continuam com um padrão parecido, com em média
-32,06\%
+32.06\%
 das mudanças ocorrendo em outubro,
-14,18\%
+14.18\%
 em março e
-10,48\%
+10.48\%
 em fevereiro. Os não-migrantes não seguem um padrão único, mudando a cada
 legislatura.
 
@@ -1217,7 +1216,7 @@ legislatura.
 Na figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
 agregarmos por ano da legislatura ao invés de mês. A grande maioria das
 mudanças dos migrantes,
-84,07\%
+84.07\%
 (380), estão concentradas no
 primeiro e terceiro anos, seguindo o padrão temporal de migração descrito por
 \citeonline{Freitas2008}. Já os não-migrantes continuam sem um padrão claro.
@@ -1238,7 +1237,7 @@ no segundo ano.
 Separando os dados por mês e ano da legislatura, temos a figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura}. Nos
 migrantes,
-52,55\%
+52.55\%
 (103) das mudanças ocorrem
 em outubro do terceiro ano, o limite para se filiar a um partido para concorrer
 nas eleições seguintes \cite{Lei9504/1997}. Os não-migrantes continuam sem um
@@ -1340,12 +1339,12 @@ com esses parâmetros usando os conjuntos de treino e validação juntos;
 \end{enumerate}
 
 Seguindo esses passos, os 78.576 dados serão separados em
-80,67\% (63.386)
-para treino, 14,48\%
-(11.380) para validação e 4,85\% (3.810) para teste. Eles possuem
-respectivamente 4,19\%,
-3,07\% e
-3,23\% de mudanças de
+80.67\% (63.386)
+para treino, 14.48\%
+(11.380) para validação e 4.85\% (3.810) para teste. Eles possuem
+respectivamente 4.19\%,
+3.07\% e
+3.23\% de mudanças de
 posicionamento. É importante se certificar que os conjuntos de validação e
 teste sejam uniformes, tendo não só uma proporção parecida de mudanças de
 posicionamento, mas que elas sigam o mesmo padrão temporal. Na figura
