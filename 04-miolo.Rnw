@@ -43,7 +43,7 @@ transformação dos dados, que serão brevemente analisados para entendermos sua
 características e, a partir delas, escolher possíveis modelos preditivos que
 serão validados para chegar ao modelo final.
 
-\section{Origem dos dados}
+\section{Coleta dos dados}
 
 <<>>=
 num_deputados = simplify2array(lapply(votes[legislatures], nrow))
@@ -140,7 +140,7 @@ regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
 Percebe-se que essa mudança alterou a frequência de entradas e saídas na
 coalizão, o que poderá influenciar na acurácia do nosso modelo.
 
-\section{Operacionalização dos dados}
+\section{Preparação dos dados}
 
 % Universo de votações
 
