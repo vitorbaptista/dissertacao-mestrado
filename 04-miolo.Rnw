@@ -763,6 +763,31 @@ ggplot(aux, aes(x = month, fill = changed_coalition)) +
   labs(x = "Mês", y = "Densidade")
 @
 
+Por fim, há mais um último problema a ser resolvido. A proporção de dados de
+parlamentares que mudaram de posicionamento (segundo os critérios definidos em
+XXX) dos que não mudaram está muito desbalanceada. Cerca de 95\% dos dados são
+de parlamentares em períodos em que não houve uma mudança de posicionamento.
+Isto pode fazer com que os modelos preditivos simplesmente prevejam todos
+exemplos como sendo negativos (i.e. em que não houve mudança de posicionamento)
+e, assim, conseguir uma acurácia de 95\%.
+
+Para evitar isso, alguns modelos aceitam um parâmetro para configurar o
+``custo'' de classificar erradamente cada classe. Ao dizer que, por exemplo,
+errar classificando um parlamentar como se ele não tivesse mudado de
+posicionamento quando, na realidade, ele mudou, é 10 vezes mais custoso do que
+classificar um parlamentar que não mudou de posicionamento como se tivesse
+mudado.
+
+Como nem todo modelo aceita esses parâmetros, isso limitaria nossa
+escolha. Por isso, preferi usar a técnica \emph{downsampling}, que diminui o
+número de exemplos da maior classe até chegar próximo de uma divisão uniforme,
+com 50\% dos exemplos pertencendo a cada classe. Ao fazer o
+\emph{downsampling}, é preciso se certificar que a única característica
+diferente dele para o conjunto completo é a proporção de exemplos de cada
+classe, sendo semelhantes nas outras características. Neste trabalho, garanti
+que a proporção de exemplos por legislatura, mês e ano da legislatura sejam
+similares.
+
 \subsection{Modelos}
 
 \citeonline{Wolpert1996} diz em seu teorema ``No Free Lunch''\footnote{Em
