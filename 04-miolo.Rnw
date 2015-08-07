@@ -224,18 +224,19 @@ nas 5 legislaturas estudadas neste trabalho.
 O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
 Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na sessão
 \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
-\citeauthor{Poole2005} sugere repetir as estimativas 101 vezes para calcular o
-erro. Entretanto, o volume de dados que estamos trabalhando invibializa esse
-número de repetições com os recursos computacionais que tenho
-disponível\footnote{Por exemplo, usando um núcleo de um processador AMD
-Opteron\texttrademark{} 6238 com 2,6 GHz o processamento dos pontos ideais de
-um parlamentar em um período demora cerca de 1h45m. Considerando somente os 513
-deputados eleitos por legislatura, o cálculo de todos os 37 períodos levaria
-aproximadamente 18 meses. Todas as 5 legislaturas analisadas neste trabalho
-levariam mais de 7 anos. O cálculo é facilmente paralelizável, diminuindo o
-tempo necessário de acordo com o número de processadores, mas ainda assim não
-foi possível usar 101 repetições neste trabalho.}. Por isto, escolhi fazer 10
-repetições, o que diminuiu o tempo necessário em cerca de 90\%.
+\citeauthor{Poole2005} sugere, sem justificar esse número, repetir as
+estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
+estamos trabalhando invibializa esse número de repetições com os recursos
+computacionais que tenho disponível\footnote{Por exemplo, usando um núcleo de
+um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o processamento dos
+pontos ideais de um parlamentar em um período demora cerca de 1h45m.
+Considerando somente os 513 deputados eleitos por legislatura, o cálculo de
+todos os 37 períodos levaria aproximadamente 18 meses. Todas as 5 legislaturas
+analisadas neste trabalho levariam mais de 7 anos. O cálculo é facilmente
+paralelizável, diminuindo o tempo necessário de acordo com o número de
+processadores, mas ainda assim não foi possível usar 101 repetições neste
+trabalho.}. Por isto, escolhi fazer 10 repetições, o que diminuiu o tempo
+necessário em cerca de 90\%.
 
 Até esse momento, temos uma tabela onde cada linha representa um parlamentar em
 um período, e nas colunas temos seus pontos ideais e as respectivas estimativas
@@ -253,44 +254,45 @@ palavras, precisamos definir qual o ``raio de influência'' de uma entrada ou
 saída da coalizão.
 
 Não há uma resposta única. Alguns parlamentares podem mudar de comportamento
-anos antes de mudarem de comportamento, enquanto outros podem não mudar em
+anos antes de mudarem de posicionamento, enquanto outros podem não mudar em
 momento algum. A hipótese fundamental deste trabalho é que eles mudam de
 comportamento antes de mudar de posicionamento, caso contrário seria impossível
 prever um a partir do outro. Formalmente, sendo $Data_{coaliz\tilde{a}o}$ a
-data de entrada ou saída da coalizão, $Data_{mudan\textit{\c{c}}a}$ a data onde
-o parlamentar mudou de comportamento, $Data_{inicial}$ e $Data_{final}$ as
-datas iniciais e finais do período analisado, e $P =
-Data_{mudan\textit{\c{c}}a} - Data_{coaliz\tilde{a}o} = Data_{final} -
-Data_{mudan\textit{\c{c}}a}$ a distância da data inicial até a data de mudança,
-que é igual a da data de mudança até a data final, nossa hipótese é que
-$Data_{mudan\textit{\c{c}}a} < Data_{coaliz\tilde{a}o}$ e o período em que
-consideramos que uma mudança de comportamento esteja relacionada a mudança de
-posicionamento compreende $\left[Data_{mudan\textit{\c{c}}a} - \frac{P}{2},
-Data_{mudan\textit{\c{c}}a} + \frac{P}{2}\right]$. Precisamos definir $P$.
+data de entrada ou saída da coalizão, $Data_{inicial}$ e $Data_{final}$ as
+datas iniciais e finais do período analisado, $Data_{m\acute{e}dia}$ a data que
+divide o período analisado em dois, ``antes'' e ``depois'', e $P =
+Data_{m\acute{e}dia} - Data_{inicial} = Data_{final} -
+Data_{m\acute{e}dia}$ a distância da data inicial até a data média, que é igual
+a da data média até a data final, então o período em que consideramos que uma
+mudança de comportamento esteja relacionada a mudança de posicionamento
+compreende $\left[Data_{m\acute{e}dia} - \frac{P}{2}, Data_{m\acute{e}dia} +
+\frac{P}{2}\right]$. Precisamos definir $P$.
 
 Para entender melhor, vejamos a figura \ref{fig:raio-de-influencia-coalizao}.
 Nela são mostrados cinco períodos de análise de um parlamentar que mudou de
 comportamento em $Data_{coaliz\tilde{a}o} - P$, representado pela mudança da
-região branca para a região verde. No primeiro período,
-\ref{fig:raio-de-influencia-coalizao1}, a $Data_{final}$ é igual ao momento de
-mudança de comportamento. Neste período não consideramos que houve uma mudança
-de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao2}, a mudança
-de comportamento ocorre no ponto médio entre a $Data_{mudan\textit{\c{c}}a}$ e
-a $Data_{final}$.  É a partir desse período que consideramos que o parlamentar
-mudou de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao3}, a
-$Data_{final} = Data_{coaliz\tilde{a}o}$, e a $Data_{mudan\textit{\c{c}}a}$
-estimada se iguala a mudança real de comportamento em $Data_{coaliz\tilde{a}o}
-- P$. Se a escolha de $P$ foi correta para este parlamentar, esse deve ser o
-período com a mudança de comportamento mais intensa. A figura
+região azul para a verde, com o período de análise em cada momento representado
+pela região escurecida entre $Data_{inicial}$ e $Data_{final}$. No primeiro
+período, \ref{fig:raio-de-influencia-coalizao1}, a $Data_{final}$ é igual ao
+momento de mudança de comportamento. Aqui, não consideramos que houve uma
+mudança de posicionamento, pois o comportamento dentro desse período é
+constante (região azul). Na figura \ref{fig:raio-de-influencia-coalizao2}, a
+mudança de comportamento ocorre no ponto médio entre a $Data_{m\acute{e}dia}$ e
+a $Data_{final}$. A partir daqui começamos a considerar que o parlamentar mudou
+de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao3}, a
+$Data_{final} = Data_{coaliz\tilde{a}o}$, e a $Data_{m\acute{e}dia}$ se iguala
+a data da mudança de comportamento em $Data_{coaliz\tilde{a}o} - P$. Se a
+escolha de $P$ foi correta para este parlamentar, esse deve ser o período com a
+mudança de comportamento mais intensa. A figura
 \ref{fig:raio-de-influencia-coalizao4} mostra o último período em que ainda
-consideramos que houve uma mudança causada pela entrada ou saída da coalizão,
-pois a partir dele o comportamento em $\left[Data_{inicial},
-Data_{mudan\textit{\c{c}}a}\right]$ começa a se igualar ao em
-$\left[Data_{mudan\textit{\c{c}}a}, Data_{final}\right]$. Na última figura, a
+consideramos que houve uma mudança de comportamento causada por uma mudança de
+posicionamento, pois a partir dele o comportamento em $\left[Data_{inicial},
+Data_{m\acute{e}dia}\right]$ começa a se igualar ao em
+$\left[Data_{m\acute{e}dia}, Data_{final}\right]$. Na última figura, a
 \ref{fig:raio-de-influencia-coalizao5}, o comportamento nos dois momentos do
 período de estudo se igualam.
 
-<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c('A data final está no limite do raio de influência da coalizão.', 'O raio de influência da coalizão chega a metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento.', 'A data estimada de mudança se iguala a data real. Este é o período onde esperamos encontrar a maior mudança de comportamento.', 'A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.', 'O comportamento nos dois períodos se iguala. Esperamos que a diferença entre os pontos ideias dos dois momentos volte aos níveis da primeira figura.')>>=
+<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c("A data final do período de análise é igual ao dia em que o parlamentar mudou de comportamento por causa da futura mudança de posicionamento. Como, dentro desse período atual, supomos que o parlamentar manteve o mesmo comportamento, ainda não consideramos que houve uma mudança.", "O raio de influência da coalizão chega a metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento, pois o parlamentar esteve com outro comportamento em mais da metade da segunda parte do período.", "A $Data_{media}$ se iguala a data de mudança. Este é o período onde esperamos encontrar a maior mudança de comportamento.", "A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.", "O comportamento nos dois períodos se iguala.  Esperamos que a diferença entre os pontos ideias dos dois momentos volte aos níveis da segunda figura.")>>=
 plot_data = function(data) {
   p = ggplot(data, aes(x = x, y = c(0))) +
         theme(axis.text.y = element_blank(),
@@ -300,8 +302,9 @@ plot_data = function(data) {
               panel.border = element_blank(),
               panel.grid = element_blank()) +
         labs(x = "", y = "") +
-        geom_rect(xmin = 12, xmax = Inf, ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "green") +
-        geom_rect(xmin = min(data$x), xmax = max(data[1:3,]$x), ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "grey") +
+        geom_rect(xmin = -Inf, xmax = 12, ymin = -Inf, ymax = Inf, fill = "#a6cee3") +
+        geom_rect(xmin = 12, xmax = Inf, ymin = -Inf, ymax = Inf, fill = "#b2df8a") +
+        geom_rect(xmin = min(data$x), xmax = max(data[1:3,]$x), ymin = -Inf, ymax = Inf, alpha = 0.2, fill = "grey") +
         scale_x_discrete(breaks = data$x, labels = data$label, limits = 0:24)
 
   for (linetype in unique(data$linetype)) {
@@ -313,24 +316,24 @@ plot_data = function(data) {
 }
 
 data_inicial = "$Data_{inicial}$"
-data_mudanca = "$Data_{mudan\\textit{\\c{c}}a}$"
+data_media = "$Data_{m\\acute{e}dia}$"
 data_final = "$Data_{final}$"
 data_coalizao = "$Data_{coaliz\\tilde{a}o}$"
 
-t0 = data.frame(x = c(0, 6, 12, 18),
-                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+t0 = data.frame(x = c(1, 6, 12, 18),
+                label = c(data_inicial, data_media, data_final, data_coalizao),
                 linetype = c(rep("solid", 3), "dashed"))
 t1 = data.frame(x = c(3, 9, 15, 18),
-                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+                label = c(data_inicial, data_media, data_final, data_coalizao),
                 linetype = c(rep("solid", 3), "dashed"))
 t2 = data.frame(x = c(6, 12, 18),
-                label = c(data_inicial, data_mudanca, paste(data_final, "$=$", data_coalizao)),
+                label = c(data_inicial, data_media, paste(data_final, "$=$", data_coalizao)),
                 linetype = rep("solid", 3))
 t3 = data.frame(x = c(9, 15, 21, 18),
-                label = c(data_inicial, data_mudanca, data_final, data_coalizao),
+                label = c(data_inicial, data_media, data_final, data_coalizao),
                 linetype = c(rep("solid", 3), "dashed"))
 t4 = data.frame(x = c(12, 18, 24),
-                label = c(data_inicial, paste(data_mudanca, "$=$", data_coalizao), data_final),
+                label = c(data_inicial, paste(data_media, "$=$", data_coalizao), data_final),
                 linetype = rep("solid", 3))
 
 plot_data(t0)
