@@ -190,16 +190,16 @@ levando em consideração nossos objetivos.
 
 <<exemplo-roc, fig.cap="Curva ROC de um modelo mostrando a área sob a curva (AUC) e dois pontos de corte: 0,5, o mais comum, e 0,614, o mais próximo do canto superior esquerdo.">>=
 set.seed(1)
-training = twoClassSim()
-testing = twoClassSim()
+tmp.training = twoClassSim()
+tmp.testing = twoClassSim()
 
 fit = train(Class ~ TwoFactor1 + TwoFactor2 + Linear03,
-            data = training,
+            data = tmp.training,
             method = "glm")
 
-roc0 = roc(testing$Class,
-           predict(fit, newdata = testing, type = "prob")[,1],
-           levels = levels(testing$Class),
+roc0 = roc(tmp.testing$Class,
+           predict(fit, newdata = tmp.testing, type = "prob")[,1],
+           levels = levels(tmp.testing$Class),
            plot = TRUE,
            print.thres = c(0.5, 0.614),
            print.auc = TRUE,
