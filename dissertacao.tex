@@ -1310,15 +1310,17 @@ delas.
 
 
 
-Existem diversas técnicas capazes de aprender a estrutura de um conjunto de
-dados tão bem que, quando usamos os modelos gerados com o mesmo conjunto de
-dados usado para treiná-lo, eles conseguem prever corretamente 100\% dos casos.
-O problema é que eles aprenderam não só os padrões gerais dos dados, mas também
-seu ruído. Esse tipo de modelo, conhecido como \emph{over-fit}\footnote{Em
-tradução livre, ``super-ajustado''.}, normalmente tem uma baixa performance
-ao ser usado com novos dados. Para evitar esse problema, é necessário validar o
-modelo em um conjunto de dados diferente do que ele foi treinado, o que gera a
-questão sobre como dividir os dados.
+
+
+Existem técnicas capazes de aprender a estrutura de um conjunto de dados tão
+bem que, quando validados com o mesmo conjunto de dados usado para treiná-lo,
+conseguem prever corretamente 100\% dos casos. O problema é que eles aprenderam
+não só os padrões gerais dos dados, mas também seu ruído. Esse tipo de modelo,
+conhecido como \emph{over-fit}\footnote{Em tradução livre,
+``super-ajustado''.}, normalmente tem uma baixa performance ao ser usado com
+novos dados. Para evitar esse problema, é necessário testar o modelo em um
+conjunto de dados diferente do que ele foi treinado, o que gera a questão sobre
+como dividir os dados \cite{Kuhn2013}.
 
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
 subconjuntos, um para treino e outro para teste. É importante se certificar que
@@ -1331,8 +1333,8 @@ Divisões aleatórias partem do princípio de que o padrão dos dados é uniform
 logo não há diferença na escolha. Visto que estamos trabalhando com um período
 longo, inclusive com uma alteração nas regras para mudança de partido, essa é
 uma suposição improvável. Como é mais importante que o modelo tenha uma boa
-performance nos anos mais recentes, segui a seguinte estratégia
-\cite[Capítulo~12.1]{Kuhn2013}:
+performance nos anos mais recentes, segui a estratégia de
+\citeonline{Kuhn2013}:
 
 \begin{enumerate}
 \item Separa aleatoriamente 25\% dos dados da 54\textordfeminine{} legislatura,
@@ -1347,25 +1349,65 @@ com esses parâmetros usando os conjuntos de treino e validação juntos;
 \item Estima a performance do modelo no conjunto de teste.
 \end{enumerate}
 
-Seguindo esses passos, os 78.576 dados serão separados em
-80.67\% (63.386)
-para treino, 14.48\%
-(11.380) para validação e 4.85\% (3.810) para teste. Eles possuem
-respectivamente 4.19\%,
-3.07\% e
-3.23\% de mudanças de
-posicionamento. É importante se certificar que os conjuntos de validação e
-teste sejam uniformes, tendo não só uma proporção parecida de mudanças de
-posicionamento, mas que elas sigam o mesmo padrão temporal. Na figura
-\ref{fig:densidade-validacao-teste} vemos que os conjuntos são uniformes.
+Assim, os 78.576 dados serão separados em
+80.67\%
+(63.386) para treino,
+14.52\%
+(11.407) para validação e 4.81\% (3.783) para teste. Eles possuem respectivamente
+4.19\%,
+3.16\% e
+2.93\% de mudanças de posicionamento.
+Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
+96.02\% de todas as observações sendo de
+parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
+que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
+maioria a revelia da minoria. Alguns modelos permitem a definição do custo para
+cada tipo de erro (falso positivo e falso negativo), que pode ser usado para
+diminuir o impacto desse desbalanceamento. Entretanto, usaremos modelos que não
+permitem isso, logo preferi usar uma técnica mais simples: \emph{downsampling}.
+
+No \emph{downsampling}, selecionamos todas as observações da categoria mais
+rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
+mais comum, chegando assim a um conjunto de dados balanceado. Na amostragem, é
+imprescindível que as características das variáveis independentes sejam
+mantidas o mais próximo possível. Nas figuras
+\ref{fig:densidade-original-downsampled-temporal}
+\ref{fig:densidade-original-downsampled-pontos-ideais}, vemos que tanto os
+aspectos temporais quanto as distribuições dos pontos ideais foram mantidos.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/densidade-validacao-teste-1} \caption[Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste]{Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.}\label{fig:densidade-validacao-teste}
+\includegraphics[width=\maxwidth]{figure/tmp/densidade-original-downsampled-temporal-1} \caption[Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste]{Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.}\label{fig:densidade-original-downsampled-temporal}
 \end{figure}
 
 
 \end{knitrout}
+
+% FIXME: Esses dados não têm padrão similar, porque não levei em consideração
+% os pontos ideias no downsampling. Preciso corrigir e re-treinar os modelos.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/densidade-original-downsampled-pontos-ideais-1} \caption[Densidade dos pontos ideais nos dados de treino originais e downsampled]{Densidade dos pontos ideais nos dados de treino originais e downsampled. Ambos têm um padrão similar.}\label{fig:densidade-original-downsampled-pontos-ideais}
+\end{figure}
+
+
+\end{knitrout}
+
+Por definição, o \emph{downsampling} altera a distribuição real das categorias,
+por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
+usada com os de validação ou teste, as estimativas de performance do modelo
+estariam enviesadas, não refletindo sua performance em dados reais.
+
+Ao final, os 78.576 dados do conjunto original foram separados em
+6.83\%
+(5.364) para treino,
+14.52\%
+(11.407) para validação e 4.81\% (3.783) para teste. Como o conjunto de treino
+foi \emph{downsampled}, ele possui
+49.55\% de mudanças de
+posicionamento, enquanto os de validação e teste possuem respectivamente
+3.16\% e
+2.93\%.
 
 \subsection{Modelos}
 
@@ -1450,22 +1492,21 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
   \item R version 3.2.1 (2015-06-18), \verb|x86_64-pc-linux-gnu|
   \item Locale: \verb|LC_CTYPE=en_US.UTF-8|, \verb|LC_NUMERIC=C|, \verb|LC_TIME=pt_BR.UTF-8|, \verb|LC_COLLATE=en_US.UTF-8|, \verb|LC_MONETARY=pt_BR.UTF-8|, \verb|LC_MESSAGES=en_US.UTF-8|, \verb|LC_PAPER=pt_BR.UTF-8|, \verb|LC_NAME=C|, \verb|LC_ADDRESS=C|, \verb|LC_TELEPHONE=C|, \verb|LC_MEASUREMENT=pt_BR.UTF-8|, \verb|LC_IDENTIFICATION=C|
   \item Base packages: base, datasets, graphics, grDevices,
-    methods, parallel, splines, stats, utils
-  \item Other packages: C50~0.1.0-24, caret~6.0-47,
-    doParallel~1.0.8, foreach~1.4.2, gbm~2.1.1, ggplot2~1.0.1,
-    ggthemes~2.2.1, iterators~1.0.7, kernlab~0.9-20, knitr~1.9,
-    lattice~0.20-31, plyr~1.8.2, pROC~1.8, randomForest~4.6-10,
-    scales~0.2.4, survival~2.38-3, tikzDevice~0.8.1
+    methods, parallel, stats, utils
+  \item Other packages: caret~6.0-47, doParallel~1.0.8,
+    e1071~1.6-4, foreach~1.4.2, ggplot2~1.0.1, ggthemes~2.2.1,
+    iterators~1.0.7, knitr~1.9, lattice~0.20-31, pROC~1.8,
+    randomForest~4.6-10, scales~0.2.4, tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
-    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
-    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
-    evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
-    gtable~0.1.2, gtools~3.4.2, highr~0.5, labeling~0.3,
-    lme4~1.1-7, MASS~7.3-42, Matrix~1.2-2, mgcv~1.8-6,
-    minqa~1.2.4, munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4,
-    nnet~7.3-10, partykit~1.0-2, pbkrtest~0.4-2, proto~0.3-10,
-    quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6,
-    stringr~0.6.2, tools~3.2.1
+    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, class~7.3-13,
+    codetools~0.2-11, colorspace~1.2-4, compiler~3.2.1,
+    digest~0.6.8, evaluate~0.5.5, filehash~2.2-2, formatR~1.2,
+    grid~3.2.1, gtable~0.1.2, gtools~3.4.2, highr~0.5,
+    labeling~0.3, lme4~1.1-7, MASS~7.3-42, Matrix~1.2-2,
+    mgcv~1.8-6, minqa~1.2.4, munsell~0.4.2, nlme~3.1-121,
+    nloptr~1.0.4, nnet~7.3-10, pbkrtest~0.4-2, plyr~1.8.2,
+    proto~0.3-10, quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1,
+    SparseM~1.6, splines~3.2.1, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

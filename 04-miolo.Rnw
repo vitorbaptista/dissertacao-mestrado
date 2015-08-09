@@ -669,34 +669,29 @@ ggplot(variaveis_dependentes, aes(x = changed_coalition, y = value)) +
 
 % FIXME: Falta falar sobre o LGOCV
 
+<<load-data-and-models>>=
+load("data/data-models-lgocv-downsampled_ROC.RData")
+@
+
 <<>>=
-trainingIndex = which(data$legislature != 54)
-training = data[trainingIndex,]
-remaining = data[-trainingIndex,]
+training.downsampled = training[training$legislature < 54,]
 
-set.seed(1)
-testingIndex = createDataPartition(paste(remaining$changed_coalition,
-                                         remaining$mid_vote_month,
-                                         remaining$mid_vote_legislature_year),
-                                   p = .25,
-                                   list = FALSE)
-testing = remaining[testingIndex,]
-validation = remaining[-testingIndex,]
-
-training_proportions = table(training$changed_coalition) / nrow(training)
+data_proportions = table(data$changed_coalition) / nrow(data)
+training_original_proportions = table(training.original$changed_coalition) / nrow(training.original)
+training_downsampled_proportions = table(training.downsampled$changed_coalition) / nrow(training.downsampled)
 validation_proportions = table(validation$changed_coalition) / nrow(validation)
 testing_proportions = table(testing$changed_coalition) / nrow(testing)
 @
 
-Existem diversas técnicas capazes de aprender a estrutura de um conjunto de
-dados tão bem que, quando usamos os modelos gerados com o mesmo conjunto de
-dados usado para treiná-lo, eles conseguem prever corretamente 100\% dos casos.
-O problema é que eles aprenderam não só os padrões gerais dos dados, mas também
-seu ruído. Esse tipo de modelo, conhecido como \emph{over-fit}\footnote{Em
-tradução livre, ``super-ajustado''.}, normalmente tem uma baixa performance
-ao ser usado com novos dados. Para evitar esse problema, é necessário validar o
-modelo em um conjunto de dados diferente do que ele foi treinado, o que gera a
-questão sobre como dividir os dados.
+Existem técnicas capazes de aprender a estrutura de um conjunto de dados tão
+bem que, quando validados com o mesmo conjunto de dados usado para treiná-lo,
+conseguem prever corretamente 100\% dos casos. O problema é que eles aprenderam
+não só os padrões gerais dos dados, mas também seu ruído. Esse tipo de modelo,
+conhecido como \emph{over-fit}\footnote{Em tradução livre,
+``super-ajustado''.}, normalmente tem uma baixa performance ao ser usado com
+novos dados. Para evitar esse problema, é necessário testar o modelo em um
+conjunto de dados diferente do que ele foi treinado, o que gera a questão sobre
+como dividir os dados \cite{Kuhn2013}.
 
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
 subconjuntos, um para treino e outro para teste. É importante se certificar que
@@ -709,8 +704,8 @@ Divisões aleatórias partem do princípio de que o padrão dos dados é uniform
 logo não há diferença na escolha. Visto que estamos trabalhando com um período
 longo, inclusive com uma alteração nas regras para mudança de partido, essa é
 uma suposição improvável. Como é mais importante que o modelo tenha uma boa
-performance nos anos mais recentes, segui a seguinte estratégia
-\cite[Capítulo~12.1]{Kuhn2013}:
+performance nos anos mais recentes, segui a estratégia de
+\citeonline{Kuhn2013}:
 
 \begin{enumerate}
 \item Separa aleatoriamente 25\% dos dados da 54\textordfeminine{} legislatura,
@@ -725,34 +720,48 @@ com esses parâmetros usando os conjuntos de treino e validação juntos;
 \item Estima a performance do modelo no conjunto de teste.
 \end{enumerate}
 
-Seguindo esses passos, os \Sexpr{nrow(data)} dados serão separados em
-\Sexpr{format_percent(nrow(training) / nrow(data))} (\Sexpr{nrow(training)})
-para treino, \Sexpr{format_percent(nrow(validation) / nrow(data))}
+Assim, os \Sexpr{nrow(data)} dados serão separados em
+\Sexpr{format_percent(nrow(training.original) / nrow(data))}
+(\Sexpr{nrow(training.original)}) para treino,
+\Sexpr{format_percent(nrow(validation) / nrow(data))}
 (\Sexpr{nrow(validation)}) para validação e \Sexpr{format_percent(nrow(testing)
-/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Eles possuem
-respectivamente \Sexpr{format_percent(training_proportions["S"])},
+/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Eles possuem respectivamente
+\Sexpr{format_percent(training_original_proportions["S"])},
 \Sexpr{format_percent(validation_proportions["S"])} e
-\Sexpr{format_percent(testing_proportions["S"])} de mudanças de
-posicionamento. É importante se certificar que os conjuntos de validação e
-teste sejam uniformes, tendo não só uma proporção parecida de mudanças de
-posicionamento, mas que elas sigam o mesmo padrão temporal. Na figura
-\ref{fig:densidade-validacao-teste} vemos que os conjuntos são uniformes.
+\Sexpr{format_percent(testing_proportions["S"])} de mudanças de posicionamento.
+Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
+\Sexpr{format_percent(data_proportions["N"])} de todas as observações sendo de
+parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
+que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
+maioria a revelia da minoria. Alguns modelos permitem a definição do custo para
+cada tipo de erro (falso positivo e falso negativo), que pode ser usado para
+diminuir o impacto desse desbalanceamento. Entretanto, usaremos modelos que não
+permitem isso, logo preferi usar uma técnica mais simples: \emph{downsampling}.
 
-<<densidade-validacao-teste, fig.cap="Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.">>=
-aux = data.frame(changed_coalition = c(validation$changed_coalition,
-                                       testing$changed_coalition),
-                 month = c(validation$mid_vote_month,
-                           testing$mid_vote_month),
-                 legislature_year = c(validation$mid_vote_legislature_year,
-                                      testing$mid_vote_legislature_year),
-                 dataset = c(rep("Validação", nrow(validation)),
-                             rep("Teste", nrow(testing))))
+No \emph{downsampling}, selecionamos todas as observações da categoria mais
+rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
+mais comum, chegando assim a um conjunto de dados balanceado. Na amostragem, é
+imprescindível que as características das variáveis independentes sejam
+mantidas o mais próximo possível. Nas figuras
+\ref{fig:densidade-original-downsampled-temporal}
+\ref{fig:densidade-original-downsampled-pontos-ideais}, vemos que tanto os
+aspectos temporais quanto as distribuições dos pontos ideais foram mantidos.
 
-aux$changed_coalition = factor(aux$changed_coalition, labels = c("Sim", "Não"))
-aux$month = as.Date(paste0("2014-", aux$month, "-01"))
-aux$dataset = factor(aux$dataset, levels = c("Validação", "Teste"))
+<<densidade-original-downsampled-temporal, fig.cap="Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.">>=
+tmp = data.frame(changed_coalition = c(training.original$changed_coalition,
+                                       training$changed_coalition),
+                 month = c(training.original$mid_vote_month,
+                           training$mid_vote_month),
+                 legislature_year = c(training.original$mid_vote_legislature_year,
+                                      training$mid_vote_legislature_year),
+                 dataset = c(rep("Original", nrow(training.original)),
+                             rep("Downsampled", nrow(training))))
 
-ggplot(aux, aes(x = month, fill = changed_coalition)) +
+tmp$changed_coalition = factor(tmp$changed_coalition, labels = c("Sim", "Não"))
+tmp$month = as.Date(paste0("2014-", tmp$month, "-01"))
+tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
+
+ggplot(tmp, aes(x = month, fill = changed_coalition)) +
   facet_grid(legislature_year ~ dataset) +
   theme(legend.position="top") +
   geom_density(aes(colour = changed_coalition), alpha = 0.3) +
@@ -763,30 +772,34 @@ ggplot(aux, aes(x = month, fill = changed_coalition)) +
   labs(x = "Mês", y = "Densidade")
 @
 
-Por fim, há mais um último problema a ser resolvido. A proporção de dados de
-parlamentares que mudaram de posicionamento (segundo os critérios definidos em
-XXX) dos que não mudaram está muito desbalanceada. Cerca de 95\% dos dados são
-de parlamentares em períodos em que não houve uma mudança de posicionamento.
-Isto pode fazer com que os modelos preditivos simplesmente prevejam todos
-exemplos como sendo negativos (i.e. em que não houve mudança de posicionamento)
-e, assim, conseguir uma acurácia de 95\%.
+% FIXME: Esses dados não têm padrão similar, porque não levei em consideração
+% os pontos ideias no downsampling. Preciso corrigir e re-treinar os modelos.
+<<densidade-original-downsampled-pontos-ideais, fig.cap="Densidade dos pontos ideais nos dados de treino originais e downsampled. Ambos têm um padrão similar.">>=
+tmp = data.frame(ponto_ideal = c(training.original$before, training.original$after,
+                                 training$before, training$after),
+                 dataset = c(rep("Original", nrow(training.original) * 2),
+                             rep("Downsampled", nrow(training) * 2)))
+tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
+ggplot(tmp, aes(x = ponto_ideal, fill = dataset)) +
+  geom_density(alpha = 0.3)
+@
 
-Para evitar isso, alguns modelos aceitam um parâmetro para configurar o
-``custo'' de classificar erradamente cada classe. Ao dizer que, por exemplo,
-errar classificando um parlamentar como se ele não tivesse mudado de
-posicionamento quando, na realidade, ele mudou, é 10 vezes mais custoso do que
-classificar um parlamentar que não mudou de posicionamento como se tivesse
-mudado.
+Por definição, o \emph{downsampling} altera a distribuição real das categorias,
+por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
+usada com os de validação ou teste, as estimativas de performance do modelo
+estariam enviesadas, não refletindo sua performance em dados reais.
 
-Como nem todo modelo aceita esses parâmetros, isso limitaria nossa
-escolha. Por isso, preferi usar a técnica \emph{downsampling}, que diminui o
-número de exemplos da maior classe até chegar próximo de uma divisão uniforme,
-com 50\% dos exemplos pertencendo a cada classe. Ao fazer o
-\emph{downsampling}, é preciso se certificar que a única característica
-diferente dele para o conjunto completo é a proporção de exemplos de cada
-classe, sendo semelhantes nas outras características. Neste trabalho, garanti
-que a proporção de exemplos por legislatura, mês e ano da legislatura sejam
-similares.
+Ao final, os \Sexpr{nrow(data)} dados do conjunto original foram separados em
+\Sexpr{format_percent(nrow(training.downsampled) / nrow(data))}
+(\Sexpr{nrow(training.downsampled)}) para treino,
+\Sexpr{format_percent(nrow(validation) / nrow(data))}
+(\Sexpr{nrow(validation)}) para validação e \Sexpr{format_percent(nrow(testing)
+/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Como o conjunto de treino
+foi \emph{downsampled}, ele possui
+\Sexpr{format_percent(training_downsampled_proportions["S"])} de mudanças de
+posicionamento, enquanto os de validação e teste possuem respectivamente
+\Sexpr{format_percent(validation_proportions["S"])} e
+\Sexpr{format_percent(testing_proportions["S"])}.
 
 \subsection{Modelos}
 
