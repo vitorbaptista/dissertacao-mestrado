@@ -193,6 +193,10 @@ inspirada no trabalho de \citeonline{Muller2000}.
 
 
 \subsection{Estimando os pontos ideais}
+\label{cap:miolo:estimando-pontos-ideais}
+
+% FIXME: Falar sobre usar só uma dimensão (justificando com Leoni e Izumi) e a
+% escolha da polaridade.
 
 O primeiro passo para se analisar uma mudança de comportamento é definir os
 períodos de estudo. Por exemplo, para analisar o efeito da saída do PSB da
@@ -306,7 +310,7 @@ plot_data = function(data) {
         labs(x = "", y = "") +
         geom_rect(xmin = -Inf, xmax = 12, ymin = -Inf, ymax = Inf, fill = "#a6cee3") +
         geom_rect(xmin = 12, xmax = Inf, ymin = -Inf, ymax = Inf, fill = "#b2df8a") +
-        geom_rect(xmin = min(data$x), xmax = max(data[1:3,]$x), ymin = -Inf, ymax = Inf, alpha = 0.2, fill = "grey") +
+        geom_rect(xmin = min(data$x), xmax = max(data[1:3,]$x), ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "black") +
         scale_x_discrete(breaks = data$x, labels = data$label, limits = 0:24)
 
   for (linetype in unique(data$linetype)) {
