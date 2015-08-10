@@ -391,7 +391,7 @@ kable(sample_dataset)
 
 
 \section{Análise}
-\label{sec:miolo:analise}
+\label{cap:miolo:analise}
 
 % FIXME: Melhora esse parágrafo
 Segundo \citeonline{Kuhn2013}, o primeiro passo em qualquer processo de
@@ -461,7 +461,7 @@ ggplot(pontos_ideais_por_legislatura, aes(x = value)) +
 @
 
 \subsection{Aspectos temporais}
-\label{sec:miolo:aspectos-temporais}
+\label{cap:miolo:aspectos-temporais}
 
 <<>>=
 coalition_changes$date_month = as.numeric(format(coalition_changes$date, "%m"))
@@ -641,13 +641,12 @@ de posicionamento, e \Sexpr{format_percent(tmp.data_proportions["N"])}
 (\Sexpr{length(which(data$changed_coalition == "N"))}) não.
 
 \subsection{Variáveis independentes}
-\label{sec:miolo:variaveis-independentes}
+\label{cap:miolo:variaveis-independentes}
 
-% FIXME: Referenciar sessão de análise
 A partir dos resultados das análises descritas na sessão
-\ref{sec:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
+\ref{cap:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
 as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
-temporais descritos na sessão \ref{sec:miolo:aspectos-temporais}. A tabela
+temporais descritos na sessão \ref{cap:miolo:aspectos-temporais}. A tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
 
