@@ -792,7 +792,6 @@ tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
 
 ggplot(tmp, aes(x = month, fill = changed_coalition)) +
   facet_grid(legislature_year ~ dataset) +
-  theme(legend.position="top") +
   geom_density(aes(colour = changed_coalition), alpha = 0.3) +
   scale_x_date(breaks = months[c(1, 6, 12)],
                labels = date_format("%b"),

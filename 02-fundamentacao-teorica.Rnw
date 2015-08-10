@@ -280,8 +280,7 @@ linha, ele é indiferente as alternativas.
 % FIXME: Esse gráfico não funciona em preto e branco
 <<modelo-espacial-votacao, fig.height = 3, fig.cap="Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos.  Parlamentares a esquerda da linha de corte nos 17 anos votam sim, e os a direita votam não. O deputado com preferência sobre a linha de corte é indiferente as duas opções. Neste exemplo, é ele quem desempata a votação.">>=
 p = ggplot(data.frame(x = rnorm(10)), aes(x)) +
-      theme(legend.position = "top",
-            axis.title.y = element_blank(),
+      theme(axis.title.y = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank())
 

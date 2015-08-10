@@ -203,6 +203,7 @@ options(digits = 2)
 theme = theme_few()
 theme$axis.title.y$vjust = 2
 theme$axis.title.x$vjust = -0.5
+theme$legend.position = "top"
 theme_set(theme)
 setwd("data/")
 set.seed(1)
