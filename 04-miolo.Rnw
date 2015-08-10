@@ -623,6 +623,23 @@ sem migrar de partido não têm um padrão claro.
 
 \section{Modelagem}
 
+\subsection{Variável dependente}
+
+<<>>=
+tmp.data_proportions = table(data$changed_coalition) / nrow(data)
+@
+
+Como variável dependente, que é o que queremos prever, usei a mudança ou não de
+comportamento do parlamentar no período. Ela foi definida a partir dos períodos
+e ``raio de influência'' apresentados na sessão
+\ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
+quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
+visto anteriormente, das \Sexpr{nrow(data)} observações,
+\Sexpr{format_percent(tmp.data_proportions["S"])}
+(\Sexpr{length(which(data$changed_coalition == "S"))}) são relativas a mudanças
+de posicionamento, e \Sexpr{format_percent(tmp.data_proportions["N"])}
+(\Sexpr{length(which(data$changed_coalition == "N"))}) não.
+
 \subsection{Variáveis independentes}
 \label{sec:miolo:variaveis-independentes}
 
@@ -643,31 +660,39 @@ delas.
   antes.sd & Estimativa de erro do ponto ideal no momento inicial& Contínua \\
   depois & Estimativa do ponto ideal no momento final & Contínua \\
   depois.sd & Estimativa de erro do ponto ideal no momento final & Contínua \\
-  mês & Mês da data de mudança do período & Discreta \\
-  ano da legislatura & Ano da legislatura na data de mudança do período & Discreta \\
+  mês & Mês na data média do período & Discreta \\
+  ano da legislatura & Ano da legislatura na data média do período & Discreta \\
 \end{tabular}
-\caption{Variáveis dependentes usadas na criação dos modelos preditivos.}
+\caption{Variáveis independentes usadas na criação dos modelos preditivos.}
 \label{table:variaveis-independentes}
 \end{table}
 
-<<>>=
-variaveis_dependentes = data.frame(value = c(data$before, data$before.sd,
+A figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
+variáveis independentes agrupados pela mudança ou não de posicionamento no
+período. Visualmente, os padrões são parecidos, mas ao treinar os modelos usei
+não só essas variáveis como também as interações entre elas, assim eles podem
+aprender características mais complexas que são de díficil visualização.
+
+<<variaveis-independentes, fig.cap="Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram.">>=
+variaveis_independentes = data.frame(value = c(data$before, data$before.sd,
                                              data$after, data$after.sd,
                                              data$mid_vote_month,
                                              data$mid_vote_legislature_year),
                                    name = factor(rep(c("antes", "antes.sd",
                                                        "depois", "depois.sd",
-                                                       "mês", "ano"),
+                                                       "mês", "ano da legislatura"),
                                                      each = nrow(data))),
                                    changed_coalition = rep(data$changed_coalition, 6))
-ggplot(variaveis_dependentes, aes(x = changed_coalition, y = value)) +
-  facet_wrap(~ name, scales = "free_y") +
-  geom_boxplot()
+variaveis_independentes$changed_coalition = factor(variaveis_independentes$changed_coalition,
+                                                 labels = c("Sim", "Não"))
+
+ggplot(variaveis_independentes, aes(x = value)) +
+  facet_wrap(~ name, scales = "free") +
+  geom_density(aes(fill = changed_coalition, colour = changed_coalition), alpha = 0.3) +
+  guides(fill = guide_legend(title="Mudou de posicionamento"),
+         colour = guide_legend(title="Mudou de posicionamento")) +
+  labs(x = "", y = "Densidade")
 @
-
-\subsection{Variável dependente}
-
-É o changed\_coalition
 
 \subsection{Divisão da base de dados}
 
