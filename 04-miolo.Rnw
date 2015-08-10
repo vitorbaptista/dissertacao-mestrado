@@ -789,13 +789,14 @@ tmp$changed_coalition = factor(tmp$changed_coalition, labels = c("Sim", "Não"))
 tmp$month = as.Date(paste0("2014-", tmp$month, "-01"))
 tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
 
-ggplot(tmp, aes(x = month, fill = changed_coalition)) +
+ggplot(tmp, aes(x = month)) +
   facet_grid(legislature_year ~ dataset) +
-  geom_density(aes(colour = changed_coalition), alpha = 0.3) +
+  geom_density(aes(fill = changed_coalition, colour = changed_coalition), alpha = 0.3) +
   scale_x_date(breaks = months[c(1, 6, 12)],
                labels = date_format("%b"),
                limits = months[c(1, 12)]) +
-  guides(fill=guide_legend(title="Mudou de posicionamento"), colour=FALSE) +
+  guides(fill = guide_legend(title = "Mudou de posicionamento"),
+         colour = guide_legend(title = "Mudou de posicionamento")) +
   labs(x = "Mês", y = "Densidade")
 @
 
