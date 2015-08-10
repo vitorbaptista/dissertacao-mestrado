@@ -805,11 +805,13 @@ ggplot(tmp, aes(x = month)) +
 <<densidade-original-downsampled-pontos-ideais, fig.cap="Densidade dos pontos ideais nos dados de treino originais e downsampled. Ambos têm um padrão similar.">>=
 tmp = data.frame(ponto_ideal = c(training.original$before, training.original$after,
                                  training$before, training$after),
-                 dataset = c(rep("Original", nrow(training.original) * 2),
-                             rep("Downsampled", nrow(training) * 2)))
-tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
-ggplot(tmp, aes(x = ponto_ideal, fill = dataset)) +
-  geom_density(alpha = 0.3)
+                 Dados = c(rep("Original", nrow(training.original) * 2),
+                           rep("Downsampled", nrow(training) * 2)))
+tmp$dataset = factor(tmp$Dados, levels = c("Original", "Downsampled"))
+ggplot(tmp, aes(x = ponto_ideal)) +
+  theme(legend.position = "right") +
+  geom_density(aes(fill = Dados, colour = Dados), alpha = 0.3) +
+  labs(x = "Ponto ideal", y = "Densidade")
 @
 
 Por definição, o \emph{downsampling} altera a distribuição real das categorias,
