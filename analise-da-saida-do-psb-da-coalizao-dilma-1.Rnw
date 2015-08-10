@@ -221,7 +221,7 @@ Seguindo a metodologia descrita na sessão
 no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
 os dados disponíveis no banco de dados do CEBRAP, isso ocorreu em 03/10/2013. A
 primeira votação depois dessa data ocorreu em
-\Sexpr{format_date(votacao_divisoria$data)} (identificador
+\Sexpr{votacao_divisoria$data} (identificador
 \Sexpr{votacao_divisoria$id}), relacionada ao MPV 621/2013. Houve
 \Sexpr{num_votacoes_antes} votações antes da ruptura e
 \Sexpr{num_votacoes_depois} votações após. Dos \Sexpr{nrow(clean_coords)}

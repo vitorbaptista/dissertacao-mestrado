@@ -135,7 +135,7 @@ mensalmente que ocorreram durante o período de estudo. Há meses que concentram
 as mudanças de posicionamento, possivelmente um reflexo da sazonalidade das
 trocas de partido \cite{Araujo2000,Melo2004,Freitas2008}. A linha tracejada
 marca a data da Resolução n\textordmasculine{} 22.610 do TSE, que em
-\Sexpr{format_date(data_resolucao_infidelidade)} alterou o entendimento das
+\Sexpr{data_resolucao_infidelidade} alterou o entendimento das
 regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
 Percebe-se que essa mudança alterou a frequência de entradas e saídas na
 coalizão, o que poderá influenciar na acurácia do nosso modelo.
