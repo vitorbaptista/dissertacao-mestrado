@@ -701,6 +701,17 @@ ggplot(variaveis_independentes, aes(x = value)) +
 load("data/data-models-lgocv-downsampled_ROC.RData")
 @
 
+<<fix-changed-coalition-levels>>=
+data$changed_coalition = factor(data$changed_coalition,
+                                levels = c("S", "N"))
+training$changed_coalition = factor(training$changed_coalition,
+                                levels = c("S", "N"))
+validation$changed_coalition = factor(validation$changed_coalition,
+                                levels = c("S", "N"))
+testing$changed_coalition = factor(testing$changed_coalition,
+                                levels = c("S", "N"))
+@
+
 <<>>=
 training.downsampled = training[training$legislature < 54,]
 
