@@ -199,7 +199,7 @@ library(randomForest)
 
 opts_chunk$set(echo = FALSE, fig.height = 4, fig.path = "figure/tmp/",
                cache = TRUE, autodep = TRUE)
-options(digits = 2)
+options(digits = 2, OutDec = ",")
 theme = theme_few()
 theme$axis.title.y$vjust = 2
 theme$axis.title.x$vjust = -0.5

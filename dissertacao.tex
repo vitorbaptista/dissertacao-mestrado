@@ -66,6 +66,7 @@
 \definecolor{errorcolor}{rgb}{1, 0, 0}
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
+\usepackage{amsmath}
 \usepackage{alltt}
 \usepackage[portuguese,ruled,linesnumbered]{algorithm2e}
 \usepackage[english,portuges]{babel}
@@ -1079,19 +1080,19 @@ analisar os dados.
 
 O conjunto de dados gerado possui 113.952 estimativas de mudança
 de comportamento entre dois sub-períodos de seis meses em cada um dos
-185 estudados. Em 31.04\% (35.376) desses períodos, não foi possível
+185 estudados. Em 31,04\% (35.376) desses períodos, não foi possível
 estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
 participou em votações não-unânimes o suficiente para ser considerado. Esses
 casos foram excluídos, ficando no final com 78.576 estimativas.
 
-Desses valores, 3.98\%
+Desses valores, 3,98\%
 (3.130) são de momentos em que houve uma mudança de
-posicionamento, enquanto 96.02\% (75.446) não. A média por legislatura é de
+posicionamento, enquanto 96,02\% (75.446) não. A média por legislatura é de
 4\%, com o
 máximo ocorrendo na 52\textordfeminine{} legislatura
-(7.07\%) e o
+(7,07\%) e o
 mínimo na 53\textordfeminine{}
-(1.55\%).
+(1,55\%).
 A tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
@@ -1150,9 +1151,9 @@ migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
 Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
 o faz, ou mudando de partido. Das 890 mudanças de
 posicionamento no período de estudo,
-50.79\% (452)
+50,79\% (452)
 ocorreram por migrações e
-49.21\% (438)
+49,21\% (438)
 pelo partido ter entrado ou saído da coalizão. Consideramos a data de mudança
 de posicionamento de formas diferentes em cada caso. Quando o partido como um
 todo entra ou sai da coalizão, consideramos a data de mudança como a data de
@@ -1168,7 +1169,7 @@ A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
 54\textordfeminine{} legislaturas agregados por mês. Três meses, março, abril e
 outubro, concentram
-52.36\%
+52,36\%
 (466) das mudanças, o que pode
 ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
 das mudanças de partido.
@@ -1186,17 +1187,17 @@ deputados que mudaram de posicionamento migrando de partido dos cujo próprio
 partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
 visivelmente distinto. Os que migraram de partido mudaram de comportamento em
 média 37,67 vezes por mês, com
-29.87\%
+29,87\%
 (135) ocorrendo em outubro. Houve respectivamente
-13.27\%
+13,27\%
 (60) e
-11.28\%
+11,28\%
 (51) em março e fevereiro, os segundo e terceiro
 meses com mais mudanças. Já os parlamentares cujos partidos entraram ou saíram
 da coalizão mudaram de posicionamento em média
 36,50 vezes por mês, com janeiro, março e
 maio concentrando
-46.8\%
+46,8\%
 (205) das mudanças.
 
 \begin{knitrout}
@@ -1210,11 +1211,11 @@ maio concentrando
 Separamos os dados por legislatura na figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}. Os
 migrantes continuam com um padrão parecido, com em média
-32.06\%
+32,06\%
 das mudanças ocorrendo em outubro,
-14.18\%
+14,18\%
 em março e
-10.48\%
+10,48\%
 em fevereiro. Os não-migrantes não seguem um padrão único, mudando a cada
 legislatura.
 
@@ -1229,7 +1230,7 @@ legislatura.
 Na figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
 agregarmos por ano da legislatura ao invés de mês. A grande maioria das
 mudanças dos migrantes,
-84.07\%
+84,07\%
 (380), estão concentradas no
 primeiro e terceiro anos, seguindo o padrão temporal de migração descrito por
 \citeonline{Freitas2008}. Já os não-migrantes continuam sem um padrão claro.
@@ -1250,7 +1251,7 @@ no segundo ano.
 Separando os dados por mês e ano da legislatura, temos a figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura}. Nos
 migrantes,
-52.55\%
+52,55\%
 (103) das mudanças ocorrem
 em outubro do terceiro ano, o limite para se filiar a um partido para concorrer
 nas eleições seguintes \cite{Lei9504/1997}. Os não-migrantes continuam sem um
@@ -1281,9 +1282,9 @@ e ``raio de influência'' apresentados na sessão
 \ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
 quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
 visto anteriormente, das 78.576 observações,
-3.98\%
+3,98\%
 (3.130) são relativas a mudanças
-de posicionamento, e 96.02\%
+de posicionamento, e 96,02\%
 (75.446) não.
 
 \subsection{Variáveis independentes}
@@ -1334,6 +1335,8 @@ aprender características mais complexas que são de díficil visualização.
 
 
 
+
+
 Existem técnicas capazes de aprender a estrutura de um conjunto de dados tão
 bem que, quando validados com o mesmo conjunto de dados usado para treiná-lo,
 conseguem prever corretamente 100\% dos casos. O problema é que eles aprenderam
@@ -1372,15 +1375,15 @@ com esses parâmetros usando os conjuntos de treino e validação juntos;
 \end{enumerate}
 
 Assim, os 78.576 dados serão separados em
-80.67\%
+80,67\%
 (63.386) para treino,
-14.52\%
-(11.407) para validação e 4.81\% (3.783) para teste. Eles possuem respectivamente
-4.19\%,
-3.16\% e
-2.93\% de mudanças de posicionamento.
+14,52\%
+(11.407) para validação e 4,81\% (3.783) para teste. Eles possuem respectivamente
+4,19\%,
+3,16\% e
+2,93\% de mudanças de posicionamento.
 Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
-96.02\% de todas as observações sendo de
+96,02\% de todas as observações sendo de
 parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
 que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
 maioria a revelia da minoria. Alguns modelos permitem a definição do custo para
@@ -1421,15 +1424,15 @@ usada com os de validação ou teste, as estimativas de performance do modelo
 estariam enviesadas, não refletindo sua performance em dados reais.
 
 Ao final, os 78.576 dados do conjunto original foram separados em
-6.83\%
+6,83\%
 (5.364) para treino,
-14.52\%
-(11.407) para validação e 4.81\% (3.783) para teste. Como o conjunto de treino
+14,52\%
+(11.407) para validação e 4,81\% (3.783) para teste. Como o conjunto de treino
 foi \emph{downsampled}, ele possui
-49.55\% de mudanças de
+49,55\% de mudanças de
 posicionamento, enquanto os de validação e teste possuem respectivamente
-3.16\% e
-2.93\%.
+3,16\% e
+2,93\%.
 
 \subsection{Modelos}
 
@@ -1518,19 +1521,18 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
   \item Other packages: C50~0.1.0-24, caret~6.0-47,
     doParallel~1.0.8, e1071~1.6-4, foreach~1.4.2, gbm~2.1.1,
     ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
-    kernlab~0.9-20, knitr~1.9, lattice~0.20-31, nnet~7.3-10,
+    kernlab~0.9-20, knitr~1.9, lattice~0.20-33, nnet~7.3-10,
     plyr~1.8.2, pROC~1.8, randomForest~4.6-10, scales~0.2.4,
     survival~2.38-3, tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
     BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, class~7.3-13,
-    codetools~0.2-11, colorspace~1.2-4, compiler~3.2.1,
-    digest~0.6.8, evaluate~0.5.5, filehash~2.2-2, formatR~1.2,
-    grid~3.2.1, gtable~0.1.2, gtools~3.4.2, highr~0.5,
-    labeling~0.3, lme4~1.1-7, MASS~7.3-42, Matrix~1.2-2,
-    mgcv~1.8-6, minqa~1.2.4, munsell~0.4.2, nlme~3.1-121,
-    nloptr~1.0.4, partykit~1.0-2, pbkrtest~0.4-2, proto~0.3-10,
-    quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6,
-    stringr~0.6.2, tools~3.2.1
+    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
+    evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
+    gtable~0.1.2, gtools~3.4.2, highr~0.5, lme4~1.1-7,
+    MASS~7.3-43, Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4,
+    munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, partykit~1.0-2,
+    pbkrtest~0.4-2, proto~0.3-10, quantreg~5.11, Rcpp~0.11.4,
+    reshape2~1.4.1, SparseM~1.6, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 
