@@ -87,6 +87,7 @@ Foo bar
 Foo bar
 
 \subsection{Avaliando performance em modelos de classificação}
+\label{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}
 
 O primeiro passo para melhorar algo é conseguir mensurá-lo, ao contrário não
 saberemos se nossas modificações estão melhorando ou piorando a situação. Com
@@ -430,7 +431,7 @@ seguro compará-las.
 \section{Processo legislativo}
 
 Na esfera federal, o Poder Legislativo é exercido pelo Congresso Nacional, que
-é composto por duas casas legislativas, contituindo um sistema bicameral. Essas
+é composto por duas casas legislativas, constituindo um sistema bicameral. Essas
 casas são a Câmara dos Deputados, que reúne os deputados federais,
 representantes do povo, e o Senado Federal, que reúne os senadores,
 representantes dos estados e Distrito Federal. Nas outras esferas (estadual,
@@ -480,7 +481,8 @@ etc.). O processo legislativo ordinário engloba três fases:
 
 \begin{description}
 \item[Introdutória ou de iniciativa] \hfill \\
-É onde se inicia o processo legislativo, com o projeto entrando em uma das
+É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
+Federal define quem pode iniciar uma lei.}, com o projeto entrando em uma das
 Casas legislativas, denominada Casa iniciadora. Com exceção dos projetos
 iniciados por Senadores, a Casa iniciadora é a Câmara dos Deputados.
 

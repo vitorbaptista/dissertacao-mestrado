@@ -1,38 +1,8 @@
-<<>>=
-legislatures = c(50, 51, 52, 53, 54)
-votes = list()
-votes_metadata = list()
+<<cache=FALSE>>=
+knitr::read_chunk('blah.R')
+@
 
-for (legislature in legislatures) {
-  votes[[legislature]] = read.csv(paste("data/", legislature, ".csv", sep=""),
-                                  header = TRUE, check.names = FALSE)
-  votes_metadata[[legislature]] = read.csv(paste("data/", legislature, "-votacoes.csv", sep=""),
-                                           header = TRUE, check.names = FALSE)
-}
-
-data = read.csv("data/data.csv")
-date_columns = c("start_vote_date", "mid_vote_date", "end_vote_date", "coalition_change_closest_to_start_vote", "coalition_change_closest_to_mid_vote", "coalition_change_closest_to_end_vote")
-for (column in date_columns) {
-  data[data[,column] == "", column] = NA
-  data[,column] = as.POSIXct(data[,column])
-}
-data$changed_coalition = factor(data$changed_coalition,
-                                levels = c("S", "N"))
-data_null = data[is.na(data$before) | is.na(data$after),]
-data = data[!is.na(data$before) & !is.na(data$after),]
-
-coalition_changes = read.csv("data/parties_and_coalitions_changes.csv",
-                             header = TRUE, check.names = FALSE)
-coalition_changes$rollcall_date = as.POSIXct(coalition_changes$rollcall_date)
-coalition_changes$coalition_start_date = as.POSIXct(coalition_changes$coalition_start_date)
-coalition_changes$migrated = as.character(coalition_changes$party_before) !=
-                             as.character(coalition_changes$party_after)
-coalition_changes$date = ifelse(coalition_changes$migrated,
-                                coalition_changes$rollcall_date,
-                                coalition_changes$coalition_start_date)
-coalition_changes$date = as.POSIXct(coalition_changes$date, origin="1970-01-01")
-coalition_changes = coalition_changes[coalition_changes$legislature >= 50 &
-                                      coalition_changes$legislature <= 54,]
+<<load-data-and-models>>=
 @
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
@@ -45,17 +15,7 @@ serão validados para chegar ao modelo final.
 
 \section{Coleta dos dados}
 
-<<>>=
-num_deputados = simplify2array(lapply(votes[legislatures], nrow))
-num_votacoes = simplify2array(lapply(votes[legislatures], ncol)) - 4
-num_votos = simplify2array(lapply(votes[legislatures], function (v) {
-  just_votes = v[, -c(1:4)]
-  sum(just_votes == 0 | just_votes == 1, na.rm = TRUE)
-}))
-stats_legislaturas = data.frame(legislature = legislatures,
-                                num_deputados = num_deputados,
-                                num_votacoes = num_votacoes,
-                                num_votos = num_votos)
+<<legislatures-stats>>=
 @
 
 % Votações
@@ -224,11 +184,11 @@ exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
 01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
 nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
-uma limitação deste trabalho, que será melhor analisada na sessão
+uma limitação deste trabalho, que será melhor analisada na seção
 \ref{cap:conclusao:limitacoes}.
 
 O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
-Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na sessão
+Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na seção
 \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
 \citeauthor{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
@@ -352,7 +312,7 @@ plot_data(t4)
 Neste trabalho, defini $P$ como sendo 6 meses. Em outras palavras, os
 parlamentares começariam a mudar de comportamento a partir de 6 meses antes da
 definitiva entrada ou saída da coalizão. Por ser uma escolha arbitrária, esta é
-uma limitação do trabalho. Na sessão \ref{cap:conclusao:limitacoes}
+uma limitação do trabalho. Na seção \ref{cap:conclusao:limitacoes}
 discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
 remediá-los em um trabalho futuro.
 
@@ -400,15 +360,7 @@ analisar os dados.
 
 \subsection{Pontos ideais}
 
-<<>>=
-num_periodos = 37 * length(legislatures)
-num_mudancas = nrow(data) + nrow(data_null)
-
-num_changes = nrow(data[data$changed_coalition == "S",])
-num_havent_changed = nrow(data) - num_changes
-
-coalition_changes_per_legislature = table(data$legislature, data$changed_coalition)
-coalition_changes_per_legislature = t(coalition_changes_per_legislature / as.vector(margin.table(coalition_changes_per_legislature, 1)))
+<<coalition-changes-stats>>=
 @
 
 O conjunto de dados gerado possui \Sexpr{num_mudancas} estimativas de mudança
@@ -463,35 +415,14 @@ ggplot(pontos_ideais_por_legislatura, aes(x = value)) +
 \subsection{Aspectos temporais}
 \label{cap:miolo:aspectos-temporais}
 
-<<>>=
-coalition_changes$date_month = as.numeric(format(coalition_changes$date, "%m"))
-coalition_changes_per_month = table(coalition_changes$date_month)
-coalition_changes_per_month_percent = coalition_changes_per_month / nrow(coalition_changes)
-coalition_changes$migrated_label = ifelse(coalition_changes$migrated, "Migrante", "Não-migrante")
-migrators = coalition_changes[coalition_changes$migrated,]
-migrators_per_month = table(migrators$date_month)
-migrators_per_month_percent = migrators_per_month / nrow(migrators)
-migrators_per_legislature_year = table(migrators$legislature_year)
-migrators_per_legislature_year_percent = migrators_per_legislature_year / nrow(migrators)
-non_migrators = coalition_changes[!coalition_changes$migrated,]
-non_migrators_per_month = table(non_migrators$date_month)
-non_migrators_per_month_percent = non_migrators_per_month / nrow(non_migrators)
-non_migrators_per_legislature_year = table(non_migrators$legislature_year)
-non_migrators_per_legislature_year_percent = non_migrators_per_legislature_year / nrow(non_migrators)
-
-migrators_per_month_per_legislature = table(migrators$date_month, migrators$legislature)
-migrators_per_month_per_legislature_percent = t(t(migrators_per_month_per_legislature) / apply(migrators_per_month_per_legislature, 2, sum)) 
-migrators_per_month_per_legislature_year = table(migrators$date_month, migrators$legislature_year)
-migrators_per_month_per_legislature_year_percent = t(t(migrators_per_month_per_legislature_year) / apply(migrators_per_month_per_legislature_year, 2, sum)) 
-
-months = sort(unique(as.Date(paste0("2014-", coalition_changes$date_month, "-01"))))
+<<temporal-aspects-stats>>=
 @
 
 Uma das principais características da migração partidária no Brasil é sua
 distribuição no tempo \cite{Araujo2000,Melo2004,Freitas2008}. A partir de 1995,
 ela se concentra nos meses de fevereiro do primeiro e terceiro ano da
 legislatura e no período pré-eleitoral, que se encerra em outubro do ano
-anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta sessão,
+anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta seção,
 analisaremos se esse padrão se repete também no subconjunto de deputados que
 migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
 
@@ -631,7 +562,7 @@ tmp.data_proportions = table(data$changed_coalition) / nrow(data)
 
 Como variável dependente, que é o que queremos prever, usei a mudança ou não de
 comportamento do parlamentar no período. Ela foi definida a partir dos períodos
-e ``raio de influência'' apresentados na sessão
+e ``raio de influência'' apresentados na seção
 \ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
 quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
 visto anteriormente, das \Sexpr{nrow(data)} observações,
@@ -643,10 +574,10 @@ de posicionamento, e \Sexpr{format_percent(tmp.data_proportions["N"])}
 \subsection{Variáveis independentes}
 \label{cap:miolo:variaveis-independentes}
 
-A partir dos resultados das análises descritas na sessão
+A partir dos resultados das análises descritas na seção
 \ref{cap:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
 as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
-temporais descritos na sessão \ref{cap:miolo:aspectos-temporais}. A tabela
+temporais descritos na seção \ref{cap:miolo:aspectos-temporais}. A tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
 
@@ -683,7 +614,7 @@ variaveis_independentes = data.frame(value = c(data$before, data$before.sd,
                                                      each = nrow(data))),
                                    changed_coalition = rep(data$changed_coalition, 6))
 variaveis_independentes$changed_coalition = factor(variaveis_independentes$changed_coalition,
-                                                 labels = c("Sim", "Não"))
+                                                   labels = c("Sim", "Não"))
 
 ggplot(variaveis_independentes, aes(x = value)) +
   facet_wrap(~ name, scales = "free") +
@@ -697,29 +628,7 @@ ggplot(variaveis_independentes, aes(x = value)) +
 
 % FIXME: Falta falar sobre o LGOCV
 
-<<load-data-and-models>>=
-load("data/data-models-lgocv-downsampled_ROC.RData")
-@
-
-<<fix-changed-coalition-levels>>=
-data$changed_coalition = factor(data$changed_coalition,
-                                levels = c("S", "N"))
-training$changed_coalition = factor(training$changed_coalition,
-                                levels = c("S", "N"))
-validation$changed_coalition = factor(validation$changed_coalition,
-                                levels = c("S", "N"))
-testing$changed_coalition = factor(testing$changed_coalition,
-                                levels = c("S", "N"))
-@
-
-<<>>=
-training.downsampled = training[training$legislature < 54,]
-
-data_proportions = table(data$changed_coalition) / nrow(data)
-training_original_proportions = table(training.original$changed_coalition) / nrow(training.original)
-training_downsampled_proportions = table(training.downsampled$changed_coalition) / nrow(training.downsampled)
-validation_proportions = table(validation$changed_coalition) / nrow(validation)
-testing_proportions = table(testing$changed_coalition) / nrow(testing)
+<<data-splits-stats>>=
 @
 
 Existem técnicas capazes de aprender a estrutura de um conjunto de dados tão
@@ -830,25 +739,27 @@ por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
 usada com os de validação ou teste, as estimativas de performance do modelo
 estariam enviesadas, não refletindo sua performance em dados reais.
 
-Ao final, os \Sexpr{nrow(data)} dados do conjunto original foram separados em
-\Sexpr{format_percent(nrow(training.downsampled) / nrow(data))}
-(\Sexpr{nrow(training.downsampled)}) para treino,
-\Sexpr{format_percent(nrow(validation) / nrow(data))}
-(\Sexpr{nrow(validation)}) para validação e \Sexpr{format_percent(nrow(testing)
-/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Como o conjunto de treino
-foi \emph{downsampled}, ele possui
+Ao final, das \Sexpr{nrow(training.original)} observações no conjunto de
+treino, foram usadas \Sexpr{format_percent(nrow(training.downsampled) /
+nrow(training.original))} (\Sexpr{nrow(training.downsampled)}), sendo
 \Sexpr{format_percent(training_downsampled_proportions["S"])} de mudanças de
-posicionamento, enquanto os de validação e teste possuem respectivamente
-\Sexpr{format_percent(validation_proportions["S"])} e
-\Sexpr{format_percent(testing_proportions["S"])}.
+posicionamento. Os conjuntos de validação e teste não foram modificados,
+mantendo-se com \Sexpr{nrow(validation)} e \Sexpr{nrow(testing)} observações
+sendo, respectivamente, \Sexpr{format_percent(validation_proportions["S"])} e
+\Sexpr{format_percent(testing_proportions["S"])} de mudanças de posicionamento.
 
 \subsection{Modelos}
+
+<<bootstrap-models-rocs, include=FALSE>>=
+@
 
 \citeonline{Wolpert1996} diz em seu teorema ``No Free Lunch''\footnote{Em
 tradução livre, ``não existe almoço grátis''.} que não há uma única técnica de
 modelagem que seja a melhor em todos casos. Por isso, \citeonline{Kuhn2013}
 sugerem testar diversos tipos de modelos antes de definir em qual focar. Na
-primeira parte desta sessão, analisarei 7 modelos:
+primeira parte desta seção, analisarei os 7 modelos descritos na tabela
+\ref{table:tipos-de-modelos}, sendo escolhido o que apresentar maior área sob a
+curva ROC (AUC).
 
 \begin{table}
 \centering
@@ -859,7 +770,7 @@ primeira parte desta sessão, analisarei 7 modelos:
   Linear & SVM Linear & SVM com kernel linear \\
   Não-linear & SVM Radial & SVM com kernel radial \\
   Não-linear & GBM & Stochastic Gradient Boosting \\
-  Não-linear & NB & Naive Bayes \\
+  Não-linear & NNET & Rede Neural \\
   Não-linear & RF & Random Forest\\
   Não-linear & C5.0 & C5.0 \\
 \end{tabular}
@@ -867,35 +778,182 @@ primeira parte desta sessão, analisarei 7 modelos:
 \label{table:tipos-de-modelos}
 \end{table}
 
+% FIXME: Confirmar se é assim que o R define interações entre variáveis.
+Todos os modelos foram treinados com os mesmos dados, usando como preditores as
+variáveis dependentes descritas na seção \ref{cap:miolo:variaveis-independentes}
+e suas interações. Por exemplo, os modelos foram treinados não só com as
+variáveis ``antes'' e ``depois'', mas também com a interação entre elas,
+definida como ``antes * depois'', com notação ``antes:depois''. Nos modelos que
+aceitam parâmetros, defini 20 valores para cada um, testando todas as suas
+permutações.
 
-% Construindo os modelos
+A tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros que
+obteve melhor AUC, juntamente com seus valores mínimo, mediano e máximo,
+calculados através de 2.000 reamostragens com reposição do conjunto de
+validação. O que obteve o maior valor mediano o C5.0, com
+\Sexpr{ci(rocs.validation$C5.0)[[2]]} (\Sexpr{ci(rocs.validation$C5.0)[[1]]},
+\Sexpr{ci(rocs.validation$C5.0)[[3]]}), contra
+\Sexpr{ci(rocs.validation$nnet)[[2]]} (\Sexpr{ci(rocs.validation$nnet)[[1]]},
+\Sexpr{ci(rocs.validation$nnet)[[3]]}) do segundo lugar, que usou redes
+neurais. Na figura \ref{fig:rocs-validation} é possível ver que o modelo C5.0
+conseguiu um resultado significantemente melhor que todos os outros.
 
-% Avaliando
+\begin{table}
+\centering
+\begin{tabular}{l l c c c c}
+  Modelo & \multicolumn{2}{c}{Parâmetros} & \multicolumn{3}{c}{AUC} \\ \cline{2-6}
+  & \multicolumn{1}{|l}{Nome} & \multicolumn{1}{c|}{Valor} & Mínimo & Mediano & \multicolumn{1}{c|}{Máximo} \\
+  \hline
+  C5.0 & model & \Sexpr{models$C5.0$bestTune$model} & \Sexpr{paste(lapply(ci(rocs.validation$C5.0), format_inline), collapse = "&")} \\
+       & winnow & \Sexpr{models$C5.0$bestTune$winnow} & & & \\
+       & trials & \Sexpr{models$C5.0$bestTune$trials} & & & \\
+  NNET & size & \Sexpr{models$nnet$bestTune$size} & \Sexpr{paste(lapply(ci(rocs.validation$nnet), format_inline), collapse = "&")} \\
+       & decay & \Sexpr{format_number(models$nnet$bestTune$decay)} & & & \\
+  GBM & shrinkage & \Sexpr{models$gbm$bestTune$shrinkage} & \Sexpr{paste(lapply(ci(rocs.validation$gbm), format_inline), collapse = "&")} \\
+      & interaction.depth & \Sexpr{models$gbm$bestTune$interaction.depth} & & & \\
+      & n.minobsinnode & \Sexpr{models$gbm$bestTune$n.minobsinnode} & & & \\
+      & n.trees & \Sexpr{models$gbm$bestTune$n.trees} & & & \\
+  SVM Radial & C & \Sexpr{models$svmRadial$bestTune$C} & \Sexpr{paste(lapply(ci(rocs.validation$svmRadial), format_inline), collapse = "&")} \\
+             & sigma & \Sexpr{gsub("\\.", ",", models$svmRadial$bestTune$sigma)} & & & \\
+  RF & mtry & \Sexpr{models$rf$bestTune$mtry} & \Sexpr{paste(lapply(ci(rocs.validation$rf), format_inline), collapse = "&")} \\
+  GLM & --- & --- & \Sexpr{paste(lapply(ci(rocs.validation$glm), format_inline), collapse = "&")} \\
+\end{tabular}
+\caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
+ROC (AUC) no conjunto de validação.}
+\label{table:resultados-validacao}
+\end{table}
 
+<<rocs-validation, fig.height=3, fig.cap="Área sob a curva ROC (AUC) dos modelos no conjunto de validação.">>=
+ggplot(rocs[rocs$type == "validation",], aes(reorder(modelName, ci.median),
+                y = ci.median,
+                ymin = ci.min,
+                ymax = ci.max)) +
+  labs(x = "", y = "Área sob a curva ROC (AUC)") +
+  geom_pointrange() +
+  coord_flip()
+@
 
-% Objetivo
-% % Quais dados precisamos?
-% % Qual o período de estudo?
-% % Devo definir o período de 1 ano dividido no meio aqui?
+<<train-final-model, include=FALSE>>=
+@
 
-% ETL
-% % CEBRAP + Câmara dos Deputados
-% % Normalização dos partidos
-% % Ignora abstenções
-% % Considera todos que já votaram ao menos 20 vezes
-% % Votações não-unânimes
+% Uma vez escolhido o modelo, precisamos agora definir o ponto de corte para a
+% classificação das classes Como explicado na seção
+% \ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, grande
+% parte das ferramentas usa 50\% como ponto de corte padrão. Entretanto, como 
+% as classes são desbalanceadas em nossos conjuntos de dados, isto é, existem
+% muito mais parlamentares que mantiveram seu posicionamento do que o contrário,
+% alterar o ponto de corte pode resultar em uma sensibilidade e especificidade
+% melhores. A figura \ref{fig:c50-roc-validation} mostra a curva ROC do modelo
+% C5.0 nos dados de validação.
+% 
+% <<c50-roc-validation, fig.cap="Curva ROC do modelo C5.0 nos dados de validação">>=
+% tmp.best_threshold = attr(rocs.validation$C5.0$ci, "thresholds")[[1]]
+% 
+% plot(rocs.validation$C5.0,
+%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
+%      print.auc = TRUE,
+%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+%      xlab = "Especificidade",
+%      ylab = "Sensibilidade")
+% 
+% plot(rocs.testing$C5.0,
+%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
+%      print.auc = TRUE,
+%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+%      xlab = "Especificidade",
+%      ylab = "Sensibilidade")
+% @
 
-% Data Analysis
-% % Mostrar informações gerais sobre o conjunto de dados
+<<bootstrap-roc-and-confusion-matrix-final-model, include=FALSE>>=
+@
 
-% Modelagem
-% % Vou usar só Random Forests? Por que? Se sim, por que não gbm?
+% FIXME: a especificidade/sensibilidade do confusionMatrix tá ao contrário do
+% ROC, não entendo por que
+Por último, treinaremos um modelo C5.0 com os parâmetros encontrados na fase
+anterior (ver tabela \ref{table:resultados-validacao}) com os dados de treino e
+validação, e estimar sua performance no conjunto de teste, que não foi usado
+até agora. Após finalizado esse treinamento, o AUC alcançado foi
+\Sexpr{ci(rocs.testing$final)[[2]]} (\Sexpr{ci(rocs.testing$final)[[1]]},
+\Sexpr{ci(rocs.testing$final)[[3]]}), com Kappa
+\Sexpr{confusionMatrix.testing$overall[["Kappa"]]} e
+\Sexpr{format_percent(confusionMatrix.testing$byClass[["Specificity"]])} das
+mudanças (especificidade) e
+\Sexpr{format_percent(confusionMatrix.testing$byClass[["Sensitivity"]])}
+das não-mudanças de posicionamento (sensibilidade) classificadas corretamente
+(considerando o ponto de corte em \Sexpr{cutoffPoint}).
+De acordo com a classificação de \citeonline{HosmerJr2013} descrita na tabela
+\ref{table:valores-auc}, esse modelo possui um poder de discriminação
+excelente. A figura \ref{fig:roc-final-model} mostra a curva ROC nos dados de
+teste, com o ponto de corte marcado em \Sexpr{cutoffPoint}.
 
-% Validação
-% % Talvez fosse bom treinar com as legislaturas 50~53 e testar com a 54, ou
-% %   com partes dela, pra demonstrar como ele seria usado no dia-a-dia.
+<<roc-final-model, fig.cap="Curva ROC do modelo final nos dados de teste.">>=
+plot(rocs.testing$final,
+     print.thres = cutoffPoint,
+     print.auc = TRUE,
+     print.thres.pattern = "%.3f\n(Espec = %.3f, Sens = %.3f)",
+     xlab = "Especificidade",
+     ylab = "Sensibilidade")
+@
 
-% Conclusão
+<<>>=
+kable(confusionMatrix.testing$table)
+@
+
+<<echo=TRUE>>=
+confusionMatrix.testing
+attributes(confusionMatrix.testing)
+confusionMatrix.testing$overall
+confusionMatrix.testing$byClass
+@
+
+% \subsubsection*{Regressão logística (GLM)}
+%
+% Sem parâmetros, chegou a uma área sob a curva ROC de
+% \Sexpr{rocs.validation$glm$auc} no conjunto de validação.
+%
+% \subsubsection*{SVM Linear}
+%
+% Parametro ``C'' (custo) mantido constante em 1. Área sob a curva ROC
+% \Sexpr{rocs.validation$svmLinear$auc} no conjunto de validação.
+%
+% \subsubsection*{SVM Radial}
+%
+% Parametros sigma mantido constante em
+% \Sexpr{unique(models$svmRadial$results$sigma)} e custo variando em
+% \Sexpr{sort(unique(models$svmRadial$results$C))}. Área sob a curva ROC
+% \Sexpr{rocs.validation$svmRadial$auc} no conjunto de validação.
+%
+% \subsubsection*{GBM}
+%
+% Parametros shrinkage constante em \Sexpr{unique(models$gbm$results$shrinkage)},
+% interaction.depth em \Sexpr{unique(models$gbm$results$interaction.depth)},
+% n.minobsinnode em \Sexpr{unique(models$gbm$results$n.minobsinnode)}, e n.trees
+% em \Sexpr{unique(models$gbm$results$n.trees)}. Área sob a curva ROC
+% \Sexpr{rocs.validation$gbm$auc} no conjunto de validação.
+%
+% \subsubsection*{RF}
+%
+% Parâmetro mtry em \Sexpr{unique(models$rf$results$mtry)}. Área sob a curva ROC
+% \Sexpr{rocs.validation$rf$auc} no conjunto de validação.
+%
+% Usa um conjunto (\emph{ensemble}) de árvores de decisão treinados com um
+% conjunto aleatório com reposição do conjunto de treino original\footnote{Esta
+% técnica é conhecida como \emph{bagging}.}. Em problemas de classificação, o
+% resultado do random forest é definido como o resultado da maioria das árvores
+% (moda).
+%
+% \subsubsection*{C5.0}
+%
+% Parâmetros model em \Sexpr{unique(models$C5.0$results$model)}, winnow em
+% \Sexpr{unique(models$C5.0$results$winnow)} e trials em
+% \Sexpr{unique(models$C5.0$results$trials)}. Área sob a curva ROC
+% \Sexpr{rocs.validation$C5.0$auc} no conjunto de validação.
+%
+% \subsubsection*{NNET}
+%
+% Parâmetros size em \Sexpr{unique(models$nnet$results$size)} e decay em
+% \Sexpr{unique(models$nnet$results$decay)}. Área sob a curva ROC
+% \Sexpr{rocs.validation$nnet$auc} no conjunto de validação.
 
 \section{Considerações Finais}
 

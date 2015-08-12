@@ -104,6 +104,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 %-----------------------------------------------------------------------------------------------------
+\usepackage{nameref} % Cria referências pelo nome
 \usepackage{float}      
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
@@ -329,6 +330,7 @@ Foo bar
 Foo bar
 
 \subsection{Avaliando performance em modelos de classificação}
+\label{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}
 
 O primeiro passo para melhorar algo é conseguir mensurá-lo, ao contrário não
 saberemos se nossas modificações estão melhorando ou piorando a situação. Com
@@ -639,7 +641,7 @@ seguro compará-las.
 \section{Processo legislativo}
 
 Na esfera federal, o Poder Legislativo é exercido pelo Congresso Nacional, que
-é composto por duas casas legislativas, contituindo um sistema bicameral. Essas
+é composto por duas casas legislativas, constituindo um sistema bicameral. Essas
 casas são a Câmara dos Deputados, que reúne os deputados federais,
 representantes do povo, e o Senado Federal, que reúne os senadores,
 representantes dos estados e Distrito Federal. Nas outras esferas (estadual,
@@ -689,7 +691,8 @@ etc.). O processo legislativo ordinário engloba três fases:
 
 \begin{description}
 \item[Introdutória ou de iniciativa] \hfill \\
-É onde se inicia o processo legislativo, com o projeto entrando em uma das
+É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
+Federal define quem pode iniciar uma lei.}, com o projeto entrando em uma das
 Casas legislativas, denominada Casa iniciadora. Com exceção dos projetos
 iniciados por Senadores, a Casa iniciadora é a Câmara dos Deputados.
 
@@ -739,12 +742,9 @@ Senado Federal como Casa Revisora.
 \section{Considerações Finais}
 \input{03-trabalhos-relacionados}
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, data[, column] == "{}"{}, column, value = NA): missing values are not allowed in subscripted assignments of data frames}}\end{kframe}
-\end{knitrout}
+
 
 \chapter{Miolo da sua dissertação}\label{cap:miolo}
 
@@ -773,9 +773,9 @@ localmente, então desenvolvi um programa\footnote{Disponível em:
 linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
 votações \cite{Python276,Scrapy}. A tabela
 \ref{table:estatisticas-legislaturas} mostra o número de deputados federais,
-votos e votações por legislatura. Em média, temos 623,80
-parlamentares e 332,04 votos em
-477,80 votações a cada legislatura.
+votos e votações por legislatura. Em média, temos 624
+parlamentares e 332 votos em
+478 votações a cada legislatura.
 \nocite{CamaraDosDeputados2015}
 
 \begin{table}
@@ -930,11 +930,11 @@ exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
 01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
 nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
-uma limitação deste trabalho, que será melhor analisada na sessão
+uma limitação deste trabalho, que será melhor analisada na seção
 \ref{cap:conclusao:limitacoes}.
 
 O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
-Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na sessão
+Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na seção
 \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
 \citeauthor{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
@@ -1019,7 +1019,7 @@ período de estudo se igualam.
 Neste trabalho, defini $P$ como sendo 6 meses. Em outras palavras, os
 parlamentares começariam a mudar de comportamento a partir de 6 meses antes da
 definitiva entrada ou saída da coalizão. Por ser uma escolha arbitrária, esta é
-uma limitação do trabalho. Na sessão \ref{cap:conclusao:limitacoes}
+uma limitação do trabalho. Na seção \ref{cap:conclusao:limitacoes}
 discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
 remediá-los em um trabalho futuro.
 
@@ -1077,17 +1077,17 @@ analisar os dados.
 
 
 
-O conjunto de dados gerado possui 113.952 estimativas de mudança
+O conjunto de dados gerado possui 111.058 estimativas de mudança
 de comportamento entre dois sub-períodos de seis meses em cada um dos
-185 estudados. Em 31.04\% (35.376) desses períodos, não foi possível
+185 estudados. Em 31.85\% (35.376) desses períodos, não foi possível
 estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
 participou em votações não-unânimes o suficiente para ser considerado. Esses
-casos foram excluídos, ficando no final com 78.576 estimativas.
+casos foram excluídos, ficando no final com 75.682 estimativas.
 
-Desses valores, 3.98\%
-(3.130) são de momentos em que houve uma mudança de
-posicionamento, enquanto 96.02\% (75.446) não. A média por legislatura é de
-4\%, com o
+Desses valores, 4.03\%
+(3.052) são de momentos em que houve uma mudança de
+posicionamento, enquanto 95.97\% (72.630) não. A média por legislatura é de
+4.02\%, com o
 máximo ocorrendo na 52\textordfeminine{} legislatura
 (7.07\%) e o
 mínimo na 53\textordfeminine{}
@@ -1103,9 +1103,9 @@ todas as legislaturas estudadas.
 \hline
   & 50 & 51 & 52 & 53 & 54\\
 \hline
-S & 0.04 & 0.04 & 0.07 & 0.02 & 0.03\\
-\hline
 N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
+\hline
+S & 0.04 & 0.04 & 0.07 & 0.02 & 0.03\\
 \hline
 \end{tabular}
 
@@ -1143,7 +1143,7 @@ Uma das principais características da migração partidária no Brasil é sua
 distribuição no tempo \cite{Araujo2000,Melo2004,Freitas2008}. A partir de 1995,
 ela se concentra nos meses de fevereiro do primeiro e terceiro ano da
 legislatura e no período pré-eleitoral, que se encerra em outubro do ano
-anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta sessão,
+anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta seção,
 analisaremos se esse padrão se repete também no subconjunto de deputados que
 migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
 
@@ -1185,7 +1185,7 @@ Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
 deputados que mudaram de posicionamento migrando de partido dos cujo próprio
 partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
 visivelmente distinto. Os que migraram de partido mudaram de comportamento em
-média 37,67 vezes por mês, com
+média 38 vezes por mês, com
 29.87\%
 (135) ocorrendo em outubro. Houve respectivamente
 13.27\%
@@ -1194,7 +1194,7 @@ média 37,67 vezes por mês, com
 (51) em março e fevereiro, os segundo e terceiro
 meses com mais mudanças. Já os parlamentares cujos partidos entraram ou saíram
 da coalizão mudaram de posicionamento em média
-36,50 vezes por mês, com janeiro, março e
+36 vezes por mês, com janeiro, março e
 maio concentrando
 46.8\%
 (205) das mudanças.
@@ -1277,22 +1277,22 @@ sem migrar de partido não têm um padrão claro.
 
 Como variável dependente, que é o que queremos prever, usei a mudança ou não de
 comportamento do parlamentar no período. Ela foi definida a partir dos períodos
-e ``raio de influência'' apresentados na sessão
+e ``raio de influência'' apresentados na seção
 \ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
 quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
-visto anteriormente, das 78.576 observações,
-3.98\%
-(3.130) são relativas a mudanças
-de posicionamento, e 96.02\%
-(75.446) não.
+visto anteriormente, das 75.682 observações,
+4.03\%
+(3.052) são relativas a mudanças
+de posicionamento, e 95.97\%
+(72.630) não.
 
 \subsection{Variáveis independentes}
 \label{cap:miolo:variaveis-independentes}
 
-A partir dos resultados das análises descritas na sessão
+A partir dos resultados das análises descritas na seção
 \ref{cap:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
 as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
-temporais descritos na sessão \ref{cap:miolo:aspectos-temporais}. A tabela
+temporais descritos na seção \ref{cap:miolo:aspectos-temporais}. A tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
 
@@ -1329,8 +1329,6 @@ aprender características mais complexas que são de díficil visualização.
 \subsection{Divisão da base de dados}
 
 % FIXME: Falta falar sobre o LGOCV
-
-
 
 
 
@@ -1371,16 +1369,16 @@ com esses parâmetros usando os conjuntos de treino e validação juntos;
 \item Estima a performance do modelo no conjunto de teste.
 \end{enumerate}
 
-Assim, os 78.576 dados serão separados em
-80.67\%
+Assim, os 75.682 dados serão separados em
+83.75\%
 (63.386) para treino,
-14.52\%
-(11.407) para validação e 4.81\% (3.783) para teste. Eles possuem respectivamente
+12.22\%
+(9.251) para validação e 4.02\% (3.045) para teste. Eles possuem respectivamente
 4.19\%,
-3.16\% e
-2.93\% de mudanças de posicionamento.
+3.22\% e
+3.15\% de mudanças de posicionamento.
 Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
-96.02\% de todas as observações sendo de
+95.97\% de todas as observações sendo de
 parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
 que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
 maioria a revelia da minoria. Alguns modelos permitem a definição do custo para
@@ -1420,24 +1418,25 @@ por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
 usada com os de validação ou teste, as estimativas de performance do modelo
 estariam enviesadas, não refletindo sua performance em dados reais.
 
-Ao final, os 78.576 dados do conjunto original foram separados em
-6.83\%
-(5.364) para treino,
-14.52\%
-(11.407) para validação e 4.81\% (3.783) para teste. Como o conjunto de treino
-foi \emph{downsampled}, ele possui
-49.55\% de mudanças de
-posicionamento, enquanto os de validação e teste possuem respectivamente
-3.16\% e
-2.93\%.
+Ao final, das 63.386 observações no conjunto de
+treino, foram usadas 8.73\% (5.531), sendo
+48.06\% de mudanças de
+posicionamento. Os conjuntos de validação e teste não foram modificados,
+mantendo-se com 9.251 e 3.045 observações
+sendo, respectivamente, 3.22\% e
+3.15\% de mudanças de posicionamento.
 
 \subsection{Modelos}
+
+
 
 \citeonline{Wolpert1996} diz em seu teorema ``No Free Lunch''\footnote{Em
 tradução livre, ``não existe almoço grátis''.} que não há uma única técnica de
 modelagem que seja a melhor em todos casos. Por isso, \citeonline{Kuhn2013}
 sugerem testar diversos tipos de modelos antes de definir em qual focar. Na
-primeira parte desta sessão, analisarei 7 modelos:
+primeira parte desta seção, analisarei os 7 modelos descritos na tabela
+\ref{table:tipos-de-modelos}, sendo escolhido o que apresentar maior área sob a
+curva ROC (AUC).
 
 \begin{table}
 \centering
@@ -1448,7 +1447,7 @@ primeira parte desta sessão, analisarei 7 modelos:
   Linear & SVM Linear & SVM com kernel linear \\
   Não-linear & SVM Radial & SVM com kernel radial \\
   Não-linear & GBM & Stochastic Gradient Boosting \\
-  Não-linear & NB & Naive Bayes \\
+  Não-linear & NNET & Rede Neural \\
   Não-linear & RF & Random Forest\\
   Não-linear & C5.0 & C5.0 \\
 \end{tabular}
@@ -1456,35 +1455,258 @@ primeira parte desta sessão, analisarei 7 modelos:
 \label{table:tipos-de-modelos}
 \end{table}
 
+% FIXME: Confirmar se é assim que o R define interações entre variáveis.
+Todos os modelos foram treinados com os mesmos dados, usando como preditores as
+variáveis dependentes descritas na seção \ref{cap:miolo:variaveis-independentes}
+e suas interações. Por exemplo, os modelos foram treinados não só com as
+variáveis ``antes'' e ``depois'', mas também com a interação entre elas,
+definida como ``antes * depois'', com notação ``antes:depois''. Nos modelos que
+aceitam parâmetros, defini 20 valores para cada um, testando todas as suas
+permutações.
 
-% Construindo os modelos
+A tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros que
+obteve melhor AUC, juntamente com seus valores mínimo, mediano e máximo,
+calculados através de 2.000 reamostragens com reposição do conjunto de
+validação. O que obteve o maior valor mediano o C5.0, com
+0,97 (0,96,
+0,98), contra
+0,86 (0,84,
+0,87) do segundo lugar, que usou redes
+neurais. Na figura \ref{fig:rocs-validation} é possível ver que o modelo C5.0
+conseguiu um resultado significantemente melhor que todos os outros.
 
-% Avaliando
+\begin{table}
+\centering
+\begin{tabular}{l l c c c c}
+  Modelo & \multicolumn{2}{c}{Parâmetros} & \multicolumn{3}{c}{AUC} \\ \cline{2-6}
+  & \multicolumn{1}{|l}{Nome} & \multicolumn{1}{c|}{Valor} & Mínimo & Mediano & \multicolumn{1}{c|}{Máximo} \\
+  \hline
+  C5.0 & model & tree & 0,96&0,97&0,98 \\
+       & winnow & FALSE & & & \\
+       & trials & 30 & & & \\
+  NNET & size & 1 & 0,84&0,86&0,87 \\
+       & decay & 0,1 & & & \\
+  GBM & shrinkage & 0,1 & 0,82&0,83&0,85 \\
+      & interaction.depth & 4 & & & \\
+      & n.minobsinnode & 10 & & & \\
+      & n.trees & 50 & & & \\
+  SVM Radial & C & 0,5 & 0,72&0,75&0,78 \\
+             & sigma & 0,142318578779184 & & & \\
+  RF & mtry & 2 & 0,74&0,77&0,8 \\
+  GLM & --- & --- & 0,57&0,59&0,62 \\
+\end{tabular}
+\caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
+ROC (AUC) no conjunto de validação.}
+\label{table:resultados-validacao}
+\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/rocs-validation-1} \caption[Área sob a curva ROC (AUC) dos modelos no conjunto de validação]{Área sob a curva ROC (AUC) dos modelos no conjunto de validação.}\label{fig:rocs-validation}
+\end{figure}
 
 
-% Objetivo
-% % Quais dados precisamos?
-% % Qual o período de estudo?
-% % Devo definir o período de 1 ano dividido no meio aqui?
+\end{knitrout}
 
-% ETL
-% % CEBRAP + Câmara dos Deputados
-% % Normalização dos partidos
-% % Ignora abstenções
-% % Considera todos que já votaram ao menos 20 vezes
-% % Votações não-unânimes
 
-% Data Analysis
-% % Mostrar informações gerais sobre o conjunto de dados
 
-% Modelagem
-% % Vou usar só Random Forests? Por que? Se sim, por que não gbm?
+% Uma vez escolhido o modelo, precisamos agora definir o ponto de corte para a
+% classificação das classes Como explicado na seção
+% \ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, grande
+% parte das ferramentas usa 50\% como ponto de corte padrão. Entretanto, como 
+% as classes são desbalanceadas em nossos conjuntos de dados, isto é, existem
+% muito mais parlamentares que mantiveram seu posicionamento do que o contrário,
+% alterar o ponto de corte pode resultar em uma sensibilidade e especificidade
+% melhores. A figura \ref{fig:c50-roc-validation} mostra a curva ROC do modelo
+% C5.0 nos dados de validação.
+% 
+% <<c50-roc-validation, fig.cap="Curva ROC do modelo C5.0 nos dados de validação">>=
+% tmp.best_threshold = attr(rocs.validation$C5.0$ci, "thresholds")[[1]]
+% 
+% plot(rocs.validation$C5.0,
+%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
+%      print.auc = TRUE,
+%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+%      xlab = "Especificidade",
+%      ylab = "Sensibilidade")
+% 
+% plot(rocs.testing$C5.0,
+%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
+%      print.auc = TRUE,
+%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+%      xlab = "Especificidade",
+%      ylab = "Sensibilidade")
+% @
 
-% Validação
-% % Talvez fosse bom treinar com as legislaturas 50~53 e testar com a 54, ou
-% %   com partes dela, pra demonstrar como ele seria usado no dia-a-dia.
 
-% Conclusão
+
+% FIXME: a especificidade/sensibilidade do confusionMatrix tá ao contrário do
+% ROC, não entendo por que
+Por último, treinaremos um modelo C5.0 com os parâmetros encontrados na fase
+anterior (ver tabela \ref{table:resultados-validacao}) com os dados de treino e
+validação, e estimar sua performance no conjunto de teste, que não foi usado
+até agora. Após finalizado esse treinamento, o AUC alcançado foi
+0,89 (0,87,
+0,92), com Kappa
+-0,017 e
+2.07\% das
+mudanças (especificidade) e
+71.88\%
+das não-mudanças de posicionamento (sensibilidade) classificadas corretamente
+(considerando o ponto de corte em 0,5).
+De acordo com a classificação de \citeonline{HosmerJr2013} descrita na tabela
+\ref{table:valores-auc}, esse modelo possui um poder de discriminação
+excelente. A figura \ref{fig:roc-final-model} mostra a curva ROC nos dados de
+teste, com o ponto de corte marcado em 0,5.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/roc-final-model-1} \caption[Curva ROC do modelo final nos dados de teste]{Curva ROC do modelo final nos dados de teste.}\label{fig:roc-final-model}
+\end{figure}
+
+\begin{kframe}\begin{verbatim}
+## 
+## Call:
+## roc.default(response = data$changed_coalition, predictor = predict(models[[modelName]],     newdata = data, type = "prob")[, 1], ci = TRUE, plot = FALSE,     of = "thresholds", thresholds = "best")
+## 
+## Data: predict(models[[modelName]], newdata = data, type = "prob")[, 1] in 96 controls (data$changed_coalition S) < 2949 cases (data$changed_coalition N).
+## Area under the curve: 0.89
+## 95% CI (2000 stratified bootstrap replicates):
+##  thresholds sp.low sp.median sp.high se.low se.median se.high
+##        0.77   0.78      0.85    0.92   0.79      0.81    0.82
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{l|r|r}
+\hline
+  & S & N\\
+\hline
+S & 69 & 2888\\
+\hline
+N & 27 & 61\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{confusionMatrix.testing}
+\end{alltt}
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##         Referência
+## Previsão    S    N
+##        S   69 2888
+##        N   27   61
+##                                        
+##                Accuracy : 0.043        
+##                  95% CI : (0.036, 0.05)
+##     No Information Rate : 0.968        
+##     P-Value [Acc > NIR] : 1            
+##                                        
+##                   Kappa : -0.017       
+##  Mcnemar's Test P-Value : <2e-16       
+##                                        
+##             Sensitivity : 0.7188       
+##             Specificity : 0.0207       
+##          Pos Pred Value : 0.0233       
+##          Neg Pred Value : 0.6932       
+##              Prevalence : 0.0315       
+##          Detection Rate : 0.0227       
+##    Detection Prevalence : 0.9711       
+##       Balanced Accuracy : 0.3697       
+##                                        
+##        'Positive' Class : S            
+## 
+\end{verbatim}
+\begin{alltt}
+\hlkwd{attributes}\hlstd{(confusionMatrix.testing)}
+\end{alltt}
+\begin{verbatim}
+## $names
+## [1] "positive" "table"    "overall"  "byClass"  "dots"    
+## 
+## $class
+## [1] "confusionMatrix"
+\end{verbatim}
+\begin{alltt}
+\hlstd{confusionMatrix.testing}\hlopt{$}\hlstd{overall}
+\end{alltt}
+\begin{verbatim}
+##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
+##          0.043         -0.017          0.036          0.050          0.968 
+## AccuracyPValue  McnemarPValue 
+##          1.000          0.000
+\end{verbatim}
+\begin{alltt}
+\hlstd{confusionMatrix.testing}\hlopt{$}\hlstd{byClass}
+\end{alltt}
+\begin{verbatim}
+##          Sensitivity          Specificity       Pos Pred Value 
+##                0.719                0.021                0.023 
+##       Neg Pred Value           Prevalence       Detection Rate 
+##                0.693                0.032                0.023 
+## Detection Prevalence    Balanced Accuracy 
+##                0.971                0.370
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% \subsubsection*{Regressão logística (GLM)}
+%
+% Sem parâmetros, chegou a uma área sob a curva ROC de
+% rocs.validation$glm$auc no conjunto de validação.
+%
+% \subsubsection*{SVM Linear}
+%
+% Parametro ``C'' (custo) mantido constante em 1. Área sob a curva ROC
+% rocs.validation$svmLinear$auc no conjunto de validação.
+%
+% \subsubsection*{SVM Radial}
+%
+% Parametros sigma mantido constante em
+% unique(models$svmRadial$results$sigma) e custo variando em
+% sort(unique(models$svmRadial$results$C)). Área sob a curva ROC
+% rocs.validation$svmRadial$auc no conjunto de validação.
+%
+% \subsubsection*{GBM}
+%
+% Parametros shrinkage constante em unique(models$gbm$results$shrinkage),
+% interaction.depth em unique(models$gbm$results$interaction.depth),
+% n.minobsinnode em unique(models$gbm$results$n.minobsinnode), e n.trees
+% em unique(models$gbm$results$n.trees). Área sob a curva ROC
+% rocs.validation$gbm$auc no conjunto de validação.
+%
+% \subsubsection*{RF}
+%
+% Parâmetro mtry em unique(models$rf$results$mtry). Área sob a curva ROC
+% rocs.validation$rf$auc no conjunto de validação.
+%
+% Usa um conjunto (\emph{ensemble}) de árvores de decisão treinados com um
+% conjunto aleatório com reposição do conjunto de treino original\footnote{Esta
+% técnica é conhecida como \emph{bagging}.}. Em problemas de classificação, o
+% resultado do random forest é definido como o resultado da maioria das árvores
+% (moda).
+%
+% \subsubsection*{C5.0}
+%
+% Parâmetros model em unique(models$C5.0$results$model), winnow em
+% unique(models$C5.0$results$winnow) e trials em
+% unique(models$C5.0$results$trials). Área sob a curva ROC
+% rocs.validation$C5.0$auc no conjunto de validação.
+%
+% \subsubsection*{NNET}
+%
+% Parâmetros size em unique(models$nnet$results$size) e decay em
+% unique(models$nnet$results$decay). Área sob a curva ROC
+% rocs.validation$nnet$auc no conjunto de validação.
 
 \section{Considerações Finais}
 
@@ -1516,21 +1738,21 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
   \item Base packages: base, datasets, graphics, grDevices,
     methods, parallel, splines, stats, utils
   \item Other packages: C50~0.1.0-24, caret~6.0-47,
-    doParallel~1.0.8, e1071~1.6-4, foreach~1.4.2, gbm~2.1.1,
-    ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
-    kernlab~0.9-20, knitr~1.9, lattice~0.20-31, nnet~7.3-10,
-    plyr~1.8.2, pROC~1.8, randomForest~4.6-10, scales~0.2.4,
-    survival~2.38-3, tikzDevice~0.8.1
+    doParallel~1.0.8, foreach~1.4.2, gbm~2.1.1, ggplot2~1.0.1,
+    ggthemes~2.2.1, iterators~1.0.7, kernlab~0.9-20, knitr~1.9,
+    lattice~0.20-33, nnet~7.3-10, plyr~1.8.2, pROC~1.8,
+    randomForest~4.6-10, scales~0.2.4, survival~2.38-3,
+    tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
     BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, class~7.3-13,
     codetools~0.2-11, colorspace~1.2-4, compiler~3.2.1,
-    digest~0.6.8, evaluate~0.5.5, filehash~2.2-2, formatR~1.2,
-    grid~3.2.1, gtable~0.1.2, gtools~3.4.2, highr~0.5,
-    labeling~0.3, lme4~1.1-7, MASS~7.3-42, Matrix~1.2-2,
-    mgcv~1.8-6, minqa~1.2.4, munsell~0.4.2, nlme~3.1-121,
-    nloptr~1.0.4, partykit~1.0-2, pbkrtest~0.4-2, proto~0.3-10,
-    quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1, SparseM~1.6,
-    stringr~0.6.2, tools~3.2.1
+    digest~0.6.8, e1071~1.6-4, evaluate~0.5.5, filehash~2.2-2,
+    formatR~1.2, grid~3.2.1, gtable~0.1.2, gtools~3.4.2,
+    highr~0.5, labeling~0.3, lme4~1.1-7, MASS~7.3-43,
+    Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4, munsell~0.4.2,
+    nlme~3.1-121, nloptr~1.0.4, partykit~1.0-2, pbkrtest~0.4-2,
+    proto~0.3-10, quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1,
+    SparseM~1.6, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

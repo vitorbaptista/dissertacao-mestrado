@@ -215,7 +215,7 @@ clean_coords$name <- reorder(clean_coords$name, clean_coords$diff)
 clean_coords <- clean_coords[order(abs(clean_coords$diff_legislator_party)),]
 @
 
-Seguindo a metodologia descrita na sessão
+Seguindo a metodologia descrita na seção
 \ref{sec:analise-saida-psb:metodologia}, dividimos a
 54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
 no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com

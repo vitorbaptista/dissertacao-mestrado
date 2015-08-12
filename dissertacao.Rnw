@@ -55,6 +55,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 %-----------------------------------------------------------------------------------------------------
+\usepackage{nameref} % Cria referências pelo nome
 \usepackage{float}      
 \usepackage{fancyvrb}
 \usepackage{fancyheadings}
@@ -212,6 +213,10 @@ format_percent <- function(number) {
   paste0(round(number * 100, 2), "\\%")
 }
 
+format_number = function(number) {
+  prettyNum(number, decimal.mark = ",", big.mark = ".")
+}
+
 format_inline = function(x) {
   if (length(x) > 1) {
     x = lapply(x, format_inline)
@@ -219,7 +224,7 @@ format_inline = function(x) {
   } else {
     if (is.numeric(x)) {
       num = ifelse(x == round(x), sprintf("%d", x), sprintf("%.2f", x))
-      prettyNum(num, decimal.mark = ",", big.mark = ".")
+      format_number(x)
     } else if (is_date(x)) {
       format(as.POSIXct(x), "%d/%m/%Y")
     } else {

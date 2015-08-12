@@ -15,3 +15,10 @@
 * Explicar extração dos dados
 * Descrever metodologia de Poole
 * Analisar os dados
+
+# Problemas
+
+* No downsampling eu não considerei os pontos ideias, só a legislatura/mês/ano.
+  Deveria ter feito downsampling mantendo as características de tudo.
+* O SVM Linear e SVM Radial foram treinados usando id, legislatura, party,
+  entre outros.
