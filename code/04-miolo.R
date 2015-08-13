@@ -13,15 +13,6 @@ for (legislature in legislatures) {
                                            header = TRUE, check.names = FALSE)
 }
 
-# Reordena factors
-# FIXME: Isso deveria estar em create-models.R
-training$changed_coalition = factor(training$changed_coalition,
-                                levels = c("S", "N"))
-validation$changed_coalition = factor(validation$changed_coalition,
-                                levels = c("S", "N"))
-testing$changed_coalition = factor(testing$changed_coalition,
-                                levels = c("S", "N"))
-
 data = rbind(training.original, validation, testing)
 data_null = read.csv("data/data.csv")
 data_null = data_null[is.na(data_null$before) | is.na(data_null$after),]
