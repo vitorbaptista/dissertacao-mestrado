@@ -13,7 +13,7 @@ for (legislature in legislatures) {
                                            header = TRUE, check.names = FALSE)
 }
 
-data = rbind(training.original, validation, testing)
+data = rbind(training.original, validation, testing.roc, testing)
 data_null = read.csv("data/data.csv")
 data_null = data_null[is.na(data_null$before) | is.na(data_null$after),]
 
