@@ -1103,9 +1103,9 @@ todas as legislaturas estudadas.
 \hline
   & 50 & 51 & 52 & 53 & 54\\
 \hline
-N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
-\hline
 S & 0.04 & 0.04 & 0.07 & 0.02 & 0.03\\
+\hline
+N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
 \hline
 \end{tabular}
 
@@ -1281,9 +1281,9 @@ e ``raio de influência'' apresentados na seção
 \ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
 quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
 visto anteriormente, das 78.576 observações,
-4.03\%
+3.98\%
 (3.130) são relativas a mudanças
-de posicionamento, e 95.97\%
+de posicionamento, e 96.02\%
 (75.446) não.
 
 \subsection{Variáveis independentes}
@@ -1353,29 +1353,34 @@ Divisões aleatórias partem do princípio de que o padrão dos dados é uniform
 logo não há diferença na escolha. Visto que estamos trabalhando com um período
 longo, inclusive com uma alteração nas regras para mudança de partido, essa é
 uma suposição improvável. Como é mais importante que o modelo tenha uma boa
-performance nos anos mais recentes, segui a estratégia de
-\citeonline{Kuhn2013}:
+performance nos anos mais recentes, segui a seguinte estratégia \cite{Kuhn2013}:
 
 \begin{enumerate}
-\item Separa aleatoriamente 25\% dos dados da 54\textordfeminine{} legislatura,
-mantendo as proporções de mudanças de posicionamento e aspectos temporais, para
-estimar a performance. Este é o conjunto de teste;
 \item Treina o modelo com os dados anteriores a 54\textordfeminine{}
 legislatura, chamado de conjunto de treino, ajustando seus parâmetros a partir
-da performance nos 75\% restantes da 54\textordfeminine{} legislatura chamadado
+da performance em 60\% dos dados da 54\textordfeminine{} legislatura, chamadado
 de conjunto de validação;
-\item Ao finalizar o ajuste dos parâmetros no passo anterior, treina o modelo
-com esses parâmetros usando os conjuntos de treino e validação juntos;
-\item Estima a performance do modelo no conjunto de teste.
+\item Ao finalizar o ajuste dos parâmetros no passo anterior, define qual
+modelo teve a melhor performance e treina um novo modelo, usando esses mesmos
+parâmetros, nos conjuntos de treino e validação juntos;
+\item Define o ponto de corte para classificação usando metade dos dados da
+54\textordfeminine{} legislatura não usados para validação;
+\item Usa o restante dos dados da 54\textordfeminine{} legislatura, chamado
+conjunto de teste, para estimar a performance final do modelo.
 \end{enumerate}
 
 Assim, os 78.576 dados serão separados em
 80.67\%
 (63.386) para treino,
 11.77\%
-(9.251) para validação e 3.88\% (3.045) para teste. Eles possuem respectivamente
+(9.251) para validação,
+3.68\%
+(2.894) para definir o ponto de corte e
+3.88\% (3.045) para
+teste. Eles possuem respectivamente
 4.19\%,
 3.22\% e
+2.7\%
 3.15\% de mudanças de posicionamento.
 Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
 96.02\% de todas as observações sendo de
@@ -1388,7 +1393,7 @@ permitem isso, logo preferi usar uma técnica mais simples: \emph{downsampling}.
 
 No \emph{downsampling}, selecionamos todas as observações da categoria mais
 rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
-mais comum, chegando assim a um conjunto de dados balanceado. Na amostragem, é
+
 imprescindível que as características das variáveis independentes sejam
 mantidas o mais próximo possível.
 
@@ -1469,10 +1474,10 @@ conseguiu um resultado significantemente melhor que todos os outros.
       & interaction.depth & 4 & & & \\
       & n.minobsinnode & 10 & & & \\
       & n.trees & 50 & & & \\
+  RF & mtry & 2 & 0,74&0,77&0,8 \\
   SVM Radial & C & 0,5 & 0,72&0,75&0,78 \\
              & sigma & 0,142318578779184 & & & \\
-  RF & mtry & 2 & 0,74&0,77&0,8 \\
-  GLM & --- & --- & 0,57&0,59&0,62 \\
+  GLM & --- & --- & 0,38&0,41&0,43 \\
 \end{tabular}
 \caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
 ROC (AUC) no conjunto de validação.}
@@ -1489,72 +1494,82 @@ ROC (AUC) no conjunto de validação.}
 
 
 
-% Uma vez escolhido o modelo, precisamos agora definir o ponto de corte para a
-% classificação das classes Como explicado na seção
-% \ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, grande
-% parte das ferramentas usa 50\% como ponto de corte padrão. Entretanto, como 
-% as classes são desbalanceadas em nossos conjuntos de dados, isto é, existem
-% muito mais parlamentares que mantiveram seu posicionamento do que o contrário,
-% alterar o ponto de corte pode resultar em uma sensibilidade e especificidade
-% melhores. A figura \ref{fig:c50-roc-validation} mostra a curva ROC do modelo
-% C5.0 nos dados de validação.
-% 
-% <<c50-roc-validation, fig.cap="Curva ROC do modelo C5.0 nos dados de validação">>=
-% tmp.best_threshold = attr(rocs.validation$C5.0$ci, "thresholds")[[1]]
-% 
-% plot(rocs.validation$C5.0,
-%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
-%      print.auc = TRUE,
-%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
-%      xlab = "Especificidade",
-%      ylab = "Sensibilidade")
-% 
-% plot(rocs.testing$C5.0,
-%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
-%      print.auc = TRUE,
-%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
-%      xlab = "Especificidade",
-%      ylab = "Sensibilidade")
-% @
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/tmp/find-cutoff-1} \caption[Curva ROC do modelo final com o ponto de corte escolhido em destaque]{Curva ROC do modelo final com o ponto de corte escolhido em destaque.}\label{fig:find-cutoff}
+\end{figure}
+
+
+\end{knitrout}
+
+Definidos o modelo e seus parâmetros, treinaremos o modelo final com o conjunto
+de treino e validação juntos. Como o conjunto de validação não é balanceado,
+tendo 3.22\%
+(298) mudanças de
+posicionamento, ele precisa ser \emph{downsampled}. Ao final, unindo o conjunto
+de treino (que já foi \emph{downsampled}) com o de validação, o novo conjunto
+possui 6.314 observações, sendo
+46.82\%
+(2.956) relativas a
+mudanças de posicionamento e
+53.18\%
+(3.358) não. O último
+passo é definir o ponto de corte para a classificação das categorias.
+
+Como explicado na seção
+\ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, a maioria
+das ferramentas de aprendizagem de máquina definem como ponto de corte padrão
+0,5. Apesar disso, especialmente em casos como o nosso em que os dados não são
+balanceados, é útil analisar outros pontos de corte buscando um melhor (que
+depende de cada caso). Para este modelo, meu objetivo é minimizar o número de
+falsos positivos (parlamentares que não mudaram de posicionamento sendo
+classificados como se tivessem mudado). Para entender a razão, considere o
+seguinte exemplo:
+
+Suponha que em um período estimamos os pontos ideais de 500 parlamentares,
+sendo que 95\% (475) não mudaram de posicionamento, e 5\% (25) mudaram. Caso o
+modelo tenha uma especificidade de 80\%, então 20\% (95) dos parlamentares que
+não mudaram de posicionamento serão classificados erroneamente. Mesmo que esse
+modelo tenha 100\% de sensibilidade e classifique corretamente todos os 25
+parlamentares que mudaram de posicionamento (o que é improvável), eles estarão
+em meio a um conjunto de 120 pessoas, o que pode inviabilizar a análise
+individual.
 
 
 
-% FIXME: a especificidade/sensibilidade do confusionMatrix tá ao contrário do
-% ROC, não entendo por que
-Por último, treinaremos um modelo C5.0 com os parâmetros encontrados na fase
-anterior (ver tabela \ref{table:resultados-validacao}) com os dados de treino e
-validação, e estimar sua performance no conjunto de teste, que não foi usado
-até agora. Após finalizado esse treinamento, o AUC alcançado foi
-0,89 (0,87,
-0,92), com Kappa
--0,017 e
-2.07\% das
-mudanças (especificidade) e
-71.88\%
-das não-mudanças de posicionamento (sensibilidade) classificadas corretamente
-(considerando o ponto de corte em 0,5).
-De acordo com a classificação de \citeonline{HosmerJr2013} descrita na tabela
-\ref{table:valores-auc}, esse modelo possui um poder de discriminação
-excelente. A figura \ref{fig:roc-final-model} mostra a curva ROC nos dados de
-teste, com o ponto de corte marcado em 0,5.
+A figura \ref{fig:find-cutoff} mostra a curva ROC do conjunto de dados de
+definição do ponto de corte em dois pontos: 0,5 e 0,65.
+Considerando o corte em 0,5, no exemplo acima 166
+parlamentares seriam classificados como tendo mudado de posicionamento,
+sendo 87.35\%
+(145) falsos positivos e 4 falsos negativos. Já
+com o corte em 0,65, 53 seriam
+classificados como tendo
+mudado de posicionamento, sendo 77.36\% (41) falsos positivos
+e 13 falsos negativos. Em outras palavras, ao mudar o ponto de
+corte de 0,5 para 0,65, estamos trocando 104 falsos positivos a menos por 9
+falsos negativos a mais.
+
+
+
+A área sob a curva ROC (figura \ref{fig:roc-final-model}) alcançada pelo modelo
+final foi de 0,88
+(0,86, 0,91), com
+Kappa 0,21 e
+52.08\% das
+mudanças (sensibilidade) e
+91.45\% das
+não-mudanças de posicionamento (especificidade) classificadas corretamente
+(considerando o ponto de corte em 0,65). De acordo com a
+classificação de \citeonline{HosmerJr2013} descrita na tabela
+\ref{table:valores-auc}, o modelo possui um poder de discriminação excelente.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \includegraphics[width=\maxwidth]{figure/tmp/roc-final-model-1} \caption[Curva ROC do modelo final nos dados de teste]{Curva ROC do modelo final nos dados de teste.}\label{fig:roc-final-model}
 \end{figure}
 
-\begin{kframe}\begin{verbatim}
-## 
-## Call:
-## roc.default(response = data$changed_coalition, predictor = predict(models[[modelName]],     newdata = data, type = "prob")[, 1], ci = TRUE, plot = FALSE,     of = "thresholds", thresholds = "best")
-## 
-## Data: predict(models[[modelName]], newdata = data, type = "prob")[, 1] in 96 controls (data$changed_coalition S) < 2949 cases (data$changed_coalition N).
-## Area under the curve: 0.89
-## 95% CI (2000 stratified bootstrap replicates):
-##  thresholds sp.low sp.median sp.high se.low se.median se.high
-##        0.77   0.78      0.85    0.92   0.79      0.81    0.82
-\end{verbatim}
-\end{kframe}
+
 \end{knitrout}
 
 \begin{knitrout}
@@ -1563,79 +1578,13 @@ teste, com o ponto de corte marcado em 0,5.
 \hline
   & S & N\\
 \hline
-S & 69 & 2888\\
+S & 50 & 252\\
 \hline
-N & 27 & 61\\
+N & 46 & 2697\\
 \hline
 \end{tabular}
 
 
-\end{knitrout}
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{confusionMatrix.testing}
-\end{alltt}
-\begin{verbatim}
-## Confusion Matrix and Statistics
-## 
-##         Referência
-## Previsão    S    N
-##        S   69 2888
-##        N   27   61
-##                                        
-##                Accuracy : 0.043        
-##                  95% CI : (0.036, 0.05)
-##     No Information Rate : 0.968        
-##     P-Value [Acc > NIR] : 1            
-##                                        
-##                   Kappa : -0.017       
-##  Mcnemar's Test P-Value : <2e-16       
-##                                        
-##             Sensitivity : 0.7188       
-##             Specificity : 0.0207       
-##          Pos Pred Value : 0.0233       
-##          Neg Pred Value : 0.6932       
-##              Prevalence : 0.0315       
-##          Detection Rate : 0.0227       
-##    Detection Prevalence : 0.9711       
-##       Balanced Accuracy : 0.3697       
-##                                        
-##        'Positive' Class : S            
-## 
-\end{verbatim}
-\begin{alltt}
-\hlkwd{attributes}\hlstd{(confusionMatrix.testing)}
-\end{alltt}
-\begin{verbatim}
-## $names
-## [1] "positive" "table"    "overall"  "byClass"  "dots"    
-## 
-## $class
-## [1] "confusionMatrix"
-\end{verbatim}
-\begin{alltt}
-\hlstd{confusionMatrix.testing}\hlopt{$}\hlstd{overall}
-\end{alltt}
-\begin{verbatim}
-##       Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
-##          0.043         -0.017          0.036          0.050          0.968 
-## AccuracyPValue  McnemarPValue 
-##          1.000          0.000
-\end{verbatim}
-\begin{alltt}
-\hlstd{confusionMatrix.testing}\hlopt{$}\hlstd{byClass}
-\end{alltt}
-\begin{verbatim}
-##          Sensitivity          Specificity       Pos Pred Value 
-##                0.719                0.021                0.023 
-##       Neg Pred Value           Prevalence       Detection Rate 
-##                0.693                0.032                0.023 
-## Detection Prevalence    Balanced Accuracy 
-##                0.971                0.370
-\end{verbatim}
-\end{kframe}
 \end{knitrout}
 
 % \subsubsection*{Regressão logística (GLM)}
@@ -1709,6 +1658,88 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
 \appendix
 \input{apendice-lista-dos-partidos}
 
+\chapter{Lista de pontos de corte do modelo final}
+\label{cap:lista-pontos-de-corte}
+
+
+
+\begin{longtable}{l l l l l l l}
+\centering
+  Threshold & \multicolumn{3}{c}{Especificidade} & \multicolumn{3}{c}{Sensibilidade} \\ \cline{2-7}
+            & \multicolumn{1}{|l}{Mínimo} & Mediano & Máximo & \multicolumn{1}{|l}{Mínimo} & Mediano & \multicolumn{1}{l|}{Máximo} \\
+  \hline
+  0.079 & 24.47\% & 26.1\% & 27.77\% & 100\% & 100\% & 100\% \\
+0.108 & 27.31\% & 29.01\% & 30.72\% & 96.15\% & 98.72\% & 100\% \\
+0.154 & 31.11\% & 32.81\% & 34.59\% & 93.59\% & 97.44\% & 100\% \\
+0.307 & 44.82\% & 46.66\% & 48.54\% & 91.03\% & 96.15\% & 100\% \\
+0.402 & 55.5\% & 57.35\% & 59.16\% & 89.74\% & 94.87\% & 98.72\% \\
+0.432 & 59.34\% & 61.12\% & 62.96\% & 87.18\% & 93.59\% & 98.72\% \\
+0.433 & 59.41\% & 61.19\% & 63.03\% & 85.9\% & 92.31\% & 97.44\% \\
+0.477 & 63.42\% & 65.06\% & 66.94\% & 84.62\% & 91.03\% & 97.44\% \\
+0.481 & 63.71\% & 65.38\% & 67.22\% & 82.05\% & 89.74\% & 96.15\% \\
+0.482 & 63.78\% & 65.45\% & 67.29\% & 80.77\% & 88.46\% & 94.87\% \\
+0.494 & 66.69\% & 68.41\% & 70.17\% & 79.49\% & 87.18\% & 94.87\% \\
+0.495 & 67.08\% & 68.82\% & 70.56\% & 78.21\% & 85.9\% & 93.59\% \\
+0.523 & 69.53\% & 71.2\% & 72.94\% & 76.92\% & 84.62\% & 92.31\% \\
+0.528 & 70.74\% & 72.37\% & 74.04\% & 74.36\% & 83.33\% & 91.03\% \\
+0.53 & 71.84\% & 73.54\% & 75.14\% & 73.08\% & 82.05\% & 91.03\% \\
+0.533 & 73.44\% & 75.07\% & 76.63\% & 71.79\% & 80.77\% & 89.74\% \\
+0.558 & 75.46\% & 77.02\% & 78.55\% & 70.51\% & 79.49\% & 88.46\% \\
+0.567 & 76.7\% & 78.23\% & 79.69\% & 69.23\% & 78.21\% & 87.18\% \\
+0.573 & 78.16\% & 79.65\% & 81.11\% & 67.95\% & 76.92\% & 85.9\% \\
+0.573 & 78.2\% & 79.69\% & 81.14\% & 65.38\% & 75.64\% & 84.62\% \\
+0.574 & 78.34\% & 79.83\% & 81.29\% & 64.1\% & 74.36\% & 83.33\% \\
+0.583 & 80.18\% & 81.61\% & 82.99\% & 64.07\% & 73.08\% & 83.33\% \\
+0.602 & 81\% & 82.39\% & 83.77\% & 61.54\% & 71.79\% & 82.05\% \\
+0.603 & 81.36\% & 82.71\% & 84.06\% & 60.26\% & 70.51\% & 80.77\% \\
+0.605 & 81.68\% & 83.06\% & 84.34\% & 58.97\% & 69.23\% & 79.49\% \\
+0.607 & 82.32\% & 83.66\% & 84.98\% & 57.69\% & 67.95\% & 78.21\% \\
+0.61 & 83.35\% & 84.71\% & 85.9\% & 56.41\% & 66.67\% & 76.92\% \\
+0.613 & 83.91\% & 85.23\% & 86.47\% & 55.13\% & 65.38\% & 76.92\% \\
+0.613 & 84.91\% & 86.22\% & 87.46\% & 46.15\% & 56.41\% & 67.95\% \\
+0.614 & 85.72\% & 87\% & 88.21\% & 44.87\% & 55.13\% & 66.67\% \\
+0.617 & 86.33\% & 87.61\% & 88.78\% & 42.31\% & 53.85\% & 65.38\% \\
+0.617 & 87.07\% & 88.32\% & 89.45\% & 41.03\% & 52.56\% & 64.1\% \\
+0.62 & 88.46\% & 89.7\% & 90.7\% & 39.74\% & 51.28\% & 62.82\% \\
+0.621 & 88.67\% & 89.84\% & 90.87\% & 38.46\% & 50\% & 61.54\% \\
+0.625 & 89.6\% & 90.7\% & 91.69\% & 35.9\% & 47.44\% & 58.97\% \\
+0.648 & 90.27\% & 91.34\% & 92.33\% & 34.62\% & 46.15\% & 57.69\% \\
+0.649 & 90.41\% & 91.44\% & 92.44\% & 33.33\% & 44.87\% & 56.41\% \\
+0.649 & 91.65\% & 92.65\% & 93.57\% & 26.92\% & 38.46\% & 50\% \\
+0.65 & 92.22\% & 93.18\% & 94.07\% & 26.92\% & 37.18\% & 48.72\% \\
+0.651 & 92.37\% & 93.32\% & 94.18\% & 25.64\% & 35.9\% & 47.44\% \\
+0.651 & 93.36\% & 94.21\% & 95.03\% & 23.08\% & 33.33\% & 43.59\% \\
+0.652 & 93.54\% & 94.39\% & 95.17\% & 21.79\% & 32.05\% & 42.31\% \\
+0.653 & 94\% & 94.89\% & 95.63\% & 20.51\% & 30.77\% & 41.03\% \\
+0.654 & 94.32\% & 95.17\% & 95.92\% & 16.67\% & 26.92\% & 37.18\% \\
+0.657 & 96.45\% & 97.12\% & 97.73\% & 16.67\% & 25.64\% & 35.9\% \\
+0.657 & 96.59\% & 97.23\% & 97.8\% & 15.38\% & 24.36\% & 34.62\% \\
+0.657 & 96.91\% & 97.5\% & 98.01\% & 11.54\% & 20.51\% & 29.49\% \\
+0.66 & 97.76\% & 98.26\% & 98.72\% & 10.26\% & 17.95\% & 26.92\% \\
+0.662 & 97.8\% & 98.3\% & 98.76\% & 8.97\% & 16.67\% & 25.64\% \\
+0.668 & 97.9\% & 98.37\% & 98.79\% & 7.69\% & 15.38\% & 24.36\% \\
+0.687 & 98.33\% & 98.76\% & 99.15\% & 6.38\% & 12.82\% & 20.51\% \\
+0.689 & 98.62\% & 99.01\% & 99.36\% & 5.13\% & 11.54\% & 19.23\% \\
+0.699 & 98.97\% & 99.29\% & 99.57\% & 2.56\% & 7.69\% & 14.1\% \\
+0.702 & 99.01\% & 99.33\% & 99.61\% & 1.28\% & 6.41\% & 12.82\% \\
+0.725 & 99.22\% & 99.5\% & 99.75\% & 1.28\% & 5.13\% & 10.26\% \\
+0.73 & 99.29\% & 99.54\% & 99.79\% & 0\% & 1.28\% & 3.85\% \\
+0.75 & 99.33\% & 99.57\% & 99.82\% & 0\% & 0\% & 0\% \\
+0.758 & 99.36\% & 99.61\% & 99.82\% & 0\% & 0\% & 0\% \\
+0.766 & 99.47\% & 99.68\% & 99.86\% & 0\% & 0\% & 0\% \\
+0.77 & 99.5\% & 99.72\% & 99.89\% & 0\% & 0\% & 0\% \\
+0.779 & 99.54\% & 99.75\% & 99.93\% & 0\% & 0\% & 0\% \\
+0.792 & 99.61\% & 99.79\% & 99.93\% & 0\% & 0\% & 0\% \\
+0.798 & 99.64\% & 99.82\% & 99.96\% & 0\% & 0\% & 0\% \\
+0.816 & 99.72\% & 99.86\% & 99.96\% & 0\% & 0\% & 0\% \\
+0.84 & 99.75\% & 99.89\% & 100\% & 0\% & 0\% & 0\% \\
+0.887 & 99.82\% & 99.93\% & 100\% & 0\% & 0\% & 0\% \\
+0.953 & 99.89\% & 99.96\% & 100\% & 0\% & 0\% & 0\% \\
+Inf & 100\% & 100\% & 100\% & 0\% & 0\% & 0\% \\
+\caption{Especificidade e sensibilidade em diversos pontos de corte do modelo
+final usando o conjunto de dados para definição do ponto de corte.}
+\end{longtable}
+
 \chapter{Versões dos softwares utilizados}
 
 \begin{itemize}\raggedright
@@ -1723,15 +1754,14 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
     randomForest~4.6-10, scales~0.2.4, survival~2.38-3,
     tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
-    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, class~7.3-13,
-    codetools~0.2-11, colorspace~1.2-4, compiler~3.2.1,
-    digest~0.6.8, e1071~1.6-4, evaluate~0.5.5, filehash~2.2-2,
-    formatR~1.2, grid~3.2.1, gtable~0.1.2, gtools~3.4.2,
-    highr~0.5, labeling~0.3, lme4~1.1-7, MASS~7.3-43,
-    Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4, munsell~0.4.2,
-    nlme~3.1-121, nloptr~1.0.4, partykit~1.0-2, pbkrtest~0.4-2,
-    proto~0.3-10, quantreg~5.11, Rcpp~0.11.4, reshape2~1.4.1,
-    SparseM~1.6, stringr~0.6.2, tools~3.2.1
+    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
+    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
+    evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
+    gtable~0.1.2, gtools~3.4.2, highr~0.5, lme4~1.1-7,
+    MASS~7.3-43, Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4,
+    munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, partykit~1.0-2,
+    pbkrtest~0.4-2, proto~0.3-10, quantreg~5.11, Rcpp~0.11.4,
+    reshape2~1.4.1, SparseM~1.6, stringr~0.6.2, tools~3.2.1
 \end{itemize}
 
 

@@ -652,30 +652,34 @@ Divisões aleatórias partem do princípio de que o padrão dos dados é uniform
 logo não há diferença na escolha. Visto que estamos trabalhando com um período
 longo, inclusive com uma alteração nas regras para mudança de partido, essa é
 uma suposição improvável. Como é mais importante que o modelo tenha uma boa
-performance nos anos mais recentes, segui a estratégia de
-\citeonline{Kuhn2013}:
+performance nos anos mais recentes, segui a seguinte estratégia \cite{Kuhn2013}:
 
 \begin{enumerate}
-\item Separa aleatoriamente 25\% dos dados da 54\textordfeminine{} legislatura,
-mantendo as proporções de mudanças de posicionamento e aspectos temporais, para
-estimar a performance. Este é o conjunto de teste;
 \item Treina o modelo com os dados anteriores a 54\textordfeminine{}
 legislatura, chamado de conjunto de treino, ajustando seus parâmetros a partir
-da performance nos 75\% restantes da 54\textordfeminine{} legislatura chamadado
+da performance em 60\% dos dados da 54\textordfeminine{} legislatura, chamadado
 de conjunto de validação;
-\item Ao finalizar o ajuste dos parâmetros no passo anterior, treina o modelo
-com esses parâmetros usando os conjuntos de treino e validação juntos;
-\item Estima a performance do modelo no conjunto de teste.
+\item Ao finalizar o ajuste dos parâmetros no passo anterior, define qual
+modelo teve a melhor performance e treina um novo modelo, usando esses mesmos
+parâmetros, nos conjuntos de treino e validação juntos;
+\item Define o ponto de corte para classificação usando metade dos dados da
+54\textordfeminine{} legislatura não usados para validação;
+\item Usa o restante dos dados da 54\textordfeminine{} legislatura, chamado
+conjunto de teste, para estimar a performance final do modelo.
 \end{enumerate}
 
 Assim, os \Sexpr{nrow(data)} dados serão separados em
 \Sexpr{format_percent(nrow(training.original) / nrow(data))}
 (\Sexpr{nrow(training.original)}) para treino,
 \Sexpr{format_percent(nrow(validation) / nrow(data))}
-(\Sexpr{nrow(validation)}) para validação e \Sexpr{format_percent(nrow(testing)
-/ nrow(data))} (\Sexpr{nrow(testing)}) para teste. Eles possuem respectivamente
+(\Sexpr{nrow(validation)}) para validação,
+\Sexpr{format_percent(nrow(testing.roc) / nrow(data))}
+(\Sexpr{nrow(testing.roc)}) para definir o ponto de corte e
+\Sexpr{format_percent(nrow(testing) / nrow(data))} (\Sexpr{nrow(testing)}) para
+teste. Eles possuem respectivamente
 \Sexpr{format_percent(training_original_proportions["S"])},
 \Sexpr{format_percent(validation_proportions["S"])} e
+\Sexpr{format_percent(testing_roc_proportions["S"])}
 \Sexpr{format_percent(testing_proportions["S"])} de mudanças de posicionamento.
 Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
 \Sexpr{format_percent(data_proportions["N"])} de todas as observações sendo de
@@ -688,7 +692,7 @@ permitem isso, logo preferi usar uma técnica mais simples: \emph{downsampling}.
 
 No \emph{downsampling}, selecionamos todas as observações da categoria mais
 rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
-mais comum, chegando assim a um conjunto de dados balanceado. Na amostragem, é
+
 imprescindível que as características das variáveis independentes sejam
 mantidas o mais próximo possível.
 
@@ -771,9 +775,9 @@ conseguiu um resultado significantemente melhor que todos os outros.
       & interaction.depth & \Sexpr{models$gbm$bestTune$interaction.depth} & & & \\
       & n.minobsinnode & \Sexpr{models$gbm$bestTune$n.minobsinnode} & & & \\
       & n.trees & \Sexpr{models$gbm$bestTune$n.trees} & & & \\
+  RF & mtry & \Sexpr{models$rf$bestTune$mtry} & \Sexpr{paste(lapply(ci(rocs.validation$rf), format_inline), collapse = "&")} \\
   SVM Radial & C & \Sexpr{models$svmRadial$bestTune$C} & \Sexpr{paste(lapply(ci(rocs.validation$svmRadial), format_inline), collapse = "&")} \\
              & sigma & \Sexpr{gsub("\\.", ",", models$svmRadial$bestTune$sigma)} & & & \\
-  RF & mtry & \Sexpr{models$rf$bestTune$mtry} & \Sexpr{paste(lapply(ci(rocs.validation$rf), format_inline), collapse = "&")} \\
   GLM & --- & --- & \Sexpr{paste(lapply(ci(rocs.validation$glm), format_inline), collapse = "&")} \\
 \end{tabular}
 \caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
@@ -794,74 +798,103 @@ ggplot(rocs[rocs$type == "validation",], aes(reorder(modelName, ci.median),
 <<train-final-model, include=FALSE>>=
 @
 
-% Uma vez escolhido o modelo, precisamos agora definir o ponto de corte para a
-% classificação das classes Como explicado na seção
-% \ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, grande
-% parte das ferramentas usa 50\% como ponto de corte padrão. Entretanto, como 
-% as classes são desbalanceadas em nossos conjuntos de dados, isto é, existem
-% muito mais parlamentares que mantiveram seu posicionamento do que o contrário,
-% alterar o ponto de corte pode resultar em uma sensibilidade e especificidade
-% melhores. A figura \ref{fig:c50-roc-validation} mostra a curva ROC do modelo
-% C5.0 nos dados de validação.
-% 
-% <<c50-roc-validation, fig.cap="Curva ROC do modelo C5.0 nos dados de validação">>=
-% tmp.best_threshold = attr(rocs.validation$C5.0$ci, "thresholds")[[1]]
-% 
-% plot(rocs.validation$C5.0,
-%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
-%      print.auc = TRUE,
-%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
-%      xlab = "Especificidade",
-%      ylab = "Sensibilidade")
-% 
-% plot(rocs.testing$C5.0,
-%      print.thres = c(tmp.best_threshold, 0.5, 0.95),
-%      print.auc = TRUE,
-%      print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
-%      xlab = "Especificidade",
-%      ylab = "Sensibilidade")
-% @
-
-<<bootstrap-roc-and-confusion-matrix-final-model, include=FALSE>>=
+<<find-cutoff, fig.cap="Curva ROC do modelo final com o ponto de corte escolhido em destaque.">>=
 @
 
-% FIXME: a especificidade/sensibilidade do confusionMatrix tá ao contrário do
-% ROC, não entendo por que
-Por último, treinaremos um modelo C5.0 com os parâmetros encontrados na fase
-anterior (ver tabela \ref{table:resultados-validacao}) com os dados de treino e
-validação, e estimar sua performance no conjunto de teste, que não foi usado
-até agora. Após finalizado esse treinamento, o AUC alcançado foi
-\Sexpr{ci(rocs.testing$final)[[2]]} (\Sexpr{ci(rocs.testing$final)[[1]]},
-\Sexpr{ci(rocs.testing$final)[[3]]}), com Kappa
-\Sexpr{confusionMatrix.testing$overall[["Kappa"]]} e
-\Sexpr{format_percent(confusionMatrix.testing$byClass[["Specificity"]])} das
-mudanças (especificidade) e
-\Sexpr{format_percent(confusionMatrix.testing$byClass[["Sensitivity"]])}
-das não-mudanças de posicionamento (sensibilidade) classificadas corretamente
-(considerando o ponto de corte em \Sexpr{cutoffPoint}).
-De acordo com a classificação de \citeonline{HosmerJr2013} descrita na tabela
-\ref{table:valores-auc}, esse modelo possui um poder de discriminação
-excelente. A figura \ref{fig:roc-final-model} mostra a curva ROC nos dados de
-teste, com o ponto de corte marcado em \Sexpr{cutoffPoint}.
+Definidos o modelo e seus parâmetros, treinaremos o modelo final com o conjunto
+de treino e validação juntos. Como o conjunto de validação não é balanceado,
+tendo \Sexpr{format_percent(validation_proportions["S"])}
+(\Sexpr{length(which(validation$changed_coalition == "S"))}) mudanças de
+posicionamento, ele precisa ser \emph{downsampled}. Ao final, unindo o conjunto
+de treino (que já foi \emph{downsampled}) com o de validação, o novo conjunto
+possui \Sexpr{nrow(training.final)} observações, sendo
+\Sexpr{format_percent(training_final_proportions["S"])}
+(\Sexpr{length(which(training.final$changed_coalition == "S"))}) relativas a
+mudanças de posicionamento e
+\Sexpr{format_percent(training_final_proportions["N"])}
+(\Sexpr{length(which(training.final$changed_coalition == "N"))}) não. O último
+passo é definir o ponto de corte para a classificação das categorias.
+
+Como explicado na seção
+\ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, a maioria
+das ferramentas de aprendizagem de máquina definem como ponto de corte padrão
+0,5. Apesar disso, especialmente em casos como o nosso em que os dados não são
+balanceados, é útil analisar outros pontos de corte buscando um melhor (que
+depende de cada caso). Para este modelo, meu objetivo é minimizar o número de
+falsos positivos (parlamentares que não mudaram de posicionamento sendo
+classificados como se tivessem mudado). Para entender a razão, considere o
+seguinte exemplo:
+
+Suponha que em um período estimamos os pontos ideais de 500 parlamentares,
+sendo que 95\% (475) não mudaram de posicionamento, e 5\% (25) mudaram. Caso o
+modelo tenha uma especificidade de 80\%, então 20\% (95) dos parlamentares que
+não mudaram de posicionamento serão classificados erroneamente. Mesmo que esse
+modelo tenha 100\% de sensibilidade e classifique corretamente todos os 25
+parlamentares que mudaram de posicionamento (o que é improvável), eles estarão
+em meio a um conjunto de 120 pessoas, o que pode inviabilizar a análise
+individual.
+
+<<>>=
+tmp.negative = 475
+tmp.positive = 25
+tmp.total = tmp.positive + tmp.negative
+spec_05 = thresholds$specificity[[1, 2]]
+sens_05 = thresholds$sensitivity[[1, 2]]
+tmp.tp_05 = round(sens_05 * tmp.positive)
+tmp.fp_05 = round((1 - spec_05) * tmp.negative)
+tmp.fn_05 = round((1 - sens_05) * tmp.positive)
+
+spec_best = thresholds$specificity[[2, 2]]
+sens_best = thresholds$sensitivity[[2, 2]]
+tmp.tp_best = round(sens_best * tmp.positive)
+tmp.fp_best = round((1 - spec_best) * tmp.negative)
+tmp.fn_best = round((1 - sens_best) * tmp.positive)
+@
+
+A figura \ref{fig:find-cutoff} mostra a curva ROC do conjunto de dados de
+definição do ponto de corte em dois pontos: 0,5 e \Sexpr{cutoffPoint}.
+Considerando o corte em 0,5, no exemplo acima \Sexpr{tmp.tp_05 + tmp.fp_05}
+parlamentares seriam classificados como tendo mudado de posicionamento,
+sendo \Sexpr{format_percent(tmp.fp_05 / (tmp.tp_05 + tmp.fp_05))}
+(\Sexpr{tmp.fp_05}) falsos positivos e \Sexpr{tmp.fn_05} falsos negativos. Já
+com o corte em \Sexpr{cutoffPoint}, \Sexpr{tmp.tp_best + tmp.fp_best} seriam
+classificados como tendo
+mudado de posicionamento, sendo \Sexpr{format_percent(tmp.fp_best /
+(tmp.tp_best + tmp.fp_best))} (\Sexpr{tmp.fp_best}) falsos positivos
+e \Sexpr{tmp.fn_best} falsos negativos. Em outras palavras, ao mudar o ponto de
+corte de 0,5 para \Sexpr{cutoffPoint}, estamos trocando \Sexpr{tmp.fp_05 -
+tmp.fp_best} falsos positivos a menos por \Sexpr{tmp.fn_best - tmp.fn_05}
+falsos negativos a mais.
+
+<<bootstrap-roc-and-confusion-matrix-final-model>>=
+@
+
+A área sob a curva ROC (figura \ref{fig:roc-final-model}) alcançada pelo modelo
+final foi de \Sexpr{ci(rocs.testing$final)[[2]]}
+(\Sexpr{ci(rocs.testing$final)[[1]]}, \Sexpr{ci(rocs.testing$final)[[3]]}), com
+Kappa \Sexpr{confMatrix$overall[["Kappa"]]} e
+\Sexpr{format_percent(confMatrix$byClass[["Sensitivity"]])} das
+mudanças (sensibilidade) e
+\Sexpr{format_percent(confMatrix$byClass[["Specificity"]])} das
+não-mudanças de posicionamento (especificidade) classificadas corretamente
+(considerando o ponto de corte em \Sexpr{cutoffPoint}). De acordo com a
+classificação de \citeonline{HosmerJr2013} descrita na tabela
+\ref{table:valores-auc}, o modelo possui um poder de discriminação excelente.
 
 <<roc-final-model, fig.cap="Curva ROC do modelo final nos dados de teste.">>=
-plot(rocs.testing$final,
-     print.thres = cutoffPoint,
-     print.auc = TRUE,
-     print.thres.pattern = "%.3f\n(Espec = %.3f, Sens = %.3f)",
-     xlab = "Especificidade",
-     ylab = "Sensibilidade")
+invisible(plot(rocs.testing$final,
+               print.thres = cutoffPoint,
+               print.auc = TRUE,
+               print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+               print.auc.y = 0.25,
+               ci = FALSE,
+               xlab = "Especificidade",
+               ylab = "Sensibilidade"))
+invisible(plot(ci.thresholds(rocs.testing$final, thresholds = cutoffPoint)))
 @
 
 <<>>=
-kable(confusionMatrix.testing$table)
-@
-
-<<echo=TRUE>>=
-confusionMatrix.testing
-attributes(confusionMatrix.testing)
-confusionMatrix.testing$overall
-confusionMatrix.testing$byClass
+kable(confMatrix$table)
 @
 
 % \subsubsection*{Regressão logística (GLM)}

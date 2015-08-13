@@ -262,6 +262,7 @@ knit_hooks$set(inline = format_inline)
 
 \appendix
 \input{apendice-lista-dos-partidos}
+\Sexpr{knit_child('apendice-tabela-com-pontos-de-corte.Rnw')}
 \Sexpr{knit_child('apendice-session-info.Rnw')}
 
 %\input{apendice-b}

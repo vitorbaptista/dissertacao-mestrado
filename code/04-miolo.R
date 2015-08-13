@@ -83,6 +83,7 @@ data_proportions = table(data$changed_coalition) / nrow(data)
 training_original_proportions = table(training.original$changed_coalition) / nrow(training.original)
 training_downsampled_proportions = table(training.downsampled$changed_coalition) / nrow(training.downsampled)
 validation_proportions = table(validation$changed_coalition) / nrow(validation)
+testing_roc_proportions = table(testing.roc$changed_coalition) / nrow(testing.roc)
 testing_proportions = table(testing$changed_coalition) / nrow(testing)
 
 ## ---- bootstrap-models-rocs ----
@@ -93,6 +94,7 @@ calculateROCs = function(data, models) {
     set.seed(1)
     roc0 = roc(data$changed_coalition,
                predict(models[[modelName]], newdata = data, type = "prob")[,1],
+               levels = c("N", "S"),
                plot = FALSE,
                ci = TRUE,
                of = "thresholds",
@@ -142,31 +144,53 @@ createGroups = function (data, numericGroups = 5) {
   result
 }
 
+# Downsample validation and concatenate with training
 set.seed(1)
-numericGroups = 3
 predictors = c("before", "before.sd", "after", "after.sd", "mid_vote_month", "mid_vote_legislature_year")
-tmp = rbind(training.original, validation)
-tmp.minority_percent = min(table(tmp$changed_coalition)) / nrow(tmp)
-tmp.majority_training.original = tmp[tmp$changed_coalition == "N",]
-downsampleIndex = createDataPartition(createGroups(tmp.majority_training.original[,predictors], numericGroups),
+output = "changed_coalition"
+tmp.minority_percent = min(table(validation$changed_coalition)) / nrow(validation)
+tmp.majority_validation = validation[validation$changed_coalition == "N",]
+downsampleIndex = createDataPartition(createGroups(tmp.majority_validation[,predictors], numericGroups),
                                       p = tmp.minority_percent,
                                       list = FALSE)
-training.downsampled = rbind(tmp.majority_training.original[downsampleIndex,],
-                             tmp[tmp$changed_coalition == "S",])
+training.final = rbind(training.downsampled[,c(predictors, output)],
+                       tmp.majority_validation[downsampleIndex,
+                                               c(predictors, output)],
+                       validation[validation$changed_coalition == "S",
+                                  c(predictors, output)])
+training_final_proportions = table(training.final$changed_coalition) / nrow(training.final)
 
-C5.0.Final = train(changed_coalition ~ before * after * before.sd * after.sd * mid_vote_month * mid_vote_legislature_year,
-                   data = training.downsampled,
-                   method = "C5.0",
-                   tuneGrid = models$C5.0$bestTune,
-                   # Use all data for training
-                   trControl = trainControl(method = "none"))
+models$final = train(changed_coalition ~ before * after * before.sd * after.sd * mid_vote_month * mid_vote_legislature_year,
+                     data = training.final,
+                     method = "C5.0",
+                     tuneGrid = models$C5.0$bestTune,
+                     # Use all data for training
+                     trControl = trainControl(method = "none"))
+
+## ---- find-cutoff ----
+set.seed(1)
+roc.finding_cutoff = roc(testing.roc$changed_coalition,
+               predict(models$final, newdata = testing.roc, type = "prob")[,1],
+               levels = c("N", "S"),
+               plot = FALSE,
+               ci = TRUE,
+               of = "thresholds",
+               thresholds = "local maximas")
+cutoffPoint = roc.finding_cutoff$ci$specificity[which(roc.finding_cutoff$ci$specificity[,1] >= 0.9),]
+cutoffPoint = as.numeric(rownames(cutoffPoint)[[1]])
+
+invisible(plot(roc.finding_cutoff, print.auc = TRUE, ci = FALSE, print.thres =
+               c(0.5, cutoffPoint),
+               print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
+               print.auc.y = 0.25,
+               xlab = "Especificidade",
+               ylab = "Sensibilidade"))
+thresholds = ci.thresholds(roc.finding_cutoff, thresholds = c(0.5, cutoffPoint))
+invisible(plot(thresholds))
 
 ## ---- bootstrap-roc-and-confusion-matrix-final-model ----
-cutoffPoint = 0.5
-tmp = calculateROCs(testing, list(final = models$C5.0))
-rocs.testing$final = tmp$final
-tmp.predictions = predict(models$C5.0, newdata = testing, type = "prob")[,1]
+rocs.testing$final = calculateROCs(testing, list(final = models$final))$final
+tmp.predictions = predict(models$final, newdata = testing, type = "prob")[,1]
 tmp.predictions = factor(ifelse(tmp.predictions > cutoffPoint, "S", "N"),
-                         levels = c("S", "N"), ordered = TRUE)
-confusionMatrix.testing = confusionMatrix(tmp.predictions, testing$changed_coalition,
-                                          dnn = c("Previsão", "Referência"))
+                         levels = levels(testing$changed_coalition))
+confMatrix = confusionMatrix(tmp.predictions, testing$changed_coalition)
