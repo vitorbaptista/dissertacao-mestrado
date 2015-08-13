@@ -690,49 +690,7 @@ No \emph{downsampling}, selecionamos todas as observações da categoria mais
 rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
 mais comum, chegando assim a um conjunto de dados balanceado. Na amostragem, é
 imprescindível que as características das variáveis independentes sejam
-mantidas o mais próximo possível. Nas figuras
-\ref{fig:densidade-original-downsampled-temporal}
-\ref{fig:densidade-original-downsampled-pontos-ideais}, vemos que tanto os
-aspectos temporais quanto as distribuições dos pontos ideais foram mantidos.
-
-<<densidade-original-downsampled-temporal, fig.cap="Densidade de mudanças e não-mudanças de posicionamento por mês em cada ano da legislatura nos conjuntos de dados de validação e teste. Visualmente, a densidade dos dois conjuntos é parecida.">>=
-tmp = data.frame(changed_coalition = c(training.original$changed_coalition,
-                                       training$changed_coalition),
-                 month = c(training.original$mid_vote_month,
-                           training$mid_vote_month),
-                 legislature_year = c(training.original$mid_vote_legislature_year,
-                                      training$mid_vote_legislature_year),
-                 dataset = c(rep("Original", nrow(training.original)),
-                             rep("Downsampled", nrow(training))))
-
-tmp$changed_coalition = factor(tmp$changed_coalition, labels = c("Sim", "Não"))
-tmp$month = as.Date(paste0("2014-", tmp$month, "-01"))
-tmp$dataset = factor(tmp$dataset, levels = c("Original", "Downsampled"))
-
-ggplot(tmp, aes(x = month)) +
-  facet_grid(legislature_year ~ dataset) +
-  geom_density(aes(fill = changed_coalition, colour = changed_coalition), alpha = 0.3) +
-  scale_x_date(breaks = months[c(1, 6, 12)],
-               labels = date_format("%b"),
-               limits = months[c(1, 12)]) +
-  guides(fill = guide_legend(title = "Mudou de posicionamento"),
-         colour = guide_legend(title = "Mudou de posicionamento")) +
-  labs(x = "Mês", y = "Densidade")
-@
-
-% FIXME: Esses dados não têm padrão similar, porque não levei em consideração
-% os pontos ideias no downsampling. Preciso corrigir e re-treinar os modelos.
-<<densidade-original-downsampled-pontos-ideais, fig.cap="Densidade dos pontos ideais nos dados de treino originais e downsampled. Ambos têm um padrão similar.">>=
-tmp = data.frame(ponto_ideal = c(training.original$before, training.original$after,
-                                 training$before, training$after),
-                 Dados = c(rep("Original", nrow(training.original) * 2),
-                           rep("Downsampled", nrow(training) * 2)))
-tmp$dataset = factor(tmp$Dados, levels = c("Original", "Downsampled"))
-ggplot(tmp, aes(x = ponto_ideal)) +
-  theme(legend.position = "right") +
-  geom_density(aes(fill = Dados, colour = Dados), alpha = 0.3) +
-  labs(x = "Ponto ideal", y = "Densidade")
-@
+mantidas o mais próximo possível.
 
 Por definição, o \emph{downsampling} altera a distribuição real das categorias,
 por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
