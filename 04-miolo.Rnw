@@ -1,5 +1,5 @@
 <<cache=FALSE>>=
-knitr::read_chunk('blah.R')
+knitr::read_chunk('code/04-miolo.R')
 @
 
 <<load-data-and-models>>=
