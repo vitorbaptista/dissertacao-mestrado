@@ -49,17 +49,6 @@ kable(stats_legislaturas,
 \label{table:estatisticas-legislaturas}
 \end{table}
 
-Durante o período de estudo, alguns partidos mudaram de nome ou se fundiram.
-Para evitar que consideremos os parlamentares desses partidos como migrantes,
-normalizamos os nomes dos partidos. No caso de mudanças de nomes usamos a sigla
-do primeiro e do último nome. Por exemplo, o PFL se tornou o DEM, então usamos
-a sigla PFL>DEM. Já no caso de fusões, usamos a sigla do maior partido na data
-da fusão e do novo nome. Por exemplo, o PL se fundiu com o PRONA para formar o
-PR, então temos PL>PR. Esta é a mesma normalização usada pelo \gls{CEBRAP} em
-seu banco de dados legislativo \cite{Freitas2008}. A lista completa dos
-partidos e seus nomes normalizados pode ser consultada no apêndice
-\ref{apendice:lista-partidos}.
-
 % Coalizão
 A lista das coalizões foi obtida através do banco de dados
 legislativos do \gls{CEBRAP}. Ela contém a data de início e fim e a composição
