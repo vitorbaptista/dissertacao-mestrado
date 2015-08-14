@@ -79,6 +79,14 @@
 \newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
+\newacronym{ROC}{ROC}{\emph{Receiver operating characteristic}}
+\newacronym{AUC}{AUC}{Área sob a curva ROC}
+\newacronym{GLM}{GLM}{Regress\~ao log\'istica}
+\newacronym{SVM}{SVM}{\emph{Support Vector Machine}}
+\newacronym{RF}{RF}{\emph{Random Forest}}
+\newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}
+\newacronym{NNET}{NNET}{Rede Neural}
+
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
@@ -262,6 +270,7 @@ knit_hooks$set(inline = format_inline)
 
 \appendix
 \input{apendice-lista-dos-partidos}
+\Sexpr{knit_child('apendice-parametros-modelos.Rnw')}
 \Sexpr{knit_child('apendice-tabela-com-pontos-de-corte.Rnw')}
 \Sexpr{knit_child('apendice-session-info.Rnw')}
 

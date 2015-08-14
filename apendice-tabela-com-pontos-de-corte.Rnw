@@ -1,0 +1,23 @@
+\chapter{Lista de pontos de corte do modelo final}
+\label{apendice:lista-pontos-de-corte}
+
+<<>>=
+tmp.thres = round(as.numeric(rownames(roc.finding_cutoff$ci[[1]])), 3)
+tmp.sp = apply(roc.finding_cutoff$ci[[1]], c(1, 2), format_percent)
+tmp.se = apply(roc.finding_cutoff$ci[[2]], c(1, 2), format_percent)
+tmp.rows = cbind(tmp.thres, tmp.sp, tmp.se)
+
+tmp.rows = apply(tmp.rows, 1, function (x) {
+  paste(paste(x, collapse = " & "), "\\\\")
+})
+@
+
+\begin{longtable}{l l l l l l l}
+\centering
+  Threshold & \multicolumn{3}{c}{Especificidade} & \multicolumn{3}{c}{Sensibilidade} \\ \cline{2-7}
+            & \multicolumn{1}{|l}{Mínimo} & Mediano & Máximo & \multicolumn{1}{|l}{Mínimo} & Mediano & \multicolumn{1}{l|}{Máximo} \\
+  \hline
+  \Sexpr{paste(tmp.rows, collapse = "\n")}
+\caption{Especificidade e sensibilidade em diversos pontos de corte do modelo
+final usando o conjunto de dados para definição do ponto de corte.}
+\end{longtable}

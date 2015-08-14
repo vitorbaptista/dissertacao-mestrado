@@ -1,0 +1,32 @@
+% FIXME: Preciso melhorar essa tabela
+\chapter{Parâmetros dos modelos}
+\label{apendice:parametros-modelos}
+
+<<>>=
+blah = function(lst) {
+  sort(gsub("\\.", ",", unique(lst)))
+}
+@
+
+\begin{table}
+\centering
+\begin{tabular}{l l l}
+  Modelo & Parâmetro & Valores \\
+  \hline
+  C5.0 & model & \Sexpr{blah(models$C5.0$results$model)} \\
+       & winnow & \Sexpr{blah(models$C5.0$results$winnow)} \\
+       & trials & \Sexpr{blah(models$C5.0$results$trials)} \\
+  NNET & size & \Sexpr{blah(models$nnet$results$size)} \\
+       & decay & \Sexpr{blah(models$nnet$results$decay)} \\
+  GBM  & shrinkage & \Sexpr{blah(models$gbm$results$shrinkage)} \\
+       & interaction.depth & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
+       & n.minobsinnode & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
+       & n.trees & \Sexpr{blah(models$gbm$results$n.trees)} \\
+  RF & mtry & \Sexpr{blah(models$rf$results$mtry)} \\
+  SVM Radial & C & \Sexpr{blah(models$svmRadial$results$C)} \\
+             & sigma & \Sexpr{blah(models$svmRadial$results$sigma)} \\
+  GLM & --- & --- \\
+\end{tabular}
+\end{table}
+
+
