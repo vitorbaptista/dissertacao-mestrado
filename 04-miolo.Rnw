@@ -7,11 +7,11 @@ knitr::read_chunk('code/04-miolo.R')
 
 \chapter{Desenvolvimento do modelo preditivo}\label{cap:desenvolvimento}
 
-Neste capítulo apresentaremos o processo de desenvolvimento, partindo da
-definição dos objetivos e período de estudo, passando pela extração, limpeza e
-transformação dos dados, que serão brevemente analisados para entendermos suas
-características e, a partir delas, escolher possíveis modelos preditivos que
-serão validados para chegar ao modelo final.
+Neste capítulo apresentaremos o processo de criação do modelo preditivo,
+partindo da coleta e preparação dos dados, onde serão estimadas as mudanças de
+comportamento, passando pela análise dos dados visando definir os preditores
+(variáveis independentes). Ao final, treinaremos 6 tipos de modelos diferentes,
+escolhendo o final de acordo com a \glsfirst{AUC}.
 
 \section{Coleta dos dados}
 
