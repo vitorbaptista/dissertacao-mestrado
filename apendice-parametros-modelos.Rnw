@@ -4,29 +4,35 @@
 
 <<>>=
 blah = function(lst) {
-  sort(gsub("\\.", ",", unique(lst)))
+  gsub("\\.", ",", sort(unique(lst)))
+}
+
+aux = function(model, param, label, modelName = "") {
+  values = blah(model$results[[param]])
+  result = c(paste(c(modelName, label, values[[1]]), collapse = " & "))
+  for (value in values[2:length(values)]) {
+  result = c(result,
+             paste(c("", "", value), collapse = " & "))
+  }
+  paste(result, collapse = " \\\\\n")
 }
 @
 
-\begin{table}
+\begin{longtable}{l l l}
 \centering
-\begin{tabular}{l l l}
   Modelo & Parâmetro & Valores \\
   \hline
-  C5.0 & model & \Sexpr{blah(models$C5.0$results$model)} \\
-       & winnow & \Sexpr{blah(models$C5.0$results$winnow)} \\
-       & trials & \Sexpr{blah(models$C5.0$results$trials)} \\
-  NNET & size & \Sexpr{blah(models$nnet$results$size)} \\
-       & decay & \Sexpr{blah(models$nnet$results$decay)} \\
-  GBM  & shrinkage & \Sexpr{blah(models$gbm$results$shrinkage)} \\
-       & interaction.depth & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
-       & n.minobsinnode & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
-       & n.trees & \Sexpr{blah(models$gbm$results$n.trees)} \\
-  RF & mtry & \Sexpr{blah(models$rf$results$mtry)} \\
-  SVM Radial & C & \Sexpr{blah(models$svmRadial$results$C)} \\
+  C5.0 & Tipo de modelo & \Sexpr{blah(models$C5.0$results$model)} \\
+       & Winnow & \Sexpr{blah(models$C5.0$results$winnow)} \\
+       & Número de iterações de boosting & \Sexpr{blah(models$C5.0$results$trials)} \\
+  NNET & Número de unidades ocultas & \Sexpr{blah(models$nnet$results$size)} \\
+  \Sexpr{aux(models$nnet, "decay", "Decaimento")} \\
+  GBM  & Encolhimento & \Sexpr{blah(models$gbm$results$shrinkage)} \\
+       & Profundidade máxima das árvores & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
+       & Tamanho mínimo dos nós folha & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
+       & Número de iterações de boosting & \Sexpr{blah(models$gbm$results$n.trees)} \\
+  RF & Número de preditores aleatórios & \Sexpr{blah(models$rf$results$mtry)} \\
+  SVM Radial & Custo & \Sexpr{blah(models$svmRadial$results$C)} \\
              & sigma & \Sexpr{blah(models$svmRadial$results$sigma)} \\
   GLM & --- & --- \\
-\end{tabular}
-\end{table}
-
-
+\end{longtable}
