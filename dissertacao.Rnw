@@ -80,13 +80,12 @@
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
 \newacronym{ROC}{ROC}{\emph{Receiver operating characteristic}}
-\newacronym{AUC}{AUC}{Área sob a curva ROC}
-\newacronym{GLM}{GLM}{Regress\~ao log\'istica}
+\newacronym{AUC}{AUC}{\'area sob a curva ROC}
+\newacronym{GLM}{GLM}{regress\~ao log\'istica}
 \newacronym{SVM}{SVM}{\emph{Support Vector Machine}}
 \newacronym{RF}{RF}{\emph{Random Forest}}
 \newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}
-\newacronym{NNET}{NNET}{Rede Neural}
-
+\newacronym{NNET}{NNET}{rede neural}
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
@@ -173,6 +172,7 @@ showstringspaces=false
 
 \Sumario
 \ListadeSiglas
+\printglossaries
 \listoffigures
 \listoftables
 \lstlistoflistings %lista de codigos fonte - Para inserir a listagem de

@@ -575,7 +575,7 @@ sem migrar de partido não têm um padrão claro.
 Esta seção trata do desenvolvimento do modelo preditivo. Para isto,
 inicialmente definirei as variáveis dependente e independentes e as divisões do
 conjunto de dados e, em seguida, treinarei modelos de diversos tipos, buscando
-o que possui a maior área sob a curva ROC (AUC). Encontrado esse modelo,
+o que possui a maior \gls{AUC}. Encontrado esse modelo,
 definirei o ponto de corte para classificação das categorias, e estimarei sua
 performance final.
 
@@ -752,37 +752,37 @@ independentes definidas em \ref{cap:miolo:variaveis-independentes} e suas
 interações\footnote{As interações são definidas como a multiplicação entre cada
 permutação das variáveis. Isso permite ao modelo usar preditores mais complexos
 como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
-modelos é a área sob a curva ROC (AUC).
+modelos é a \glsfirst{AUC}.
 
 \begin{table}
 \centering
 \begin{tabular}{l l c}
   Natureza & Sigla & Nome \\
   \hline
-  Linear & GLM & Regressão logística \\
+  Linear & GLM & \Glsfirst{GLM} \\
   Não-linear & SVM Radial & SVM com kernel radial \\
-  Não-linear & RF & Random Forest\\
-  Não-linear & GBM & Stochastic Gradient Boosting \\
+  Não-linear & RF & \glsfirst{RF}\\
+  Não-linear & GBM & \glsfirst{GBM} \\
   Não-linear & C5.0 & C5.0 \\
-  Não-linear & NNET & Rede Neural \\
+  Não-linear & NNET & \Glsfirst{NNET} \\
 \end{tabular}
 \caption{Tipos de modelos preditivos testados.}
 \label{table:tipos-de-modelos}
 \end{table}
 
 A tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
-cada modelo que obteve o maior AUC no conjunto de validação, juntamente com seus
+cada modelo que obteve o maior \gls{AUC} no conjunto de validação, juntamente com seus
 intervalos de confiança em 95\%\footnote{O intervalo de confiança foi
 calculado usando 2.000 amostragens com reposição do conjunto de validação,
 mantendo as proporções das classes. Essa técnica é chamada de
 \emph{bootstraping} estratificado. O número de amostragens foi baseado nos
 trabalhos de \citeonline{Carpenter2000} e \citeonline{R:pROC}.}. O que
-apresentou o maior AUC foi o C5.0, com \Sexpr{ci(rocs.validation$C5.0)[[2]]}
+apresentou o maior \gls{AUC} foi o C5.0, com \Sexpr{ci(rocs.validation$C5.0)[[2]]}
 (\Sexpr{ci(rocs.validation$C5.0)[[1]]}, \Sexpr{ci(rocs.validation$C5.0)[[3]]}),
 contra \Sexpr{ci(rocs.validation$nnet)[[2]]}
 (\Sexpr{ci(rocs.validation$nnet)[[1]]}, \Sexpr{ci(rocs.validation$nnet)[[3]]})
 do segundo lugar, o de redes neurais. Na figura \ref{fig:rocs-validation} é
-possível visualizar mais facilmente a diferença do AUC entre os modelos.
+possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
 
 % FIXME: O sigma do SVM Radial não pode ser arredondado
 \begin{table}
@@ -805,8 +805,8 @@ possível visualizar mais facilmente a diferença do AUC entre os modelos.
              & Sigma & \Sexpr{gsub("\\.", ",", round(models$svmRadial$bestTune$sigma, 5))} & & & \\
   GLM & --- & --- & \Sexpr{paste(lapply(ci(rocs.validation$glm), format_inline), collapse = "&")} \\
 \end{tabular}
-\caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
-ROC (AUC) no conjunto de validação.}
+\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
+no conjunto de validação.}
 \label{table:resultados-validacao}
 \end{table}
 
@@ -877,7 +877,7 @@ tmp.fp_best = round((1 - spec_best) * tmp.negative)
 tmp.fn_best = round((1 - sens_best) * tmp.positive)
 @
 
-A figura \ref{fig:find-cutoff} mostra a curva ROC do modelo no conjunto de
+A figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
 dados de definição do ponto de corte com dois pontos em destaque: o padrão 0,5
 e o escolhido \Sexpr{cutoffPoint}. Considerando o corte em 0,5, no exemplo
 acima \Sexpr{tmp.tp_05 + tmp.fp_05} parlamentares seriam classificados como
@@ -892,22 +892,20 @@ falsos negativos.  Em outras palavras, ao mudar o ponto de corte de 0,5 para
 positivos a menos por \Sexpr{tmp.fn_best - tmp.fn_05} falsos negativos a mais.
 No apêndice \ref{apendice:lista-pontos-de-corte}, há uma tabela com os pontos
 de corte, e suas respectivas sensibilidades e especificidades. Eles foram
-escolhidos buscando os máximos locais da curva ROC.
+escolhidos buscando os máximos locais da curva \gls{ROC}
 
 <<bootstrap-roc-and-confusion-matrix-final-model>>=
 @
 
-O modelo final alcançou uma área sob a curva ROC (AUC)
-\Sexpr{ci(rocs.testing$final)[[2]]} (\Sexpr{ci(rocs.testing$final)[[1]]},
-\Sexpr{ci(rocs.testing$final)[[3]]}), como visto na figura
-\ref{fig:roc-final-model}. Considerando o ponto de corte em
-\Sexpr{cutoffPoint}, o modelo possui Kappa
+O modelo final alcançou uma \gls{AUC} \Sexpr{ci(rocs.testing$final)[[2]]}
+(\Sexpr{ci(rocs.testing$final)[[1]]}, \Sexpr{ci(rocs.testing$final)[[3]]}),
+como visto na figura \ref{fig:roc-final-model}. Considerando o ponto de corte
+em \Sexpr{cutoffPoint}, o modelo possui Kappa
 \Sexpr{confMatrix$overall[["Kappa"]]} e
-\Sexpr{format_percent(confMatrix$byClass[["Sensitivity"]])} das
-mudanças (sensibilidade) e
-\Sexpr{format_percent(confMatrix$byClass[["Specificity"]])} das
-não-mudanças de posicionamento (especificidade) classificadas corretamente. A
-tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
+\Sexpr{format_percent(confMatrix$byClass[["Sensitivity"]])} das mudanças
+(sensibilidade) e \Sexpr{format_percent(confMatrix$byClass[["Specificity"]])}
+das não-mudanças de posicionamento (especificidade) classificadas corretamente.
+A tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
 nos dados de teste. De acordo com a classificação de \citeonline{HosmerJr2013}
 descrita na tabela \ref{table:valores-auc}, o modelo possui um poder de
 discriminação excelente.
@@ -938,55 +936,22 @@ invisible(plot(ci.thresholds(rocs.testing$final, thresholds = cutoffPoint)))
 \label{table:confusion-matrix-final-model}
 \end{table}
 
-% \subsubsection*{Regressão logística (GLM)}
-%
-% Sem parâmetros, chegou a uma área sob a curva ROC de
-% \Sexpr{rocs.validation$glm$auc} no conjunto de validação.
-%
-% \subsubsection*{SVM Linear}
-%
-% Parametro ``C'' (custo) mantido constante em 1. Área sob a curva ROC
-% \Sexpr{rocs.validation$svmLinear$auc} no conjunto de validação.
-%
-% \subsubsection*{SVM Radial}
-%
-% Parametros sigma mantido constante em
-% \Sexpr{unique(models$svmRadial$results$sigma)} e custo variando em
-% \Sexpr{sort(unique(models$svmRadial$results$C))}. Área sob a curva ROC
-% \Sexpr{rocs.validation$svmRadial$auc} no conjunto de validação.
-%
-% \subsubsection*{GBM}
-%
-% Parametros shrinkage constante em \Sexpr{unique(models$gbm$results$shrinkage)},
-% interaction.depth em \Sexpr{unique(models$gbm$results$interaction.depth)},
-% n.minobsinnode em \Sexpr{unique(models$gbm$results$n.minobsinnode)}, e n.trees
-% em \Sexpr{unique(models$gbm$results$n.trees)}. Área sob a curva ROC
-% \Sexpr{rocs.validation$gbm$auc} no conjunto de validação.
-%
-% \subsubsection*{RF}
-%
-% Parâmetro mtry em \Sexpr{unique(models$rf$results$mtry)}. Área sob a curva ROC
-% \Sexpr{rocs.validation$rf$auc} no conjunto de validação.
-%
-% Usa um conjunto (\emph{ensemble}) de árvores de decisão treinados com um
-% conjunto aleatório com reposição do conjunto de treino original\footnote{Esta
-% técnica é conhecida como \emph{bagging}.}. Em problemas de classificação, o
-% resultado do random forest é definido como o resultado da maioria das árvores
-% (moda).
-%
-% \subsubsection*{C5.0}
-%
-% Parâmetros model em \Sexpr{unique(models$C5.0$results$model)}, winnow em
-% \Sexpr{unique(models$C5.0$results$winnow)} e trials em
-% \Sexpr{unique(models$C5.0$results$trials)}. Área sob a curva ROC
-% \Sexpr{rocs.validation$C5.0$auc} no conjunto de validação.
-%
-% \subsubsection*{NNET}
-%
-% Parâmetros size em \Sexpr{unique(models$nnet$results$size)} e decay em
-% \Sexpr{unique(models$nnet$results$decay)}. Área sob a curva ROC
-% \Sexpr{rocs.validation$nnet$auc} no conjunto de validação.
-
 \section{Considerações Finais}
 
-Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, analisa e gera relatórios para os usuários. Cada parte pode ser modificada e expandida, e os dados (e algoritmos) podem ser usados por outras pessoas. Daqui falta validar que os algoritmos na parte de análise geram algo interessante.
+Na primeira parte desta seção, foram apresentadas as etapas seguidas para
+coleta e preparação dos dados, descrevendo os parâmetros usados na estimação
+dos pontos ideais, e a definição do ``raio de influência'' das mudanças de
+posicionamento. Após isso, os dados foram analisados, identificando suas
+características e aspectos temporais.
+
+Ao final, o processo de modelagem foi apresentado, com a definição das
+variáveis dependente e independentes e divisão da base de dados, e o teste de 6
+tipos de modelos preditivos: \gls{GLM}, SVM com kernel radial, \gls{RF},
+\gls{GBM}, C5.0 e \gls{NNET}. Com base na \glsfirst{AUC}, o modelo que usou
+C5.0 foi escolhido. Após a definição do ponto de corte, ele alcançou um
+\gls{AUC} \Sexpr{ci(rocs.testing$final)[[2]]} no conjunto de teste, tendo um
+poder de discriminação excelente de acordo com a classificação de
+\citeonline{HosmerJr2013}.
+
+Na próxima seção, apresentarei as conclusões da pesquisa, descrevendo os
+resultados obtidos, suas limitações e possíveis trabalhos futuros.

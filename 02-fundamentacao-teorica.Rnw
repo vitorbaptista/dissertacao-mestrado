@@ -180,10 +180,10 @@ Grande parte das ferramentas usa 50\% por padrão, que geralmente é uma escolha
 interessante caso o custo de um falso positivo e falso negativo seja o mesmo e
 as categorias sejam balanceadas. Caso contrário, é recomendável testar outros
 valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
-modelo usando diferentes pontos de corte é a curva ROC (\emph{Receiver Operator
-Characteristic}) \cite{Altman1994,Brown2006,Fawcett2006}.
+modelo usando diferentes pontos de corte é a curva \gls{ROC}
+\cite{Altman1994,Brown2006,Fawcett2006}.
 
-A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva ROC com os
+A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
 valores discriminados em dois pontos: 0,5 e 0,614. A partir desse gráfico,
 percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
 o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
@@ -209,27 +209,28 @@ roc0 = roc(tmp.testing$Class,
            ylab = "Sensibilidade")
 @
 
-Além de auxiliar na escolha do ponto de corte, a curva ROC também pode ser
-usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
-comparando a área sob suas curvas (AUC). O modelo na figura
-\ref{fig:exemplo-roc} possui AUC 0,787. Quanto mais próximo a curva está do
-canto superior esquerdo, maior é seu AUC e, em geral, maior é sua performance.
-O modelo perfeito tem AUC 1, já um modelo aleatório tem AUC próximo de 0,5 e
-segue na diagonal do gráfico. O que caracteriza é um AUC bom ou ruim varia de
-caso a caso, mas \citeonline{HosmerJr2013} definiram uma regra geral para
-avaliação descrita na tabela \ref{table:valores-auc}.
+Além de auxiliar na escolha do ponto de corte, a curva \gls{ROC} também pode
+ser usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
+comparando a área sob suas curvas (\acrshort{AUC}). O modelo na figura
+\ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
+do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
+performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
+tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza é um
+\acrshort{AUC} bom ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013}
+definiram uma regra geral para avaliação descrita na tabela
+\ref{table:valores-auc}.
 
 \begin{table}
 \centering
 \begin{tabular}{c l}
-  AUC & \multicolumn{1}{c}{Valor} \\
+  \acrshort{AUC} & \multicolumn{1}{c}{Valor} \\
   \hline
   0,5 & Não há discriminação \\
   Entre 0,7 e 0,8 & Discriminação aceitável \\
   Entre 0,8 e 0,9 & Discriminação excelente \\
   Acima de 0,9 & Discriminação excepcional \\
 \end{tabular}
-\caption{Regra geral para avaliação da área sob a curva ROC de \citeonline{HosmerJr2013}.}
+\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
 \label{table:valores-auc}
 \end{table}
 

@@ -129,13 +129,12 @@
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
 \newacronym{ROC}{ROC}{\emph{Receiver operating characteristic}}
-\newacronym{AUC}{AUC}{Área sob a curva ROC}
-\newacronym{GLM}{GLM}{Regress\~ao log\'istica}
+\newacronym{AUC}{AUC}{\'area sob a curva ROC}
+\newacronym{GLM}{GLM}{regress\~ao log\'istica}
 \newacronym{SVM}{SVM}{\emph{Support Vector Machine}}
 \newacronym{RF}{RF}{\emph{Random Forest}}
 \newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}
-\newacronym{NNET}{NNET}{Rede Neural}
-
+\newacronym{NNET}{NNET}{rede neural}
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
@@ -222,6 +221,7 @@ showstringspaces=false
 
 \Sumario
 \ListadeSiglas
+\printglossaries
 \listoffigures
 \listoftables
 \lstlistoflistings %lista de codigos fonte - Para inserir a listagem de
@@ -431,10 +431,10 @@ Grande parte das ferramentas usa 50\% por padrão, que geralmente é uma escolha
 interessante caso o custo de um falso positivo e falso negativo seja o mesmo e
 as categorias sejam balanceadas. Caso contrário, é recomendável testar outros
 valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
-modelo usando diferentes pontos de corte é a curva ROC (\emph{Receiver Operator
-Characteristic}) \cite{Altman1994,Brown2006,Fawcett2006}.
+modelo usando diferentes pontos de corte é a curva \gls{ROC}
+\cite{Altman1994,Brown2006,Fawcett2006}.
 
-A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva ROC com os
+A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
 valores discriminados em dois pontos: 0,5 e 0,614. A partir desse gráfico,
 percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
 o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
@@ -448,27 +448,28 @@ levando em consideração nossos objetivos.
 
 \end{knitrout}
 
-Além de auxiliar na escolha do ponto de corte, a curva ROC também pode ser
-usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
-comparando a área sob suas curvas (AUC). O modelo na figura
-\ref{fig:exemplo-roc} possui AUC 0,787. Quanto mais próximo a curva está do
-canto superior esquerdo, maior é seu AUC e, em geral, maior é sua performance.
-O modelo perfeito tem AUC 1, já um modelo aleatório tem AUC próximo de 0,5 e
-segue na diagonal do gráfico. O que caracteriza é um AUC bom ou ruim varia de
-caso a caso, mas \citeonline{HosmerJr2013} definiram uma regra geral para
-avaliação descrita na tabela \ref{table:valores-auc}.
+Além de auxiliar na escolha do ponto de corte, a curva \gls{ROC} também pode
+ser usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
+comparando a área sob suas curvas (\acrshort{AUC}). O modelo na figura
+\ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
+do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
+performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
+tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza é um
+\acrshort{AUC} bom ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013}
+definiram uma regra geral para avaliação descrita na tabela
+\ref{table:valores-auc}.
 
 \begin{table}
 \centering
 \begin{tabular}{c l}
-  AUC & \multicolumn{1}{c}{Valor} \\
+  \acrshort{AUC} & \multicolumn{1}{c}{Valor} \\
   \hline
   0,5 & Não há discriminação \\
   Entre 0,7 e 0,8 & Discriminação aceitável \\
   Entre 0,8 e 0,9 & Discriminação excelente \\
   Acima de 0,9 & Discriminação excepcional \\
 \end{tabular}
-\caption{Regra geral para avaliação da área sob a curva ROC de \citeonline{HosmerJr2013}.}
+\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
 \label{table:valores-auc}
 \end{table}
 
@@ -1300,7 +1301,7 @@ sem migrar de partido não têm um padrão claro.
 Esta seção trata do desenvolvimento do modelo preditivo. Para isto,
 inicialmente definirei as variáveis dependente e independentes e as divisões do
 conjunto de dados e, em seguida, treinarei modelos de diversos tipos, buscando
-o que possui a maior área sob a curva ROC (AUC). Encontrado esse modelo,
+o que possui a maior \gls{AUC}. Encontrado esse modelo,
 definirei o ponto de corte para classificação das categorias, e estimarei sua
 performance final.
 
@@ -1462,38 +1463,39 @@ independentes definidas em \ref{cap:miolo:variaveis-independentes} e suas
 interações\footnote{As interações são definidas como a multiplicação entre cada
 permutação das variáveis. Isso permite ao modelo usar preditores mais complexos
 como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
-modelos é a área sob a curva ROC (AUC).
+modelos é a \glsfirst{AUC}.
 
 \begin{table}
 \centering
 \begin{tabular}{l l c}
   Natureza & Sigla & Nome \\
   \hline
-  Linear & GLM & Regressão logística \\
+  Linear & GLM & \Glsfirst{GLM} \\
   Não-linear & SVM Radial & SVM com kernel radial \\
-  Não-linear & RF & Random Forest\\
-  Não-linear & GBM & Stochastic Gradient Boosting \\
+  Não-linear & RF & \glsfirst{RF}\\
+  Não-linear & GBM & \glsfirst{GBM} \\
   Não-linear & C5.0 & C5.0 \\
-  Não-linear & NNET & Rede Neural \\
+  Não-linear & NNET & \Glsfirst{NNET} \\
 \end{tabular}
 \caption{Tipos de modelos preditivos testados.}
 \label{table:tipos-de-modelos}
 \end{table}
 
 A tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
-cada modelo que obteve o maior AUC no conjunto de validação, juntamente com seus
+cada modelo que obteve o maior \gls{AUC} no conjunto de validação, juntamente com seus
 intervalos de confiança em 95\%\footnote{O intervalo de confiança foi
 calculado usando 2.000 amostragens com reposição do conjunto de validação,
 mantendo as proporções das classes. Essa técnica é chamada de
 \emph{bootstraping} estratificado. O número de amostragens foi baseado nos
 trabalhos de \citeonline{Carpenter2000} e \citeonline{R:pROC}.}. O que
-apresentou o maior AUC foi o C5.0, com 0,97
+apresentou o maior \gls{AUC} foi o C5.0, com 0,97
 (0,96, 0,98),
 contra 0,86
 (0,84, 0,87)
 do segundo lugar, o de redes neurais. Na figura \ref{fig:rocs-validation} é
-possível visualizar mais facilmente a diferença do AUC entre os modelos.
+possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
 
+% FIXME: O sigma do SVM Radial não pode ser arredondado
 \begin{table}
 \centering
 \begin{tabular}{l l c c c c}
@@ -1501,7 +1503,7 @@ possível visualizar mais facilmente a diferença do AUC entre os modelos.
   & \multicolumn{1}{|l}{Nome} & \multicolumn{1}{c|}{Valor} & Mínimo & Mediano & \multicolumn{1}{c|}{Máximo} \\
   \hline
   C5.0 & Tipo & tree & 0,96&0,97&0,98 \\
-       & winnow & FALSE & & & \\
+       & Winnow & FALSE & & & \\
        & Iterações boosting & 30 & & & \\
   NNET & Unidades ocultas & 1 & 0,84&0,86&0,87 \\
        & Decaimento & 0,1 & & & \\
@@ -1514,8 +1516,8 @@ possível visualizar mais facilmente a diferença do AUC entre os modelos.
              & Sigma & 0,14232 & & & \\
   GLM & --- & --- & 0,38&0,41&0,43 \\
 \end{tabular}
-\caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
-ROC (AUC) no conjunto de validação.}
+\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
+no conjunto de validação.}
 \label{table:resultados-validacao}
 \end{table}
 
@@ -1573,7 +1575,7 @@ individual.
 
 
 
-A figura \ref{fig:find-cutoff} mostra a curva ROC do modelo no conjunto de
+A figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
 dados de definição do ponto de corte com dois pontos em destaque: o padrão 0,5
 e o escolhido 0,65. Considerando o corte em 0,5, no exemplo
 acima 166 parlamentares seriam classificados como
@@ -1586,21 +1588,19 @@ falsos negativos.  Em outras palavras, ao mudar o ponto de corte de 0,5 para
 positivos a menos por 9 falsos negativos a mais.
 No apêndice \ref{apendice:lista-pontos-de-corte}, há uma tabela com os pontos
 de corte, e suas respectivas sensibilidades e especificidades. Eles foram
-escolhidos buscando os máximos locais da curva ROC.
+escolhidos buscando os máximos locais da curva \gls{ROC}
 
 
 
-O modelo final alcançou uma área sob a curva ROC (AUC)
-0,88 (0,86,
-0,91), como visto na figura
-\ref{fig:roc-final-model}. Considerando o ponto de corte em
-0,65, o modelo possui Kappa
+O modelo final alcançou uma \gls{AUC} 0,88
+(0,86, 0,91),
+como visto na figura \ref{fig:roc-final-model}. Considerando o ponto de corte
+em 0,65, o modelo possui Kappa
 0,21 e
-52.08\% das
-mudanças (sensibilidade) e
-91.45\% das
-não-mudanças de posicionamento (especificidade) classificadas corretamente. A
-tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
+52.08\% das mudanças
+(sensibilidade) e 91.45\%
+das não-mudanças de posicionamento (especificidade) classificadas corretamente.
+A tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
 nos dados de teste. De acordo com a classificação de \citeonline{HosmerJr2013}
 descrita na tabela \ref{table:valores-auc}, o modelo possui um poder de
 discriminação excelente.
@@ -1627,58 +1627,25 @@ discriminação excelente.
 \label{table:confusion-matrix-final-model}
 \end{table}
 
-% \subsubsection*{Regressão logística (GLM)}
-%
-% Sem parâmetros, chegou a uma área sob a curva ROC de
-% rocs.validation$glm$auc no conjunto de validação.
-%
-% \subsubsection*{SVM Linear}
-%
-% Parametro ``C'' (custo) mantido constante em 1. Área sob a curva ROC
-% rocs.validation$svmLinear$auc no conjunto de validação.
-%
-% \subsubsection*{SVM Radial}
-%
-% Parametros sigma mantido constante em
-% unique(models$svmRadial$results$sigma) e custo variando em
-% sort(unique(models$svmRadial$results$C)). Área sob a curva ROC
-% rocs.validation$svmRadial$auc no conjunto de validação.
-%
-% \subsubsection*{GBM}
-%
-% Parametros shrinkage constante em unique(models$gbm$results$shrinkage),
-% interaction.depth em unique(models$gbm$results$interaction.depth),
-% n.minobsinnode em unique(models$gbm$results$n.minobsinnode), e n.trees
-% em unique(models$gbm$results$n.trees). Área sob a curva ROC
-% rocs.validation$gbm$auc no conjunto de validação.
-%
-% \subsubsection*{RF}
-%
-% Parâmetro mtry em unique(models$rf$results$mtry). Área sob a curva ROC
-% rocs.validation$rf$auc no conjunto de validação.
-%
-% Usa um conjunto (\emph{ensemble}) de árvores de decisão treinados com um
-% conjunto aleatório com reposição do conjunto de treino original\footnote{Esta
-% técnica é conhecida como \emph{bagging}.}. Em problemas de classificação, o
-% resultado do random forest é definido como o resultado da maioria das árvores
-% (moda).
-%
-% \subsubsection*{C5.0}
-%
-% Parâmetros model em unique(models$C5.0$results$model), winnow em
-% unique(models$C5.0$results$winnow) e trials em
-% unique(models$C5.0$results$trials). Área sob a curva ROC
-% rocs.validation$C5.0$auc no conjunto de validação.
-%
-% \subsubsection*{NNET}
-%
-% Parâmetros size em unique(models$nnet$results$size) e decay em
-% unique(models$nnet$results$decay). Área sob a curva ROC
-% rocs.validation$nnet$auc no conjunto de validação.
-
 \section{Considerações Finais}
 
-Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, analisa e gera relatórios para os usuários. Cada parte pode ser modificada e expandida, e os dados (e algoritmos) podem ser usados por outras pessoas. Daqui falta validar que os algoritmos na parte de análise geram algo interessante.
+Na primeira parte desta seção, foram apresentadas as etapas seguidas para
+coleta e preparação dos dados, descrevendo os parâmetros usados na estimação
+dos pontos ideais, e a definição do ``raio de influência'' das mudanças de
+posicionamento. Após isso, os dados foram analisados, identificando suas
+características e aspectos temporais.
+
+Ao final, o processo de modelagem foi apresentado, com a definição das
+variáveis dependente e independentes e divisão da base de dados, e o teste de 6
+tipos de modelos preditivos: \gls{GLM}, SVM com kernel radial, \gls{RF},
+\gls{GBM}, C5.0 e \gls{NNET}. Com base na \glsfirst{AUC}, o modelo que usou
+C5.0 foi escolhido. Após a definição do ponto de corte, ele alcançou um
+\gls{AUC} 0,88 no conjunto de teste, tendo um
+poder de discriminação excelente de acordo com a classificação de
+\citeonline{HosmerJr2013}.
+
+Na próxima seção, apresentarei as conclusões da pesquisa, descrevendo os
+resultados obtidos, suas limitações e possíveis trabalhos futuros.
 \input{05-conclusao}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
