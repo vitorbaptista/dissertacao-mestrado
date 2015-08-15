@@ -18,7 +18,9 @@
 
 # Problemas
 
-* No downsampling eu não considerei os pontos ideias, só a legislatura/mês/ano.
-  Deveria ter feito downsampling mantendo as características de tudo.
 * O SVM Linear e SVM Radial foram treinados usando id, legislatura, party,
   entre outros.
+* Estou usando o nome "período" para definir a janela de tempo, os períodos
+  "antes" e "depois", e o período antes da mudança de posicionamento que o
+  parlamentar muda de comportamento. Preciso escolher nomes diferentes para
+  cada uma dessas coisas, evitando confusões.

@@ -22,17 +22,17 @@ aux = function(model, param, label, modelName = "") {
 \centering
   Modelo & Parâmetro & Valores \\
   \hline
-  C5.0 & Tipo de modelo & \Sexpr{blah(models$C5.0$results$model)} \\
+  C5.0 & Tipo & \Sexpr{blah(models$C5.0$results$model)} \\
        & Winnow & \Sexpr{blah(models$C5.0$results$winnow)} \\
-       & Número de iterações de boosting & \Sexpr{blah(models$C5.0$results$trials)} \\
-  NNET & Número de unidades ocultas & \Sexpr{blah(models$nnet$results$size)} \\
+       & Iterações boosting & \Sexpr{blah(models$C5.0$results$trials)} \\
+  NNET & Unidades ocultas & \Sexpr{blah(models$nnet$results$size)} \\
   \Sexpr{aux(models$nnet, "decay", "Decaimento")} \\
   GBM  & Encolhimento & \Sexpr{blah(models$gbm$results$shrinkage)} \\
-       & Profundidade máxima das árvores & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
-       & Tamanho mínimo dos nós folha & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
-       & Número de iterações de boosting & \Sexpr{blah(models$gbm$results$n.trees)} \\
-  RF & Número de preditores aleatórios & \Sexpr{blah(models$rf$results$mtry)} \\
+       & Profundidade máxima & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
+       & Tamanho mínimo das folhas & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
+       & Iterações boosting & \Sexpr{blah(models$gbm$results$n.trees)} \\
+  RF & Preditores aleatórios & \Sexpr{blah(models$rf$results$mtry)} \\
   SVM Radial & Custo & \Sexpr{blah(models$svmRadial$results$C)} \\
-             & sigma & \Sexpr{blah(models$svmRadial$results$sigma)} \\
+             & Sigma & \Sexpr{blah(models$svmRadial$results$sigma)} \\
   GLM & --- & --- \\
 \end{longtable}

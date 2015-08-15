@@ -305,7 +305,7 @@ Há diversos modelos criados para estimar esses valores, como o NOMINATE,
 W-NOMINATE, DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
 não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
 Nosso foco neste trabalho é no W-NOMINATE.
-\cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
+\cite{Poole1985,Poole2000,Poole2005,Jackman2000,Clinton2004}
 
 O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
 \citeonline{Poole1985}. Eles são baseados no modelo de utilidade aleatória de

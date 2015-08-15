@@ -523,7 +523,7 @@ Há diversos modelos criados para estimar esses valores, como o NOMINATE,
 W-NOMINATE, DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
 não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
 Nosso foco neste trabalho é no W-NOMINATE.
-\cite{Poole2000,Poole2005,Poole2014,Jackman2000,Clinton2004}
+\cite{Poole1985,Poole2000,Poole2005,Jackman2000,Clinton2004}
 
 O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
 \citeonline{Poole1985}. Eles são baseados no modelo de utilidade aleatória de
@@ -766,17 +766,12 @@ serão validados para chegar ao modelo final.
 
 
 
-% Votações
-
-% FIXME: Super confuso. Tentei usar uma linguagem menos técnica, mas falhei
-% miseravelmente. Não ficou claro pra ninguém, nem os que conhecem a linguagem
-% técnica nem os que não conhecem.
 Os votos e votações foram extraídos diretamente do site da Câmara dos
-Deputados. Apesar da Câmara disponibilizar uma \gls{API} para consulta desses
-dados através de um programa, até a data de escrita deste trabalho esta
-consulta só poderia ser feita individualmente, votação por votação. Para
-desenvolver o modelo preditivo, precisamos ter acesso a todos os dados
-localmente, então desenvolvi um programa\footnote{Disponível em:
+Deputados através de sua \gls{API} \cite{CamaraDosDeputados2015}. Para
+desenvolver o modelo preditivo, precisamos ter acesso a todos os dados na
+máquina local. Entretanto, até a data de escrita deste trabalho, a \gls{API} da
+Câmara só permitia consultas individuais, votação por votação, por isso
+desenvolvi um programa\footnote{Disponível em:
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
 linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
 votações \cite{Python276,Scrapy}. A tabela
@@ -784,7 +779,6 @@ votações \cite{Python276,Scrapy}. A tabela
 votos e votações por legislatura. Em média, temos 624
 parlamentares e 332 votos em
 478 votações a cada legislatura.
-\nocite{CamaraDosDeputados2015}
 
 \begin{table}
 \centering
@@ -824,6 +818,15 @@ ocorreu entre legislaturas. Já a saída de Romário (PSB/RJ) da coalizão quand
 seu partido se tornou oposição em 2013 é considerada, pois ocorreu dentro de
 uma mesma legislatura.
 
+As coalizões são compostas pelos partidos que controlam ao menos um ministério.
+Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
+ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
+palavras, uma nova coalizão é formada quando um partido que não possuía nenhum
+ministério passa a ter ao menos um, quando um partido que controlava algum
+ministério passa a não ter nenhum, ou quando se inicia uma nova legislatura.
+Esses critérios foram definidos por \citeonline{Figueiredo2007}, inspirada no
+trabalho de \citeonline{Muller2000}.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \includegraphics[width=\maxwidth]{figure/tmp/mudancas-mensais-de-coalizao-1} \caption[Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agrupados mês a mês]{Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agrupados mês a mês.}\label{fig:mudancas-mensais-de-coalizao}
@@ -833,46 +836,44 @@ uma mesma legislatura.
 \end{knitrout}
 
 A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
-890 entradas e saídas da coalizão agrupadas
-mensalmente que ocorreram durante o período de estudo. Há meses que concentram
-as mudanças de posicionamento, possivelmente um reflexo da sazonalidade das
-trocas de partido \cite{Araujo2000,Melo2004,Freitas2008}. A linha tracejada
-marca a data da Resolução n\textordmasculine{} 22.610 do TSE, que em
-25/10/2007 alterou o entendimento das
-regras de fidelidade partidária, tornando-as mais restritas \cite{TSE2007}.
-Percebe-se que essa mudança alterou a frequência de entradas e saídas na
-coalizão, o que poderá influenciar na acurácia do nosso modelo.
+890 entradas e saídas da coalizão que ocorreram
+durante o período de estudo, agrupadas mensalmente. Há meses que concentram
+as mudanças de posicionamento, que serão melhor analisadas na seção
+\ref{cap:miolo:aspectos-temporais}. A linha tracejada marca a data da Resolução
+n\textordmasculine{} 22.610 do TSE, que em 25/10/2007
+alterou o entendimento das regras de fidelidade partidária, tornando-as mais
+restritas \cite{TSE2007}, o que aparentemente alterou os aspectos temporais das
+mudanças de posicionamento.
 
 \section{Preparação dos dados}
 
 % Universo de votações
 
+% FIXME: Confirmar uso da crase
 O período de análise deste trabalho é composto pela 50\textordfeminine{},
 51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
 54\textordfeminine{} legislaturas, compreendendo os 20 anos de 1995 até o
 início de 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o
 final do primeiro mandato de Dilma Rousseff. As 48\textordfeminine{} e
-49\textordfeminine{} legislaturas, iniciadas em 1987 e 1991 respectivamente,
-foram excluídas pois segundo \citeonline{Freitas2008} neste período os
-parlamentares ainda estão se acomodando as novas regras definidas pela
-Constituição de 1998.
+49\textordfeminine{} legislaturas, iniciadas respectivamente em 1987 e 1991,
+foram excluídas, pois, segundo \citeonline{Freitas2008}, elas ocorreram em um
+período onde parlamentares ainda estavam se acomodando às novas regras advindas
+da transição à democracia.
 
 % Universo de parlamentares
 
-% FIXME: Essa justificativa está fraca, e está misturada com a explicação de
-% quais parlamentares são considerados.
-A análise se restringe à Câmara dos Deputados pois o número de parlamentares é
-maior (existem 513 deputados federais contra 81 senadores) e os dados estão
-disponíveis mais facilmente no próprio site da Câmara. Considerei todos os
-parlamentares que votaram ao menos uma vez na Câmara, por isso o número é maior
-do que os 513 eleitos por legislatura.
+A análise se restringe à Câmara dos Deputados por três razões: facilidade na
+obtenção dos dados; maior número de parlamentares (513 contra 81 no Senado
+Federal), e; por normalmente ser a casa iniciadora, mais votações ocorrem na
+Câmara \cite{Vicente2012}.
 
-A unidade de análise usada é o parlamentar. Ela foi escolhida pois, apesar de
-grande parte da literatura apontar o papel fundamental dos partidos no
-comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}, trabalhar com
-os dados desagregados nos permite perceber movimentações como quando um
-parlamentar deixa um partido governista para entrar em um de oposição (ou
-vice-versa).
+A unidade de análise usada é o parlamentar, pois, apesar da literatura apontar o
+papel fundamental dos partidos no comportamento dos parlamentares
+\cite{Figueiredo2001,Santos2003,Freitas2008}, trabalhar com os dados
+desagregados nos permite perceber movimentações como quando um parlamentar
+deixa um partido governista para entrar em um de oposição (ou vice-versa).
+Considerei todos os parlamentares que votaram ao menos uma vez na Câmara, por
+isso o número é maior do que os 513 eleitos por legislatura.
 
 % Universo de votos
 
@@ -883,42 +884,82 @@ sendo a favor ou contra (por exemplo, considerando abstenções como votos
 contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
 criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
 
-% Composição das coalizões
+\subsection{Estimando a mudança de comportamento}
+\label{cap:miolo:estimando-mudanca-comportamento}
 
-% FIXME: Esse texto tá confuso.
-As coalizões são compostas pelos partidos que controlam ao menos um ministério.
-Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
-ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
-palavras, se um partido que não possuía nenhum ministério passa a ter ao menos
-um, ou se um partido deixa de controlar algum ministério, uma nova coalizão é
-formada. Esses critérios foram definidos por \citeonline{Figueiredo2007},
-inspirada no trabalho de \citeonline{Muller2000}.
+Para estimar a mudança de comportamento, seguirei a metodologia de
+\citeonline{Poole2005} descrita na seção
+\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} usando o modelo
+W-NOMINATE \cite{Poole1985}. Esse modelo foi escolhido pois, apesar de
+diversos outros modelos terem sido desenvolvidos nos 30 anos desde sua criação,
+ele continua sendo um dos modelos mais usados \cite{Poole2011}, inclusive no
+Brasil \cite{Leoni2002,Desposato2005b,Zucco2009,Freitas2012,Bernabel2015}.
 
+Ao estimar os pontos ideais usando esse modelo, precisamos definir 5
+parâmetros: número de dimensões; polaridade(s); critérios de inclusão de
+parlamentares e votações; número de repetições para estimar o erro, e; período
+de análise. Eles serão definidos nas próximas subseções.
 
-\subsection{Estimando os pontos ideais}
-\label{cap:miolo:estimando-pontos-ideais}
+\subsubsection{Número de dimensões}
 
-% FIXME: Falar sobre usar só uma dimensão (justificando com Leoni e Izumi) e a
-% escolha da polaridade.
+\citeonline{Leoni2002} analisou o número de dimensões necessárias para explicar
+o comportamento dos parlamentares na Câmara dos Deputados de 1991 a 1998.
+\citeonline{Freitas2012} expandiram esse trabalho analisando não só a Câmara,
+mas também o Senado Federal, usando os dados do período de 1988 a 2010.
+\citeonline{Izumi2013} analisou o Senado de 1989 a 2010 usando outro modelo
+espacial de votação, o \emph{Optimal Classification}. Exceto durante a
+49\textordfeminine{} legislatura, onde tivemos dois presidentes (Collor e
+Itamar Franco), todos concluíram que o congresso é predominantemente
+unidimensional. Como essa legislatura não será analisada neste trabalho, usarei
+uma única dimensão.
 
-O primeiro passo para se analisar uma mudança de comportamento é definir os
-períodos de estudo. Por exemplo, para analisar o efeito da saída do PSB da
-coalizão em outubro de 2013 no comportamento dos parlamentares, poderíamos
-definir o período inicial como sendo do início da legislatura até a data da
-saída do PSB, e o período final como sendo da saída do PSB até o final da
-legislatura. Como o objetivo deste trabalho não é analisar um período
-específico, mas criar um modelo que detecte mudanças na coalizão, não basta
-definir um, mas sim um conjunto de períodos.
+\subsubsection{Polaridade}
 
-Ao definir esses períodos precisamos levar em consideração diversos fatores.
+A polaridade define qual é a direção dos eixos das dimensões. No caso de uma
+única dimensão, o parlamentar escolhido como polaridade será colocado nos
+valores positivos. Idealmente, deve-se escolher um parlamentar que não tenha
+mudado de posicionamento no período e que tenha participado do maior número de
+votações. Como o PT é, historicamente, um dos partidos mais coesos do Brasil e
+nunca mudou de posicionamento durante uma legislatura, sendo sempre oposição
+até se tornar governo com a eleição de Lula em 2003, escolhi parlamentares
+filiados a ele como polaridade.
+
+O deputado José Genoíno foi usado nas 50\textordfeminine{},
+51\textordfeminine{} e 53\textordfeminine{} legislaturas, Arlindo Chinaglia na
+52\textordfeminine{} e Luiz Couto na 54\textordfeminine{}. Eles foram
+escolhidos pois nunca trocaram de partido, ocuparam cargos de liderança e
+participaram de um grande número de votações nas legislaturas em que foram
+escolhidos.
+
+\subsubsection{Critérios de inclusão de parlamentares e votações}
+\label{cap:miolo:criterios-de-inclusao}
+
+Incluímos parlamentares que participaram de no mínimo 20 votações cujo lado
+minoritário foi responsável por 2,5\% ou mais dos votos. Esses são os critérios
+padrão do W-NOMINATE, seguidos nos trabalhos de
+\citeonline{Leoni2002,Zucco2009,Freitas2012}.
+
+\subsubsection{Períodos de análise}
+\label{cap:miolo:periodos-de-analise}
+
+Na análise de uma mudança de comportamento, é preciso definir ao menos dois
+períodos: um anterior e outro posterior a data de interesse. Por exemplo, para
+analisar o efeito da saída do PSB da coalizão em outubro de 2013 no
+comportamento dos parlamentares, poderíamos definir o período inicial como
+sendo do início da legislatura até a data da saída do PSB, e o período final
+como sendo da saída do PSB até o final da legislatura. Como o objetivo deste
+trabalho não é analisar um período específico, mas criar um modelo que detecte
+mudanças na coalizão, não basta definir um, mas sim um conjunto de
+períodos.
+
+Ao definir esses períodos é preciso levar em consideração diversos fatores.
 Períodos muito curtos, por exemplo uma semana antes e uma semana depois, podem
 sofrer com a falta de votações suficientes ou serem demasiadamente
 influenciados por votações anômalas. Já períodos muito longos, como 5 anos
 antes e 5 anos depois, dificultam a interpretação dos resultados pois podem
 conter diversas mudanças de comportamento. No mínimo, precisamos de um período
-que contenha 20 votações cuja minoria responsável por ao menos 2,5\% dos
-votos\footnote{Estes são os critérios padrão de inclusão de parlamentares e
-votações do W-NOMINATE, que seguimos neste trabalho.}.
+que contenha votações suficientes de acordo com nossos critérios de inclusão
+definidos na seção \ref{cap:miolo:criterios-de-inclusao}.
 
 Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
 divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
@@ -930,28 +971,52 @@ nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
 uma limitação deste trabalho, que será melhor analisada na seção
 \ref{cap:conclusao:limitacoes}.
 
-O próximo passo é estimar os pontos ideais de cada parlamentar em cada período.
-Para isto, seguimos a metodologia de \citeonline{Poole2005} descrita na seção
-\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}.
-\citeauthor{Poole2005} sugere, sem justificar esse número, repetir as
+\subsubsection{Estimativas de erro}
+
+\citeonline{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
 estamos trabalhando invibializa esse número de repetições com os recursos
-computacionais que tenho disponível\footnote{Por exemplo, usando um núcleo de
-um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o processamento dos
-pontos ideais de um parlamentar em um período demora cerca de 1h45m.
-Considerando somente os 513 deputados eleitos por legislatura, o cálculo de
-todos os 37 períodos levaria aproximadamente 18 meses. Todas as 5 legislaturas
-analisadas neste trabalho levariam mais de 7 anos. O cálculo é facilmente
-paralelizável, diminuindo o tempo necessário de acordo com o número de
-processadores, mas ainda assim não foi possível usar 101 repetições neste
+computacionais disponíveis para esta pesquisa\footnote{Por exemplo, usando um
+núcleo de um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o
+processamento dos pontos ideais de um parlamentar em um período demora cerca de
+1h45m. Considerando somente os 513 deputados eleitos por legislatura, o
+cálculo de todos os 37 períodos levaria aproximadamente 18 meses. Todas as 5
+legislaturas analisadas neste trabalho levariam mais de 7 anos. O cálculo é
+facilmente paralelizável, diminuindo o tempo necessário de acordo com o número
+de processadores, mas ainda assim não foi possível usar 101 repetições neste
 trabalho.}. Por isto, escolhi fazer 10 repetições, o que diminuiu o tempo
 necessário em cerca de 90\%.
+
+\begin{table}
+\centering
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{tabular}{r|r|r|r|l}
+\hline
+antes & antes.sd & depois & depois.sd & mudou\_posicionamento\\
+\hline
+0.55 & 0.02 & -0.40 & 0.03 & Sim\\
+\hline
+0.90 & 0.01 & 0.85 & 0.02 & Não\\
+\hline
+-0.30 & 0.01 & 0.40 & 0.01 & Sim\\
+\hline
+\end{tabular}
+
+
+\end{knitrout}
+\caption{Exemplo da tabela usada para treinar o algoritmo.}
+\label{table:dataset-final}
+\end{table}
+
+\subsection{``Raio de influência'' de uma mudança de posicionamento}
+\label{cap:miolo:raio-de-influencia}
 
 Até esse momento, temos uma tabela onde cada linha representa um parlamentar em
 um período, e nas colunas temos seus pontos ideais e as respectivas estimativas
 de erro. Em outras palavras, temos nossas variáveis independentes, agora
-precisamos determinar a variável dependente: se o parlamentar entrou ou saiu da
-coalizão ou se manteve como estava.
+precisamos determinar a variável dependente: se o parlamentar mudou de
+posicionamento, entrando ou saindo da coalizão, ou se manteve como estava.
 
 Para isso, precisamos definir qual o período antes de uma mudança de
 posicionamento que o parlamentar começa a mudar de comportamento. Por exemplo,
@@ -1020,76 +1085,38 @@ uma limitação do trabalho. Na seção \ref{cap:conclusao:limitacoes}
 discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
 remediá-los em um trabalho futuro.
 
-Ao final desse processo, teremos uma
-tabela como a \ref{table:dataset-final}, onde as colunas representam:
 
-\begin{description}
-\item[Períodos de análise] Períodos de 1 ano divididos em dois
-subperíodos de 6 meses, iniciando no primeiro dia de cada mês entre fevereiro
-do primeiro ano da legislatura até fevereiro do último. Por legislatura,
-existem 37 desses períodos.
-\item[Critérios de inclusão de parlamentares] Ao menos 20 votações no período;
-\item[Critérios de inclusão de votações] Minoria responsável por ao menos 2,5\%
-dos votos na votação;
-\item[Número de repetições] 10;
-\item[Polaridade] José Genoíno nas 50\textordfeminine{}, 51\textordfeminine{} e
-53\textordfeminine{} legislaturas, Arlindo Chinaglia na 52\textordfeminine{} e
-Luiz Couto na 54\textordfeminine{}. Eles foram escolhidos pois são ligados ao
-PT desde sua fundação ocupando cargos de liderança e participaram de um grande
-número de votações.
-\end{description}
-
-\begin{table}
-\centering
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{tabular}{r|r|r|r|l}
-\hline
-antes & antes.sd & depois & depois.sd & mudou\_posicionamento\\
-\hline
-0.55 & 0.02 & -0.40 & 0.03 & Sim\\
-\hline
-0.90 & 0.01 & 0.85 & 0.02 & Não\\
-\hline
--0.30 & 0.01 & 0.40 & 0.01 & Sim\\
-\hline
-\end{tabular}
-
-
-\end{knitrout}
-\caption{Exemplo da tabela usada para treinar o algoritmo.}
-\label{table:dataset-final}
-\end{table}
-
-
-\section{Análise}
+\section{Análise dos dados}
 \label{cap:miolo:analise}
 
-% FIXME: Melhora esse parágrafo
-Segundo \citeonline{Kuhn2013}, o primeiro passo em qualquer processo de
-desenvolvimento de um modelo é entender os dados. Nas próximas sessões iremos
-analisar os dados.
+Segundo \citeonline{Kuhn2013}, uma das etapas mais importantes na criação de
+modelos preditivos é analisar os dados, buscando padrões que poderão ser
+utilizados para o aumento de sua performance. Nas seguintes subseções,
+analisaremos as características das estimativas de pontos ideais e seus padrões
+temporais.
 
 \subsection{Pontos ideais}
 
 
 
 O conjunto de dados gerado possui 113.952 estimativas de mudança
-de comportamento entre dois sub-períodos de seis meses em cada um dos
-185 estudados. Em 31.04\% (35.376) desses períodos, não foi possível
-estimar o ponto ideal em um ou ambos momentos porque o parlamentar não
-participou em votações não-unânimes o suficiente para ser considerado. Esses
-casos foram excluídos, ficando no final com 78.576 estimativas.
+de comportamento em 185 períodos de 12 meses divididos em dois
+sub-períodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
+ambos sub-períodos em 31.04\%
+(35.376) períodos, pois o parlamentar não participou de
+votações o suficiente, ou as que ele participou não passaram nos critérios de
+inclusão definidos na seção \ref{cap:miolo:criterios-de-inclusao}. Esses casos
+foram excluídos, sobrando ao final 78.576 observações.
 
 Desses valores, 3.98\%
-(3.130) são de momentos em que houve uma mudança de
+(3.130) são de períodos em que houve uma mudança de
 posicionamento, enquanto 96.02\% (75.446) não. A média por legislatura é de
-4\%, com o
-máximo ocorrendo na 52\textordfeminine{} legislatura
+4\% mudanças,
+com o máximo ocorrendo na 52\textordfeminine{}
 (7.07\%) e o
 mínimo na 53\textordfeminine{}
-(1.55\%).
-A tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
+(1.55\%).  A
+tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
 \begin{table}
@@ -1115,13 +1142,13 @@ N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
 A figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
 dos pontos ideais em cada legislatura, com o PT estando a direita do gráfico.
 Na 50\textordfeminine{} e 51\textordfeminine{} legislaturas, durante o governo
-do PSDB, a maior parte dos parlamentares se encontra no lado esquerdo. Com a
-eleição de Lula em 2003 na 52\textordfeminine{}, esse quadro muda, com a
-maioria dos parlamentares estando mais a direita, mas muitos parlamentares
-se mantendo nas posições centrais. Já na 53\textordfeminine{} as posições se
-tornam mais polarizadas, com dois picos claros na direita e na esquerda do
-gráfico. Por final, na 54\textordfeminine{} legislatura, durante o primeiro
-governo de Dilma Rousseff, os pontos ideais se concentram no centro.
+do PSDB, a maior parte dos deputados federais encontram-se ao lado esquerdo.
+Esse quadro muda a partir da eleição de Lula em 2003, na 52\textordfeminine{}
+legislatura, com a maioria dos parlamentares estando mais a direita do gráfico.
+Na 53\textordfeminine{} legislatura as posições se tornam mais polarizadas, com
+dois picos claros, um na direita do gráfico e outro, menor, na esquerda. Por
+final, durante o primeiro governo de Dilma Rousseff, na 54\textordfeminine{}
+legislatura, os pontos ideais se concentram no centro.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
@@ -1140,9 +1167,8 @@ Uma das principais características da migração partidária no Brasil é sua
 distribuição no tempo \cite{Araujo2000,Melo2004,Freitas2008}. A partir de 1995,
 ela se concentra nos meses de fevereiro do primeiro e terceiro ano da
 legislatura e no período pré-eleitoral, que se encerra em outubro do ano
-anterior as eleições \cite{Freitas2008,Lei9504/1997}. Nesta seção,
-analisaremos se esse padrão se repete também no subconjunto de deputados que
-migram para partidos de posicionamento oposto, saindo ou entrando na coalizão.
+anterior às eleições \cite{Freitas2008,Lei9504/1997}. Nesta seção,
+analisaremos se as mudanças de posicionamento também seguem um padrão temporal.
 
 Há duas formas de um parlamentar entrar ou sair da coalizão: quando seu partido
 o faz, ou mudando de partido. Das 890 mudanças de
@@ -1150,25 +1176,25 @@ posicionamento no período de estudo,
 50.79\% (452)
 ocorreram por migrações e
 49.21\% (438)
-pelo partido ter entrado ou saído da coalizão. Consideramos a data de mudança
+pelo partido ter mudado de posicionamento. Consideramos a data de mudança
 de posicionamento de formas diferentes em cada caso. Quando o partido como um
 todo entra ou sai da coalizão, consideramos a data de mudança como a data de
 início da coalizão. Já em uma mudança por migração, usamos a data da primeira
 votação do parlamentar no novo partido\footnote{Idealmente, a data de mudança
-por migração deveria ser a data em que o parlamentar se filiou ao novo partido.
+por migração deveria ser a data de filiação do parlamentar ao novo partido.
 Infelizmente, essa informação não está disponível através da \gls{API} da
 Câmara para todas as legislaturas analisadas, então usei a data da primeira
-votação no novo partido. Como 99\% dos parlamentares faltam no máximo 35
-votações seguidas, as duas datas devem ser próximas na maioria dos casos.}.
+votação no novo partido. Como, no período de análise, 99\% dos parlamentares
+faltaram no máximo 35 votações seguidas, as duas datas devem ser próximas na
+maioria dos casos.}.
 
 A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
-54\textordfeminine{} legislaturas agregados por mês. Três meses, março, abril e
-outubro, concentram
-52.36\%
-(466) das mudanças, o que pode
-ser um indício que as mudanças de posicionamento seguem um padrão semelhante ao
-das mudanças de partido.
+54\textordfeminine{} legislaturas agregados por mês. Quatro meses, janeiro,
+março, abril e outubro, concentram
+65.06\%
+(579) das mudanças, o que pode
+ser um indício que as mudanças de posicionamento seguem um padrão temporal.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
@@ -1196,6 +1222,7 @@ maio concentrando
 46.8\%
 (205) das mudanças.
 
+% FIXME: As escalas devem ser em percentual, não em absoluto
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \includegraphics[width=\maxwidth]{figure/tmp/mudancas-de-posicionamento-por-migrantes-1} \caption[Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês]{Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\textordfeminine{} e 54\textordfeminine{} legislaturas agregados por mês.}\label{fig:mudancas-de-posicionamento-por-migrantes}
@@ -1224,7 +1251,7 @@ legislatura.
 \end{knitrout}
 
 Na figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
-agregarmos por ano da legislatura ao invés de mês. A grande maioria das
+agregamos por ano da legislatura ao invés de mês. A grande maioria das
 mudanças dos migrantes,
 84.07\%
 (380), estão concentradas no
@@ -1268,16 +1295,23 @@ sem migrar de partido não têm um padrão claro.
 
 \section{Modelagem}
 
+
+
+Esta seção trata do desenvolvimento do modelo preditivo. Para isto,
+inicialmente definirei as variáveis dependente e independentes e as divisões do
+conjunto de dados e, em seguida, treinarei modelos de diversos tipos, buscando
+o que possui a maior área sob a curva ROC (AUC). Encontrado esse modelo,
+definirei o ponto de corte para classificação das categorias, e estimarei sua
+performance final.
+
 \subsection{Variável dependente}
-
-
 
 Como variável dependente, que é o que queremos prever, usei a mudança ou não de
 comportamento do parlamentar no período. Ela foi definida a partir dos períodos
 e ``raio de influência'' apresentados na seção
-\ref{cap:miolo:estimando-pontos-ideais}. Ela pode tomar os valores ``S'',
-quando houve uma mudança de posicionamento, e ``N'', quando não houve. Como já
-visto anteriormente, das 78.576 observações,
+\ref{cap:miolo:raio-de-influencia}, e toma o valor ``S'', quando
+houve uma mudança de posicionamento, e ``N'', quando não houve. Como já visto
+anteriormente, das 78.576 observações,
 3.98\%
 (3.130) são relativas a mudanças
 de posicionamento, e 96.02\%
@@ -1287,8 +1321,8 @@ de posicionamento, e 96.02\%
 \label{cap:miolo:variaveis-independentes}
 
 A partir dos resultados das análises descritas na seção
-\ref{cap:miolo:analise}, defini 7 variáveis dependentes, sendo 4 relativas
-as estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
+\ref{cap:miolo:analise}, defini 6 variáveis independentes, sendo 4 relativas
+às estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
 temporais descritos na seção \ref{cap:miolo:aspectos-temporais}. A tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
@@ -1302,8 +1336,8 @@ delas.
   antes.sd & Estimativa de erro do ponto ideal no momento inicial& Contínua \\
   depois & Estimativa do ponto ideal no momento final & Contínua \\
   depois.sd & Estimativa de erro do ponto ideal no momento final & Contínua \\
-  mês & Mês na data média do período & Discreta \\
-  ano da legislatura & Ano da legislatura na data média do período & Discreta \\
+  mês & Mês na data média do período & Ordinal \\
+  ano da legislatura & Ano da legislatura na data média do período & Ordinal \\
 \end{tabular}
 \caption{Variáveis independentes usadas na criação dos modelos preditivos.}
 \label{table:variaveis-independentes}
@@ -1328,17 +1362,15 @@ aprender características mais complexas que são de díficil visualização.
 
 % FIXME: Falta falar sobre o LGOCV
 
-
-
-Existem técnicas capazes de aprender a estrutura de um conjunto de dados tão
-bem que, quando validados com o mesmo conjunto de dados usado para treiná-lo,
-conseguem prever corretamente 100\% dos casos. O problema é que eles aprenderam
-não só os padrões gerais dos dados, mas também seu ruído. Esse tipo de modelo,
-conhecido como \emph{over-fit}\footnote{Em tradução livre,
-``super-ajustado''.}, normalmente tem uma baixa performance ao ser usado com
-novos dados. Para evitar esse problema, é necessário testar o modelo em um
-conjunto de dados diferente do que ele foi treinado, o que gera a questão sobre
-como dividir os dados \cite{Kuhn2013}.
+Existem tipos de modelos capazes de aprender a estrutura de um conjunto de
+dados tão bem que, quando validados com o mesmo conjunto de dados usado para
+treiná-los, conseguem prever corretamente 100\% dos casos. O problema é que
+eles aprenderam não só os padrões gerais dos dados, mas também seu ruído. Esses
+modelos, conhecidos como \emph{over-fit}\footnote{Em tradução livre,
+``super-ajustado''.}, têm normalmente uma baixa performance ao serem usados em
+novos dados. Para evitar esse problema, é necessário testá-los em um conjunto
+de dados diferente do que foram treinados, o que gera a questão sobre como
+dividir os dados \cite{Kuhn2013}.
 
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
 subconjuntos, um para treino e outro para teste. É importante se certificar que
@@ -1355,14 +1387,16 @@ performance nos anos mais recentes, segui a seguinte estratégia \cite{Kuhn2013}
 
 \begin{enumerate}
 \item Treina o modelo com os dados anteriores a 54\textordfeminine{}
-legislatura, chamado de conjunto de treino, ajustando seus parâmetros a partir
-da performance em 60\% dos dados da 54\textordfeminine{} legislatura, chamadado
-de conjunto de validação;
+legislatura, chamado conjunto de treino, ajustando seus parâmetros a partir
+da performance em 60\% dos dados da 54\textordfeminine{} legislatura, chamado
+conjunto de validação;
 \item Ao finalizar o ajuste dos parâmetros no passo anterior, define qual
 modelo teve a melhor performance e treina um novo modelo, usando esses mesmos
-parâmetros, nos conjuntos de treino e validação juntos;
-\item Define o ponto de corte para classificação usando metade dos dados da
-54\textordfeminine{} legislatura não usados para validação;
+parâmetros, nos conjuntos de treino e validação juntos. Isso vai permitir ao
+modelo aprender os padrões da 54\textordfeminine{} legislatura;
+\item Define o ponto de corte para classificação usando metade dos 40\%
+restantes dos dados da 54\textordfeminine{} legislatura, que não foram usados
+para validação;
 \item Usa o restante dos dados da 54\textordfeminine{} legislatura, chamado
 conjunto de teste, para estimar a performance final do modelo.
 \end{enumerate}
@@ -1377,35 +1411,37 @@ Assim, os 78.576 dados serão separados em
 3.88\% (3.045) para
 teste. Eles possuem respectivamente
 4.19\%,
-3.22\% e
-2.7\%
+3.22\%,
+2.7\% e
 3.15\% de mudanças de posicionamento.
 Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
 96.02\% de todas as observações sendo de
 parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
 que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
-maioria a revelia da minoria. Alguns modelos permitem a definição do custo para
-cada tipo de erro (falso positivo e falso negativo), que pode ser usado para
-diminuir o impacto desse desbalanceamento. Entretanto, usaremos modelos que não
-permitem isso, logo preferi usar uma técnica mais simples: \emph{downsampling}.
+maioria a revelia da minoria. Por exemplo, um modelo que simplesmente
+classificasse todas observações como não sendo de mudanças de posicionamento
+conseguiria 96.02\% de acurácia.  Para
+diminuir o impacto desse desbalanceamento, alguns modelos permitem a definição
+do custo para cada tipo de erro (falso positivo e falso negativo). Entretanto,
+como usaremos modelos que não permitem isso, preferi usar uma técnica mais
+simples: o \emph{downsampling}.
 
-No \emph{downsampling}, selecionamos todas as observações da categoria mais
-rara juntamente com uma amostragem sem reposição de mesmo tamanho da categoria
-
-imprescindível que as características das variáveis independentes sejam
-mantidas o mais próximo possível.
-
-Por definição, o \emph{downsampling} altera a distribuição real das categorias,
-por isso essa técnica só deve ser usada com os dados de treino.  Caso seja
-usada com os de validação ou teste, as estimativas de performance do modelo
-estariam enviesadas, não refletindo sua performance em dados reais.
+No \emph{downsampling}, todas as observações da categoria mais rara (mudanças de
+posicionamento) são selecionadas, juntamente com uma amostragem sem repetição,
+de tamanho similar, da categoria mais comum. Essa amostra deve manter os padrões
+das variáveis independentes do conjunto original. Por definição, o
+\emph{downsampling} altera a distribuição real das categorias, por isso ela só
+deve ser usada com os dados de treino. Caso fosse usada nos os de validação ou
+teste, as estimativas de performance do modelo estariam enviesadas, não
+refletindo sua performance em dados reais.
 
 Ao final, das 63.386 observações no conjunto de
-treino, foram usadas 8.73\% (5.531), sendo
-48.06\% de mudanças de
-posicionamento. Os conjuntos de validação e teste não foram modificados,
+treino, 8.73\% (5.531) foram usadas,
+sendo 48.06\% de mudanças
+de posicionamento. Os conjuntos de validação e teste não foram modificados,
 mantendo-se com 9.251 e 3.045 observações
-sendo, respectivamente, 3.22\% e
+cada sendo, respectivamente,
+3.22\% e
 3.15\% de mudanças de posicionamento.
 
 \subsection{Modelos}
@@ -1464,18 +1500,18 @@ possível visualizar mais facilmente a diferença do AUC entre os modelos.
   Modelo & \multicolumn{2}{c}{Parâmetros} & \multicolumn{3}{c}{AUC} \\ \cline{2-6}
   & \multicolumn{1}{|l}{Nome} & \multicolumn{1}{c|}{Valor} & Mínimo & Mediano & \multicolumn{1}{c|}{Máximo} \\
   \hline
-  C5.0 & model & tree & 0,96&0,97&0,98 \\
+  C5.0 & Tipo & tree & 0,96&0,97&0,98 \\
        & winnow & FALSE & & & \\
-       & trials & 30 & & & \\
-  NNET & size & 1 & 0,84&0,86&0,87 \\
-       & decay & 0,1 & & & \\
-  GBM & shrinkage & 0,1 & 0,82&0,83&0,85 \\
-      & interaction.depth & 4 & & & \\
-      & n.minobsinnode & 10 & & & \\
-      & n.trees & 50 & & & \\
-  RF & mtry & 2 & 0,74&0,77&0,8 \\
-  SVM Radial & C & 0,5 & 0,72&0,75&0,78 \\
-             & sigma & 0,142318578779184 & & & \\
+       & Iterações boosting & 30 & & & \\
+  NNET & Unidades ocultas & 1 & 0,84&0,86&0,87 \\
+       & Decaimento & 0,1 & & & \\
+  GBM & Encolhimento & 0,1 & 0,82&0,83&0,85 \\
+      & Profundidade máxima & 4 & & & \\
+      & Tamanho mínimo das folhas & 10 & & & \\
+      & Iterações boosting & 50 & & & \\
+  RF & Preditores aleatórios & 2 & 0,74&0,77&0,8 \\
+  SVM Radial & Custo & 0,5 & 0,72&0,75&0,78 \\
+             & Sigma & 0,14232 & & & \\
   GLM & --- & --- & 0,38&0,41&0,43 \\
 \end{tabular}
 \caption{Lista de parâmetros dos modelos com sua respectiva área sob a curva
@@ -1495,7 +1531,7 @@ ROC (AUC) no conjunto de validação.}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/find-cutoff-1} \caption[Curva ROC do modelo final com o ponto de corte escolhido em destaque]{Curva ROC do modelo final com o ponto de corte escolhido em destaque.}\label{fig:find-cutoff}
+\includegraphics[width=\maxwidth]{figure/tmp/find-cutoff-1} \caption[Curva ROC do modelo final no conjunto de escolha do ponto de corte]{Curva ROC do modelo final no conjunto de escolha do ponto de corte.}\label{fig:find-cutoff}
 \end{figure}
 
 
@@ -1671,10 +1707,10 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
 \centering
   Modelo & Parâmetro & Valores \\
   \hline
-  C5.0 & Tipo de modelo & rules, tree \\
+  C5.0 & Tipo & rules, tree \\
        & Winnow & FALSE, TRUE \\
-       & Número de iterações de boosting & 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 \\
-  NNET & Número de unidades ocultas & 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39 \\
+       & Iterações boosting & 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 \\
+  NNET & Unidades ocultas & 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39 \\
    & Decaimento & 0 \\
  &  & 1e-04 \\
  &  & 0,000146779926762207 \\
@@ -1696,12 +1732,12 @@ Desenvolvi uma ferramenta que extrai dados de diversas fontes, os consolida, ana
  &  & 0,0681292069057961 \\
  &  & 0,1 \\
   GBM  & Encolhimento & 0,1 \\
-       & Profundidade máxima das árvores & 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 \\
-       & Tamanho mínimo dos nós folha & 10 \\
-       & Número de iterações de boosting & 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000 \\
-  RF & Número de preditores aleatórios & 2, 3, 5, 6, 9, 13, 17, 24, 33, 45, 62, 85, 117, 160, 219, 299, 410, 560, 766 \\
+       & Profundidade máxima & 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 \\
+       & Tamanho mínimo das folhas & 10 \\
+       & Iterações boosting & 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000 \\
+  RF & Preditores aleatórios & 2, 3, 5, 6, 9, 13, 17, 24, 33, 45, 62, 85, 117, 160, 219, 299, 410, 560, 766 \\
   SVM Radial & Custo & 0,25, 0,5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072 \\
-             & sigma & 0,142318578779184 \\
+             & Sigma & 0,142318578779184 \\
   GLM & --- & --- \\
 \end{longtable}
 
@@ -1801,8 +1837,8 @@ final usando o conjunto de dados para definição do ponto de corte.}
     randomForest~4.6-10, scales~0.2.4, survival~2.38-3,
     tikzDevice~0.8.1
   \item Loaded via a namespace (and not attached):
-    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25,
-    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
+    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, class~7.3-13,
+    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8, e1071~1.6-4,
     evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
     gtable~0.1.2, gtools~3.4.2, highr~0.5, lme4~1.1-7,
     MASS~7.3-43, Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4,
