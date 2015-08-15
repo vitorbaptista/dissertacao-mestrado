@@ -79,7 +79,7 @@
 \newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
-\newacronym{ROC}{ROC}{\emph{Receiver operating characteristic}}
+\newacronym{ROC}{ROC}{\emph{Receiver Operating Characteristic}}
 \newacronym{AUC}{AUC}{\'area sob a curva ROC}
 \newacronym{GLM}{GLM}{regress\~ao log\'istica}
 \newacronym{SVM}{SVM}{\emph{Support Vector Machine}}

@@ -128,7 +128,7 @@
 \newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
-\newacronym{ROC}{ROC}{\emph{Receiver operating characteristic}}
+\newacronym{ROC}{ROC}{\emph{Receiver Operating Characteristic}}
 \newacronym{AUC}{AUC}{\'area sob a curva ROC}
 \newacronym{GLM}{GLM}{regress\~ao log\'istica}
 \newacronym{SVM}{SVM}{\emph{Support Vector Machine}}
@@ -251,7 +251,19 @@ showstringspaces=false
 
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
+Neste capítulo, serão abordados os conceitos necessários para compreensão do
+restante do trabalho. Na seção \ref{cap:fundamentacao:ciencia-de-dados},
+explicarei o que é ciência de dados, descrevendo também o processo de
+desenvolvimento e avaliação de modelos preditivos, com foco em modelos de
+classificação. Na seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
+falarei brevemente sobre a teoria espacial do voto e a técnica W-NOMINATE para
+estimativa de pontos ideais. Por fim, na seção
+\ref{cap:fundamentacao:processo-legislativo}, descreverei em linhas gerais o
+processo legislativo brasileiro em nível federal, com ênfase nos tipos de
+votação.
+
 \section{Ciência de Dados}
+\label{cap:fundamentacao:ciencia-de-dados}
 
 Segundo \citeonline{Stanton2012}, o termo Ciência de Dados (do inglês
 \emph{Data Science}) é usado para definir uma área emergente que se ocupa da
@@ -265,7 +277,7 @@ Brasil) a distinção do que é ciência de dados e não estatística, matemáti
 computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
 diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
 \ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
-relação as outras áreas. Nela, vemos que a ciência de dados está na intersecção
+relação às outras áreas. Nela, vemos que a ciência de dados está na intersecção
 entre computação, estatística e uma área fim (por exemplo, ciência política). A
 pesquisa tradicional, segundo ele, estaria na intersecção da estatística com a
 área fim, enquanto a pesquisa de aprendizagem de máquina estaria na intersecção
@@ -296,12 +308,11 @@ probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
 processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
 previsão precisa''.
 
-Independente da definição usada, modelos preditivos fazem parte do dia-a-dia da
-sociedade atual. O Google os utiliza para interpretar o que seus usuários estão
-buscando; o Netflix usa para recomendar filmes; corretoras de valores usam para
-definir que ações comprar ou vender; seguradoras usam para definir qual o risco
-e, consequentemente, o preço do seguro de um carro, entre outros
-\cite{Levy2010}.
+Modelos preditivos fazem parte do dia-a-dia da sociedade atual. O Google os
+utiliza para interpretar o que seus usuários estão buscando; o Netflix usa para
+recomendar filmes; corretoras de valores usam para definir que ações comprar ou
+vender; seguradoras usam para definir qual o risco e, consequentemente, o preço
+do seguro de um carro, entre outros \cite{Levy2010}.
 
 Existem duas principais categorias de problemas que podem ser resolvidos por
 modelos preditivos: regressão e classificação. A diferença entre eles está no
@@ -338,13 +349,9 @@ Foo bar
 Foo bar
 
 \subsection{Avaliando performance em modelos de classificação}
-\label{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}
+\label{cap:fundamentacao:avaliando-modelos-de-classificacao}
 
-O primeiro passo para melhorar algo é conseguir mensurá-lo, ao contrário não
-saberemos se nossas modificações estão melhorando ou piorando a situação. Com
-relação a modelos preditivos, o ideal é ter uma métrica única que defina sua
-performance de acordo com nossos critérios. Dessa forma, a comparação e
-otimização dos modelos é simplificada \cite{Ng2012}.
+\nocite{Ng2012}
 
 Uma das formas mais comuns de descrever a perfomance de um modelo de
 classificação é através de uma ``matriz de confusão''. A tabela
@@ -385,13 +392,13 @@ N = VN + FP
 ACC = \frac{VP + VN}{P + N}
 \end{equation}
 \item[Sensibilidade] Proporção de elementos da classe positiva classificados
-corretamente com relação ao total de elementos positivos
+corretamente em relação ao total de elementos positivos
 \begin{equation}
 \label{eq:sensitivity}
 SENS = \frac{VP}{VP + FN}
 \end{equation}
 \item[Especificidade] Proporção de elementos da classe negativa classificados
-corretamente com relação ao total de elementos negativos
+corretamente em relação ao total de elementos negativos
 \begin{equation}
 \label{eq:specificity}
 ESPEC = \frac{VN}{FP + VN}
@@ -473,9 +480,8 @@ definiram uma regra geral para avaliação descrita na tabela
 \label{table:valores-auc}
 \end{table}
 
-% TODO: Concluir
-
-\section{Modelos espaciais de votação}
+\section{Teoria espacial do voto}
+\label{cap:fundamentacao:teoria-espacial-do-voto}
 
 
 
@@ -484,14 +490,15 @@ atores políticos. Por exemplo, dizemos que um deputado é de esquerda, enquanto
 outro é de direita. A teoria espacial do voto é uma formalização dessas ideias.
 Ela parte do pressuposto que as preferências individuais e as políticas podem
 ser interpretadas como pontos em um espaço euclidiano. Um parlamentar então
-votaria na política mais próxima da sua preferência, chamada de ponto ideal.
+votaria na política mais próxima da sua preferência, chamada de ponto ideal
+\cite{Leoni2002}.
 
-As dimensões desse espaço correspondem as áreas temáticas relevantes para os
+As dimensões desse espaço correspondem às áreas temáticas relevantes para os
 atores, que podem ser muitas. Por exemplo, proteção do meio-ambiente, comércio
 exterior, distribuição de renda, etc.
 
 Considere um exemplo onde 5 parlamentares votam em um
-projetos de Lei que propõe a redução da maioridade penal de
+projeto de Lei que propõe a redução da maioridade penal de
 18 para 16 anos. Suponha
 que cada um tem uma única preferência (\emph{single-peakedness}), que é o seu
 ponto ideal, e vota sinceramente de acordo com ela, e que suas preferências são
@@ -509,12 +516,12 @@ parlamentares que deverão votar sim dos que votarão não. Nesse exemplo, as
 escolhas são entre uma maioridade penal de 16 ou
 18, logo a linha de corte passa em $\frac{16 +
 18}{2}$, ou seja, $17$. Caso o ponto ideal de um parlamentar esteja sobre essa
-linha, ele é indiferente as alternativas.
+linha, ele é indiferente às alternativas.
 
 % FIXME: Esse gráfico não funciona em preto e branco
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/tmp/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos]{Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos.  Parlamentares a esquerda da linha de corte nos 17 anos votam sim, e os a direita votam não. O deputado com preferência sobre a linha de corte é indiferente as duas opções. Neste exemplo, é ele quem desempata a votação.}\label{fig:modelo-espacial-votacao}
+\includegraphics[width=\maxwidth]{figure/tmp/modelo-espacial-votacao-1} \caption[Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos]{Preferências de 5 deputados na votação sobre a redução da maioridade penal de 18 para 16 anos.  Parlamentares a esquerda da linha de corte nos 17 anos votam sim, e os a direita votam não. O deputado com preferência sobre a linha de corte é indiferente às duas opções. Neste exemplo, é ele quem desempata a votação.}\label{fig:modelo-espacial-votacao}
 \end{figure}
 
 
@@ -529,7 +536,7 @@ Nosso foco neste trabalho é no W-NOMINATE.
 O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
 \citeonline{Poole1985}. Eles são baseados no modelo de utilidade aleatória de
 \citeonline{McFadden1976}, que define que a utilidade para um legislador em
-votar de certa forma é formado por dois componentes: um determinístico e outro
+votar de certa forma é formada por dois componentes: um determinístico e outro
 estocástico (erro). Sendo $s$ o número de votações indexadas por $k = 1, ...,
 s$; $p$ o número de legisladores indexados por $i = 1, ..., p$, e; $q$ o número
 de votações indexados por $j = 1, ..., q$, a utilidade para o legislador $i$ da
@@ -559,8 +566,8 @@ u_{ijy} - u_{ijn} > \epsilon_{ijy} - \epsilon_{ijn}
 ou seja, se a diferença das suas utilidades for maior que a diferença dos
 erros. No W-NOMINATE, considera-se que a parte determinística $u_{ijy}$ segue a
 distribuição normal, com os valores concentrados ao redor do ponto ideal do
-legislador, e rapidamente tendendo a zero ao se afastar para qualquer lado. Com
-isso, a equação \ref{eq:random-utility} se torna:
+legislador, e rapidamente tendendo a zero ao se afastar para ambos os lados.
+Com isso, a equação \ref{eq:random-utility} se torna:
 
 \begin{equation}
   U_{ijy} = \beta \exp^{\left( - \frac{1}{2} \sum\limits_{k=1}^s w_k^2 d_{ijky}^2 \right)} + \epsilon_{ijn}
@@ -568,8 +575,8 @@ isso, a equação \ref{eq:random-utility} se torna:
 
 onde $\beta$ é uma constante que define o peso da parte determinística na
 equação; $w_k$ é o peso da dimensão $k$, e; $d_{ijky}^2$ é a distância ao
-quadrado na dimensão $k$ do legislador $i$ ($X_{ik}$) a consequência do
-resultado sim na votação $j$ ($O_{jky}$):
+quadrado na dimensão $k$ do legislador $i$ ($X_{ik}$) da consequência do
+resultado sim da votação $j$ ($O_{jky}$):
 
 \begin{equation}
 d_{ijky}^2 = \left(X_{ik} - O_{jky}\right)^2
@@ -583,38 +590,39 @@ $w_k$.
 \subsection{Comparando pontos ideais ao longo do tempo}
 \label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
 
-O principal problema em comparar mudanças nos pontos ideais ao longo do tempo é
+O principal desafio em comparar mudanças nos pontos ideais ao longo do tempo é
 distinguir alterações causadas por mudanças na agenda legislativa das causadas
 por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
 palavras, se o ponto ideal de um deputado federal passa de 0.3 para -0.2 de um ano
-para o outro, como descobrir se isso representa uma mudança real de ideologia ou
-é somente reflexo da diferença na agenda legislativa dos dois períodos?
+para o outro, como descobrir se isso representa uma mudança real de
+posicionamento ou é somente reflexo da diferença na agenda legislativa dos dois
+períodos?
 
 Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
 usam ``pontes'', que podem ser parlamentares cujo posicionamento assume-se ter
-se mantido estável durante o período de interesse, ou; projetos de Lei que
+se mantido estável durante o período de interesse, ou projetos de Lei que
 foram votados em mais de um momento (nas duas casas legislativas em um sistema
-bicameral, por exemplo). O primeiro é mais usado para comparar as mudanças nos
+bicameral, por exemplo). O primeiro é mais usado para comparar as mudanças dos
 posicionamentos dos parlamentares, enquanto o segundo permite unir pessoas que
 não votaram juntas em um mesmo mapa espacial\footnote{Por exemplo,
 \citeonline{Shor2010} colocam todos os legisladores de 11 estados americanos e
 do congresso federal em um período que varia entre 7 e 15 anos, dependendo do
-estado, em um mesmo mapa espacial}. \citeonline{Poole2005} propõe duas formas
+estado, em um mesmo mapa espacial.}. \citeonline{Poole2005} propõe duas formas
 para estimar pontos ideais usando pontes.
 
-Na primeira, batizada de \emph{pooled scaling} por \citeonline{Shor2010},
+Na primeira forma, batizada de \emph{pooled scaling} por \citeonline{Shor2010},
 dividimos os votos dos parlamentares que queremos mensurar em dois
 parlamentares ``virtuais'', um com os votos antes e outro com os votos depois
 da data de interesse. Unimos esses parlamentares virtuais com os
 parlamentares-ponte, que possuem um registro único, em uma tabela individual e
 executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
 pontos para cada parlamentar de interesse e um ponto para os pontes. Na
-segunda, que \citeonline{Shor2010} chamam de \emph{linear mapping}, estimamos
-os pontos ideias separadamente em cada período e os conectamos usando regressão
-entre os conjuntos de pontos dos parlamentares-ponte. Ambas formas devem gerar
-resultados similares, mas a segunda é computacionalmente mais simples, o que
-pode ser essencial, dependendo da quantidade de parlamentares e votações votos
-em estudo.
+segunda forma, que \citeonline{Shor2010} chamam de \emph{linear mapping},
+estimamos os pontos ideias separadamente em cada período e os conectamos usando
+uma regressão entre os conjuntos de pontos dos parlamentares-ponte. Ambas
+formas devem gerar resultados similares, mas a segunda é computacionalmente
+mais simples, o que pode ser essencial, dependendo da quantidade de
+parlamentares e votações e votos em estudo.
 
 \citeonline{Poole2005} ainda descreve uma terceira forma, similar a
 \emph{pooled scaling} descrita acima, que usa para testar se os senadores
@@ -648,6 +656,7 @@ diferença de que um dos parlamentares foi dividido em dois, ele considera ser
 seguro compará-las.
 
 \section{Processo legislativo}
+\label{cap:fundamentacao:processo-legislativo}
 
 Na esfera federal, o Poder Legislativo é exercido pelo Congresso Nacional, que
 é composto por duas casas legislativas, constituindo um sistema bicameral. Essas
@@ -657,11 +666,11 @@ representantes dos estados e Distrito Federal. Nas outras esferas (estadual,
 distrital e municipal), o Poder Legislativo é unicameral.
 
 As funções do Poder Legislativo se dividem em típicas e atípicas. Como típicas,
-temos legislar (art. 48, 49, 51 e 52) e fiscalizar as entidades da
-administração direta e indireta (art. 70), já as atípicas são administrar (por
-exemplo, seu quadro de servidores internos), e julgar (por exemplo, crimes de
-responsabilidade do presidente da República). Além dessas,
-\citeonline{Carneiro2013} mencionam que, como representantes do povo e da
+temos legislar \cite[arts. 48, 49, 51 e 52]{CF1988} e fiscalizar as entidades da
+administração direta e indireta \cite[art. 70]{CF1988}. As funções atípicas são
+administrar (por exemplo, seu quadro de servidores internos), e julgar (por
+exemplo, crimes de responsabilidade do presidente da República). Além dessas,
+\citeonline[p. 26]{Carneiro2013} mencionam que, como representantes do povo e da
 nação, cabe ao Legislativo ``(...) debater temas importantes o que, muitas
 vezes, não necessariamente resulta na inserção de uma nova norma no ordenamento
 jurídico ou em uma fiscalização de determinada entidade ou agente público, o
@@ -681,29 +690,33 @@ senadores alternadamente de 4 em 4 anos.
 
 A Câmara dos Deputados, também chamada de Casa Baixa ou Casa do Povo, é
 composta por 513 deputados federais, cujo papel é representar o povo. Cada
-Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente a
+Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente à
 sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema
 proporcional\footnote{No sistema proporcional os partidos registram vários
 candidatos para o mesmo cargo. Os votos recebidos por cada candidato são
 direcionados ao partido, que precisa atingir uma quantidade mínima de votos
 (chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse
 sistema, um candidato com menos votos pode se eleger, enquanto outro com mais
-votos não se elegeu, dependendo do partido de cada um deles.
+votos não se elegeu, dependendo dos seus partidos de filiação.
 \cite{Carneiro2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é
 total de 4 em 4 anos.
 
 O processo legislativo é classificado em ordinário, sumário e especial. O
 primeiro se refere a elaboração de leis ordinárias, o sumário se diferencia por
-apresentar prazo máximo para apreciação (art. 64), e o especial se refere as
-outras normas jurídicas (e.x.: emendas constitucionais, medidas provisórias,
-etc.). O processo legislativo ordinário engloba três fases:
+apresentar prazo máximo para apreciação \cite[art. 64]{CF1988}, e o especial se
+refere às outras normas jurídicas (e.x.: emendas constitucionais, medidas
+provisórias, etc.). De acordo com \citeonline{Carneiro2013}, o processo
+legislativo ordinário engloba três fases: 
 
 \begin{description}
 \item[Introdutória ou de iniciativa] \hfill \\
 É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
-Federal define quem pode iniciar uma lei.}, com o projeto entrando em uma das
-Casas legislativas, denominada Casa iniciadora. Com exceção dos projetos
-iniciados por Senadores, a Casa iniciadora é a Câmara dos Deputados.
+Federal define quem pode iniciar o processo legislativo. Exceto quando iniciado
+por um Senador, o processo comeca com a Câmara dos Deputados como Casa
+Iniciadora e, consequentemente, o Senado Federal como Casa Revisora.}, com o
+projeto entrando em uma das Casas legislativas, denominada Casa iniciadora. Com
+exceção dos projetos iniciados por Senadores, a Casa iniciadora é a Câmara dos
+Deputados.
 
 \item[Constitutiva] \hfill \\
 A Casa iniciadora discutirá o projeto e poderá rejeitá-lo, enviando-o para o
@@ -711,7 +724,7 @@ arquivo, ou aprová-lo integralmente ou com emendas, caso em que passará para a
 Casa revisora.
 
 Igualmente, a Casa revisora poderá rejeitar o projeto e encaminhá-lo para o
-arquivo, aprová-lo com emendas e devolvê-lo a Casa iniciadora para análise das
+arquivo, aprová-lo com emendas e devolvê-lo à Casa iniciadora para análise das
 emendas sugeridas, ou aprová-lo integralmente e enviá-lo para sanção ou veto do
 presidente. O projeto só passa para o presidente quando ambas as casas o
 aprovam integralmente.
@@ -722,33 +735,57 @@ um veto, ele será apreciado pelo Congresso Nacional dentro de trinta dias
 corridos do seu recebimento, só podendo ser rejeitado pelo voto da maioria
 absoluta dos deputados federais e senadores. Caso esse prazo se esgote, ele
 será incluído na Ordem do Dia da próxima sessão do Congresso Nacional, se
-sobrepondo as demais proposições até ser votado.
+sobrepondo às demais proposições até ser votado.
 
 \item[Complementar] \hfill \\
-É composta pela promulgação, instrumento do Poder Legislativo similar a
-sanção do Poder Executo, que atesta a existência da lei, e a subsequente
+É composta pela promulgação, instrumento do Poder Legislativo similar à
+sanção do Poder Executivo, que atesta a existência da lei, e a subsequente
 publicação no Diário Oficial da União. A lei entrará em vigor em 45 dias após
 sua publicação ou em outra data definida nela própria. O intervalo entre sua
 publicação e a entrada em vigor é conhecido como \emph{vacatio legis}.
 \end{description}
 
-% FIXME: Falar sobre votações nominais.
-Em linhas gerais, o projeto é iniciado por alguém que possa e vai para a Casa
-iniciadora (normalmente a CD), aonde é discutida e, caso aprovada, passa para a
-Casa revisora, que pode aceitá-lo integralmente (o que faz seguir para sanção
-ou veto pelo presidente da República), aceitá-lo com emendas e devolvê-lo a
-Casa iniciadora para apreciação das emendas sugeridas, ou rejeitá-lo e
+Em linhas gerais, o projeto é iniciado em uma das casas legislativas
+(normalmente a Câmara), que passa a ser conhecida como Casa Iniciadora. Ele é
+discutido e, caso aprovado, passa para a outra casa legislativa, chamada de
+Casa Revisora, que pode aceitá-lo integralmente (o que o faz seguir para sanção
+ou veto pelo presidente da República); aceitá-lo com emendas e devolvê-lo à
+Casa Iniciadora para apreciação das emendas sugeridas, ou; rejeitá-lo e
 encaminhá-lo ao arquivo. Caso o presidente vete parcial ou integralmente o
-projeto, ele o Congresso Nacional apreciará o veto, podendo mantê-lo e arquivar
-o projeto, ou rejeitá-lo (por maioria absoluta) e devolvê-lo ao presidente para
-promulgação.
+projeto, o Congresso Nacional apreciará o veto, podendo mantê-lo e arquivar o
+projeto, ou rejeitá-lo (por maioria absoluta) e devolvê-lo ao presidente para
+promulgação \cite{Carneiro2013}.
 
-O art. 61 da Constituição Federal explicita quem pode introduzir um projeto de
-lei no processo legislativo. Exceto quando iniciado por um Senador, o processo
-começa com a Câmara dos Deputados como Casa Iniciadora e, consequentemente, o
-Senado Federal como Casa Revisora.
+Existem dois tipos de votação: ostensiva e secreta. A votação ostensiva é
+utilizada nas proposições em geral, e é a regra na Câmara dos Deputados. Ela
+pode ocorrer pelos processos simbólico ou nominal. No processo simbólico, o
+presidente da casa, ao anunciar a votação, convida os deputados a favor da
+matéria a permanecerem sentados, devendo os contrários manifestarem-se
+(normalmente levandando um braço). No processo nominal, os parlamentares votam
+usando um meio eletrônico ou, em caso de falha, por chamada nominal
+\cite{Carneiro2013}.
+
+Na Câmara dos Deputados, o processo nominal é utilizado nos casos em que seja
+exigido quórum especial de votação (como nas emendas constitucionais); por
+deliberação do Plenário, a requerimento de qualquer deputado, e; quando houve
+pedido de verificação de votação por 6\% dos membros da Casa (31 deputados), ou
+líder que represente esse número \cite[art. 186]{RICD2015}. No geral, as
+votações nominais compreendem o subconjunto de decisões mais importantes e
+polêmicas \cite{Figueiredo2001}.
 
 \section{Considerações Finais}
+
+O objetivo deste capítulo foi fornecer um conjunto mínimo de conhecimento
+necessário para a compreensão do restante deste trabalho. Para isso, foram
+descritos o processo de desenvolvimento e avaliação de modelos preditivos,
+focando em modelos de classificação. Em seguida, foi explicada brevemente a
+teoria espacial do voto, em especial a técnica W-NOMINATE. Por fim, o processo
+legislativo brasileiro a nível federal foi descrito, com ênfase nos tipos de
+votação.
+
+No próximo capítulo, serão apresentados alguns trabalhos relacionados aos temas
+desta dissertação, analisando suas metodologias e resultados em comparação com
+o deste trabalho.
 \input{03-trabalhos-relacionados}
 
 
