@@ -5,7 +5,7 @@ knitr::read_chunk('code/04-miolo.R')
 <<load-data-and-models>>=
 @
 
-\chapter{Miolo da sua dissertação}\label{cap:miolo}
+\chapter{Desenvolvimento do modelo preditivo}\label{cap:desenvolvimento}
 
 Neste capítulo apresentaremos o processo de desenvolvimento, partindo da
 definição dos objetivos e período de estudo, passando pela extração, limpeza e
@@ -85,7 +85,7 @@ A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
 \Sexpr{nrow(coalition_changes)} entradas e saídas da coalizão que ocorreram
 durante o período de estudo, agrupadas mensalmente. Há meses que concentram
 as mudanças de posicionamento, que serão melhor analisadas na seção
-\ref{cap:miolo:aspectos-temporais}. A linha tracejada marca a data da Resolução
+\ref{cap:desenvolvimento:aspectos-temporais}. A linha tracejada marca a data da Resolução
 n\textordmasculine{} 22.610 do TSE, que em \Sexpr{data_resolucao_infidelidade}
 alterou o entendimento das regras de fidelidade partidária, tornando-as mais
 restritas \cite{TSE2007}, o que aparentemente alterou os aspectos temporais das
@@ -131,7 +131,7 @@ contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
 criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
 
 \subsection{Estimando a mudança de comportamento}
-\label{cap:miolo:estimando-mudanca-comportamento}
+\label{cap:desenvolvimento:estimando-mudanca-comportamento}
 
 Para estimar a mudança de comportamento, seguirei a metodologia de
 \citeonline{Poole2005} descrita na seção
@@ -178,7 +178,7 @@ participaram de um grande número de votações nas legislaturas em que foram
 escolhidos.
 
 \subsubsection{Critérios de inclusão de parlamentares e votações}
-\label{cap:miolo:criterios-de-inclusao}
+\label{cap:desenvolvimento:criterios-de-inclusao}
 
 Incluímos parlamentares que participaram de no mínimo 20 votações cujo lado
 minoritário foi responsável por 2,5\% ou mais dos votos. Esses são os critérios
@@ -186,7 +186,7 @@ padrão do W-NOMINATE, seguidos nos trabalhos de
 \citeonline{Leoni2002,Zucco2009,Freitas2012}.
 
 \subsubsection{Períodos de análise}
-\label{cap:miolo:periodos-de-analise}
+\label{cap:desenvolvimento:periodos-de-analise}
 
 Na análise de uma mudança de comportamento, é preciso definir ao menos dois
 períodos: um anterior e outro posterior a data de interesse. Por exemplo, para
@@ -205,7 +205,7 @@ influenciados por votações anômalas. Já períodos muito longos, como 5 anos
 antes e 5 anos depois, dificultam a interpretação dos resultados pois podem
 conter diversas mudanças de comportamento. No mínimo, precisamos de um período
 que contenha votações suficientes de acordo com nossos critérios de inclusão
-definidos na seção \ref{cap:miolo:criterios-de-inclusao}.
+definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}.
 
 Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
 divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
@@ -248,7 +248,7 @@ kable(sample_dataset)
 \end{table}
 
 \subsection{``Raio de influência'' de uma mudança de posicionamento}
-\label{cap:miolo:raio-de-influencia}
+\label{cap:desenvolvimento:raio-de-influencia}
 
 Até esse momento, temos uma tabela onde cada linha representa um parlamentar em
 um período, e nas colunas temos seus pontos ideais e as respectivas estimativas
@@ -364,7 +364,7 @@ remediá-los em um trabalho futuro.
 
 
 \section{Análise dos dados}
-\label{cap:miolo:analise}
+\label{cap:desenvolvimento:analise}
 
 Segundo \citeonline{Kuhn2013}, uma das etapas mais importantes na criação de
 modelos preditivos é analisar os dados, buscando padrões que poderão ser
@@ -383,7 +383,7 @@ sub-períodos de mesma duração. Não foi possível estimar o ponto ideal em um
 ambos sub-períodos em \Sexpr{format_percent(nrow(data_null) / num_mudancas)}
 (\Sexpr{nrow(data_null)}) períodos, pois o parlamentar não participou de
 votações o suficiente, ou as que ele participou não passaram nos critérios de
-inclusão definidos na seção \ref{cap:miolo:criterios-de-inclusao}. Esses casos
+inclusão definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
 foram excluídos, sobrando ao final \Sexpr{nrow(data)} observações.
 
 Desses valores, \Sexpr{format_percent(num_changes / nrow(data))}
@@ -428,7 +428,7 @@ ggplot(pontos_ideais_por_legislatura, aes(x = value)) +
 @
 
 \subsection{Aspectos temporais}
-\label{cap:miolo:aspectos-temporais}
+\label{cap:desenvolvimento:aspectos-temporais}
 
 <<temporal-aspects-stats>>=
 @
@@ -584,7 +584,7 @@ performance final.
 Como variável dependente, que é o que queremos prever, usei a mudança ou não de
 comportamento do parlamentar no período. Ela foi definida a partir dos períodos
 e ``raio de influência'' apresentados na seção
-\ref{cap:miolo:raio-de-influencia}, e toma o valor ``S'', quando
+\ref{cap:desenvolvimento:raio-de-influencia}, e toma o valor ``S'', quando
 houve uma mudança de posicionamento, e ``N'', quando não houve. Como já visto
 anteriormente, das \Sexpr{nrow(data)} observações,
 \Sexpr{format_percent(data_proportions["S"])}
@@ -593,12 +593,12 @@ de posicionamento, e \Sexpr{format_percent(data_proportions["N"])}
 (\Sexpr{data_proportions["N"] * nrow(data)}) não.
 
 \subsection{Variáveis independentes}
-\label{cap:miolo:variaveis-independentes}
+\label{cap:desenvolvimento:variaveis-independentes}
 
 A partir dos resultados das análises descritas na seção
-\ref{cap:miolo:analise}, defini 6 variáveis independentes, sendo 4 relativas
+\ref{cap:desenvolvimento:analise}, defini 6 variáveis independentes, sendo 4 relativas
 às estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
-temporais descritos na seção \ref{cap:miolo:aspectos-temporais}. A tabela
+temporais descritos na seção \ref{cap:desenvolvimento:aspectos-temporais}. A tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
 
@@ -646,7 +646,7 @@ ggplot(variaveis_independentes, aes(x = value)) +
 @
 
 \subsection{Divisão da base de dados}
-\label{cap:miolo:divisao-dados}
+\label{cap:desenvolvimento:divisao-dados}
 
 % FIXME: Falta falar sobre o LGOCV
 
@@ -745,10 +745,10 @@ sugerem testar diversos tipos de modelos antes de definir em qual focar. Nesta
 seção, usarei \Sexpr{length(models)} tipos: \gls{GLM}, SVM com kernel
 radial, \gls{RF}, \gls{GBM}, C5.0 e \gls{NNET} (tabela
 \ref{table:tipos-de-modelos}). Cada um deles será treinado e validado nos
-conjuntos de dados descritos na seção \ref{cap:miolo:divisao-dados} usando todas
+conjuntos de dados descritos na seção \ref{cap:desenvolvimento:divisao-dados} usando todas
 as permutações dos parâmetros definidos no apêndice
 \ref{apendice:parametros-modelos}. Os preditores utilizados serão as variáveis
-independentes definidas em \ref{cap:miolo:variaveis-independentes} e suas
+independentes definidas em \ref{cap:desenvolvimento:variaveis-independentes} e suas
 interações\footnote{As interações são definidas como a multiplicação entre cada
 permutação das variáveis. Isso permite ao modelo usar preditores mais complexos
 como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
