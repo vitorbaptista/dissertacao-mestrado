@@ -841,10 +841,10 @@ mudanças de posicionamento e
 passo é definir o ponto de corte para a classificação das categorias.
 
 Como explicado na seção
-\ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, a maioria
-das ferramentas de aprendizagem de máquina definem como ponto de corte padrão
-0,5. Entretanto, especialmente em casos onde as categorias não estão balanceadas
-ou onde o custo de um falso positivo é diferente de um falso negativo, é útil
+\ref{cap:fundamentacao:avaliando-modelos-de-classificacao}, a maioria das
+ferramentas de aprendizagem de máquina definem como ponto de corte padrão 0,5.
+Entretanto, especialmente em casos onde as categorias não estão balanceadas ou
+onde o custo de um falso positivo é diferente de um falso negativo, é útil
 analisar pontos de corte alternativos. Para este modelo, meu objetivo é
 minimizar o número de falsos positivos\footnote{Parlamentares que não mudaram
 de posicionamento sendo classificados como se tivessem mudado.}, dado que

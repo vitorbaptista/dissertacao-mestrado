@@ -71,7 +71,7 @@
 \newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
 
 \makeglossaries
-\newacronym{IR}{IR}{Índice de Rice}
+\newacronym{IR}{IR}{\'indice de Rice}
 \newacronym{PT}{PT}{Partido dos Trabalhadores}
 \newacronym{PSOL}{PSOL}{Partido Socialismo e Liberdade}
 \newacronym{API}{API}{\emph{Application Programming Interface}}
@@ -79,6 +79,7 @@
 \newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
+\newacronym{ELLO}{ELLO}{Estudos Legislativos e An\'alise Pol\'itica}
 \newacronym{ROC}{ROC}{\emph{Receiver Operating Characteristic}}
 \newacronym{AUC}{AUC}{\'area sob a curva ROC}
 \newacronym{GLM}{GLM}{regress\~ao log\'istica}
@@ -86,6 +87,8 @@
 \newacronym{RF}{RF}{\emph{Random Forest}}
 \newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}
 \newacronym{NNET}{NNET}{rede neural}
+\newacronym{ACP}{ACP}{An\'{a}lise de Componentes Principais}
+\newacronym{MCA}{MCA}{\emph{Multiple Correspondence Analysis}}
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------

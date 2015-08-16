@@ -120,7 +120,7 @@
 \newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
 
 \makeglossaries
-\newacronym{IR}{IR}{Índice de Rice}
+\newacronym{IR}{IR}{\'indice de Rice}
 \newacronym{PT}{PT}{Partido dos Trabalhadores}
 \newacronym{PSOL}{PSOL}{Partido Socialismo e Liberdade}
 \newacronym{API}{API}{\emph{Application Programming Interface}}
@@ -128,6 +128,7 @@
 \newacronym{CSV}{CSV}{\emph{Comma Separated Values}}
 \newacronym{JSON}{JSON}{\emph{JavaScript Object Notation}}
 \newacronym{CEBRAP}{CEBRAP}{Centro Brasileiro de An\'alise e Pesquisa}
+\newacronym{ELLO}{ELLO}{Estudos Legislativos e An\'alise Pol\'itica}
 \newacronym{ROC}{ROC}{\emph{Receiver Operating Characteristic}}
 \newacronym{AUC}{AUC}{\'area sob a curva ROC}
 \newacronym{GLM}{GLM}{regress\~ao log\'istica}
@@ -135,6 +136,8 @@
 \newacronym{RF}{RF}{\emph{Random Forest}}
 \newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}
 \newacronym{NNET}{NNET}{rede neural}
+\newacronym{ACP}{ACP}{An\'{a}lise de Componentes Principais}
+\newacronym{MCA}{MCA}{\emph{Multiple Correspondence Analysis}}
 
 %\input{psfig.sty}
 % ----------------- Para inserir codigo fonte de linguagens de programacao no documento -------------
@@ -1591,10 +1594,10 @@ mudanças de posicionamento e
 passo é definir o ponto de corte para a classificação das categorias.
 
 Como explicado na seção
-\ref{cap:fundamentacao-teorica:avaliando-modelos-de-classificacao}, a maioria
-das ferramentas de aprendizagem de máquina definem como ponto de corte padrão
-0,5. Entretanto, especialmente em casos onde as categorias não estão balanceadas
-ou onde o custo de um falso positivo é diferente de um falso negativo, é útil
+\ref{cap:fundamentacao:avaliando-modelos-de-classificacao}, a maioria das
+ferramentas de aprendizagem de máquina definem como ponto de corte padrão 0,5.
+Entretanto, especialmente em casos onde as categorias não estão balanceadas ou
+onde o custo de um falso positivo é diferente de um falso negativo, é útil
 analisar pontos de corte alternativos. Para este modelo, meu objetivo é
 minimizar o número de falsos positivos\footnote{Parlamentares que não mudaram
 de posicionamento sendo classificados como se tivessem mudado.}, dado que

@@ -1,7 +1,124 @@
 \chapter{Trabalhos Relacionados}\label{cap:relacionados}
 
 
-\section{Análise de mudança de comportamento de parlamentares}
+\section{Análise do comportamento parlamentar}
+\label{cap:trabalhos-relacionados:analise-comportamento}
+
+No final da década de 80 e na de 90, diversos autores viam o sistema político
+brasileiro como sendo altamente instável, com um Poder Executivo fraco,
+obrigado a negociar com cada parlamentar individualmente para executar seu
+plano de governo. Os parlamentares, preocupados somente com seus interesses
+individuais e regionalistas, seriam indisciplinados, levando a
+ingovernabilidade do país
+\cite{Abranches1988,Lamounier1994,Mainwaring2001,Ames2003}.
+
+Contrários a esse diagnóstico, \citeonline{Limongi1995} descreveram um cenário
+muito diferente. O Executivo, por ter domínio sobre a agenda legislativa,
+seria capaz de executar seu plano de governo negociando diretamente com os partidos
+políticos, que seriam capazes de disciplinar seus parlamentares a votar
+conforme suas indicações. Esse diagnóstico foi feito a partir da análise das
+votações nominais na Câmara dos Deputados no período de 1989 a 1994. Nessa
+análise, os autores calcularam a coesão interna de cada partido, usando o
+\gls{IR}\footnote{O \glsfirst{IR} varia de 0 a 100, e é calculado subtraindo a
+proporção dos votos minoritários dos majoritários. Ele é 0 quando o partido
+está dividido, com metade votando sim e a outra metade votando não, e é 100
+quando todos os parlamentares votam da mesma forma \cite{Rice1924}.}. Todos os
+partidos apresentaram níveis de coesão relativamente altos, com o menos coeso,
+o PDS, atingindo um \gls{IR} 75,70, e o mais coeso, o PT, com \gls{IR} 95,96.
+
+Essas duas correntes foram tão distintas que \citeonline{Power2010} as dividiu
+em ``pessimistas'' e ``otimistas''.
+
+Figueiredo e Limongi continuaram analisando dados relacionados ao mesmo tempo,
+focando em períodos e características distintos, que confirmaram o prognóstico.
+A coletânea desses artigos gerou o livro ``Executivo e Legislativo na nova
+ordem constitucional'' \cite{Figueiredo2001}.
+
+Também usando métricas de coesão, \citeonline{Cheibub2009} concluem que o
+Congresso brasileiro, ao contrário do previsto pelos pessimistas, é altamente
+centralizado, com partidos e seus líderes capazes de disciplinar seus
+parlamentares, evitando que estes ajam somente em busca de benefícios para si
+mesmo e seus redutos eleitorais.
+
+Além de cientistas políticos, jornalistas também têm usado técnicas semelhantes
+para análise das votações. O Grupo Estado, dono do jornal Estado de São Paulo
+(o Estadão), lançou em maio de 2012 a ferramenta Basômetro\footnote{Disponível
+em \url{http://estadaodados.com/basometro/}.}, um site interativo que permite a
+análise de como os parlamentares, individualmente e agregados por partido,
+votaram, com dados a partir do primeiro governo de Lula em 2003. Além da
+análise de cada votação, o Basômetro também calcula a taxa de
+governismo\footnote{A taxa de governismo é calculada como o percentual de vezes
+que os parlamentares votaram de acordo com a posição do governo.} dos partidos
+e parlamentares, mostrando suas flutuações em cada mês \cite{Estadao2012}.
+
+\citeonline{Dantas2014} organizaram uma coletânea de artigos escritos baseados
+em análises feitas com o Basômetro gerando o livro ``Análise política \&
+jornalismo de dados''.
+
+Apesar de serem de interpretação e cálculo mais simples, métricas de coesão têm
+alguns problemas. Em primeiro lugar, pela distância entre valores não ser
+uniforme (por exemplo, a distância entre 40\% e 50\% não é necessariamente
+igual a entre 50\% e 60\%), eles só ordenam os parlamentares. Há também um
+baixo valor de números possíveis. Em $p$ votações, há $p + 1$ valores
+possíveis. Por exemplo, em 3 votações, os parlamentares só podem assumir os
+valores 0\%, 33\%, 66\% e 100\%. Por fim, o índice é calculado em relação a
+algum ponto específico. Por exemplo, a taxa de governismo é calculada com base
+no voto do governo, que normalmente é definido pela indicação ou voto do líder
+do governo. Assim, ninguém pode ser mais governista do que o próprio líder, o
+que é um pressuposto que precisa ser testado
+\cite{Poole2005,McCarty2011,Izumi2013}. Para evitar essas limitações, diversos
+autores usam modelos espaciais de votação (ver seção
+\ref{cap:fundamentacao:teoria-espacial-do-voto}).
+
+No Brasil, o primeiro autor a usar esses modelos foi \citeonline{Leoni2002},
+que analisou o posicionamento dos deputados federais entre 1991 e 1998 usando o
+W-NOMINATE. \citeonline{Desposato2005b} usou o mesmo método para analisar o
+efeito da mudança partidária no comportamento dos parlamentares.
+\citeonline{Zucco2009} também usa o W-NOMINATE, dessa vez para entender os
+fatores que influenciam o comportamento dos parlamentares, encontrando
+que a ideologia não explica completamente seus comportamentos, e indicativos
+que o presidente da República é um importante influenciador, especialmente
+através da distribuição de cargos e recursos.
+
+\citeonline{Freitas2012} analisam o significado da primeira dimensão, estimada
+usando W-NOMINATE, na Câmara dos Deputados e no Senado Federal, concluindo que
+ela está ligada ao conflito governo e oposição. \citeonline{Izumi2013} repete
+essa análise no Senado Federal usando outro modelo, o \emph{Optimal
+Classification}, chegando a mesma conclusão.
+
+Além de técnicas específicas para gerar mapas espaciais de votação, alguns
+autores usaram técnicas de redução de dimensionalidade mais gerais.
+\citeonline{Trento2013} analisaram os dados da Câmara dos Deputados, Senado
+Federal e Câmara Municipal de São Paulo usando \gls{ACP}\footnote{Do inglês,
+\emph{Principal Component Analysis} (PCA).}, uma técnica estatística de redução
+de dimensionalidade. Eles mapeiam um voto sim ou não nos valores 1 e 0, e
+transformam o conjunto de votos dos parlamentares em pontos em um espaço
+n-dimensional, onde cada dimensão representa uma votação. Como o número de
+votações é alto, é difícil visualizar esses pontos. Assim, usam o \gls{ACP}
+para colocar esses pontos em um espaço bidimensional, mantendo ao máximo suas
+posições relativas. Dessa forma, quanto mais próximo estiverem dois
+parlamentares (ou partidos), mais vezes eles votaram da mesma forma. O
+resultado dessa pesquisa foi o Radar Parlamentar\footnote{Disponível em
+\url{http://radarparlamentar.polignu.org}}, um site interativo no qual é
+possível visualizar os diversos gráficos gerados, com as posições dos
+legisladores e partidos a cada ano.
+
+Usando uma técnica semelhante, a \gls{MCA}, \citeonline{Andrade2015} colocam os
+deputados federais em um espaço bidimensional, mostrando aonde estaria o
+presidente da Câmara dos Deputados, Eduardo Cunha (PMDB/RJ). Como ele não vota,
+consideraram seu posicionamento como sendo igual ao do líder do PMDB na Câmara
+no período. Eles também analisaram a similaridade dos deputados com o Eduardo
+Cunha através do percentual de votos que deram iguais a ele, batizando essa
+métrica de ``Cunhômetro''.
+
+Apesar dessas técnicas estatísticas como a \gls{ACP} e \gls{MCA} serem
+similares a técnicas como o W-NOMINATE, não encontramos trabalhos que validem
+seu uso em dados de votação, o que pode dificultar a interpretação dos seus
+resultados.
+
+% FIXME: Citar o GovTrack.us e https://opengovdata.io/
+
+\subsection{Análise da mudança de comportamento parlamentar}
 
 O problema básico em comparar mudanças de comportamento ao longo do tempo é
 distinguir alterações por causa de uma mudança de agenda das causadas por uma
@@ -11,18 +128,6 @@ forma, e em outro momento eles votaram 50\% das vezes, como definir se essa
 mudança se deu porque eles mudaram seus posicionamentos, ou simplesmente porque
 eles concordavam nas votações do primeiro momento, mas não nas do segundo?
 
-% FIXME: Isso não é análise de mudança de comportamento, mas análise de apoio
-% ao governo.
-Limongi escapa desse problema ao focar sua análise na habilidade do governo em
-manter o apoio dos parlamentares aos seus projetos, medidas através da taxa de
-governismo\footnote{Percentual de vezes que os parlamentares votaram segundo a
-indicação do governo.}. Nessa análise, não importa se esse controle se deu
-através da seleção da agenda ou de uma negociação com os parlamentares, mas sim
-o resultado final. Em outras palavras, estou preocupado com o fim, e não com os
-meios. O Basômetro segue uma linha similar, mas ao invés de tratar de
-legislaturas completas, analisa mês a mês. Por isso, está mais suscetível a
-flutuações.
-
 Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
 usam ``pontes'', que são parlamentares que estiveram presentes em ambos
 momentos e cujo posicionamento se assume ter se mantido estável. Podemos citar
@@ -30,12 +135,6 @@ como exemplos parlamentares que foram eleitos para mais de uma legislatura, ou
 que mudaram de Casa (deputados federais que se tornam senadores). Projetos de
 Lei também podem ser usados como ponte, caso eles tenham sido votados nas
 instituições ou períodos de interesse.
-
-O Basômetro monitora a taxa de governismo dos parlamentares, definida como o
-percentual de vezes que um parlamentar votou de acordo com a indicação do líder
-do governo. Como eles não fazem uso de pontes, não há como diferenciar a razão
-da mudança: se por uma alteração na agenda de votação ou uma real mudança de
-posicionamentos.
 
 No artigo, \citeonline{Shor2010} usa três tipos de pontes para colocar
 parlamentares que serviram no nível estadual em ambas as casas\footnote{O
@@ -48,47 +147,91 @@ da casa baixa para a casa alta (ou vice-versa) em nível estadual conectam as
 respectivas casas, e; parlamentares que passam do nível estadual para atuar no
 nível federal conectam o estado com o Congresso.
 
-Os trabalhos se dividem em dois grandes grupos: os que usam medidas de coesão e
-os que usam modelos espaciais de votação.
+No Brasil, \citeonline{Leoni2002} analisa as posições dos deputados federais na
+49\textordfeminine{} e 50\textordfeminine{} legislaturas não usando pontes, mas
+sim a correlação de Pearson entre os pontos ideais. Ele encontrou correlações
+altas, em torno de 0,80. Apesar disso, ele reconhece que uma limitação de seu
+trabalho é que, nos períodos estudados, o governo sempre foi de direita, o que
+poderia causar essa baixa mudança de pontos ideais. Além disso, como ele não
+usou nenhuma técnica para diferenciar mudanças de comportamento de mudanças na
+agenda legislativa (como as pontes), não é possível distinguir a razão desse
+resultado com segurança.
 
-% Dividem-se em dois grupos: os que usam métodos espaciais e os que usam
-% métodos "normais" (qual o nome?).
-% Radar Parlamentar
-% Basômetro
-% TODO: O livro do Poole "Congress: A Political-Economic History of Roll Call
-% Voting" parece importante demais pra estar de fora.
+\citeonline{Desposato2005b}, ao analisar o impacto das mudanças de partido no
+comportamento dos parlamentares, usou o posicionamento dos legisladores que não
+mudaram de partido como pontes. \citeonline{Izumi2013} faz uma pesquisa
+semelhante, mas analisando a mudança de comportamento dos senadores que mudaram
+de um partido dentro da coalizão governamental para um fora (ou vice-versa),
+para entender o efeito da coalizão no comportamento dos parlamentares.
 
-\citeonline{Desposato2005b} analisou os efeitos da mudança de partidos no
-comportamento dos senadores e deputados federais brasileiros durante a
-49\textordfeminine{} e 50\textordfeminine{} legislaturas. Ele usou o W-NOMINATE
-para estimar os pontos ideais de cara par parlamentar-partido. Ou seja, se o
-parlamentar \emph{A} mudar do PT para o DEM, ele terá dois pontos ideais: um
-para cada período.
+O Basômetro e o Radar Parlamentar não diferenciam mudanças de comportamento
+reais das causadas por mudança da agenda legislativa
+\cite{Estadao2012,Trento2013}.
 
-\citeonline{Leoni2002} analisou o comportamento dos partidos políticos na
-Câmara dos Deputados entre 1991 e 1998 usando a correlação de Pearson. Ele
-estava buscando entender se os deputados federais mantinham suas posições
-relativas ao longo do tempo, e qual influência o presidente da República tinha
-em alterar essas posições. Nesse período, ele não encontrou uma influência
-estatisticamente relevante dos presidentes na composição da Câmara, mas há o
-porém que todos os presidentes estudados eram de direita. Isso pode ter
-influenciado seu resultado.
+Em geral, trabalhos que usam métricas de coesão interpretam as razões de
+mudanças de comportamento usando métodos qualitativos, enquanto os que usam
+pontos ideais usam métodos quantitativos.
 
-\section{Ciência de dados}
+\section{Aprendizagem de máquina na Ciência Política}
+\label{ref:trabalhos-relacionados:data-science-polsci}
 
-Listarei trabalhos sobre ciência de dados, especialmente métodos de detecção de anomalias. Acho que não cabe aqui, mas a parte de sistemas de monitoramento de servidores e a sacada de usá-los nessa outra área é interessante. Também a criação de um pipeline, possivelmente usando o Luigi (\url{https://github.com/spotify/luigi}).
+Os trabalhos encontrados que usam técnicas de aprendizagem de máquina no
+âmbito da Ciência Política dividem-se em duas categorias: os que analisam
+textos (como discursos) buscando entender seu conteúdo ou o posicionamento do
+autor, e os que analisam projetos de lei tentando prever seus resultados.
 
-(Alexandre) Essa parte sobre a parte de sistemas de monitoramento entra em outro capítulo e concordo que deve ser mencionada sim na dissertação. Acho que isso pode aparecer no próximo capítulo.
+Dos que fazem análise textual, \citeonline{Thomas2006} criaram um modelo que
+classifica os discursos em debates sobre projetos de lei no congresso
+estadunidense como sendo contrários ou favoráveis ao mesmo.
+\citeonline{Quinn2006} criaram um modelo que extrai tópicos do texto de
+discursos, validando-o nos dados do 105\textordmasculine{} ao
+107\textordmasculine{} senado dos Estados Unidos. \citeonline{Yu2008}
+determinam a filiação partidária dos parlamentares estadunidense a partir dos
+seus discursos. \citeonline{Somasundaran2010} classificam autores de textos
+publicados na Internet identificando seu posicionamento político a partir de
+suas argumentações. Já \citeonline{Conover2011} faz o mesmo com os usuários do
+Twitter\footnote{Disponível em \url{http://twitter.com}.}, mas a partir da
+frequência do uso de certas palavras.
 
-\subsection{Discussão}
+Já na previsão do sucesso de projetos de lei, \citeonline{Gerrish2011} e
+\citeonline{Goldblatt2012} desenvolveram modelos que acertaram mais de 90\% dos
+resultados nos períodos estudados. \citeonline{Yano2012} fizeram uma análise
+semelhante, mas focando em prever os projetos de lei que conseguirão passar das
+discussões ocorridas em comissões e ser postos em votação.
+\citeonline{Wang2012} preveem os resultados através de uma caminhada aleatória
+em 3 grafos heterogêneos interconectados, sendo dois representando os
+legisladores e um representando projetos de lei. Os legisladores estão
+interligados caso tenham escrito ao menos um projeto juntos\footnote{Do inglês,
+\emph{co-sponsorship}.}, e os projetos de lei interligados pela análise da
+similaridade textual. Quando um legislador vota em um projeto de lei, um
+vértice é criado entre seu nó e o do projeto. Ele criou dois grafos para os
+legisladores como forma de criar dois tipos de ligação entre os legisladores e
+os projetos de lei: uma para representar votos sim, e outra para votos não.
+
+A empresa americana \citeonline{FiscalNote2015} desenvolve ferramentas para
+monitoramento legislativo usando técnicas de ciência de dados. Uma delas, a
+\emph{Prophecy}\footnote{Disponível em
+\url{https://www.fiscalnote.com/prophecy}.} (do inglês, profecia), supostamente
+prevê o resultado de projetos de lei com 94\% de acurácia. No Brasil, o
+\gls{ELLO}, empresa ligada ao \gls{CEBRAP}, possui um produto similar.
 
 \section{Considerações Finais}
 
-Esse trabalho não trás muitas novidades especificamente nas áreas relacionadas, mas a contribuição está na junção dessas ferramentas já existentes. Nas minhas pesquisas, só encontrei o a startup \url{www.fiscalnote.com} que faz um trabalho parecido, mas tenho certeza que existem outras empresas, ou sistemas internos. O que não encontrei é um monitorador legislativo que não foque em uma área ou projeto de Lei específico, mas busque padrões gerais. O que encontrei mais parecido é o monitoramento de servidores, que segue o padrão de analisar o maior número possível de dados buscando anomalias e padrões.
+Como visto na seção \ref{cap:trabalhos-relacionados:analise-comportamento}, o
+foco da literatura encontrada é na análise e interpretação do comportamento dos
+parlamentares, seja usando métricas de coesão ou modelos espaciais de votação.
+Na seção \ref{ref:trabalhos-relacionados:data-science-polsci}, foram
+apresentados trabalhos que aplicam técnicas de aprendizagem de máquina em temas
+da ciência política, buscando descobrir o posicionamento de pessoas através dos
+seus textos ou prever o resultado de votações.
 
+Nesse levantamento bibliográfico, não foi encontrado nenhum autor que
+desenvolva o objetivo deste trabalho: a detecção de mudanças de posicionamento
+dos legisladores. O que parece ser mais próximo é a pesquisa feita pela empresa
+americana \citeonline{FiscalNote2015} para o desenvolvimento do produto
+\emph{Prophecy}, mas não foi possível analisar as semelhanças mais a fundo pois
+o processo usado por eles não é divulgado.
 
-(Alexandre) Então esse deve ser o principal diferencial do seu trabalho em relação aos demais. Essa diferença deve ser reforçada ao apresentar os trabalhos relacionados.
-
-Um negócio que fica muito legal nesta seção é criar uma tabela com um conjunto de características presentes e desejadas e marcar quais trabalhos relacionados atendem a cada uma dessas características.
-
-Assim fica mais fácil constatar onde está o grande diferencial do seu trabalho, que seria justamente ser uma solução com aplicação mais ampla e não focada em áreas específicas.
+Nesse sentido, considero a detecção de mudança de posicionamento dos deputados
+federais brasileiros como sendo o principal diferencial e contribuição deste
+trabalho.
