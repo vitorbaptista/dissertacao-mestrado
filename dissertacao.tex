@@ -1554,7 +1554,7 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
       & Iterações boosting & 50 & & & \\
   RF & Preditores aleatórios & 2 & 0,74&0,77&0,8 \\
   SVM Radial & Custo & 0,5 & 0,72&0,75&0,78 \\
-             & Sigma & 0,14232 & & & \\
+             & Sigma & 0,14 & & & \\
   GLM & --- & --- & 0,38&0,41&0,43 \\
 \end{tabular}
 \caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
@@ -1715,38 +1715,43 @@ resultados obtidos, suas limitações e possíveis trabalhos futuros.
 \centering
   Modelo & Parâmetro & Valores \\
   \hline
+  % C5.0
   C5.0 & Tipo & rules, tree \\
-       & Winnow & FALSE, TRUE \\
-       & Iterações boosting & 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 \\
-  NNET & Unidades ocultas & 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39 \\
-   & Decaimento & 0 \\
- &  & 1e-04 \\
- &  & 0,000146779926762207 \\
- &  & 0,000215443469003188 \\
- &  & 0,000316227766016838 \\
- &  & 0,000464158883361278 \\
- &  & 0,000681292069057962 \\
- &  & 0,001 \\
- &  & 0,00146779926762207 \\
- &  & 0,00215443469003188 \\
- &  & 0,00316227766016838 \\
- &  & 0,00464158883361278 \\
- &  & 0,00681292069057962 \\
- &  & 0,01 \\
- &  & 0,0146779926762207 \\
- &  & 0,0215443469003188 \\
- &  & 0,0316227766016838 \\
- &  & 0,0464158883361278 \\
- &  & 0,0681292069057961 \\
- &  & 0,1 \\
-  GBM  & Encolhimento & 0,1 \\
-       & Profundidade máxima & 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 \\
-       & Tamanho mínimo das folhas & 10 \\
-       & Iterações boosting & 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000 \\
-  RF & Preditores aleatórios & 2, 3, 5, 6, 9, 13, 17, 24, 33, 45, 62, 85, 117, 160, 219, 299, 410, 560, 766 \\
-  SVM Radial & Custo & 0,25, 0,5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072 \\
-             & Sigma & 0,142318578779184 \\
+   & Winnow & FALSE, TRUE \\
+   & Iterações boosting & 1, 10, 20, 30, 40, 50, 60, 70, \\
+ &  & 80, 90, 100 \\
+  % NNET
+  NNET & Unidades Ocultas & 1, 3, 5, 7, 9, 11, 13, 15, 17, \\
+ &  & 19, 21, 23, 25, 27, 29, 31, 33, \\
+ &  & 35, 37, 39 \\
+   & Decaimento & 0, 1e-04, 0,00015, 0,00022, \\
+ &  & 0,00032, 0,00046, 0,00068, \\
+ &  & 0,001, 0,0015, 0,0022, 0,0032, \\
+ &  & 0,0046, 0,0068, 0,01, 0,015, \\
+ &  & 0,022, 0,032, 0,046, 0,068, 0,1 \\
+  % GBM
+  GBM & Encolhimento & 0,1 \\
+   & Profundidade máxima & 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, \\
+ &  & 11, 12, 13, 14, 15, 16, 17, 18, \\
+ &  & 19, 20 \\
+   & Tamanho mínimo das folhas & 10 \\
+   & Iterações boosting & 50, 100, 150, 200, 250, 300, \\
+ &  & 350, 400, 450, 500, 550, 600, \\
+ &  & 650, 700, 750, 800, 850, 900, \\
+ &  & 950, 1.000 \\
+  % RF
+  RF & Preditores aleatórios & 2, 3, 5, 6, 9, 13, 17, 24, 33, \\
+ &  & 45, 62, 85, 117, 160, 219, 299, \\
+ &  & 410, 560, 766 \\
+  % SVM Radial
+  SVM Radial & Custo & 0,25, 0,5, 1, 2, 4, 8, 16, 32, \\
+ &  & 64, 128, 256, 512, 1.024, 2.048, \\
+ &  & 4.096, 8.192, 16.384, 32.768, \\
+ &  & 65.536, 131.072 \\
+   & Sigma & 0,14 \\
   GLM & --- & --- \\
+\caption{Lista dos parâmetros usados no treinamento dos modelos. Em modelos com
+mais de um parâmetro, foram testadas todas suas permutações.}
 \end{longtable}
 
 \chapter{Lista de pontos de corte do modelo final}

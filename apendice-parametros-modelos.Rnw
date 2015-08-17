@@ -3,16 +3,37 @@
 \label{apendice:parametros-modelos}
 
 <<>>=
-blah = function(lst) {
-  gsub("\\.", ",", sort(unique(lst)))
+breakList = function(lst, size = 30) {
+  # Quebra uma lista de strings em outra onde cada
+  # elemento possui ao menos "size" caracteres.
+  if (length(lst) == 1) {
+    return(lst)
+  }
+  result = list()
+  aux = NULL
+  for (val in lst) {
+    if (is.null(aux)) {
+      aux = val
+    } else {
+      if (nchar(aux) + nchar(val) < size) {
+        aux = paste(c(aux, val), collapse = ", ")
+      } else {
+        result = c(result, paste0(aux, ","))
+        aux = val
+      }
+    }
+  }
+  c(result, aux)
 }
 
-aux = function(model, param, label, modelName = "") {
-  values = blah(model$results[[param]])
+generateRows = function(modelParams, label, modelName = "") {
+  values = breakList(format_number(sort(unique(modelParams))))
   result = c(paste(c(modelName, label, values[[1]]), collapse = " & "))
-  for (value in values[2:length(values)]) {
-  result = c(result,
-             paste(c("", "", value), collapse = " & "))
+  if (length(values) > 1) {
+    for (value in values[2:length(values)]) {
+      result = c(result,
+                 paste(c("", "", value), collapse = " & "))
+    }
   }
   paste(result, collapse = " \\\\\n")
 }
@@ -22,17 +43,24 @@ aux = function(model, param, label, modelName = "") {
 \centering
   Modelo & Parâmetro & Valores \\
   \hline
-  C5.0 & Tipo & \Sexpr{blah(models$C5.0$results$model)} \\
-       & Winnow & \Sexpr{blah(models$C5.0$results$winnow)} \\
-       & Iterações boosting & \Sexpr{blah(models$C5.0$results$trials)} \\
-  NNET & Unidades ocultas & \Sexpr{blah(models$nnet$results$size)} \\
-  \Sexpr{aux(models$nnet, "decay", "Decaimento")} \\
-  GBM  & Encolhimento & \Sexpr{blah(models$gbm$results$shrinkage)} \\
-       & Profundidade máxima & \Sexpr{blah(models$gbm$results$interaction.depth)} \\
-       & Tamanho mínimo das folhas & \Sexpr{blah(models$gbm$results$n.minobsinnode)} \\
-       & Iterações boosting & \Sexpr{blah(models$gbm$results$n.trees)} \\
-  RF & Preditores aleatórios & \Sexpr{blah(models$rf$results$mtry)} \\
-  SVM Radial & Custo & \Sexpr{blah(models$svmRadial$results$C)} \\
-             & Sigma & \Sexpr{blah(models$svmRadial$results$sigma)} \\
+  % C5.0
+  \Sexpr{generateRows(models$C5.0$results$model, "Tipo", "C5.0")} \\
+  \Sexpr{generateRows(models$C5.0$results$winnow, "Winnow")} \\
+  \Sexpr{generateRows(models$C5.0$results$trials, "Iterações boosting")} \\
+  % NNET
+  \Sexpr{generateRows(models$nnet$results$size, "Unidades Ocultas", "NNET")} \\
+  \Sexpr{generateRows(models$nnet$results$decay, "Decaimento")} \\
+  % GBM
+  \Sexpr{generateRows(models$gbm$results$shrinkage, "Encolhimento", "GBM")} \\
+  \Sexpr{generateRows(models$gbm$results$interaction.depth, "Profundidade máxima")} \\
+  \Sexpr{generateRows(models$gbm$results$n.minobsinnode, "Tamanho mínimo das folhas")} \\
+  \Sexpr{generateRows(models$gbm$results$n.trees, "Iterações boosting")} \\
+  % RF
+  \Sexpr{generateRows(models$rf$results$mtry, "Preditores aleatórios", "RF")} \\
+  % SVM Radial
+  \Sexpr{generateRows(models$svmRadial$results$C, "Custo", "SVM Radial")} \\
+  \Sexpr{generateRows(models$svmRadial$results$sigma, "Sigma")} \\
   GLM & --- & --- \\
+\caption{Lista dos parâmetros usados no treinamento dos modelos. Em modelos com
+mais de um parâmetro, foram testadas todas suas permutações.}
 \end{longtable}

@@ -803,7 +803,7 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
       & Iterações boosting & \Sexpr{models$gbm$bestTune$n.trees} & & & \\
   RF & Preditores aleatórios & \Sexpr{models$rf$bestTune$mtry} & \Sexpr{paste(lapply(ci(rocs.validation$rf), format_inline), collapse = "&")} \\
   SVM Radial & Custo & \Sexpr{models$svmRadial$bestTune$C} & \Sexpr{paste(lapply(ci(rocs.validation$svmRadial), format_inline), collapse = "&")} \\
-             & Sigma & \Sexpr{gsub("\\.", ",", round(models$svmRadial$bestTune$sigma, 5))} & & & \\
+             & Sigma & \Sexpr{models$svmRadial$bestTune$sigma} & & & \\
   GLM & --- & --- & \Sexpr{paste(lapply(ci(rocs.validation$glm), format_inline), collapse = "&")} \\
 \end{tabular}
 \caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}

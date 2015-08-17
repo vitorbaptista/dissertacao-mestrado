@@ -225,7 +225,8 @@ format_percent <- function(number) {
 }
 
 format_number = function(number) {
-  prettyNum(number, decimal.mark = ",", big.mark = ".")
+  prettyNum(number, decimal.mark = ",", big.mark = ".",
+            preserve.width = "individual")
 }
 
 format_inline = function(x) {
