@@ -568,6 +568,7 @@ descrito por \citeonline{Freitas2008}, enquanto os que mudam de posicionamento
 sem migrar de partido não têm um padrão claro.
 
 \section{Modelagem}
+\label{cap:desenvolvimento:modelagem}
 
 <<data-splits-stats>>=
 @

@@ -1,33 +1,113 @@
 \chapter{Introdução} \label{intro}
 
+Neste capítulo, serão descritos o que motivou o desenvolvimento deste trabalho
+(seção \ref{sec:motivacao}), juntamente com a definição do problema e objetivos
+da pesquisa, a metodologia seguida, publicações relacionadas e, por fim, será
+resumida a estrutura dos restante da dissertação.
+
 \section{Motivação}\label{sec:motivacao}
 
-Desde XXXX, a Câmara dos Deputados disponibiliza em seu site o resultado das
-votações nominais realizadas nesta Casa. Algumas ferramentas foram criadas para
-analizar o comportamento dos parlamentares através desses dados, como o
-Basômetro e o Radar Parlamentar. Essas ferramentas são usadas por jornalistas e
-cientistas políticos, como CITAR LIVRO BASÔMETRO E MATERIAS DO ESTADAO. Apesar
-disso, a análise desses dados ainda se dá de forma manual. Com 513 deputados
-federais a cada legislatura, sem contar os suplentes, o volume de dados é muito
-grande, então as análises acabam sendo feitas por partidos ou com parlamentares
-específicos.
+O acompanhamento das atividades dos legisladores é extremamente importante,
+pois são eles que alteram as regras do jogo para a vida no Brasil, afetando
+todos brasileiros. Desde uma empregada doméstica, que quer entender quais são
+seus novos direitos conquistados pela exigência que seus patrões assinem sua
+carteira de trabalho, até a presidente de uma grande construtora, que pode
+ganhar ou perder milhões de acordo com a aprovação ou não de novas leis. As grandes
+empresas, com recurso para investir, reconhecem a importância de acompanhar de
+perto a atividade legislativa, seja passiva ou ativamente através de
+\emph{lobbying}. Infelizmente, com exceção das leis que são divulgadas na mídia,
+como aumentos do salário mínimo ou, recentemente, a redução da maioridade
+penal, a maioria dos cidadãos não se interessa por essa área, seja por falta de
+tempo, conhecimento ou simplesmente falta de interesse.
 
-O objetivo desse trabalho é desenvolver um modelo capaz de determinar qual a
-chance de um parlamentar ter mudado de posicionamento em um determinado
-período. Defino uma mudança de posicionamento como sendo a entrada ou saída da
-coalizão. Para isso, o modelo se baseia no padrão de votação, mensurado a
-partir do modelo espacial de votação W-NOMINATE, e em padrões temporais. Ele
-pode ser executado automaticamente, conforme novas votações forem surgindo, e
-alertar algum interessado caso a chance de ter havido uma mudança de
-posicionamento seja superior a algum valor pré-definido (e.x.: 80\%).
+Jornalistas políticos exercem um papel fundamental nesse sentido, traduzindo os
+termos técnicos e jurídicos usados pelos parlamentares em uma forma que possa
+ser mais facilmente compreendida pelo cidadão comum. Entretanto, como essa
+análise demanda bastante tempo, ela acaba se restringindo aos temas mais
+polêmicos, que atingem um maior número de pessoas. Esses temas são muito
+importantes, mas não suficientes: se eu trabalho numa ONG de preservação do
+meio ambiente, por exemplo, meu maior interesse é em projetos de lei que versem
+nessa área.
 
-\section{Objetivos}
+Percebendo essa necessidade, empresas como o \gls{ELLO} no Brasil e a
+FiscalNote nos Estados Unidos, criaram ferramentas que facilitam esse
+monitoramento personalizado. Seus produtos permitem que o usuário defina suas
+as áreas de interesse (por exemplo, meio ambiente ou mobilidade urbana),
+recebendo resumos periódicos do que afeta essas áreas, inclusive com previsões
+da probabilidade de aprovação dos projetos de lei relacionados. Apesar disso,
+por serem ferramentas pagas, seu uso ainda é restrito.
 
-O objetivo geral desta dissertação é o desenvolvimento e validação de um modelo
-capaz de determinar a chance de um deputado federal ter mudado de
-posicionamento em um determinado período.
+% Explica importância do monitoramento do comportamento dos legisladores
+Um dos fatores mais importantes no comportamento dos parlamentares é o conflito
+governo/oposicao \cite{Leoni2002,Desposato2005b,Freitas2012,Izumi2013}. Dessa
+forma, quando um parlamentar muda de lado, seja migrando de partido ou quando
+seu próprio partido se une (ou deixa) à coalizão governamental, é de se esperar
+que seu comportamento também mude. Como, no geral, os partidos são capazes de
+disciplinar seus filiados a votar de certa forma, essa mudança de forças pode
+definir a aprovação ou não de um projeto de lei. Dessa forma, é essencial
+monitorar essas mudanças para entender as chances que um projeto tem de virar
+lei.
 
-\subsection{Objetivos Especificos}
+Apesar disso, o grande volume de dados gera um desafio. Considerando somente o
+nível federal, 513 deputados federais e 81 senadores participam de centenas de
+votações a cada legislatura, tornando difícil o entendimento dos seus padrões
+de votação. Algumas ferramentas, como o Basômetro e o Radar Parlamentar, foram
+criadas para tentar diminuir esse problema \cite{Estadao2012,Trento2013}.
+
+Elas são ferramentas gratuitas que permitem o acompanhamento da taxa de
+governismo (no caso do Basômetro) ou das posições relativas dos parlamentares
+(no caso do Radar Parlamentar), sendo um grande avanço para auxiliar o cidadão
+comum a se aproximar do processo legislativo \cite{Dantas2014}. Entretanto,
+mesmo facilitando bastante, não é fácil analisar um gráfico com 513 pontos (no
+caso da Câmara) e visualizar o que está mudando ou não. Para diminuir esse
+desafio, as análises acabam sendo feitas baseados no comportamento agregado dos
+partidos, e não dos parlamentares individualmente.
+
+% FIXME: Acertar os valores da coesão do PT, possivelmente usando o Basômetro.
+Os partidos são capazes de influenciar o comportamento dos seus parlamentares,
+mantendo taxas de coesão, em sua maioria, acima de 75\%
+\cite{Figueiredo2001,Cheibub2009,Zucco2009}. Assim, a análise a nível de partido
+é uma forma importantíssima de entender o comportamento parlamentar. Apesar
+disso, algumas informações são perdidas ao fazer essa agregação. Para dar um
+exemplo concreto, o PT é, historicamente, um dos partidos brasileiros mais
+coesos, sendo comum chegar a taxas de coesão acima de 95\%. Em 2003 e 2004, os
+dois primeiros anos do primeiro governo Lula, o PT mantinha uma coesão
+altíssima (XX \%). Apesar disso, três deputados constantemente votavam
+contrários a indicação do líder do partido. Depois de serem alertados sobre seu
+comportamento, eles acabaram sendo expulsos do PT.
+
+% FIXME: Citar os fundadores do PSOL e números de deputados do PT
+Esses deputados são Babá, Luciana Genro e XXX que, juntamente com a senadora
+Heloísa Helena, expulsa pela mesma razão, fundaram o PSOL. Essa movimentação
+passaria desapercebida ao analisar o PT como um todo, já que só 3 dos quase 100
+deputados do partido tiveram esse comportamento na época.
+
+O objetivo deste trabalho é o desenvolvimento de um modelo estatístico que
+determine a chance de um parlamentar ter mudado de posicionamento com base no
+seu padrão de voto. Esse modelo foi treinado com os dados da
+50\textordfeminine{} até a 54\textordfeminine{} legislaturas, compreendendo o
+período de 20 anos de 1995, no início do primeiro governo de Fernando Henrique
+Cardoso, até o início de 2015, no final do primeiro governo de Dilma Rousseff.
+
+Com isso, espero criar uma ferramenta para que os cidadãos, jornalistas e
+cientistas políticos consigam filtrar quais parlamentares mudaram de
+comportamento mais significativamente em cada período, otimizando o uso do seu
+tempo ao focar seus esforços em analisar quem está mudando. Esse modelo poderá
+ser usado separadamente, ou integrado em ferramentas já existentes, como o
+Basômetro ou o Radar Parlamentar, visando aumentar sua utilidade como
+ferramentas de monitoramento legislativo.
+
+Como preditores, o modelo usa os pontos ideais dos parlamentares, estimados
+peloo algoritmo W-NOMINATE \cite{Poole1985,Poole2005}. Além desses pontos,
+também replicamos parte da pesquisa de \citeonline{Freitas2008}, que analisa os
+aspectos temporais das migrações partidárias no Brasil, focando nas mudanças de
+posicionamento, sejam a partir da migração para partidos de posicionamento
+oposto (indo do governo para oposição ou vice-versa), ou na entrada ou saída do
+próprio partido na coalizão governamental.
+
+O principal diferencial deste trabalho é democratizar o acesso a técnicas
+antes só disponíveis em sistemas pagos de empresas como o \gls{ELLO} no Brasil
+e a FiscalNote nos Estados Unidos.
 
 \section{Problema de pesquisa}
 
@@ -38,27 +118,67 @@ entrar ou sair da coalizão, mas não sabemos se ele muda antes ou depois da
 oficialização dessa mudança. A pergunta que buscamos responder neste trabalho
 é:
 
-% FIXME: A partir dessa frase, parece que o modelo irá dizer "O deputado X vai
-% mudar de posicionamento daqui a 3 meses", o que é errado. Ele vai dizer "Eu
-% tenho 85% de certeza que o deputado X mudou de posicionamento entre os
-% períodos Y1 e Y2".
-\emph{É possível prever se um deputado federal irá mudar de posicionamento,
-entrando ou saindo da coalizão do governo, a partir do seu padrão de votação?}
+\emph{É possível detectar a mudança de posicionamento de um deputado federal,
+com ele entrando ou saindo da coalizão governamental, a partir de uma mudança
+no seu padrão de votação?}
 
-Para tanto, partimos do pressuposto que os parlamentares mudam de comportamento
-antes de mudar de posicionamento. Caso isto esteja errado e eles mudem
-depois (ou não mudem), não conseguiremos prever essa mudança de posicionamento.
+O modelo estatístico desenvolvido neste trabalho só faz sentido caso, além de
+ser possível detectar mudanças de posicionamento, essa detecção ocorra antes da
+oficialização da mudança. Em outras palavras, que o modelo seja capaz de
+detectar uma mudança de posicionamento antes que ela seja de conhecimento
+público. Para isto, precisaremos também responder a pergunta:
+
+\emph{Os deputados federais mudam seu padrão de votação antes de mudar de
+posicionamento?}
+
+No levantamento bibliográfico feito no capítulo
+\ref{cap:trabalhos-relacionados} mostraremos que, apesar de alguns autores
+descobrirem que os parlamentares mudam de comportamento ao mudarem de
+posicionamento, não foram encontrados trabalhos que discorram sobre se essa
+mudança de comportamento ocorre antes ou depois da efetiva mudança de
+posicionamento. Dessa forma, responder essa pergunta é uma outra contribuição
+deste trabalho.
+
+\section{Objetivos}
+
+O objetivo geral desta dissertação é o desenvolvimento e validação de um modelo
+capaz de determinar a chance de um deputado federal ter mudado de
+posicionamento em um determinado período.
+
+Para alcançar esse objetivo geral, foram definidos os seguintes objetivos
+específicos:
+
+\begin{enumerate}
+  \item Determinar um conjunto de características a partir das quais seja
+    possível determinar a chance de um parlamentar mudar de posicionamento;
+  \item Descobrir se os parlamentares mudam de comportamento antes de mudarem
+    de posicionamento;
+  \item Analisar diversos modelos estatísticos, buscando qual tem melhor
+    performance na detecção da mudança de posicionamento dos deputados
+    federais brasileiros.
+\end{enumerate}
 
 \section{Metodologia}
 
-Não sei qual o nome da metodologia que estou usando: por enquanto é tudo muito ad-hoc. Estudo de caso é um componente, mas não sei se há outra.
+Para o desenvolvimento desta pesquisa, foram seguidos os seguintes passos:
 
-Alexandre -  Não é preciso dar uma nome a metodologia. O que você precisa descrever aqui são os passos seguidos até chegar ao resultado final.
-
-Tipo
-1 - Levantamento Bibliográfico sobre X e Y
-2 - Desenvolviment do mecanismo para extração e filtragem dos dados
-3 - ...
+\begin{itemize}
+  \item Levantamento bibliográfico sobre análise do comportamento parlamentar,
+    análise da mudança do comportamento parlamentar, e métodos de aprendizado
+    de máquina usados no âmbito da Ciência Política;
+  \item Extração dos dados de votos e votações a partir da página da Câmara dos
+    Deputados, e da listagem de coalizões a partir do banco de dados
+    legislativo do \gls{CEBRAP};
+  \item Definição da forma para representação desses dados usando a teoria
+    espacial do voto;
+  \item Análise dos padrões gerais e temporais dos pontos ideias estimados;
+  \item Definição de variáveis independentes capazes de serem usadas para
+    diferenciar parlamentares que mudaram de posicionamento dos que não
+    mudaram;
+  \item Análise de diversos modelos preditivos buscando o que obtem a melhor
+    performance nesses dados;
+  \item Validação do modelo final baseado na análise feita na etapa anterior.
+\end{itemize}
 
 \section{Publicações Relacionadas}
 
@@ -66,44 +186,49 @@ Mencionar o artigo que você publicou no BRASNAM
 
 \section{Estrutura da Dissertação}
 
-No segundo capítulo, intitulado Fundamentação Teórica, será apresentada a
-Ciência de Dados e os seguintes modelos preditivos, que auxiliam na previsão e
-probabilidade de resultados: glm, SVM, gbm, NB, RF e C5.0.
+Esta dissertação é dividida em cinco capítulos, incluindo este introdutório,
+que apresentou a motivação, problema de pesquisa e objetivos deste trabalho.
 
-Além disso, no subtítulo 2.1 será a avaliada a performance de modelos de
-classificação para a otimização dos modelos, através de matrizes de confusão e
-outras ferramentas como a curva ROC (Receiver Operator Characteristic) 
+No capítulo \ref{cap:fundamentacao}, \nameref{cap:fundamentacao}, serão
+brevemente apresentados os conceitos básicos necessários para entendimento do
+restante do trabalho. Na seção \ref{cap:fundamentacao:ciencia-de-dados}, falarei
+sobre a Ciência de Dados, com foco no desenvolvimento de modelos preditivos
+para predição de variáveis categóricas e sua validação através de matrizes de
+confusão e ferramentas como a curva \gls{ROC}.
 
-No subtítulo 2.2 serão apresentados os modelos espaciais de votação, com foco
-no estudo dos pontos ideais, relacionados às preferências dos parlamentares
-sobre determinada votação. Nessa seção serão apresentados os modelos utilizados
-para estimar os valores de preferência como o NOMINATE, W-NOMINATE e
-DW-NOMINATE, modelos paramétricos. No trabalho, o W-NOMINATE será o modelo
-predominante. 
+Na seção \ref{cap:fundamentacao:teoria-espacial-do-voto}, apresentarei técnicas
+baseadas na teoria espacial do voto, que permitem colocar um conjunto de
+parlamentares em um plano cartesiano, com suas posições definidas a partir de
+seus votos em um conjunto de votações. Existem diversas técnicas para definir
+essas posições, mas neste trabalho focarei no W-NOMINATE, uma das mais usadas.
 
-Na seção 2.1.1 serão comparados os pontos ideais ao longo do tempo. Para
-resolver o complexo problema da identificação de mudanças na agenda legislativa
-versus mudança na agenda dos parlamentares serão utilizadas pontes. Nesta seção
-será explicada a utilização das pontes no cálculo dos pontos ideais.
+Na seção \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}, será
+apresentado o problema em comparar pontos ideais ao longo do tempo, descrevendo
+técnicas que usam ``pontes'' para diferenciar mudanças causadas por diferenças
+na agenda legislativa dos períodos das causadas pela mudança de comportamento
+do parlamentar.
 
-No subtítulo 2.3 intitulado Processo Legislativo será apresentada a composição
-do Poder Legislativo, suas funções e fases do Processo Legislativo ordinário,
-com o intuito de auxiliar na compreensão sobre o objeto de estudo do trabalho.   
+Ao final desse capítulo, no subtítulo
+\ref{cap:fundamentacao:processo-legislativo}, será resumido o processo
+legislativo brasileiro em nível federal com foco nas formas de votação, em
+especial no critérios que determinam quando um projeto de lei será posto em
+votação nominal, que são a principal fonte dos dados usados para construção do
+modelo estatístico.
 
-No terceiro capítulo, intitulado Trabalhos Relacionados, será apresentada a
-análise de mudança de comportamento de parlamentares, com foco na utilização de
-“pontes”. Além disso, no subtítulo 3.2 Ciência de Dados serão apresentados
-especialmente métodos de detecção de anomalias, 
+No capítulo \ref{cap:trabalhos-relacionados},
+\nameref{cap:trabalhos-relacionados}, serão resumidos alguns trabalhos,
+encontrados durante a revisão bibliográfica feita nessa pesquisa, que versam
+sobre a análise do comportamento parlamentar, a da mudança de comportamento e o
+uso de técnicas de aprendizagem de máquina na Ciência Política.
 
-No capítulo 4 apresentaremos o processo de desenvolvimento do modelo preditivo,
-partindo da definição dos objetivos e período de estudo, passando pela
-extração, limpeza e transformação dos dados. Em seguida, os dados serão
-brevemente analisados para entendermos suas características e, a partir delas,
-escolher possíveis modelos preditivos que serão validados para chegar ao modelo
-final. Para isso, o capítulo 4 foi dividido em: 4.1 Coleta dos dados; 4.2
-Preparação dos dados; 4.2.1 Estimando os pontos ideais; 4.3 Análise; 4.3.1
-Pontos Ideais; 4.3.2 Aspectos temporais; 4.4 Modelagem; 4.4.1 Variável
-dependente; 4.4.2 Variável independente; 4.4.3 Divisão da base de dados; 4.4.4
-Modelos; 4.5 Considerações Finais.
+Explicadas, até esse momento, as ferramentas usadas no trabalho e a literatura
+da área, no capítulo \ref{cap:desenvolvimento}, \nameref{cap:desenvolvimento},
+será descrito o processo de criação do modelo, partindo da definição do
+universo de estudo, coleta e preparação dos dados, gerando estimativas dos
+pontos ideais dos parlamentares, passando para a análise das características
+gerais e temporais dos dados para, finalmente, na seção
+\ref{cap:desenvolvimento:modelagem}, \nameref{cap:desenvolvimento:modelagem},
+descrevermos o desenvolvimento e validação do modelo.
 
-No capítulo 5 serão apresentadas as conclusões da pesquisa.   
+Por fim, o capítulo \ref{cap:conclusao}, \nameref{cap:conclusao}, apresenta as
+conclusões da pesquisa, incluindo suas limitações e possíveis trabalhos futuros.
