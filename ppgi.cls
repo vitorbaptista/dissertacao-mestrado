@@ -164,7 +164,7 @@
    \vskip 3em%
    \@Orientadores \par
   \@thanks
-  \vfil\null
+  \vspace*{\fill}
    Jo\~{a}o Pessoa, Para\'{\i}ba, Brasil \par
    \copyright\@Autor, \@Data \par
   \end{center}\par
