@@ -32,14 +32,14 @@ nessa área.
 Percebendo essa necessidade, empresas como o \gls{ELLO} no Brasil e a
 FiscalNote nos Estados Unidos, criaram ferramentas que facilitam esse
 monitoramento personalizado. Seus produtos permitem que o usuário defina suas
-as áreas de interesse (por exemplo, meio ambiente ou mobilidade urbana),
+áreas de interesse (por exemplo, meio ambiente ou mobilidade urbana),
 recebendo resumos periódicos do que afeta essas áreas, inclusive com previsões
 da probabilidade de aprovação dos projetos de lei relacionados. Apesar disso,
 por serem ferramentas pagas, seu uso ainda é restrito.
 
 % Explica importância do monitoramento do comportamento dos legisladores
 Um dos fatores mais importantes no comportamento dos parlamentares é o conflito
-governo/oposicao \cite{Leoni2002,Desposato2005b,Freitas2012,Izumi2013}. Dessa
+governo/oposição \cite{Leoni2002,Desposato2005b,Freitas2012,Izumi2013}. Dessa
 forma, quando um parlamentar muda de lado, seja migrando de partido ou quando
 seu próprio partido se une (ou deixa) à coalizão governamental, é de se esperar
 que seu comportamento também mude. Como, no geral, os partidos são capazes de
@@ -63,24 +63,22 @@ caso da Câmara) e visualizar o que está mudando ou não. Para diminuir esse
 desafio, as análises acabam sendo feitas baseados no comportamento agregado dos
 partidos, e não dos parlamentares individualmente.
 
-% FIXME: Acertar os valores da coesão do PT, possivelmente usando o Basômetro.
 Os partidos são capazes de influenciar o comportamento dos seus parlamentares,
 mantendo taxas de coesão, em sua maioria, acima de 75\%
 \cite{Figueiredo2001,Cheibub2009,Zucco2009}. Assim, a análise a nível de partido
 é uma forma importantíssima de entender o comportamento parlamentar. Apesar
 disso, algumas informações são perdidas ao fazer essa agregação. Para dar um
-exemplo concreto, o PT é, historicamente, um dos partidos brasileiros mais
-coesos, sendo comum chegar a taxas de coesão acima de 95\%. Em 2003 e 2004, os
-dois primeiros anos do primeiro governo Lula, o PT mantinha uma coesão
-altíssima (XX \%). Apesar disso, três deputados constantemente votavam
-contrários a indicação do líder do partido. Depois de serem alertados sobre seu
-comportamento, eles acabaram sendo expulsos do PT.
+exemplo concreto, o \gls{PT} é, historicamente, um dos partidos brasileiros mais
+coesos. Em 2003, o primeiro ano do primeiro governo Lula, o \gls{PT} manteve uma
+coesão altíssima (98,36 \% na Câmara). Apesar disso, três deputados e uma
+senadora constantemente votavam contrários a indicação do partido, o que acabou
+resultando na sua expulsão no final do mesmo ano \cite{Breve2013}.
 
-% FIXME: Citar os fundadores do PSOL e números de deputados do PT
-Esses deputados são Babá, Luciana Genro e XXX que, juntamente com a senadora
-Heloísa Helena, expulsa pela mesma razão, fundaram o PSOL. Essa movimentação
-passaria desapercebida ao analisar o PT como um todo, já que só 3 dos quase 100
-deputados do partido tiveram esse comportamento na época.
+Esses parlamentares são os deputados Babá, Luciana Genro e João Fontes e a
+senadora Heloísa Helena. Após serem expulsos, fundaram um novo partido: o
+\gls{PSOL}. Essa movimentação passaria desapercebida ao analisar o \gls{PT}
+como um todo, já que só 4 dos quase 100 deputados e senadores do partido
+tiveram esse comportamento.
 
 O objetivo deste trabalho é o desenvolvimento de um modelo estatístico que
 determine a chance de um parlamentar ter mudado de posicionamento com base no
@@ -90,26 +88,27 @@ período de 20 anos de 1995, no início do primeiro governo de Fernando Henrique
 Cardoso, até o início de 2015, no final do primeiro governo de Dilma Rousseff.
 
 Com isso, espero criar uma ferramenta para que os cidadãos, jornalistas e
-cientistas políticos consigam filtrar quais parlamentares mudaram de
-comportamento mais significativamente em cada período, otimizando o uso do seu
-tempo ao focar seus esforços em analisar quem está mudando. Esse modelo poderá
-ser usado separadamente, ou integrado em ferramentas já existentes, como o
-Basômetro ou o Radar Parlamentar, visando aumentar sua utilidade como
-ferramentas de monitoramento legislativo.
+cientistas políticos consigam filtrar e ordenar os parlamentares pela
+intensidade da sua mudança de comportamento. Dessa forma, eles otimizariam o
+uso do seu tempo, focando em quem está mudando. Esse modelo poderá ser usado
+separadamente, ou integrado em ferramentas já existentes, como o Basômetro ou o
+Radar Parlamentar, visando aumentar sua utilidade como ferramentas de
+monitoramento legislativo.
 
 Como preditores, o modelo usa os pontos ideais dos parlamentares, estimados
-peloo algoritmo W-NOMINATE \cite{Poole1985,Poole2005}. Além desses pontos,
+pelo algoritmo W-NOMINATE \cite{Poole1985,Poole2005}. Além desses pontos,
 também replicamos parte da pesquisa de \citeonline{Freitas2008}, que analisa os
 aspectos temporais das migrações partidárias no Brasil, focando nas mudanças de
 posicionamento, sejam a partir da migração para partidos de posicionamento
 oposto (indo do governo para oposição ou vice-versa), ou na entrada ou saída do
 próprio partido na coalizão governamental.
 
-O principal diferencial deste trabalho é democratizar o acesso a técnicas
-antes só disponíveis em sistemas pagos de empresas como o \gls{ELLO} no Brasil
-e a FiscalNote nos Estados Unidos.
+Uma das principais contribuições deste trabalho é democratizar o acesso a
+técnicas antes só disponíveis em sistemas pagos de empresas como o \gls{ELLO}
+e a FiscalNote.
 
 \section{Problema de pesquisa}
+\label{cap:introducao:problemas-de-pesquisa}
 
 Os partidos e as coalizões governamentais são capazes de influenciar o
 comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}. Partindo
@@ -148,7 +147,7 @@ posicionamento em um determinado período.
 Para alcançar esse objetivo geral, foram definidos os seguintes objetivos
 específicos:
 
-\begin{enumerate}
+\begin{itemize}
   \item Determinar um conjunto de características a partir das quais seja
     possível determinar a chance de um parlamentar mudar de posicionamento;
   \item Descobrir se os parlamentares mudam de comportamento antes de mudarem
@@ -156,13 +155,13 @@ específicos:
   \item Analisar diversos modelos estatísticos, buscando qual tem melhor
     performance na detecção da mudança de posicionamento dos deputados
     federais brasileiros.
-\end{enumerate}
+\end{itemize}
 
 \section{Metodologia}
 
 Para o desenvolvimento desta pesquisa, foram seguidos os seguintes passos:
 
-\begin{itemize}
+\begin{enumerate}
   \item Levantamento bibliográfico sobre análise do comportamento parlamentar,
     análise da mudança do comportamento parlamentar, e métodos de aprendizado
     de máquina usados no âmbito da Ciência Política;
@@ -178,7 +177,7 @@ Para o desenvolvimento desta pesquisa, foram seguidos os seguintes passos:
   \item Análise de diversos modelos preditivos buscando o que obtem a melhor
     performance nesses dados;
   \item Validação do modelo final baseado na análise feita na etapa anterior.
-\end{itemize}
+\end{enumerate}
 
 \section{Publicações Relacionadas}
 
