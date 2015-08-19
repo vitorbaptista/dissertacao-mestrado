@@ -139,6 +139,13 @@ showstringspaces=false
 \newpage
 \cleardoublepage
 
+\newpage
+\cleardoublepage
+\pagestyle{empty}
+\input{licenca.tex}
+\newpage
+\cleardoublepage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{resumo} 
 \input{resumo.tex}
