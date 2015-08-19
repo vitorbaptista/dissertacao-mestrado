@@ -256,7 +256,7 @@ knit_hooks$set(inline = format_inline)
 \Sexpr{knit_child('02-fundamentacao-teorica.Rnw')}
 \input{03-trabalhos-relacionados}
 \Sexpr{knit_child('04-miolo.Rnw')}
-\input{05-conclusao}
+\Sexpr{knit_child('05-conclusao.Rnw')}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIbliografia

@@ -1013,6 +1013,7 @@ uma limitação deste trabalho, que será melhor analisada na seção
 \ref{cap:conclusao:limitacoes}.
 
 \subsubsection{Estimativas de erro}
+\label{cap:miolo:estimativas-de-erro}
 
 \citeonline{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
@@ -1487,6 +1488,7 @@ cada sendo, respectivamente,
 3.15\% de mudanças de posicionamento.
 
 \subsection{Modelos}
+\label{cap:miolo:modelos}
 
 
 
@@ -1687,7 +1689,161 @@ poder de discriminação excelente de acordo com a classificação de
 
 Na próxima seção, apresentarei as conclusões da pesquisa, descrevendo os
 resultados obtidos, suas limitações e possíveis trabalhos futuros.
-\input{05-conclusao}
+
+\chapter{Conclusão}\label{cap:conclusao}
+
+A partir da identificação do problema enfrentado ao monitorar a atividade
+legislativa da Câmara dos Deputados, especificamente o comportamento em votação
+dos deputados, este trabalho propôs uma solução: um modelo capaz de detectar
+mudanças de comportamento que indiquem mudanças de posicionamento. Com este
+modelo, cidadãos, jornalistas e cientistas políticos podem otimizar o uso de
+seu tempo ao focar nos parlamentares com maior probabilidade de mudar de
+posicionamento.
+
+O modelo final, que usou o método C5.0, apresentou resultados excelentes ao ser
+validado em um subconjunto dos dados da 54\textordfeminine{} legislatura (seção
+\ref{cap:miolo:modelos}), alcançando uma \glsfirst{AUC} de
+0,88. Com o ponto de corte em
+0,65, definido a partir da análise da performance do modelo em
+um conjunto de dados diferente, foram identificados corretamente
+52.08\% dos parlamentares
+que mudaram de posicionamento e
+91.45\% dos que não
+mudaram. Mesmo os deputados que foram classificados erroneamente podem ser
+úteis. Um erro neste trabalho significa que, de acordo com o modelo, o deputado
+se comportou como alguém que mudou de posicionamento, mesmo não tendo mudado
+até aquele momento, o que pode ser uma informação relevante.
+
+Na seção \ref{cap:introducao:problemas-de-pesquisa}, foram definidas duas
+perguntas de pesquisa:
+
+\begin{enumerate}
+\item \emph{É possível detectar a mudança de posicionamento de um deputado federal,
+com ele entrando ou saindo da coalizão governamental, a partir de uma mudança
+no seu padrão de votação?}
+\item \emph{Os deputados federais mudam seu padrão de votação antes de mudar de
+posicionamento?}
+\end{enumerate}
+
+Com a performance alcançada pelo modelo, mostramos que é possível detectar
+mudanças de posicionamento a partir de mudanças de comportamento. Apesar da
+segunda pergunta não ter sido testada diretamente, considero essa performance
+como sendo um forte indicador que os deputados federais mudam de comportamento
+antes de mudar de posicionamento.
+
+Foi tomado um cuidado redobrado em tornar os resultados dessa pesquisa
+replicáveis com, além da própria dissertação, todos os dados e códigos-fonte
+dos programas desenvolvidos estando disponíveis na Internet, licenciados
+livremente de forma a permitir que sejam usados de qualquer forma, inclusive
+comercial, com a única exigência sendo a citação das fontes. Assim, espero que
+esses resultados sejam usados na melhoria ou criação de novas ferramentas de
+monitoramento legislativo.
+
+\section{Contribuições}
+
+A principal contribuição desse trabalho como sendo a metodologia seguida para o
+desenvolvimento de um modelo que detecte as mudanças de posicionamento de
+parlamentares. Além de propôr uma divisão de dados que tenta resolver problemas
+no treinamento dos modelos em dados especialmente desafiadores, por serem
+temporais e desbalanceados, descrevo problemas como a definição dos períodos de
+análise e o ``raio de influência'' das mudanças de posicionamento, que não
+foram descritos em nenhum dos trabalhos encontrados na revisão bibliográfica.
+
+O modelo desenvolvido e os códigos-fonte dos programas escritos para
+gerá-lo\footnote{Disponível em
+\url{https://github.com/vitorbaptista/dissertacao-mestrado}} são também
+contribuições interessantes, especialmente por eles serem licenciados de forma
+livre, permitindo reuso e modificação inclusive com fins comerciais.
+
+Para extrair os dados das votações, foi desenvolvido um programa que,
+juntamente com os dados em si, também foi disponibilizado livremente na
+Internet\footnote{Disponível em
+\url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}.
+
+Na análise dos dados, seção \ref{cap:desenvolvimento:aspectos-temporais}, foram
+encontrados padrões temporais nas mudanças de posicionamento. Esses padrões
+foram seguidos somente pelos parlamentares que mudam de posicionamento através
+da migração partidária, e não os cujo próprio partido entra ou sai da coalizão.
+Isso reforça o que já é sabido na ciência política: migrações partidárias
+possuem aspectos temporais.
+
+\section{Limitações}
+\label{cap:conclusao:limitacoes}
+
+Por limitações de tempo, alguns problemas na modelagem não puderam ser
+solucionados. Nesta seção, descreverei cada um deles.
+
+\subsection{Períodos de análise}
+
+Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini os períodos de
+análise como sendo de 12 meses divididos em dois subperíodos de mesma duração.
+A escolha dessas durações foi arbitrária. Uma possível forma de definí-los pode
+ser buscando o menor período que contenha parlamentares e votações suficientes
+para, de acordo com os critérios definidos, calcular os pontos ideias.
+
+\subsection{Critérios de inclusão de parlamentares e votações}
+
+Neste trabalho, segui os critérios de inclusão padrão do W-NOMINATE, definido
+como ao menos 20 votação cuja maioria foi responsável por, no máximo, 97,5\%
+dos votos. Manter os mesmos critérios é importante em análises para permitir
+que os resultados sejam comparáveis com outros trabalhos. Como o objetivo do
+modelo não é a análise, é possível que critérios mais (ou menos) restritos
+possam aumentar sua performance. Uma forma de definir esses critérios é
+comparar a performance de modelos treinados com os pontos ideais calculados
+usando critérios distintos.
+
+\subsection{Raio de influência da mudança de posicionamento}
+
+Uma das hipóteses básicas desse trabalho é que os parlamentares mudam de
+comportamento antes de mudarem de posicionamento oficialmente, permitindo assim
+a detecção de um a partir do outro. Baseado nisso, foi preciso definir a partir
+de quanto tempo antes de efetivada a mudança de posicionamento o parlamentar
+mudava de comportamento. Neste trabalho, foi definido 6 meses antes, mas esse
+valor foi escolhido arbitrariamente.
+
+Uma forma de encontrar o ``raio de influência'' real é buscando o dia em que os
+pontos ideais nos períodos antes e depois dele estão mais distantes. É provável
+que esse valor varie bastante dependendo do parlamentar e do momento, o que
+seria um complicador. Nesse caso, poderia se buscar o valor mais comum.
+
+\subsection{Número de repetições para estimar o erro}
+
+Para estimar o erro dos pontos ideais, \citeonline{Poole2005} sugere repetir
+seu cálculo 101 vezes. Como explicado na seção
+\ref{cap:miolo:estimativas-de-erro}, esse número se provou impraticável com o
+volume de dados e capacidade de processamento disponível. Por isso, neste
+trabalho o erro foi calculado a partir de 10 repetições.
+
+Esse número foi arbitrário. É possível que a performance do modelo aumente com
+mais repetições. Para descobrir isso, seria preciso gerar as estimativas de
+erro com diversos números de repetições (inclusive zero) e encontrar o que gera
+um modelo com maior performance.
+
+\section{Trabalhos futuros}
+
+Pela pesquisa bibliográfica realizada, o uso de técnicas da ciência de dados
+para detectar mudanças de posicionamento dos parlamentares é uma área
+relativamente inexplorada. Dessa forma, existem diversos trabalhos possíveis.
+
+Além da resolução das limitações apresentadas na seção
+\ref{cap:conclusao:limitacoes}, o processo de modelagem descrito nesta
+dissertação poderia ser replicado em outra casa legislativa, como o Senado
+Federal ou casas de outras esferas. Seria interessante, inclusive, testar se os
+indicadores de mudanças de posicionamentos sejam parecidos em casas distintas,
+analisando a performance de um modelo treinado com os dados de uma casa nos
+dadosde outra. Treinar um modelo único com os dados de diversas casas
+legislativas pode até apresentar uma performance superior do que um específico
+para cada casa.
+
+O W-NOMINATE foi escolhido por ser um dos métodos mais usados e existirem
+implementações gratuitas disponíveis. Entretanto, é possível que o uso de outro
+método gere melhores resultados. Pode ser, inclusive, gerado um modelo que use
+mais de um método ao mesmo tempo.
+
+Apesar dos códigos-fonte de todos os programas desenvolvidos estarem
+disponíveis, seu uso exige conhecimentos de computação. Integrar o modelo em
+ferramentas como o Basômetro ou o Radar Parlamentar são trabalhos essenciais
+para que os benefícios deste trabalho sejam aproveitados por mais pessoas.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIbliografia

@@ -218,6 +218,7 @@ uma limitação deste trabalho, que será melhor analisada na seção
 \ref{cap:conclusao:limitacoes}.
 
 \subsubsection{Estimativas de erro}
+\label{cap:miolo:estimativas-de-erro}
 
 \citeonline{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
@@ -735,6 +736,7 @@ cada sendo, respectivamente,
 \Sexpr{format_percent(testing_proportions["S"])} de mudanças de posicionamento.
 
 \subsection{Modelos}
+\label{cap:miolo:modelos}
 
 <<bootstrap-models-rocs, include=FALSE>>=
 @
