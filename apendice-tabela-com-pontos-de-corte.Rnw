@@ -1,4 +1,4 @@
-\chapter{Lista de pontos de corte do modelo final}
+\chapter{Pontos de corte do modelo final}
 \label{apendice:lista-pontos-de-corte}
 
 <<>>=
