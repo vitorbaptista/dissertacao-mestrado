@@ -117,6 +117,7 @@
 \usepackage{glossaries} % Gerar glossário
 \usepackage[skip=0pt]{caption} % Diminui distância entre imagens/tabelas e seus captions
 \usepackage{subcaption}
+\usepackage{epigraph}
 \newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
 
 \makeglossaries
@@ -156,6 +157,9 @@ showstringspaces=false
 \renewcommand{\lstlistingname}{C\'odigo Fonte}
 \renewcommand{\lstlistlistingname}{Lista de C\'odigos Fonte}
 
+% Configura estilo da epígrafe
+\setlength{\epigraphrule}{0pt}
+\setlength{\epigraphwidth}{.8\textwidth}
 % ---------------------------------------------------------------------------------------------------
 
 \selectlanguage{portuges}
@@ -217,6 +221,12 @@ showstringspaces=false
 \end{agradecimentos}
 
 \clearpage
+
+\newpage
+\cleardoublepage
+\input{epigrafe.tex}
+\newpage
+\cleardoublepage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Definicao do cabecalho: secao do lado esquerdo e numero da pagina do lado direito
