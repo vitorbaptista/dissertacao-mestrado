@@ -79,23 +79,80 @@ igualmente errados. O que classificou como 3 não está ``menos errado'' do que 
 que classificou como 8 \cite{Kuhn2013,Zumel2014}. O foco deste trabalho é em
 classificação. A seguir, apresentarei os modelos utilizados.
 
-\subsubsection{glm}
-Foo bar
+\subsubsection{Modelo Linear Generalizado (GLM)}
 
-\subsubsection{SVM}
-Foo bar
+O \gls{GLM} é uma técnica para encontrar uma função que, a partir das variáveis
+independentes, preveja as variáveis dependentes. Ele é uma generalização da
+regressão linear, onde as variáveis dependentes podem seguir uma
+distribuição diferente da normal, permitindo assim seu uso com variáveis
+binárias, por exemplo \cite{Kuhn2013}.
 
-\subsubsection{gbm}
-Foo bar
+\subsubsection{\emph{Support Vector Machine} (SVM)}
 
-\subsubsection{NB}
-Foo bar
+O \gls{SVM} é um modelo de aprendizagem supervisionada. Ele funciona mapeando
+as observações em um espaço n-dimensional e encontrando o hiperplano que divide
+as classes estando a distância máxima de todos os pontos. A função que define
+esse mapeamento se chama ``kernel''. Dependendo da escolha do kernel, o
+\gls{SVM} pode aprender relações lineares ou não-lineares \cite{Kuhn2013}.
 
-\subsubsection{RF}
-Foo bar
+\subsubsection{Árvore de decisão}
+
+Árvores de decisão podem ser pensados como fluxogramas. Em cada nó da árvore há
+uma pergunta com respostas binárias. Por exemplo, ``o paciente está com
+febre?''. Essas perguntas vão sendo respondidas até chegar numa folha, onde
+estará o valor de previsão \cite{Kuhn2013}.
+
+\subsubsection{\emph{Random Forest} (RF)}
+
+O \gls{RF} é um modelo de aprendizagem supervisionada que pode ser usado tanto
+para regressão quanto classificação. Ele funciona retornando a moda (na
+classificação) ou média (na regressão) dos resultados de um conjunto de
+árvores de decisão, cada uma treinada em um subconjunto aleatório das variáveis
+independentes.
+
+Ao usar diversas árvores de decisão treinadas com subconjuntos diferentes dos
+preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{over-fit},
+aumentando sua performance \cite{Kuhn2013}.
+
+\subsubsection{\emph{Stochastic Gradient Boosting} (GBM)}
+
+O \gls{GBM} é um modelo que une um conjunto de modelos de baixa performance
+(normalmente árvores de decisão) em um único de alta performance. Cada
+submodelo $m$ é treinado a partir dos resíduos do modelo $m - 1$. Formalmente,
+temos:
+
+Seja $F$ o modelo final, composto por $M$ submodelos, que preveja os valores
+$\hat{y} = F(x)$. A cada etapa $1 \le m \le M$, um modelo imperfeito $F_m$ é
+treinado com uma amostra aleatória sem reposição dos dados. Na etapa seguinte,
+o método adiciona um novo modelo $h$ de forma que $F_{m + 1} = F_m(x) + h(x)$.
+Caso $F_{m + 1}$ fosse perfeito, isso significaria que $F_{m + 1} = F_m(x) +
+h(x) = y$, o que é equivalente a $h(x) = y - F_m(x)$. Assim, o modelo $h(x)$ é
+treinado buscando prever o residual $y - F_m(x)$. Essa técnica é conhecida como
+\emph{boosting} \cite{Kuhn2013}.
 
 \subsubsection{C5.0}
-Foo bar
+
+O C5.0 é um modelo baseado no C4.5 que gera estimativas a partir de árvores ou
+regras de decisão. Ele se diferencia de outros modelos que usam árvores de
+decisão pelas técnicas usadas para diminuir a complexidade das árvores,
+diminuindo a probabilidade de se tornar \emph{over-fit}. A semelhança do
+\gls{GBM}, ele também usa técnicas de \emph{boosting}.
+
+Regras de decisão se diferenciam de árvores ao permitir múltiplos critérios em
+cada etapa. Por exemplo, uma regra poderia ser ``o paciente está com febre
+\emph{e} dor de cabeça?'' \cite{Kuhn2013}.
+
+\subsubsection{Rede neural (NNET)}
+
+Uma \gls{NNET} é um modelo inspirado no funcionamento do cérebro dos animais.
+Ele é dividido em camadas com um conjunto de ``neurônios''. Os neurônios
+recebem um valor da camada anterior, fazem algum processamento, e passam o novo
+valor para todos os neurônios da camada posterior. Na primeira camada, as
+entradas são as variáveis independentes, e na última, as saídas são as
+previsões do modelo.
+
+Tanto o número de camadas quando o número de neurônios podem ser modificados,
+dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 
 \subsection{Avaliando performance em modelos de classificação}
 \label{cap:fundamentacao:avaliando-modelos-de-classificacao}
