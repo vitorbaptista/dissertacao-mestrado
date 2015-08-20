@@ -626,6 +626,20 @@ período. Visualmente, os padrões são parecidos, mas ao treinar os modelos use
 não só essas variáveis como também as interações entre elas, assim eles podem
 aprender características mais complexas que são de difícil visualização.
 
+As variáveis ``antes'' e ``depois'' possuem uma correlação alta, de
+\Sexpr{cor(data$before, data$after)}. Os erros possuem correlação baixa, sendo
+\Sexpr{cor(data$before.sd, data$after.sd)} a correlação entre eles,
+\Sexpr{cor(data$before, data$before.sd)} a do ``antes'' com seu erro
+``antes.sd'', e \Sexpr{cor(data$after, data$after.sd)} a do ``depois'' com seu
+erro ``depois.sd''. Ao separar os parlamentares que mudaram de posicionamento,
+sua correlação entre ``antes'' e ``depois'' cai para
+\Sexpr{cor(data[data$changed_coalition == "S",]$before,
+data[data$changed_coalition == "S",]$after)}, enquanto os outros continuam com
+correlação \Sexpr{cor(data[data$changed_coalition == "N",]$before,
+data[data$changed_coalition == "N",]$after)}. Essa diferença faz sentido, já
+que esperamos que quem mudou de posicionamento tenha alterado seus pontos
+ideais, enquanto os de quem não mudou tenham se mantido constantes.
+
 <<variaveis-independentes, fig.cap="Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram.">>=
 variaveis_independentes = data.frame(value = c(data$before, data$before.sd,
                                              data$after, data$after.sd,

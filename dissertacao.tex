@@ -1466,6 +1466,18 @@ período. Visualmente, os padrões são parecidos, mas ao treinar os modelos use
 não só essas variáveis como também as interações entre elas, assim eles podem
 aprender características mais complexas que são de difícil visualização.
 
+As variáveis ``antes'' e ``depois'' possuem uma correlação alta, de
+0,91. Os erros possuem correlação baixa, sendo
+0,49 a correlação entre eles,
+0,21 a do ``antes'' com seu erro
+``antes.sd'', e 0,23 a do ``depois'' com seu
+erro ``depois.sd''. Ao separar os parlamentares que mudaram de posicionamento,
+sua correlação entre ``antes'' e ``depois'' cai para
+0,67, enquanto os outros continuam com
+correlação 0,91. Essa diferença faz sentido, já
+que esperamos que quem mudou de posicionamento tenha alterado seus pontos
+ideais, enquanto os de quem não mudou tenham se mantido constantes.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 \includegraphics[width=\maxwidth]{figure/tmp/variaveis-independentes-1} \caption[Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram]{Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram.}\label{fig:variaveis-independentes}
