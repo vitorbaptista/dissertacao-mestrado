@@ -328,7 +328,7 @@ probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
 processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
 previsão precisa''.
 
-Modelos preditivos fazem parte do dia-a-dia da sociedade atual. O Google os
+Modelos preditivos fazem parte do dia a dia da sociedade atual. O Google os
 utiliza para interpretar o que seus usuários estão buscando; o Netflix usa para
 recomendar filmes; corretoras de valores usam para definir que ações comprar ou
 vender; seguradoras usam para definir qual o risco e, consequentemente, o preço
@@ -382,7 +382,7 @@ classificação) ou média (na regressão) dos resultados de um conjunto de
 independentes.
 
 Ao usar diversas árvores de decisão treinadas com subconjuntos diferentes dos
-preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{over-fit},
+preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{overfit},
 aumentando sua performance \cite{Kuhn2013}.
 
 \subsubsection{\emph{Stochastic Gradient Boosting} (GBM)}
@@ -406,7 +406,7 @@ treinado buscando prever o residual $y - F_m(x)$. Essa técnica é conhecida com
 O C5.0 é um modelo baseado no C4.5 que gera estimativas a partir de árvores ou
 regras de decisão. Ele se diferencia de outros modelos que usam árvores de
 decisão pelas técnicas usadas para diminuir a complexidade das árvores,
-diminuindo a probabilidade de se tornar \emph{over-fit}. A semelhança do
+diminuindo a probabilidade de se tornar \emph{overfit}. A semelhança do
 \gls{GBM}, ele também usa técnicas de \emph{boosting}.
 
 Regras de decisão se diferenciam de árvores ao permitir múltiplos critérios em
@@ -430,7 +430,7 @@ dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 
 \nocite{Ng2012}
 
-Uma das formas mais comuns de descrever a perfomance de um modelo de
+Uma das formas mais comuns de descrever a performance de um modelo de
 classificação é através de uma ``matriz de confusão''. A tabela
 \ref{table:exemplo-matriz-de-confusao} mostra um exemplo de matriz de confusão
 com duas categorias: ``positivo'' e ``negativo''. Na diagonal principal estão
@@ -571,7 +571,7 @@ votaria na política mais próxima da sua preferência, chamada de ponto ideal
 \cite{Leoni2002}.
 
 As dimensões desse espaço correspondem às áreas temáticas relevantes para os
-atores, que podem ser muitas. Por exemplo, proteção do meio-ambiente, comércio
+atores, que podem ser muitas. Por exemplo, proteção do meio ambiente, comércio
 exterior, distribuição de renda, etc.
 
 Considere um exemplo onde 5 parlamentares votam em um
@@ -789,7 +789,7 @@ legislativo ordinário engloba três fases:
 \item[Introdutória ou de iniciativa] \hfill \\
 É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
 Federal define quem pode iniciar o processo legislativo. Exceto quando iniciado
-por um Senador, o processo comeca com a Câmara dos Deputados como Casa
+por um Senador, o processo começa com a Câmara dos Deputados como Casa
 Iniciadora e, consequentemente, o Senado Federal como Casa Revisora.}, com o
 projeto entrando em uma das Casas legislativas, denominada Casa iniciadora. Com
 exceção dos projetos iniciados por Senadores, a Casa iniciadora é a Câmara dos
@@ -838,7 +838,7 @@ utilizada nas proposições em geral, e é a regra na Câmara dos Deputados. Ela
 pode ocorrer pelos processos simbólico ou nominal. No processo simbólico, o
 presidente da casa, ao anunciar a votação, convida os deputados a favor da
 matéria a permanecerem sentados, devendo os contrários manifestarem-se
-(normalmente levandando um braço). No processo nominal, os parlamentares votam
+(normalmente levantando um braço). No processo nominal, os parlamentares votam
 usando um meio eletrônico ou, em caso de falha, por chamada nominal
 \cite{Carneiro2013}.
 
@@ -1091,7 +1091,7 @@ uma limitação deste trabalho, que será melhor analisada na seção
 
 \citeonline{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
-estamos trabalhando invibializa esse número de repetições com os recursos
+estamos trabalhando inviabiliza esse número de repetições com os recursos
 computacionais disponíveis para esta pesquisa\footnote{Por exemplo, usando um
 núcleo de um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o
 processamento dos pontos ideais de um parlamentar em um período demora cerca de
@@ -1217,8 +1217,8 @@ temporais.
 
 O conjunto de dados gerado possui 113.952 estimativas de mudança
 de comportamento em 185 períodos de 12 meses divididos em dois
-sub-períodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
-ambos sub-períodos em 31.04\%
+subperíodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
+ambos subperíodos em 31.04\%
 (35.376) períodos, pois o parlamentar não participou de
 votações o suficiente, ou as que ele participou não passaram nos critérios de
 inclusão definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
@@ -1464,7 +1464,7 @@ A figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores d
 variáveis independentes agrupados pela mudança ou não de posicionamento no
 período. Visualmente, os padrões são parecidos, mas ao treinar os modelos usei
 não só essas variáveis como também as interações entre elas, assim eles podem
-aprender características mais complexas que são de díficil visualização.
+aprender características mais complexas que são de difícil visualização.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
@@ -1483,8 +1483,8 @@ Existem tipos de modelos capazes de aprender a estrutura de um conjunto de
 dados tão bem que, quando validados com o mesmo conjunto de dados usado para
 treiná-los, conseguem prever corretamente 100\% dos casos. O problema é que
 eles aprenderam não só os padrões gerais dos dados, mas também seu ruído. Esses
-modelos, conhecidos como \emph{over-fit}\footnote{Em tradução livre,
-``super-ajustado''.}, têm normalmente uma baixa performance ao serem usados em
+modelos, conhecidos como \emph{overfit}\footnote{Em tradução livre,
+``superajustado''.}, têm normalmente uma baixa performance ao serem usados em
 novos dados. Para evitar esse problema, é necessário testá-los em um conjunto
 de dados diferente do que foram treinados, o que gera a questão sobre como
 dividir os dados \cite{Kuhn2013}.
@@ -1850,7 +1850,7 @@ nesta seção.
 
 Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
 os períodos de análise como sendo de 12 meses divididos em dois subperíodos de
-mesma duração. Uma forma melhor de definí-los seria buscando o menor período
+mesma duração. Uma forma melhor de defini-los seria buscando o menor período
 que contenha parlamentares e votações suficientes para, de acordo com os
 critérios definidos, estimar os pontos ideias.
 
@@ -1920,7 +1920,7 @@ partidos. Para isso, basta analisar o partido dos deputados que têm uma maior
 probabilidade de ter mudado de posicionamento. Um percentual grande de
 parlamentares de um mesmo partido terem sido detectado pode ser um indicador de
 uma mudança organizada. Essa análise pode ser expandida não só para os
-partidos, mas também para grupos intra-partidários como as bancadas.
+partidos, mas também para grupos intrapartidários como as bancadas.
 
 Apesar dos códigos-fonte de todos os programas desenvolvidos estarem
 disponíveis, seu uso exige conhecimentos de computação. Integrar o modelo a

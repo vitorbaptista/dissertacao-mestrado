@@ -222,7 +222,7 @@ uma limitação deste trabalho, que será melhor analisada na seção
 
 \citeonline{Poole2005} sugere, sem justificar esse número, repetir as
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
-estamos trabalhando invibializa esse número de repetições com os recursos
+estamos trabalhando inviabiliza esse número de repetições com os recursos
 computacionais disponíveis para esta pesquisa\footnote{Por exemplo, usando um
 núcleo de um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o
 processamento dos pontos ideais de um parlamentar em um período demora cerca de
@@ -380,8 +380,8 @@ temporais.
 
 O conjunto de dados gerado possui \Sexpr{num_mudancas} estimativas de mudança
 de comportamento em \Sexpr{num_periodos} períodos de 12 meses divididos em dois
-sub-períodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
-ambos sub-períodos em \Sexpr{format_percent(nrow(data_null) / num_mudancas)}
+subperíodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
+ambos subperíodos em \Sexpr{format_percent(nrow(data_null) / num_mudancas)}
 (\Sexpr{nrow(data_null)}) períodos, pois o parlamentar não participou de
 votações o suficiente, ou as que ele participou não passaram nos critérios de
 inclusão definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
@@ -624,7 +624,7 @@ A figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores d
 variáveis independentes agrupados pela mudança ou não de posicionamento no
 período. Visualmente, os padrões são parecidos, mas ao treinar os modelos usei
 não só essas variáveis como também as interações entre elas, assim eles podem
-aprender características mais complexas que são de díficil visualização.
+aprender características mais complexas que são de difícil visualização.
 
 <<variaveis-independentes, fig.cap="Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram.">>=
 variaveis_independentes = data.frame(value = c(data$before, data$before.sd,
@@ -656,8 +656,8 @@ Existem tipos de modelos capazes de aprender a estrutura de um conjunto de
 dados tão bem que, quando validados com o mesmo conjunto de dados usado para
 treiná-los, conseguem prever corretamente 100\% dos casos. O problema é que
 eles aprenderam não só os padrões gerais dos dados, mas também seu ruído. Esses
-modelos, conhecidos como \emph{over-fit}\footnote{Em tradução livre,
-``super-ajustado''.}, têm normalmente uma baixa performance ao serem usados em
+modelos, conhecidos como \emph{overfit}\footnote{Em tradução livre,
+``superajustado''.}, têm normalmente uma baixa performance ao serem usados em
 novos dados. Para evitar esse problema, é necessário testá-los em um conjunto
 de dados diferente do que foram treinados, o que gera a questão sobre como
 dividir os dados \cite{Kuhn2013}.

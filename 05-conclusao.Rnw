@@ -84,7 +84,7 @@ nesta seção.
 
 Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
 os períodos de análise como sendo de 12 meses divididos em dois subperíodos de
-mesma duração. Uma forma melhor de definí-los seria buscando o menor período
+mesma duração. Uma forma melhor de defini-los seria buscando o menor período
 que contenha parlamentares e votações suficientes para, de acordo com os
 critérios definidos, estimar os pontos ideias.
 
@@ -154,7 +154,7 @@ partidos. Para isso, basta analisar o partido dos deputados que têm uma maior
 probabilidade de ter mudado de posicionamento. Um percentual grande de
 parlamentares de um mesmo partido terem sido detectado pode ser um indicador de
 uma mudança organizada. Essa análise pode ser expandida não só para os
-partidos, mas também para grupos intra-partidários como as bancadas.
+partidos, mas também para grupos intrapartidários como as bancadas.
 
 Apesar dos códigos-fonte de todos os programas desenvolvidos estarem
 disponíveis, seu uso exige conhecimentos de computação. Integrar o modelo a

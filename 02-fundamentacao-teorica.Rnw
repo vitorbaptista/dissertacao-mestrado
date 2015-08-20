@@ -57,7 +57,7 @@ probabilidade de um resultado''. Já \citeonline{Kuhn2013} definem como ``o
 processo de desenvolvimento de uma ferramenta ou modelo matemático que gere uma
 previsão precisa''.
 
-Modelos preditivos fazem parte do dia-a-dia da sociedade atual. O Google os
+Modelos preditivos fazem parte do dia a dia da sociedade atual. O Google os
 utiliza para interpretar o que seus usuários estão buscando; o Netflix usa para
 recomendar filmes; corretoras de valores usam para definir que ações comprar ou
 vender; seguradoras usam para definir qual o risco e, consequentemente, o preço
@@ -111,7 +111,7 @@ classificação) ou média (na regressão) dos resultados de um conjunto de
 independentes.
 
 Ao usar diversas árvores de decisão treinadas com subconjuntos diferentes dos
-preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{over-fit},
+preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{overfit},
 aumentando sua performance \cite{Kuhn2013}.
 
 \subsubsection{\emph{Stochastic Gradient Boosting} (GBM)}
@@ -135,7 +135,7 @@ treinado buscando prever o residual $y - F_m(x)$. Essa técnica é conhecida com
 O C5.0 é um modelo baseado no C4.5 que gera estimativas a partir de árvores ou
 regras de decisão. Ele se diferencia de outros modelos que usam árvores de
 decisão pelas técnicas usadas para diminuir a complexidade das árvores,
-diminuindo a probabilidade de se tornar \emph{over-fit}. A semelhança do
+diminuindo a probabilidade de se tornar \emph{overfit}. A semelhança do
 \gls{GBM}, ele também usa técnicas de \emph{boosting}.
 
 Regras de decisão se diferenciam de árvores ao permitir múltiplos critérios em
@@ -159,7 +159,7 @@ dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 
 \nocite{Ng2012}
 
-Uma das formas mais comuns de descrever a perfomance de um modelo de
+Uma das formas mais comuns de descrever a performance de um modelo de
 classificação é através de uma ``matriz de confusão''. A tabela
 \ref{table:exemplo-matriz-de-confusao} mostra um exemplo de matriz de confusão
 com duas categorias: ``positivo'' e ``negativo''. Na diagonal principal estão
@@ -319,7 +319,7 @@ votaria na política mais próxima da sua preferência, chamada de ponto ideal
 \cite{Leoni2002}.
 
 As dimensões desse espaço correspondem às áreas temáticas relevantes para os
-atores, que podem ser muitas. Por exemplo, proteção do meio-ambiente, comércio
+atores, que podem ser muitas. Por exemplo, proteção do meio ambiente, comércio
 exterior, distribuição de renda, etc.
 
 Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em um
@@ -551,7 +551,7 @@ legislativo ordinário engloba três fases:
 \item[Introdutória ou de iniciativa] \hfill \\
 É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
 Federal define quem pode iniciar o processo legislativo. Exceto quando iniciado
-por um Senador, o processo comeca com a Câmara dos Deputados como Casa
+por um Senador, o processo começa com a Câmara dos Deputados como Casa
 Iniciadora e, consequentemente, o Senado Federal como Casa Revisora.}, com o
 projeto entrando em uma das Casas legislativas, denominada Casa iniciadora. Com
 exceção dos projetos iniciados por Senadores, a Casa iniciadora é a Câmara dos
@@ -600,7 +600,7 @@ utilizada nas proposições em geral, e é a regra na Câmara dos Deputados. Ela
 pode ocorrer pelos processos simbólico ou nominal. No processo simbólico, o
 presidente da casa, ao anunciar a votação, convida os deputados a favor da
 matéria a permanecerem sentados, devendo os contrários manifestarem-se
-(normalmente levandando um braço). No processo nominal, os parlamentares votam
+(normalmente levantando um braço). No processo nominal, os parlamentares votam
 usando um meio eletrônico ou, em caso de falha, por chamada nominal
 \cite{Carneiro2013}.
 
