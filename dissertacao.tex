@@ -75,10 +75,12 @@
 \usepackage{hyperref}
 \hypersetup{
     bookmarks=true,   
-    pdftitle={Monitor legislativo},
-    pdfauthor={Vitor Márcio Paiva de Sousa Baptista}, 
-    pdfsubject={Modelo de Documento Científico},
-    pdfkeywords={Dissertação, Mestrado, PPGI, UFPB, modelo}, 
+    pdftitle={Um modelo para detec{\c{c}}{\~{a}}o das mudan{\c{c}}as de posicionamento dos
+deputados federais},
+    pdfauthor={Vitor M{\'{a}}rcio Paiva de Sousa Baptista}, 
+    pdfsubject={},
+    pdfkeywords={An{\'{a}}lise legislativa, Ci{\^{e}}ncia pol{\'{i}}tica,
+Ci{\^{e}}ncia de dados, Modelos preditivos, Aprendizagem de m{\'{a}}quina}, 
     colorlinks=true,
     linkcolor=black,
     citecolor=black,
@@ -241,11 +243,9 @@ showstringspaces=false
 
 \Sumario
 \ListadeSiglas
-\printglossaries
+\printglossary[title=Lista de Siglas]
 \listoffigures
 \listoftables
-\lstlistoflistings %lista de codigos fonte - Para inserir a listagem de
-% codigos fonte
 
 \newpage
 \cleardoublepage
@@ -670,7 +670,7 @@ $w_k$.
 O principal desafio em comparar mudanças nos pontos ideais ao longo do tempo é
 distinguir alterações causadas por mudanças na agenda legislativa das causadas
 por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
-palavras, se o ponto ideal de um deputado federal passa de 0.3 para -0.2 de um ano
+palavras, se o ponto ideal de um deputado federal passa de 0,3 para -0,2 de um ano
 para o outro, como descobrir se isso representa uma mudança real de
 posicionamento ou é somente reflexo da diferença na agenda legislativa dos dois
 períodos?
