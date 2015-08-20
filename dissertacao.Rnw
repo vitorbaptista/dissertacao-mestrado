@@ -83,7 +83,7 @@
 \newacronym{ELLO}{ELLO}{Estudos Legislativos e An\'alise Pol\'itica}
 \newacronym{ROC}{ROC}{\emph{Receiver Operating Characteristic}}
 \newacronym{AUC}{AUC}{\'area sob a curva ROC}
-\newacronym{GLM}{GLM}{regress\~ao log\'istica}
+\newacronym{GLM}{GLM}{Modelo Linear Generalizado}
 \newacronym{SVM}{SVM}{\emph{Support Vector Machine}}
 \newacronym{RF}{RF}{\emph{Random Forest}}
 \newacronym{GBM}{GBM}{\emph{Stochastic Gradient Boosting}}

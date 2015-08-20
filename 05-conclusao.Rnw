@@ -91,7 +91,7 @@ critérios definidos, estimar os pontos ideias.
 \subsection{Critérios de inclusão de parlamentares e votações}
 
 Neste trabalho, segui os critérios de inclusão padrão do W-NOMINATE, definido
-como ao menos 20 votação cuja maioria foi responsável por, no máximo, 97,5\%
+como ao menos 20 votações cuja maioria foi responsável por, no máximo, 97,5\%
 dos votos. Manter os mesmos critérios é importante em análises para permitir
 que os resultados sejam comparáveis com outros trabalhos. Como o objetivo do
 modelo não é a análise, é possível que critérios mais (ou menos) restritivos
