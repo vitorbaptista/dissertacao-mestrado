@@ -404,7 +404,7 @@ todas as legislaturas estudadas.
 <<>>=
 kable(coalition_changes_per_legislature)
 @
-\caption{Número de deputados que entraram ou saíram da coalizão por legislatura.}
+\caption{Percentual de deputados que mudaram de posicionamento por legislatura.}
 \label{table:coalition-changes-per-legislature}
 \end{table}
 
@@ -419,7 +419,7 @@ dois picos claros, um na direita do gráfico e outro, menor, na esquerda. Por
 final, durante o primeiro governo de Dilma Rousseff, na 54\textordfeminine{}
 legislatura, os pontos ideais se concentram no centro.
 
-<<pontos-ideais-por-legislatura, fig.cap="Distribuição dos pontos ideais agrupados por legislatura.">>=
+<<pontos-ideais-por-legislatura, fig.cap="Distribuição dos pontos ideais nos 37 períodos de análise a cada legislatura.">>=
 pontos_ideais_por_legislatura = data.frame(value = c(data$before, data$after),
                                            legislature = rep(paste0(data$legislature, "ª legislatura"), 2))
 ggplot(pontos_ideais_por_legislatura, aes(x = value)) +
