@@ -1,0 +1,386 @@
+Um modelo para detecção das mudanças de posicionamento dos deputados federais
+========================================================
+author: Vítor Baptista
+date: 27 de agosto de 2015
+
+```{r setup, cache=FALSE, include=FALSE}
+setwd("~/Projetos/Mestrado/dissertacao-mestrado/presentation")
+
+library(knitr)
+library(ggplot2)
+library(ggthemes)
+library(scales)
+library(caret)
+library(pROC)
+library(doParallel)
+library(randomForest)
+
+opts_chunk$set(echo = FALSE, fig.path = "figure/tmp/",
+               cache = TRUE, autodep = TRUE,
+               fig.width = 8, fig.height = 4.5, dpi = 300, out.width = "1920px", height = "1080px")
+options(digits = 2)
+theme = theme_few() #base_size = 36)
+theme$axis.title.y$vjust = 2
+theme$axis.title.x$vjust = -0.5
+theme$legend.position = "top"
+theme_set(theme)
+set.seed(1)
+```
+
+Introdução
+========================================================
+type: section
+
+Motivação
+========================================================
+incremental: true
+* Importância do processo legislativo;
+* Grande volume de dados;
+* Governo X Oposição;
+
+Perguntas de pesquisa
+========================================================
+incremental: true
+* É possível detectar a mudança de posicionamento de um deputado federal, com ele entrando ou saindo da coalizão governamental, a partir de uma mudança no seu padrão de votação?
+* Os deputados federais mudam seu padrão de votação antes de mudar de posicionamento?
+
+Objetivos
+========================================================
+incremental: true
+* Determinar um conjunto de características que indiquem uma mudança de posicionamento;
+* Determinar se a mudança de comportamento ocorre antes ou depois da mudança de posicionamento;
+* Analisar diversos modelos estatísticos buscando o com maior performance nesses dados.
+
+Metodologia
+========================================================
+incremental: true
+* Levantamento bibliográfico tanto de análise legislativa quanto de modelos preditivos criados nessa área;
+* Extração, limpeza e transformação dos dados;
+* Cálculo dos pontos ideais e da mudança de comportamento;
+* Criação e validação do modelo preditivo.
+
+Publicações relacionadas
+========================================================
+"Uma ferramenta para analisar mudanças na coesão entre parlamentares em votações nominais"
+BRASNAM (2013)
+
+https://www.academia.edu/15002720
+
+Fundamentação teórica
+========================================================
+type: section
+
+Ciência de Dados
+========================================================
+![Habilidades necessários por um cientista de dados][ciencia-de-dados-venn]
+http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram
+
+[ciencia-de-dados-venn]: ../figure/ciencia-de-dados-diagrama-venn.svg
+
+Ciência de Dados
+========================================================
+
+$$
+F(X_1, X_2, ..., X_n) = Y
+$$
+
+Pontos ideais
+========================================================
+```{r plot-pontos-ideais}
+parlamentares = data.frame(maioridade_penal = c(16, 17, 15, 18, 20))
+maioridade_penal = c(16, 18)
+cutlines = data.frame(xintercept = c(16, 18, 17),
+                      colour = c("blue", "red", "black"),
+                      label = c("Alternativa sim", "Alternativa não", "Linha de corte"),
+                      linetype = c("solid", "solid", "dashed"))
+
+p = ggplot(data.frame(x = rnorm(10)), aes(x)) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank())
+
+for (val in parlamentares$maioridade_penal) {
+  p = p +
+    stat_function(fun = dnorm, args = list(mean = val, sd = 0.5), alpha = 0.3)
+}
+
+p = p +
+  geom_vline(data = cutlines, size = 1, aes(xintercept = xintercept, colour = label), show_guide = TRUE) +
+  scale_colour_manual(name = "", values = c("Alternativa sim" = "blue",
+                                            "Alternativa não" = "red",
+                                             "Linha de corte" = "black")) +
+  scale_x_continuous("Maioridade penal", limits = c(12, 22),
+                     breaks = c(12, 14, 16, 17, 18, 20, 22))
+p
+```
+
+Teoria espacial do voto
+========================================================
+![Pontos ideais da Câmara dos Deputados em 2015][mapa-cunhometro]
+http://houseofcunha.com.br/
+
+[mapa-cunhometro]: figure/cunhometro-partidos.png
+
+Análise da mudança de comportamento
+========================================================
+```{r}
+votos = data.frame(nome = c("Samara", "Dione", "Maria"),
+                   votacao1 = c("S", "N", "N"),
+                   votacao2 = c("S", "N", "S"),
+                   votacao3 = c("N", "S", "N"),
+                   votacao4 = c("S", "S", "S"))
+kable(votos, row.names = FALSE)
+```
+
+Análise da mudança de comportamento
+========================================================
+```{r}
+votos2 = data.frame(nome = c("Samara 1", "Samara 2"),
+                    votacao1 = c("S", ""),
+                    votacao2 = c("S", ""),
+                    votacao3 = c("", "N"),
+                    votacao4 = c("", "S"))
+votos2 = rbind(votos2, votos[2:nrow(votos),])
+kable(votos2, row.names = FALSE)
+```
+
+Análise da mudança de comportamento
+========================================================
+```{r}
+pontos = data.frame(nome = c("Samara 1", "Samara 2", "Dione", "Maria"),
+                    ponto_ideal = c(0.3, 0.7, -0.4, 0.8))
+
+kable(pontos, row.names = FALSE)
+```
+
+Análise da mudança de comportamento
+========================================================
+```{r}
+pontos = data.frame(nome = c("Samara", "Dione", "Maria"),
+                    antes = c(0.3, -0.5, 0.8),
+                    depois = c(0.7, -0.4, 0.7))
+
+kable(pontos, row.names = FALSE)
+```
+
+
+Desenvolvimento
+========================================================
+type: section
+
+Universo de análise
+========================================================
+incremental: true
+* 50ª até a 54ª legislaturas;
+* 1995 (FHC I) até 2015 (Dilma I);
+* Câmara dos Deputados
+  * Facilidade de obtenção dos dados;
+  * Maior número de parlamentares (513);
+  * Maior número de votações.
+
+Extração e limpeza dos dados
+========================================================
+incremental: true
+* Votos e votações do site da Câmara dos Deputados
+* Lista de coalizões do BD Legislativo do CEBRAP
+
+Composição das coalizões
+========================================================
+incremental: true
+* Partido do presidente da República;
+* Partidos que possuem ao menos um ministério.
+
+Estimativas dos pontos ideais
+========================================================
+* 1 dimensão;
+* Parlamentares com ao menos 20 votações não-unânimes;
+  * Minoria responsável por ao menos 2,5% dos votos.
+
+Períodos de análise
+========================================================
+* Períodos de 12 meses divididos em dois subperíodos de mesmo tamanho;
+* 37 períodos por legislatura;
+
+Raio de influência de uma mudança de posicionamento
+========================================================
+6 meses, sendo 3 meses antes e 3 após a data média.
+```{r}
+aux = data.frame(x = c(1, 7, 13),
+                label = c("Início", "Meio", "Fim"),
+                linetype = rep("solid", 3))
+
+ggplot(aux, aes(x = x, y = c(0))) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line = element_line(),
+        axis.line.y = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank()) +
+  labs(x = "", y = "") +
+  geom_rect(xmin = 4, xmax = 10, ymin = -Inf, ymax = Inf, alpha = 0.1, fill = "black") +
+  geom_vline(aes(xintercept = x)) +
+  scale_x_discrete(breaks = aux$x, labels = aux$label, limits = 0:13)
+```
+
+Modelagem
+========================================================
+type: section
+
+Variáveis independentes
+========================================================
+```{r}
+aux = data.frame(variavel = c("antes", "antes.sd",
+                              "depois", "depois.sd",
+                              "mês", "ano da legislatura"),
+                 descricao = c("Estimativa do ponto ideal no momento inicial",
+                               "Estimativa de erro do ponto ideal no momento inicial",
+                               "Estimativa do ponto ideal no momento final",
+                               "Estimativa de erro do ponto ideal no momento final",
+                               "Mês na data média do período",
+                               "Ano da legislatura na data média do período"),
+                 natureza = c(rep("Contínua", 4), rep("Ordinal", 2)))
+kable(aux,
+      col.names = c("Variável", "Descrição", "Natureza"))
+```
+
+Variável dependente
+========================================================
+Houve (S) ou não (N) mudança de posicionamento no período.
+
+```{r}
+aux = data.frame(tipo = c("S", "N"),
+                 quantidade = c(3130, 75446))
+ggplot(aux, aes(x = tipo, y = quantidade)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Mudança de posicionamento", y = "Quantidade")
+```
+
+Divisão da base de dados
+========================================================
+```{r}
+aux = data.frame(Dataset = c("Treino", "Validação"),
+                 value = c(54, 0.6))
+aux$Dataset = factor(aux$Dataset, levels = aux$Dataset, ordered = TRUE)
+aux$x = rep("foo", nrow(aux))
+ggplot(aux, aes(x = x, y = value)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line = element_line(),
+        axis.line.y = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank()) +
+  geom_bar(aes(fill = Dataset), stat = "identity") +
+  coord_flip(ylim = c(50, 55)) +
+  labs(x = "", y = "Legislatura")
+```
+
+Divisão da base de dados
+========================================================
+```{r}
+aux = data.frame(Dataset = c("Treino", "Definição do ponto de corte", "Teste"),
+                 value = c(54.6, 0.2, 0.2))
+aux$Dataset = factor(aux$Dataset, levels = aux$Dataset, ordered = TRUE)
+aux$x = rep("foo", nrow(aux))
+ggplot(aux, aes(x = x, y = value)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line = element_line(),
+        axis.line.y = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank()) +
+  geom_bar(aes(fill = Dataset), stat = "identity") +
+  coord_flip(ylim = c(50, 55)) +
+  labs(x = "", y = "Legislatura")
+```
+
+Modelos
+========================================================
+```{r}
+aux = data.frame(natureza = c("Linear", rep("Não-linear", 5)),
+                 sigla = c("GLM", "SVM Radial", "RF", "GBM", "C5.0", "NNET"),
+                 nome = c("Modelo Linear Generalizado",
+                          "SVM com kernel radial",
+                          "Random Forest",
+                          "Stochastic Gradient Boosting",
+                          "C5.0",
+                          "Rede neural"))
+kable(aux,
+      col.names = c("Natureza", "Sigla", "Nome"))
+```
+
+Modelos
+========================================================
+![AUC dos modelos no conjunto de validação][auc-modelos-validacao]
+
+[auc-modelos-validacao]: figure/auc-modelos.png
+
+Definindo ponto de corte
+========================================================
+![Definindo ponto de corte do modelo][roc-finding-cutoff]
+
+[roc-finding-cutoff]: figure/roc-finding-cutoff.png
+
+ROC do modelo final nos dados de teste
+========================================================
+![ROC final][roc-final]
+
+[roc-final]: figure/roc-final.png
+
+Estudo de Caso
+========================================================
+type: section
+
+A saída do PSB da coalizão em 2013
+
+Estudo de Caso
+========================================================
+![Mudança dos deputados federais do PSB][mudanca-psb-individual]
+
+[mudanca-psb-individual]: figure/mudanca-psb-individual.png
+
+Estudo de Caso
+========================================================
+![Mudança média dos deputados federais do PSB][mudanca-psb-media]
+
+[mudanca-psb-media]: figure/mudanca-psb-media.png
+
+Estudo de Caso
+========================================================
+![Mudança dos deputados federais do PSB][mudanca-psb-total]
+
+[mudanca-psb-total]: figure/mudanca-psb-total.png
+
+Conclusão
+========================================================
+type: section
+
+Limitações
+========================================================
+incremental: true
+* Períodos de análise
+* Critérios de inclusão de parlamentares e votações
+* Raio de influência
+* Estimativas de erro
+
+Trabalhos futuros
+========================================================
+* Outras casas legislativas;
+* Outros métodos de estimativa de pontos ideais;
+* Comportamento dos partidos e bancadas;
+* Integrar com ferramentas existentes ou novas.
+
+Obrigado!
+========================================================
+type: section
+Vítor Baptista
+
+vitor@vitorbaptista.com
+
+http://vitorbaptista.com
+
+Vai passar?
+========================================================
+![Vai passar?][vai-passar]
+http://estadaodados.com/vai-passar
+
+[vai-passar]: figure/estadao-vai-passar.png
