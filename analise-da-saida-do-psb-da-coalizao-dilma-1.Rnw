@@ -1,6 +1,6 @@
 <<>>=
-votes <- read.csv("54.csv", header = TRUE, check.names = FALSE)
-votes_metadata <- read.csv("54-votacoes.csv", header = TRUE, check.names = FALSE)
+votes <- read.csv("data/54.csv", header = TRUE, check.names = FALSE)
+votes_metadata <- read.csv("data/54-votacoes.csv", header = TRUE, check.names = FALSE)
 @
 
 \chapter{A saída do PSB da coalizão em Dilma I}\label{cap:analise-saida-psb}
@@ -160,7 +160,7 @@ library(data.table)
 library(plyr)
 
 result <- readRDS("~/Projetos/Mestrado/theRealPipeline/results/output.rds")
-changed_coalitions <- read.csv("parties_and_coalitions_changes.csv",
+changed_coalitions <- read.csv("data/parties_and_coalitions_changes.csv",
                                header = TRUE,
                                check.names = FALSE)
 changed_coalitions$rollcall_date <- as.POSIXct(changed_coalitions$rollcall_date)

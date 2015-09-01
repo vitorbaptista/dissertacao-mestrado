@@ -1,5 +1,6 @@
 ## ---- load-data-and-models ----
 load("data/data-models-lgocv-downsampled_ROC.RData")
+training.downsampled = training[training$legislature < 54,]
 
 # Carrega votos e votações por legislatura
 legislatures = c(50, 51, 52, 53, 54)
@@ -77,8 +78,6 @@ migrators_per_month_per_legislature_year_percent = t(t(migrators_per_month_per_l
 months = sort(unique(as.Date(paste0("2014-", coalition_changes$date_month, "-01"))))
 
 ## ---- data-splits-stats ----
-training.downsampled = training[training$legislature < 54,]
-
 data_proportions = table(data$changed_coalition) / nrow(data)
 training_original_proportions = table(training.original$changed_coalition) / nrow(training.original)
 training_downsampled_proportions = table(training.downsampled$changed_coalition) / nrow(training.downsampled)

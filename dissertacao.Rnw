@@ -294,6 +294,7 @@ knit_hooks$set(inline = format_inline)
 \Sexpr{knit_child('apendice-parametros-modelos.Rnw')}
 \Sexpr{knit_child('apendice-tabela-com-pontos-de-corte.Rnw')}
 \Sexpr{knit_child('apendice-session-info.Rnw')}
+\Sexpr{knit_child('analise-da-saida-do-psb-da-coalizao-dilma-1.Rnw')}
 
 %\input{apendice-b}
 %\input{apendice-c}
