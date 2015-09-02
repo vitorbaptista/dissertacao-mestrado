@@ -1,5 +1,5 @@
 ## ---- load-data-and-models ----
-load("data/data-models-lgocv-downsampled_ROC.RData")
+load("data/data_and_models.RData")
 training.downsampled = training[training$legislature < 54,]
 
 # Carrega votos e votações por legislatura
