@@ -18,12 +18,13 @@ escolhendo o final de acordo com a \glsfirst{AUC}.
 <<legislatures-stats>>=
 @
 
-Os votos e votações foram extraídos diretamente do site da Câmara dos
-Deputados através de sua \gls{API} \cite{CamaraDosDeputados2015}. Para
-desenvolver o modelo preditivo, precisamos ter acesso a todos os dados na
-máquina local. Entretanto, até a data de escrita deste trabalho, a \gls{API} da
-Câmara só permitia consultas individuais, votação por votação, por isso
-desenvolvi um programa\footnote{Disponível em:
+Os votos e votações foram extraídos diretamente do site da Câmara dos Deputados
+através de sua \gls{API}\footnote{Em tradução livre, ``Interface de Programação
+de Aplicativos''.} \cite{CamaraDosDeputados2015}. Para desenvolver o modelo
+preditivo, precisamos ter acesso a todos os dados na máquina local. Entretanto,
+até a data de publicação deste trabalho, a \gls{API} da Câmara só permitia
+consultas individuais, votação por votação, por isso desenvolvi um
+programa\footnote{Disponível em:
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
 linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
 votações \cite{Python276,Scrapy}. A tabela
@@ -198,14 +199,14 @@ trabalho não é analisar um período específico, mas criar um modelo que detec
 mudanças na coalizão, não basta definir um, mas sim um conjunto de
 períodos.
 
-Ao definir esses períodos é preciso levar em consideração diversos fatores.
-Períodos muito curtos, por exemplo uma semana antes e uma semana depois, podem
-sofrer com a falta de votações suficientes ou serem demasiadamente
-influenciados por votações anômalas. Já períodos muito longos, como 5 anos
-antes e 5 anos depois, dificultam a interpretação dos resultados pois podem
-conter diversas mudanças de comportamento. No mínimo, precisamos de um período
-que contenha votações suficientes de acordo com nossos critérios de inclusão
-definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}.
+Ao definir esses períodos, é preciso levar em consideração diversos fatores.
+Períodos muito curtos, como uma semana antes e uma semana depois, podem sofrer
+com a falta de votações suficientes ou serem demasiadamente influenciados por
+votações anômalas. Já períodos muito longos, como 5 anos antes e 5 anos depois,
+dificultam a interpretação dos resultados pois podem conter diversas mudanças
+de comportamento. No mínimo, precisamos de um período que contenha votações
+suficientes de acordo com nossos critérios de inclusão definidos na seção
+\ref{cap:desenvolvimento:criterios-de-inclusao}.
 
 Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
 divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
@@ -233,20 +234,6 @@ facilmente paralelizável, diminuindo o tempo necessário de acordo com o númer
 de processadores, mas ainda assim não foi possível usar 101 repetições neste
 trabalho.}. Por isto, escolhi fazer 10 repetições, o que diminuiu o tempo
 necessário em cerca de 90\%.
-
-\begin{table}
-\centering
-<<>>=
-sample_dataset = data.frame(antes = c(0.55, 0.9, -0.3),
-                            antes.sd = c(0.02, 0.01, 0.01),
-                            depois = c(-0.4, 0.85, 0.4),
-                            depois.sd = c(0.03, 0.02, 0.01),
-                            mudou_posicionamento = c("Sim", "Não", "Sim"))
-kable(sample_dataset)
-@
-\caption{Exemplo da tabela usada para treinar o algoritmo.}
-\label{table:dataset-final}
-\end{table}
 
 \subsection{``Raio de influência'' de uma mudança de posicionamento}
 \label{cap:desenvolvimento:raio-de-influencia}
@@ -305,7 +292,7 @@ $\left[Data_{m\acute{e}dia}, Data_{final}\right]$. Na última figura, a
 \ref{fig:raio-de-influencia-coalizao5}, o comportamento nos dois momentos do
 período de estudo se igualam.
 
-<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c("A data final do período de análise é igual ao dia em que o parlamentar mudou de comportamento por causa da futura mudança de posicionamento. Como, dentro desse período atual, supomos que o parlamentar manteve o mesmo comportamento, ainda não consideramos que houve uma mudança.", "O raio de influência da coalizão chega a metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento, pois o parlamentar esteve com outro comportamento em mais da metade da segunda parte do período.", "A $Data_{media}$ se iguala a data de mudança. Este é o período onde esperamos encontrar a maior mudança de comportamento.", "A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.", "O comportamento nos dois períodos se iguala.  Esperamos que a diferença entre os pontos ideias dos dois momentos volte aos níveis da segunda figura.")>>=
+<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c("A data final do período de análise é igual ao dia em que o parlamentar mudou de comportamento por causa da futura mudança de posicionamento. Como, dentro desse período atual, supomos que o parlamentar manteve o mesmo comportamento, ainda não consideramos que houve uma mudança.", "O raio de influência da coalizão chega a metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento, pois o parlamentar esteve com outro comportamento em mais da metade da segunda parte do período.", "A $Data_{media}$ se iguala a data de mudança. Este é o período onde esperamos encontrar a maior mudança de comportamento.", "A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.", "O comportamento nos dois períodos se iguala.  Esperamos que a diferença entre os pontos ideais dos dois momentos volte aos níveis da segunda figura.")>>=
 plot_data = function(data) {
   p = ggplot(data, aes(x = x, y = c(0))) +
         theme(axis.text.y = element_blank(),
@@ -363,7 +350,6 @@ uma limitação do trabalho. Na seção \ref{cap:conclusao:limitacoes}
 discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
 remediá-los em um trabalho futuro.
 
-
 \section{Análise dos dados}
 \label{cap:desenvolvimento:analise}
 
@@ -390,9 +376,9 @@ foram excluídos, sobrando ao final \Sexpr{nrow(data)} observações.
 Desses valores, \Sexpr{format_percent(num_changes / nrow(data))}
 (\Sexpr{num_changes}) são de períodos em que houve uma mudança de
 posicionamento, enquanto \Sexpr{format_percent(num_havent_changed /
-nrow(data))} (\Sexpr{num_havent_changed}) não. A média por legislatura é de
-\Sexpr{format_percent(mean(coalition_changes_per_legislature["S",]))} mudanças,
-com o máximo ocorrendo na 52\textordfeminine{}
+nrow(data))} (\Sexpr{num_havent_changed}) não. Por legislatura, existem em
+média \Sexpr{format_percent(mean(coalition_changes_per_legislature["S",]))}
+mudanças, com o máximo ocorrendo na 52\textordfeminine{}
 (\Sexpr{format_percent(max(coalition_changes_per_legislature["S",]))}) e o
 mínimo na 53\textordfeminine{}
 (\Sexpr{format_percent(min(coalition_changes_per_legislature["S",]))}).  A
@@ -416,7 +402,7 @@ Esse quadro muda a partir da eleição de Lula em 2003, na 52\textordfeminine{}
 legislatura, com a maioria dos parlamentares estando mais a direita do gráfico.
 Na 53\textordfeminine{} legislatura as posições se tornam mais polarizadas, com
 dois picos claros, um na direita do gráfico e outro, menor, na esquerda. Por
-final, durante o primeiro governo de Dilma Rousseff, na 54\textordfeminine{}
+fim, durante o primeiro governo de Dilma Rousseff, na 54\textordfeminine{}
 legislatura, os pontos ideais se concentram no centro.
 
 <<pontos-ideais-por-legislatura, fig.cap="Distribuição dos pontos ideais nos 37 períodos de análise a cada legislatura.">>=
@@ -477,10 +463,10 @@ ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", date_month, "-01")))) 
 @
 
 Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
-deputados que mudaram de posicionamento migrando de partido dos cujo próprio
-partido entrou ou saiu da coalizão. O padrão temporal dos dois grupos é
-visivelmente distinto. Os que migraram de partido mudaram de comportamento em
-média \Sexpr{sum(migrators_per_month) / 12} vezes por mês, com
+deputados que mudaram de posicionamento migrando de partido (migrantes) dos
+cujo próprio partido mudou de posicionamento (não-migrantes). O padrão temporal
+dos dois grupos é visivelmente distinto. Os que migraram de partido mudaram de
+comportamento em média \Sexpr{sum(migrators_per_month) / 12} vezes por mês, com
 \Sexpr{format_percent(migrators_per_month_percent[10])}
 (\Sexpr{migrators_per_month[10]}) ocorrendo em outubro. Houve respectivamente
 \Sexpr{format_percent(migrators_per_month_percent[3])}
@@ -623,8 +609,8 @@ delas.
 A figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
 variáveis independentes agrupados pela mudança ou não de posicionamento no
 período. Visualmente, os padrões são parecidos, mas ao treinar os modelos usei
-não só essas variáveis como também as interações entre elas, assim eles podem
-aprender características mais complexas que são de difícil visualização.
+não só essas variáveis, como também as interações entre elas. Dessa forma, eles
+podem aprender características mais complexas, de difícil visualização.
 
 As variáveis ``antes'' e ``depois'' possuem uma correlação alta, de
 \Sexpr{cor(data$before, data$after)}. Os erros possuem correlação baixa, sendo
@@ -670,24 +656,18 @@ Existem tipos de modelos capazes de aprender a estrutura de um conjunto de
 dados tão bem que, quando validados com o mesmo conjunto de dados usado para
 treiná-los, conseguem prever corretamente 100\% dos casos. O problema é que
 eles aprenderam não só os padrões gerais dos dados, mas também seu ruído. Esses
-modelos, conhecidos como \emph{overfit}\footnote{Em tradução livre,
-``superajustado''.}, têm normalmente uma baixa performance ao serem usados em
-novos dados. Para evitar esse problema, é necessário testá-los em um conjunto
-de dados diferente do que foram treinados, o que gera a questão sobre como
-dividir os dados \cite{Kuhn2013}.
+modelos estão superajustados (do inglês, \emph{overfit}), e têm normalmente uma
+baixa performance ao serem usados em novos dados. Para evitar esse problema, é
+necessário testá-los em um conjunto de dados diferente do que foram treinados,
+o que gera a questão sobre como dividir os dados \cite{Kuhn2013}.
 
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
-subconjuntos, um para treino e outro para teste. É importante se certificar que
-os subconjuntos possuem características similares, especialmente nos casos onde
-as categorias (mudou ou não de posicionamento) não estão balanceadas, como no
-nosso caso. As divisões que levam em conta a proporção de cada categoria são
-chamadas de estratificadas.
-
-Divisões aleatórias partem do princípio de que o padrão dos dados é uniforme,
-logo não há diferença na escolha. Visto que estamos trabalhando com um período
-longo, inclusive com uma alteração nas regras para mudança de partido, essa é
-uma suposição improvável. Como é mais importante que o modelo tenha uma boa
-performance nos anos mais recentes, segui a seguinte estratégia \cite{Kuhn2013}:
+subconjuntos, um para treino e outro para teste. Divisões aleatórias partem do
+princípio de que o padrão dos dados é uniforme, logo não há diferença na
+escolha. Visto que estamos trabalhando com um período longo, inclusive com uma
+alteração nas regras para mudança de partido, essa é uma suposição improvável.
+Como é mais importante que o modelo tenha uma boa performance nos anos mais
+recentes, segui a seguinte estratégia \cite{Kuhn2013}:
 
 \begin{enumerate}
 \item Treina o modelo com os dados anteriores a 54\textordfeminine{}
@@ -713,7 +693,7 @@ Assim, os \Sexpr{nrow(data)} dados serão separados em
 \Sexpr{format_percent(nrow(testing.roc) / nrow(data))}
 (\Sexpr{nrow(testing.roc)}) para definir o ponto de corte e
 \Sexpr{format_percent(nrow(testing) / nrow(data))} (\Sexpr{nrow(testing)}) para
-teste. Eles possuem respectivamente
+teste. Eles possuem, respectivamente,
 \Sexpr{format_percent(training_original_proportions["S"])},
 \Sexpr{format_percent(validation_proportions["S"])},
 \Sexpr{format_percent(testing_roc_proportions["S"])} e

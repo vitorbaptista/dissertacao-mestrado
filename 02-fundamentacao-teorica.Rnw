@@ -38,7 +38,7 @@ não entender as características e limites das ferramentas estatísticas usadas
 \begin{figure}[h]
 \includegraphics{ciencia-de-dados-diagrama-venn}
 \caption{Diagrama de Venn mostrando as habilidades necessárias para um
-cientista de dados}
+cientista de dados \cite{Conway2013}.}
 \label{fig:ciencia-de-dados-venn}
 \end{figure}
 
@@ -98,9 +98,9 @@ esse mapeamento se chama ``kernel''. Dependendo da escolha do kernel, o
 \subsubsection{Árvore de decisão}
 
 Árvores de decisão podem ser pensados como fluxogramas. Em cada nó da árvore há
-uma pergunta com respostas binárias. Por exemplo, ``o paciente está com
-febre?''. Essas perguntas vão sendo respondidas até chegar numa folha, onde
-estará o valor de previsão \cite{Kuhn2013}.
+uma pergunta como, por exemplo, ``o paciente está com febre?'' ou ``qual a
+nacionalidade da pessoa?''. Essas perguntas vão sendo respondidas até chegar
+numa folha, onde estará o valor de previsão \cite{Kuhn2013}.
 
 \subsubsection{\emph{Random Forest} (RF)}
 
@@ -135,7 +135,7 @@ treinado buscando prever o residual $y - F_m(x)$. Essa técnica é conhecida com
 O C5.0 é um modelo baseado no C4.5 que gera estimativas a partir de árvores ou
 regras de decisão. Ele se diferencia de outros modelos que usam árvores de
 decisão pelas técnicas usadas para diminuir a complexidade das árvores,
-diminuindo a probabilidade de se tornar \emph{overfit}. A semelhança do
+diminuindo a probabilidade de se tornar \emph{overfit}. À semelhança do
 \gls{GBM}, ele também usa técnicas de \emph{boosting}.
 
 Regras de decisão se diferenciam de árvores ao permitir múltiplos critérios em
@@ -151,7 +151,7 @@ valor para todos os neurônios da camada posterior. Na primeira camada, as
 entradas são as variáveis independentes, e na última, as saídas são as
 previsões do modelo.
 
-Tanto o número de camadas quando o número de neurônios podem ser modificados,
+Tanto o número de camadas quanto o número de neurônios podem ser modificados,
 dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 
 \subsection{Avaliando performance em modelos de classificação}
@@ -215,12 +215,13 @@ Dessas métricas, a com interpretação mais simples é a acurácia (equação
 \ref{eq:accuracy}), que mede o percentual de predições corretas. Entretanto,
 ela tem algumas limitações. Primeiramente, ela não leva em consideração o tipo
 do erro. Em diversos problemas, o custo de um falso positivo é diferente do de
-um falso negativo. Por exemplo, num sistema de classificação de spam, é
-preferível que o usuário veja uma propaganda (falso negativo) do que deixe de
-receber um e-mail importante (falso positivo). Além disso, ela também não
-considera a frequência natural de cada classe. Se, por exemplo, 90\% dos
-e-mails que eu receba não sejam spam, um modelo que simplesmente classifique
-todo e-mail como não sendo spam terá 90\% de acurácia \cite{Kuhn2013}.
+um falso negativo. Por exemplo, num sistema de classificação de
+\emph{spam}\footnote{E-mails não solicitados.}, é preferível que o usuário veja
+uma propaganda (falso negativo) do que deixe de receber um e-mail importante
+(falso positivo). Além disso, ela também não considera a frequência natural de
+cada classe. Se, por exemplo, 90\% dos e-mails que eu receba não sejam
+\emph{spam}, um modelo que simplesmente classifique todo e-mail como não sendo
+\emph{spam} terá 90\% de acurácia \cite{Kuhn2013}.
 
 O \emph{Kappa} é uma métrica que leva em consideração as proporções das
 classes. Ela pode assumir valores entre -1 e 1, sendo que 1 indica que todas as
@@ -235,8 +236,8 @@ Kappa = \frac{ACC - ACC_{esperada}}{1 - ACC_{esperada}}
 \end{equation}
 
 Em geral, o resultado do uso de modelos de classificação é a probabilidade de
-pertencimento a cada categoria. Por exemplo, um modelo pode, ao analisar um
-e-mail, determinar que ele tem 75\% de chances de ser spam e, consequentemente,
+pertencer a cada categoria. Por exemplo, um modelo pode, ao analisar um e-mail,
+determinar que ele tem 75\% de chances de ser \emph{spam} e, consequentemente,
 25\% de chances de não ser. Para transformar essa probabilidade em uma
 categoria define-se um ponto de corte \cite{Kuhn2013}.
 
@@ -253,7 +254,7 @@ percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
 o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
 levando em consideração nossos objetivos.
 
-<<exemplo-roc, fig.cap="Curva ROC de um modelo mostrando a área sob a curva (AUC) e dois pontos de corte: 0,5, o mais comum, e 0,614, o mais próximo do canto superior esquerdo.">>=
+<<exemplo-roc, fig.cap="Curva ROC de um modelo mostrando a área sob a curva (AUC) e dois pontos de corte: 0,5, o mais comum, e 0,614, o mais próximo do canto superior esquerdo. O gráfico mostra também os valores de especificidade (Espec) e sensibilidade (Sens) nos dois pontos.">>=
 set.seed(1)
 tmp.training = twoClassSim()
 tmp.testing = twoClassSim()
@@ -279,7 +280,7 @@ comparando a área sob suas curvas (\acrshort{AUC}). O modelo na figura
 \ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
 do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
 performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
-tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza é um
+tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza um
 \acrshort{AUC} bom ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013}
 definiram uma regra geral para avaliação descrita na tabela
 \ref{table:valores-auc}.
@@ -325,14 +326,14 @@ exterior, distribuição de renda, etc.
 Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em um
 projeto de Lei que propõe a redução da maioridade penal de
 \Sexpr{max(maioridade_penal)} para \Sexpr{min(maioridade_penal)} anos. Suponha
-que cada um tem uma única preferência (\emph{single-peakedness}), que é o seu
-ponto ideal, e vota sinceramente de acordo com ela, e que suas preferências são
-simétricas. Isto é, dado duas escolhas a uma mesma distância do ponto ideal de
-um parlamentar, ele será indiferente a qualquer uma delas.
+que cada um tem uma única preferência (do inglês, \emph{single-peakedness}),
+que é o seu ponto ideal, e vota sinceramente de acordo com ela, e que suas
+preferências são simétricas. Isto é, dado duas escolhas a uma mesma distância
+do ponto ideal de um parlamentar, ele será indiferente a qualquer uma delas.
 
 Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde as curvas
 representam as preferências dos legisladores sobre o assunto dessa votação, com
-a altura representando a intensidade da preferência. Os pontos ideias estão nos
+a altura representando a intensidade da preferência. Os pontos ideais estão nos
 picos de cada curva. Há também três linhas, a azul representando o resultado de
 um voto ``sim'', a vermelha o de um voto ``não'' (isto é, o \emph{status quo}),
 e a preta representa a ``linha de corte'' dessa votação. As linhas de corte
@@ -367,9 +368,9 @@ p
 @
 
 Há diversos modelos criados para estimar esses valores, como o NOMINATE,
-W-NOMINATE, DW-NOMINATE, que são paramétricos; o Optimal Classification, que é
-não-paramétrico, e; modelos baseados em estatística Bayesiana, como o IDEAL.
-Nosso foco neste trabalho é no W-NOMINATE.
+W-NOMINATE, DW-NOMINATE, que são paramétricos; o \emph{Optimal Classification},
+que é não-paramétrico, e; modelos baseados em estatística Bayesiana, como o
+IDEAL. O foco deste trabalho é o W-NOMINATE.
 \cite{Poole1985,Poole2000,Poole2005,Jackman2000,Clinton2004}
 
 O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
@@ -388,7 +389,7 @@ consequência política do resultado ``sim'' da votação $j$ é definida como:
 
 onde $u_{ijy}$ é a parte determinística e $\epsilon_{ijy}$ é a parte
 estocástica da função utilidade $U_{ijy}$. Se não houver erro, o legislador vota sim se
-$U_{ijy} > U_{ijn}$ e não se $U_{ijy} < U_{ijn}$, onde $y$ e $n$ representam as
+$U_{ijy} > U_{ijn}$, e não se $U_{ijy} < U_{ijn}$, onde $y$ e $n$ representam as
 consequências de um voto sim ou não, respectivamente. Caso $U_{ijy} = U_{ijn}$,
 ele é indiferente ao resultado. Com o erro, a diferença entre as utilidades é:
 
@@ -457,7 +458,7 @@ parlamentares-ponte, que possuem um registro único, em uma tabela individual e
 executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
 pontos para cada parlamentar de interesse e um ponto para os pontes. Na
 segunda forma, que \citeonline{Shor2010} chamam de \emph{linear mapping},
-estimamos os pontos ideias separadamente em cada período e os conectamos usando
+estimamos os pontos ideais separadamente em cada período e os conectamos usando
 uma regressão entre os conjuntos de pontos dos parlamentares-ponte. Ambas
 formas devem gerar resultados similares, mas a segunda é computacionalmente
 mais simples, o que pode ser essencial, dependendo da quantidade de
@@ -478,7 +479,7 @@ comportamento. Ao invés disso, ele segue o seguinte processo:
       \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
 de votos antes, e outro com os depois da data de interesse. Os outros
 parlamentares não são modificados;
-      \item Calcule os pontos ideias;
+      \item Calcule os pontos ideais;
       \item Guarde os resultados dos dois parlamentares ``virtuais''. A
 diferença entre suas posições representa a mudança de comportamento do
 parlamentar.

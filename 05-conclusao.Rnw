@@ -86,7 +86,7 @@ Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
 os períodos de análise como sendo de 12 meses divididos em dois subperíodos de
 mesma duração. Uma forma melhor de defini-los seria buscando o menor período
 que contenha parlamentares e votações suficientes para, de acordo com os
-critérios definidos, estimar os pontos ideias.
+critérios definidos, estimar os pontos ideais.
 
 \subsection{Critérios de inclusão de parlamentares e votações}
 
