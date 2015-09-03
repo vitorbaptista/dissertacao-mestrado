@@ -8,7 +8,7 @@ oposição. Assim, cidadãos, jornalistas e cientistas políticos podem otimizar
 uso de seu tempo.
 
 O modelo final, que usou o método C5.0, apresentou resultados excelentes ao ser
-validado em um subconjunto dos dados da 54\textordfeminine{} legislatura (seção
+validado em um subconjunto dos dados da 54\textordfeminine{} legislatura (Seção
 \ref{cap:miolo:modelos}), alcançando uma \glsfirst{AUC} de
 \Sexpr{ci(rocs.testing$final)[[2]]}. Com o ponto de corte em
 \Sexpr{cutoffPoint}, definido a partir da análise da performance do modelo em
@@ -20,7 +20,7 @@ mudaram. Um erro neste trabalho significa que, de acordo com o modelo, o deputad
 se comportou como alguém que mudou de posicionamento, mesmo não tendo mudado
 até aquele momento, o que pode ser também uma informação relevante.
 
-Na seção \ref{cap:introducao:problemas-de-pesquisa}, foram definidas duas
+Na Seção \ref{cap:introducao:problemas-de-pesquisa}, foram definidas duas
 perguntas de pesquisa:
 
 \begin{enumerate}
@@ -66,7 +66,7 @@ juntamente com os dados em si, também foi disponibilizado livremente na
 Internet\footnote{Disponível em
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}.
 
-Por fim, na análise dos dados na seção
+Por fim, na análise dos dados na Seção
 \ref{cap:desenvolvimento:aspectos-temporais} foram encontrados padrões
 temporais nas mudanças de posicionamento. Esses padrões foram seguidos somente
 pelos parlamentares que mudam de posicionamento através da migração partidária,
@@ -82,7 +82,7 @@ nesta seção.
 
 \subsection{Períodos de análise}
 
-Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
+Na Seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
 os períodos de análise como sendo de 12 meses divididos em dois subperíodos de
 mesma duração. Uma forma melhor de defini-los seria buscando o menor período
 que contenha parlamentares e votações suficientes para, de acordo com os
@@ -116,7 +116,7 @@ seria um complicador. Nesse caso, poderia se buscar o valor mais comum.
 \subsection{Número de repetições para estimar o erro}
 
 Para estimar o erro dos pontos ideais, \citeonline{Poole2005} sugere repetir
-seu cálculo 101 vezes. Como explicado na seção
+seu cálculo 101 vezes. Como explicado na Seção
 \ref{cap:miolo:estimativas-de-erro}, esse número se provou impraticável com o
 volume de dados e capacidade de processamento disponível. Por isso, neste
 trabalho o erro foi calculado usando 10 repetições.
@@ -132,7 +132,7 @@ Pela pesquisa bibliográfica realizada, o uso de técnicas da ciência de dados
 para detectar mudanças de posicionamento dos parlamentares é uma área
 relativamente inexplorada. Dessa forma, existem diversos trabalhos possíveis.
 
-Além da resolução das limitações apresentadas na seção
+Além da resolução das limitações apresentadas na Seção
 \ref{cap:conclusao:limitacoes}, o processo de modelagem descrito nesta
 dissertação poderia ser replicado em outra casa legislativa, como o Senado
 Federal ou casas de outras esferas. Inclusive, seria interessante testar se os

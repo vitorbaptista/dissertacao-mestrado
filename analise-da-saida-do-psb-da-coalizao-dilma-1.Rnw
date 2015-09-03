@@ -36,14 +36,14 @@ para cada parlamentar: um para antes e outro para depois da mudança. A
 diferença entre esses pontos representa o nível da mudança de comportamento no
 período de análise. 
 
-Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
+Por exemplo, considere a Tabela \ref{table:exemplo-mudanca-de-comportamento}
 contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
 comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
-parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
+parlamentares ``virtuais'', Samara 1 e Samara 2 (ver Tabela
 \ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
 Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
 depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
-a sua posição antes, e outro depois da mudança (ver figura
+a sua posição antes, e outro depois da mudança (ver Figura
 \ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
 uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
 de cada parlamentar, podemos determinar se a mudança é significante ou não.
@@ -124,8 +124,8 @@ num_votacoes <- ncol(votes) - 4
 Os dados das votações nominais foram extraídos a partir da API disponibilizada
 no site da Câmara dos Deputados. Eles compreendem \Sexpr{num_votes} votos
 proferidos por \Sexpr{nrow(votes)} parlamentares em \Sexpr{num_votacoes}
-votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
-votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
+votações. A Figura \ref{fig:votacoes-por-mes} mostra a distribuição das
+votações no período e a Figura \ref{fig:deputados-por-partido} mostra o número
 de deputados federais por partido. Só consideramos votos \verb|Sim| ou
 \verb|Não|.  
 
@@ -215,7 +215,7 @@ clean_coords$name <- reorder(clean_coords$name, clean_coords$diff)
 clean_coords <- clean_coords[order(abs(clean_coords$diff_legislator_party)),]
 @
 
-Seguindo a metodologia descrita na seção
+Seguindo a metodologia descrita na Seção
 \ref{sec:analise-saida-psb:metodologia}, dividimos a
 54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
 no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
@@ -229,7 +229,7 @@ parlamentares que votaram ao menos uma vez nesse período,
 \Sexpr{sum(!is.na(clean_coords$diff))} passaram pelo nosso filtro de
 participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
 
-A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
+A Figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
 entre as posições dos parlamentares antes e depois da saída do PSB da base do
 governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
 sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
@@ -245,7 +245,7 @@ ggplot(clean_coords[!is.na(clean_coords$diff),], aes(x = changed_coalition, y = 
   labs(x = "", y = "Distância entre posições")
 @
 
-Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
+Na Tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
 de posição em valores absolutos. Desses, analisemos os que não entraram nem
 saíram da coalizão: 
 
@@ -286,7 +286,7 @@ deputados_psdb = clean_coords[clean_coords$party == "PSDB",]
 outlier_psb = deputados_psb[which.max(deputados_psb$diff),]
 @
 
-De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
+De acordo com a Figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
 afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
 mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
 contrário da maioria, se aproximou do governo: \Sexpr{outlier_psb$name}, que
@@ -384,9 +384,9 @@ model <- train(changed_coalition ~ before * before.sd * after * after.sd * diff,
 model_results = model$results[model$results$mtry == as.numeric(model$bestTune),]
 @
 
-O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
+O modelo foi treinado com todos os atributos na Tabela \ref{table:clean-data} e
 a interação entre eles. Analisamos diversos números de preditores e, como pode
-ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
+ser visto na Figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
 sob a curva ROC usou \Sexpr{model$bestTune} preditores e chegou a área de
 \Sexpr{model_results$ROC} com desvio-padrão de \Sexpr{model_results$ROCSD}.
 
@@ -394,11 +394,11 @@ sob a curva ROC usou \Sexpr{model$bestTune} preditores e chegou a área de
 plot(model)
 @
 
-Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
+Usando os dados de teste, podemos avaliar nosso modelo. A Figura \ref{fig:roc}
 mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
 para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
 como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
-e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
+e especificidade iguais a 1). Na Tabela \ref{table:roc} podemos ver todos
 máximos locais dos pontos de corte e as respectivas sensibilidades e
 especificidades, com mínimos e máximos dentro de margem de confiança de
 95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.

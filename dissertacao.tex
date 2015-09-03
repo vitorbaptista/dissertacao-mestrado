@@ -272,12 +272,12 @@ showstringspaces=false
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
 Neste capítulo, serão abordados os conceitos necessários para compreensão do
-restante do trabalho. Na seção \ref{cap:fundamentacao:ciencia-de-dados},
+restante do trabalho. Na Seção \ref{cap:fundamentacao:ciencia-de-dados},
 explicarei o que é ciência de dados, descrevendo também o processo de
 desenvolvimento e avaliação de modelos preditivos, com foco em modelos de
-classificação. Na seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
+classificação. Na Seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
 falarei brevemente sobre a teoria espacial do voto e a técnica W-NOMINATE para
-estimativa de pontos ideais. Por fim, na seção
+estimativa de pontos ideais. Por fim, na Seção
 \ref{cap:fundamentacao:processo-legislativo}, descreverei em linhas gerais o
 processo legislativo brasileiro em nível federal, com ênfase nos tipos de
 votação.
@@ -295,7 +295,7 @@ uma área fim, como a ciência política.
 Por ser uma área interdisciplinar e relativamente recente (especialmente no
 Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
 computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
-diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
+diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da Figura
 \ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
 relação às outras áreas. Nela, vemos que a ciência de dados está na intersecção
 entre computação, estatística e uma área fim (por exemplo, ciência política). A
@@ -431,7 +431,7 @@ dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 \nocite{Ng2012}
 
 Uma das formas mais comuns de descrever a performance de um modelo de
-classificação é através de uma ``matriz de confusão''. A tabela
+classificação é através de uma ``matriz de confusão''. A Tabela
 \ref{table:exemplo-matriz-de-confusao} mostra um exemplo de matriz de confusão
 com duas categorias: ``positivo'' e ``negativo''. Na diagonal principal estão
 os valores classificados corretamente, e fora dela estão os erros. Dessa matriz
@@ -519,7 +519,7 @@ valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
 modelo usando diferentes pontos de corte é a curva \gls{ROC}
 \cite{Altman1994,Brown2006,Fawcett2006}.
 
-A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
+A Figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
 valores discriminados em dois pontos: 0,5 e 0,614. A partir desse gráfico,
 percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
 o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
@@ -535,13 +535,13 @@ levando em consideração nossos objetivos.
 
 Além de auxiliar na escolha do ponto de corte, a curva \gls{ROC} também pode
 ser usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
-comparando a área sob suas curvas (\acrshort{AUC}). O modelo na figura
+comparando a área sob suas curvas (\acrshort{AUC}). O modelo na Figura
 \ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
 do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
 performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
 tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza um
 \acrshort{AUC} bom ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013}
-definiram uma regra geral para avaliação descrita na tabela
+definiram uma regra geral para avaliação descrita na Tabela
 \ref{table:valores-auc}.
 
 \begin{table}
@@ -583,7 +583,7 @@ que é o seu ponto ideal, e vota sinceramente de acordo com ela, e que suas
 preferências são simétricas. Isto é, dado duas escolhas a uma mesma distância
 do ponto ideal de um parlamentar, ele será indiferente a qualquer uma delas.
 
-Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde as curvas
+Graficamente, temos a Figura \ref{fig:modelo-espacial-votacao}, onde as curvas
 representam as preferências dos legisladores sobre o assunto dessa votação, com
 a altura representando a intensidade da preferência. Os pontos ideais estão nos
 picos de cada curva. Há também três linhas, a azul representando o resultado de
@@ -891,7 +891,7 @@ consultas individuais, votação por votação, por isso desenvolvi um
 programa\footnote{Disponível em:
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}} na
 linguagem Python que, com o auxílio da biblioteca Scrapy, baixa todas as
-votações \cite{Python276,Scrapy}. A tabela
+votações \cite{Python276,Scrapy}. A Tabela
 \ref{table:estatisticas-legislaturas} mostra o número de deputados federais,
 votos e votações por legislatura. Em média, temos 624
 parlamentares e 332 votos em
@@ -952,10 +952,10 @@ trabalho de \citeonline{Muller2000}.
 
 \end{knitrout}
 
-A figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
+A Figura \ref{fig:mudancas-mensais-de-coalizao} mostra as
 890 entradas e saídas da coalizão que ocorreram
 durante o período de estudo, agrupadas mensalmente. Há meses que concentram
-as mudanças de posicionamento, que serão melhor analisadas na seção
+as mudanças de posicionamento, que serão melhor analisadas na Seção
 \ref{cap:desenvolvimento:aspectos-temporais}. A linha tracejada marca a data da Resolução
 n\textordmasculine{} 22.610 do TSE, que em 24/10/2007
 alterou o entendimento das regras de fidelidade partidária, tornando-as mais
@@ -1005,7 +1005,7 @@ criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
 \label{cap:desenvolvimento:estimando-mudanca-comportamento}
 
 Para estimar a mudança de comportamento, seguirei a metodologia de
-\citeonline{Poole2005} descrita na seção
+\citeonline{Poole2005} descrita na Seção
 \ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} usando o modelo
 W-NOMINATE \cite{Poole1985}. Esse modelo foi escolhido pois, apesar de
 diversos outros modelos terem sido desenvolvidos nos 30 anos desde sua criação,
@@ -1075,7 +1075,7 @@ com a falta de votações suficientes ou serem demasiadamente influenciados por
 votações anômalas. Já períodos muito longos, como 5 anos antes e 5 anos depois,
 dificultam a interpretação dos resultados pois podem conter diversas mudanças
 de comportamento. No mínimo, precisamos de um período que contenha votações
-suficientes de acordo com nossos critérios de inclusão definidos na seção
+suficientes de acordo com nossos critérios de inclusão definidos na Seção
 \ref{cap:desenvolvimento:criterios-de-inclusao}.
 
 Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
@@ -1085,7 +1085,7 @@ exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
 01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
 01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
 nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
-uma limitação deste trabalho, que será melhor analisada na seção
+uma limitação deste trabalho, que será melhor analisada na Seção
 \ref{cap:conclusao:limitacoes}.
 
 \subsubsection{Estimativas de erro}
@@ -1138,7 +1138,7 @@ mudança de comportamento esteja relacionada a mudança de posicionamento
 compreende $\left[Data_{m\acute{e}dia} - \frac{P}{2}, Data_{m\acute{e}dia} +
 \frac{P}{2}\right]$. Precisamos definir $P$.
 
-Para entender melhor, vejamos a figura \ref{fig:raio-de-influencia-coalizao}.
+Para entender melhor, vejamos a Figura \ref{fig:raio-de-influencia-coalizao}.
 Nela são mostrados cinco períodos de análise de um parlamentar que mudou de
 comportamento em $Data_{coaliz\tilde{a}o} - P$, representado pela mudança da
 região azul para a verde, com o período de análise em cada momento representado
@@ -1146,14 +1146,14 @@ pela região escurecida entre $Data_{inicial}$ e $Data_{final}$. No primeiro
 período, \ref{fig:raio-de-influencia-coalizao1}, a $Data_{final}$ é igual ao
 momento de mudança de comportamento. Aqui, não consideramos que houve uma
 mudança de posicionamento, pois o comportamento dentro desse período é
-constante (região azul). Na figura \ref{fig:raio-de-influencia-coalizao2}, a
+constante (região azul). Na Figura \ref{fig:raio-de-influencia-coalizao2}, a
 mudança de comportamento ocorre no ponto médio entre a $Data_{m\acute{e}dia}$ e
 a $Data_{final}$. A partir daqui começamos a considerar que o parlamentar mudou
-de posicionamento. Na figura \ref{fig:raio-de-influencia-coalizao3}, a
+de posicionamento. Na Figura \ref{fig:raio-de-influencia-coalizao3}, a
 $Data_{final} = Data_{coaliz\tilde{a}o}$, e a $Data_{m\acute{e}dia}$ se iguala
 a data da mudança de comportamento em $Data_{coaliz\tilde{a}o} - P$. Se a
 escolha de $P$ foi correta para este parlamentar, esse deve ser o período com a
-mudança de comportamento mais intensa. A figura
+mudança de comportamento mais intensa. A Figura
 \ref{fig:raio-de-influencia-coalizao4} mostra o último período em que ainda
 consideramos que houve uma mudança de comportamento causada por uma mudança de
 posicionamento, pois a partir dele o comportamento em $\left[Data_{inicial},
@@ -1177,7 +1177,7 @@ período de estudo se igualam.
 Neste trabalho, defini $P$ como sendo 6 meses. Em outras palavras, os
 parlamentares começariam a mudar de comportamento a partir de 6 meses antes da
 definitiva entrada ou saída da coalizão. Por ser uma escolha arbitrária, esta é
-uma limitação do trabalho. Na seção \ref{cap:conclusao:limitacoes}
+uma limitação do trabalho. Na Seção \ref{cap:conclusao:limitacoes}
 discorro sobre os possíveis problemas dessa escolha e sugestões sobre como
 remediá-los em um trabalho futuro.
 
@@ -1200,7 +1200,7 @@ subperíodos de mesma duração. Não foi possível estimar o ponto ideal em um 
 ambos subperíodos em 31.04\%
 (35.376) períodos, pois o parlamentar não participou de
 votações o suficiente, ou as que ele participou não passaram nos critérios de
-inclusão definidos na seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
+inclusão definidos na Seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
 foram excluídos, sobrando ao final 78.576 observações.
 
 Desses valores, 3.98\%
@@ -1211,7 +1211,7 @@ mudanças, com o máximo ocorrendo na 52\textordfeminine{}
 (7.07\%) e o
 mínimo na 53\textordfeminine{}
 (1.55\%).  A
-tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
+Tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
 \begin{table}
@@ -1234,7 +1234,7 @@ N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
 \label{table:coalition-changes-per-legislature}
 \end{table}
 
-A figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
+A Figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
 dos pontos ideais em cada legislatura, com o PT estando a direita do gráfico.
 Na 50\textordfeminine{} e 51\textordfeminine{} legislaturas, durante o governo
 do PSDB, a maior parte dos deputados federais encontram-se ao lado esquerdo.
@@ -1283,7 +1283,7 @@ votação no novo partido. Como, no período de análise, 99\% dos parlamentares
 faltaram no máximo 35 votações seguidas, as duas datas devem ser próximas na
 maioria dos casos.}.
 
-A figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
+A Figura \ref{fig:mudancas-de-posicionamento-geral} mostra o número de
 deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
 54\textordfeminine{} legislaturas agregados por mês. Quatro meses, janeiro,
 março, abril e outubro, concentram
@@ -1299,7 +1299,7 @@ ser um indício que as mudanças de posicionamento seguem um padrão temporal.
 
 \end{knitrout}
 
-Na figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
+Na Figura \ref{fig:mudancas-de-posicionamento-por-migrantes}, separamos os
 deputados que mudaram de posicionamento migrando de partido (migrantes) dos
 cujo próprio partido mudou de posicionamento (não-migrantes). O padrão temporal
 dos dois grupos é visivelmente distinto. Os que migraram de partido mudaram de
@@ -1326,7 +1326,7 @@ maio concentrando
 
 \end{knitrout}
 
-Separamos os dados por legislatura na figura
+Separamos os dados por legislatura na Figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}. Os
 migrantes continuam com um padrão parecido, com em média
 32.06\%
@@ -1345,7 +1345,7 @@ legislatura.
 
 \end{knitrout}
 
-Na figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
+Na Figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
 agregamos por ano da legislatura ao invés de mês. A grande maioria das
 mudanças dos migrantes,
 84.07\%
@@ -1366,7 +1366,7 @@ no segundo ano.
 
 \end{knitrout}
 
-Separando os dados por mês e ano da legislatura, temos a figura
+Separando os dados por mês e ano da legislatura, temos a Figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura}. Nos
 migrantes,
 52.55\%
@@ -1404,7 +1404,7 @@ performance final.
 
 Como variável dependente, que é o que queremos prever, usei a mudança ou não de
 comportamento do parlamentar no período. Ela foi definida a partir dos períodos
-e ``raio de influência'' apresentados na seção
+e ``raio de influência'' apresentados na Seção
 \ref{cap:desenvolvimento:raio-de-influencia}, e toma o valor ``S'', quando
 houve uma mudança de posicionamento, e ``N'', quando não houve. Como já visto
 anteriormente, das 78.576 observações,
@@ -1416,10 +1416,10 @@ de posicionamento, e 96.02\%
 \subsection{Variáveis independentes}
 \label{cap:desenvolvimento:variaveis-independentes}
 
-A partir dos resultados das análises descritas na seção
+A partir dos resultados das análises descritas na Seção
 \ref{cap:desenvolvimento:analise}, defini 6 variáveis independentes, sendo 4 relativas
 às estimativas de pontos ideais e seus erros, e duas relacionadas aos padrões
-temporais descritos na seção \ref{cap:desenvolvimento:aspectos-temporais}. A tabela
+temporais descritos na Seção \ref{cap:desenvolvimento:aspectos-temporais}. A Tabela
 \ref{table:variaveis-independentes} contém a descrição e natureza de cada uma
 delas.
 
@@ -1439,7 +1439,7 @@ delas.
 \label{table:variaveis-independentes}
 \end{table}
 
-A figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
+A Figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
 variáveis independentes agrupados pela mudança ou não de posicionamento no
 período. Visualmente, os padrões são parecidos, mas ao treinar os modelos usei
 não só essas variáveis, como também as interações entre elas. Dessa forma, eles
@@ -1556,9 +1556,9 @@ tradução livre, ``não existe almoço grátis''.} que não há uma técnica ú
 modelagem que seja melhor em todos casos. Por isso, \citeonline{Kuhn2013}
 sugerem testar diversos tipos de modelos antes de definir em qual focar. Nesta
 seção, usarei 6 tipos: \gls{GLM}, SVM com kernel
-radial, \gls{RF}, \gls{GBM}, C5.0 e \gls{NNET} (tabela
+radial, \gls{RF}, \gls{GBM}, C5.0 e \gls{NNET} (Tabela
 \ref{table:tipos-de-modelos}). Cada um deles será treinado e validado nos
-conjuntos de dados descritos na seção \ref{cap:desenvolvimento:divisao-dados} usando todas
+conjuntos de dados descritos na Seção \ref{cap:desenvolvimento:divisao-dados} usando todas
 as permutações dos parâmetros definidos no apêndice
 \ref{apendice:parametros-modelos}. Os preditores utilizados serão as variáveis
 independentes definidas em \ref{cap:desenvolvimento:variaveis-independentes} e suas
@@ -1583,7 +1583,7 @@ modelos é a \glsfirst{AUC}.
 \label{table:tipos-de-modelos}
 \end{table}
 
-A tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
+A Tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
 cada modelo que obteve o maior \gls{AUC} no conjunto de validação, juntamente com seus
 intervalos de confiança em 95\%\footnote{O intervalo de confiança foi
 calculado usando 2.000 amostragens com reposição do conjunto de validação,
@@ -1594,7 +1594,7 @@ apresentou o maior \gls{AUC} foi o C5.0, com 0,97
 (0,96, 0,98),
 contra 0,86
 (0,84, 0,87)
-do segundo lugar, o de redes neurais. Na figura \ref{fig:rocs-validation} é
+do segundo lugar, o de redes neurais. Na Figura \ref{fig:rocs-validation} é
 possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
 
 % FIXME: O sigma do SVM Radial não pode ser arredondado
@@ -1655,7 +1655,7 @@ mudanças de posicionamento e
 (3.358) não. O último
 passo é definir o ponto de corte para a classificação das categorias.
 
-Como explicado na seção
+Como explicado na Seção
 \ref{cap:fundamentacao:avaliando-modelos-de-classificacao}, a maioria das
 ferramentas de aprendizagem de máquina definem como ponto de corte padrão 0,5.
 Entretanto, especialmente em casos onde as categorias não estão balanceadas ou
@@ -1677,7 +1677,7 @@ individual.
 
 
 
-A figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
+A Figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
 dados de definição do ponto de corte com dois pontos em destaque: o padrão 0,5
 e o escolhido 0,65. Considerando o corte em 0,5, no exemplo
 acima 166 parlamentares seriam classificados como
@@ -1696,15 +1696,15 @@ escolhidos buscando os máximos locais da curva \gls{ROC}
 
 O modelo final alcançou uma \gls{AUC} 0,88
 (0,86, 0,91),
-como visto na figura \ref{fig:roc-final-model}. Considerando o ponto de corte
+como visto na Figura \ref{fig:roc-final-model}. Considerando o ponto de corte
 em 0,65, o modelo possui Kappa
 0,21 e
 52.08\% das mudanças
 (sensibilidade) e 91.45\%
 das não-mudanças de posicionamento (especificidade) classificadas corretamente.
-A tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
+A Tabela \ref{table:confusion-matrix-final-model} mostra a matriz de confusão
 nos dados de teste. De acordo com a classificação de \citeonline{HosmerJr2013}
-descrita na tabela \ref{table:valores-auc}, o modelo possui um poder de
+descrita na Tabela \ref{table:valores-auc}, o modelo possui um poder de
 discriminação excelente.
 
 \begin{knitrout}
@@ -1759,7 +1759,7 @@ oposição. Assim, cidadãos, jornalistas e cientistas políticos podem otimizar
 uso de seu tempo.
 
 O modelo final, que usou o método C5.0, apresentou resultados excelentes ao ser
-validado em um subconjunto dos dados da 54\textordfeminine{} legislatura (seção
+validado em um subconjunto dos dados da 54\textordfeminine{} legislatura (Seção
 \ref{cap:miolo:modelos}), alcançando uma \glsfirst{AUC} de
 0,88. Com o ponto de corte em
 0,65, definido a partir da análise da performance do modelo em
@@ -1771,7 +1771,7 @@ mudaram. Um erro neste trabalho significa que, de acordo com o modelo, o deputad
 se comportou como alguém que mudou de posicionamento, mesmo não tendo mudado
 até aquele momento, o que pode ser também uma informação relevante.
 
-Na seção \ref{cap:introducao:problemas-de-pesquisa}, foram definidas duas
+Na Seção \ref{cap:introducao:problemas-de-pesquisa}, foram definidas duas
 perguntas de pesquisa:
 
 \begin{enumerate}
@@ -1817,7 +1817,7 @@ juntamente com os dados em si, também foi disponibilizado livremente na
 Internet\footnote{Disponível em
 \url{https://github.com/vitorbaptista/dados-abertos-camara.gov.br}}.
 
-Por fim, na análise dos dados na seção
+Por fim, na análise dos dados na Seção
 \ref{cap:desenvolvimento:aspectos-temporais} foram encontrados padrões
 temporais nas mudanças de posicionamento. Esses padrões foram seguidos somente
 pelos parlamentares que mudam de posicionamento através da migração partidária,
@@ -1833,7 +1833,7 @@ nesta seção.
 
 \subsection{Períodos de análise}
 
-Na seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
+Na Seção \ref{cap:desenvolvimento:periodos-de-analise}, defini arbitrariamente
 os períodos de análise como sendo de 12 meses divididos em dois subperíodos de
 mesma duração. Uma forma melhor de defini-los seria buscando o menor período
 que contenha parlamentares e votações suficientes para, de acordo com os
@@ -1867,7 +1867,7 @@ seria um complicador. Nesse caso, poderia se buscar o valor mais comum.
 \subsection{Número de repetições para estimar o erro}
 
 Para estimar o erro dos pontos ideais, \citeonline{Poole2005} sugere repetir
-seu cálculo 101 vezes. Como explicado na seção
+seu cálculo 101 vezes. Como explicado na Seção
 \ref{cap:miolo:estimativas-de-erro}, esse número se provou impraticável com o
 volume de dados e capacidade de processamento disponível. Por isso, neste
 trabalho o erro foi calculado usando 10 repetições.
@@ -1883,7 +1883,7 @@ Pela pesquisa bibliográfica realizada, o uso de técnicas da ciência de dados
 para detectar mudanças de posicionamento dos parlamentares é uma área
 relativamente inexplorada. Dessa forma, existem diversos trabalhos possíveis.
 
-Além da resolução das limitações apresentadas na seção
+Além da resolução das limitações apresentadas na Seção
 \ref{cap:conclusao:limitacoes}, o processo de modelagem descrito nesta
 dissertação poderia ser replicado em outra casa legislativa, como o Senado
 Federal ou casas de outras esferas. Inclusive, seria interessante testar se os
@@ -2102,14 +2102,14 @@ para cada parlamentar: um para antes e outro para depois da mudança. A
 diferença entre esses pontos representa o nível da mudança de comportamento no
 período de análise. 
 
-Por exemplo, considere a tabela \ref{table:exemplo-mudanca-de-comportamento}
+Por exemplo, considere a Tabela \ref{table:exemplo-mudanca-de-comportamento}
 contendo 3 parlamentares e 4 votações. Para definir qual foi a mudança de
 comportamento de Samara entre as votações 2 e 3, dividimos seus votos em dois
-parlamentares ``virtuais'', Samara 1 e Samara 2 (ver tabela
+parlamentares ``virtuais'', Samara 1 e Samara 2 (ver Tabela
 \ref{table:exemplo-parlamentar-virtual}), e executamos o algoritmo W-NOMINATE.
 Guardamos os resultados de Samara e repetimos os mesmos passos para Pedro e
 depois Maria. Ao final, teremos dois pontos para cada parlamentar: um relativo
-a sua posição antes, e outro depois da mudança (ver figura
+a sua posição antes, e outro depois da mudança (ver Figura
 \ref{fig:exemplo-mudanca-de-comportamento}). A distância desses dois pontos é
 uma medida da intensidade da mudança do parlamentar.  Comparando as distâncias
 de cada parlamentar, podemos determinar se a mudança é significante ou não.
@@ -2183,8 +2183,8 @@ de cada parlamentar, podemos determinar se a mudança é significante ou não.
 Os dados das votações nominais foram extraídos a partir da API disponibilizada
 no site da Câmara dos Deputados. Eles compreendem 131.552 votos
 proferidos por 644 parlamentares em 432
-votações. A figura \ref{fig:votacoes-por-mes} mostra a distribuição das
-votações no período e a figura \ref{fig:deputados-por-partido} mostra o número
+votações. A Figura \ref{fig:votacoes-por-mes} mostra a distribuição das
+votações no período e a Figura \ref{fig:deputados-por-partido} mostra o número
 de deputados federais por partido. Só consideramos votos \verb|Sim| ou
 \verb|Não|.  
 
@@ -2208,7 +2208,7 @@ de deputados federais por partido. Só consideramos votos \verb|Sim| ou
 
 
 
-Seguindo a metodologia descrita na seção
+Seguindo a metodologia descrita na Seção
 \ref{sec:analise-saida-psb:metodologia}, dividimos a
 54\textordfeminine{} legislatura na votação mais próxima da data de interesse,
 no nosso caso, a data em que o PSB deixa a coalizão do governo. De acordo com
@@ -2222,7 +2222,7 @@ parlamentares que votaram ao menos uma vez nesse período,
 470 passaram pelo nosso filtro de
 participação em ao menos 20 votações cuja minoria teve 2,5\% ou mais dos votos.
 
-A figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
+A Figura \ref{fig:boxplot-diff-coalizao} mostra a distribuição da diferença
 entre as posições dos parlamentares antes e depois da saída do PSB da base do
 governo, agrupado pelos que entraram ou saíram da coalizão e os que mantiveram
 sua posição. Nela podemos ver que, no geral, quem entra na coalizão se torna
@@ -2237,7 +2237,7 @@ posição, mas existem diversos \emph{outliers}.
 
 \end{knitrout}
 
-Na tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
+Na Tabela \ref{table:top-10-diffs} estão os dez parlamentares com maior mudança
 de posição em valores absolutos. Desses, analisemos os que não entraram nem
 saíram da coalizão: 
 
@@ -2295,7 +2295,7 @@ antes e depois da saída do PSB da base do governo.}
 
 
 
-De acordo com a figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
+De acordo com a Figura \ref{fig:mudanca-psb}, no geral os deputados do PSB se
 afastaram do governo, enquanto a maioria dos parlamentares dos outros partidos
 mantiveram suas posições. Há um \emph{outlier} nos deputados do PSB que, ao
 contrário da maioria, se aproximou do governo: Alexandre Toledo, que
@@ -2381,9 +2381,9 @@ precisão do nosso modelo sejam confiáveis. Escolhemos manter 80\% para treino 
 \end{kframe}
 \end{knitrout}
 
-O modelo foi treinado com todos os atributos na tabela \ref{table:clean-data} e
+O modelo foi treinado com todos os atributos na Tabela \ref{table:clean-data} e
 a interação entre eles. Analisamos diversos números de preditores e, como pode
-ser visto na figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
+ser visto na Figura \ref{fig:roc-vs-mtry}, o melhor modelo com relação ao área
 sob a curva ROC usou 6 preditores e chegou a área de
 0,86 com desvio-padrão de 0,068.
 
@@ -2395,11 +2395,11 @@ sob a curva ROC usou 6 preditores e chegou a área de
 
 \end{knitrout}
 
-Usando os dados de teste, podemos avaliar nosso modelo. A figura \ref{fig:roc}
+Usando os dados de teste, podemos avaliar nosso modelo. A Figura \ref{fig:roc}
 mostra a curva ROC. Ela mostra a sensibilidade e especificidade do nosso modelo
 para diversos pontos de corte. O valor marcado é o ponto ``ideal'', definido
 como o ponto mais próximo do canto superior esquerdo do gráfico (sensibilidade
-e especificidade iguais a 1). Na tabela \ref{table:roc} podemos ver todos
+e especificidade iguais a 1). Na Tabela \ref{table:roc} podemos ver todos
 máximos locais dos pontos de corte e as respectivas sensibilidades e
 especificidades, com mínimos e máximos dentro de margem de confiança de
 95\%\footnote{Calculado a partir de 2.000 stratified bootstrap replications.

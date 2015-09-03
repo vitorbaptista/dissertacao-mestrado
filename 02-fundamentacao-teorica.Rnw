@@ -1,12 +1,12 @@
 \chapter{Fundamentação Teórica}\label{cap:fundamentacao}
 
 Neste capítulo, serão abordados os conceitos necessários para compreensão do
-restante do trabalho. Na seção \ref{cap:fundamentacao:ciencia-de-dados},
+restante do trabalho. Na Seção \ref{cap:fundamentacao:ciencia-de-dados},
 explicarei o que é ciência de dados, descrevendo também o processo de
 desenvolvimento e avaliação de modelos preditivos, com foco em modelos de
-classificação. Na seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
+classificação. Na Seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
 falarei brevemente sobre a teoria espacial do voto e a técnica W-NOMINATE para
-estimativa de pontos ideais. Por fim, na seção
+estimativa de pontos ideais. Por fim, na Seção
 \ref{cap:fundamentacao:processo-legislativo}, descreverei em linhas gerais o
 processo legislativo brasileiro em nível federal, com ênfase nos tipos de
 votação.
@@ -24,7 +24,7 @@ uma área fim, como a ciência política.
 Por ser uma área interdisciplinar e relativamente recente (especialmente no
 Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
 computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
-diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da figura
+diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da Figura
 \ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
 relação às outras áreas. Nela, vemos que a ciência de dados está na intersecção
 entre computação, estatística e uma área fim (por exemplo, ciência política). A
@@ -160,7 +160,7 @@ dependendo dos padrões dos dados e objetivos do modelo \cite{Kuhn2013}.
 \nocite{Ng2012}
 
 Uma das formas mais comuns de descrever a performance de um modelo de
-classificação é através de uma ``matriz de confusão''. A tabela
+classificação é através de uma ``matriz de confusão''. A Tabela
 \ref{table:exemplo-matriz-de-confusao} mostra um exemplo de matriz de confusão
 com duas categorias: ``positivo'' e ``negativo''. Na diagonal principal estão
 os valores classificados corretamente, e fora dela estão os erros. Dessa matriz
@@ -248,7 +248,7 @@ valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
 modelo usando diferentes pontos de corte é a curva \gls{ROC}
 \cite{Altman1994,Brown2006,Fawcett2006}.
 
-A figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
+A Figura \ref{fig:exemplo-roc} mostra um exemplo de uma curva \gls{ROC} com os
 valores discriminados em dois pontos: 0,5 e 0,614. A partir desse gráfico,
 percebemos a troca entre sensibilidade e especificidade (quanto maior um, menor
 o outro), e podemos escolher o melhor ponto de corte para o modelo em questão
@@ -276,13 +276,13 @@ roc0 = roc(tmp.testing$Class,
 
 Além de auxiliar na escolha do ponto de corte, a curva \gls{ROC} também pode
 ser usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
-comparando a área sob suas curvas (\acrshort{AUC}). O modelo na figura
+comparando a área sob suas curvas (\acrshort{AUC}). O modelo na Figura
 \ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
 do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
 performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
 tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza um
 \acrshort{AUC} bom ou ruim varia de caso a caso, mas \citeonline{HosmerJr2013}
-definiram uma regra geral para avaliação descrita na tabela
+definiram uma regra geral para avaliação descrita na Tabela
 \ref{table:valores-auc}.
 
 \begin{table}
@@ -331,7 +331,7 @@ que é o seu ponto ideal, e vota sinceramente de acordo com ela, e que suas
 preferências são simétricas. Isto é, dado duas escolhas a uma mesma distância
 do ponto ideal de um parlamentar, ele será indiferente a qualquer uma delas.
 
-Graficamente, temos a figura \ref{fig:modelo-espacial-votacao}, onde as curvas
+Graficamente, temos a Figura \ref{fig:modelo-espacial-votacao}, onde as curvas
 representam as preferências dos legisladores sobre o assunto dessa votação, com
 a altura representando a intensidade da preferência. Os pontos ideais estão nos
 picos de cada curva. Há também três linhas, a azul representando o resultado de
