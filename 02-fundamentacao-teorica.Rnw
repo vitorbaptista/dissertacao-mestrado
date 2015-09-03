@@ -477,11 +477,12 @@ comportamento. Ao invés disso, ele segue o seguinte processo:
   \item Para cada parlamentar, faça:
     \begin{enumerate}
       \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
-de votos antes, e outro com os depois da data de interesse. Os outros
-parlamentares não são modificados;
-      \item Calcule os pontos ideais;
+de votos antes, e outro com os depois da data de interesse;
+      \item Calcule os pontos ideais usando o conjunto de todos parlamentares,
+com a linha referente ao parlamentar dessa iteração substituída pelos dois
+parlamentares ``virtuais'' definidos no passo anterior;
       \item Guarde os resultados dos dois parlamentares ``virtuais''. A
-diferença entre suas posições representa a mudança de comportamento do
+diferença entre suas posições representa a mudança de comportamento desse
 parlamentar.
     \end{enumerate}
   \item Calcule medidas de incerteza para as estimativas.
@@ -491,9 +492,8 @@ Ao final, ele tem dois pontos para cada senador: um representando sua posição
 nos primeiros 4, e o outro nos últimos 2 anos da legislatura. Note que, como as
 matrizes de votações usadas para gerar os mapas espaciais são diferentes, eles
 não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
-argumenta que como elas possuem o mesmo conjunto de votos, com a única
-diferença de que um dos parlamentares foi dividido em dois, ele considera ser
-seguro compará-las.
+considera que é seguro compará-los, já que eles possuem o mesmo conjunto de
+votos, com a única diferença sendo qual parlamentar foi dividido em dois.
 
 \section{Processo legislativo}
 \label{cap:fundamentacao:processo-legislativo}
