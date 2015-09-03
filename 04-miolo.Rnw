@@ -57,11 +57,11 @@ seu partido se tornou oposição em 2013 é considerada, pois ocorreu dentro de
 uma mesma legislatura.
 
 As coalizões são compostas pelos partidos que controlam ao menos um ministério.
-Uma nova coalizão é formada em duas situações: i) na mudança de legislatura, e;
+Uma nova coalizão é formada em duas situações: i) na mudança de governo, e;
 ii) na mudança do conjunto de partidos que controlam ministérios. Em outras
 palavras, uma nova coalizão é formada quando um partido que não possuía nenhum
 ministério passa a ter ao menos um, quando um partido que controlava algum
-ministério passa a não ter nenhum, ou quando se inicia uma nova legislatura.
+ministério passa a não ter nenhum, ou quando se inicia um novo governo.
 Esses critérios foram definidos por \citeonline{Figueiredo2007}, inspirada no
 trabalho de \citeonline{Muller2000}.
 
