@@ -112,9 +112,8 @@ da transição à democracia.
 % Universo de parlamentares
 
 A análise se restringe à Câmara dos Deputados por três razões: facilidade na
-obtenção dos dados; maior número de parlamentares (513 contra 81 no Senado
-Federal), e; por normalmente ser a casa iniciadora, mais votações ocorrem na
-Câmara \cite{Vicente2012}.
+obtenção dos dados, e; maior número de parlamentares (513 contra 81 no Senado
+Federal) \cite{Vicente2012}.
 
 A unidade de análise usada é o parlamentar, pois, apesar da literatura apontar o
 papel fundamental dos partidos no comportamento dos parlamentares
