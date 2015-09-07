@@ -6,10 +6,7 @@ explicarei o que é ciência de dados, descrevendo também o processo de
 desenvolvimento e avaliação de modelos preditivos, com foco em modelos de
 classificação. Na Seção \ref{cap:fundamentacao:teoria-espacial-do-voto},
 falarei brevemente sobre a teoria espacial do voto e a técnica W-NOMINATE para
-estimativa de pontos ideais. Por fim, na Seção
-\ref{cap:fundamentacao:processo-legislativo}, descreverei em linhas gerais o
-processo legislativo brasileiro em nível federal, com ênfase nos tipos de
-votação.
+estimativa de pontos ideais.
 
 \section{Ciência de Dados}
 \label{cap:fundamentacao:ciencia-de-dados}
@@ -495,133 +492,13 @@ não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
 considera que é seguro compará-los, já que eles possuem o mesmo conjunto de
 votos, com a única diferença sendo qual parlamentar foi dividido em dois.
 
-\section{Processo legislativo}
-\label{cap:fundamentacao:processo-legislativo}
-
-Na esfera federal, o Poder Legislativo é exercido pelo Congresso Nacional, que
-é composto por duas casas legislativas, constituindo um sistema bicameral. Essas
-casas são a Câmara dos Deputados, que reúne os deputados federais,
-representantes do povo, e o Senado Federal, que reúne os senadores,
-representantes dos estados e Distrito Federal. Nas outras esferas (estadual,
-distrital e municipal), o Poder Legislativo é unicameral.
-
-As funções do Poder Legislativo se dividem em típicas e atípicas. Como típicas,
-temos legislar \cite[arts. 48, 49, 51 e 52]{CF1988} e fiscalizar as entidades da
-administração direta e indireta \cite[art. 70]{CF1988}. As funções atípicas são
-administrar (por exemplo, seu quadro de servidores internos), e julgar (por
-exemplo, crimes de responsabilidade do presidente da República). Além dessas,
-\citeonline[p. 26]{Carneiro2013} mencionam que, como representantes do povo e da
-nação, cabe ao Legislativo ``(...) debater temas importantes o que, muitas
-vezes, não necessariamente resulta na inserção de uma nova norma no ordenamento
-jurídico ou em uma fiscalização de determinada entidade ou agente público, o
-que denota atuação inerente ao exercício da atividade parlamentar.''
-
-O Senado Federal, também chamado de Casa Alta, é composto por 81 senadores, 3
-por Estado e Distrito Federal. Os senadores têm mandato de 8 anos e são eleitos
-pelo sistema majoritário\footnote{No sistema majoritário, o candidato mais
-votado é eleito. Nos anos em que são eleitos 2 senadores, os dois candidatos
-mais votados serão eleitos. Ele pressupõe um (ou dois) único candidatos por
-partido. É o mesmo sistema usado nas eleições para os chefes do Poder Executivo
-(presidente da República, governadores e prefeitos). Com exceção da eleição de
-senadores e prefeitos em cidades com menos de 200 mil habitantes, onde há um
-único turno, as eleições ocorrem em dois turnos. \cite{Carneiro2013}}. A
-renovação da casa é parcial, modificando $\frac{1}{3}$ e $\frac{2}{3}$ dos
-senadores alternadamente de 4 em 4 anos.
-
-A Câmara dos Deputados, também chamada de Casa Baixa ou Casa do Povo, é
-composta por 513 deputados federais, cujo papel é representar o povo. Cada
-Estado ou Distrito Federal elege entre 8 e 70 deputados, proporcionalmente à
-sua população. Os deputados têm mandato de 4 anos, eleitos pelo sistema
-proporcional\footnote{No sistema proporcional os partidos registram vários
-candidatos para o mesmo cargo. Os votos recebidos por cada candidato são
-direcionados ao partido, que precisa atingir uma quantidade mínima de votos
-(chamado quociente eleitoral) para eleger ao menos um de seus candidatos. Nesse
-sistema, um candidato com menos votos pode se eleger, enquanto outro com mais
-votos não se elegeu, dependendo dos seus partidos de filiação.
-\cite{Carneiro2013,Bramatti2014}}. Diferente do Senado Federal, a renovação é
-total de 4 em 4 anos.
-
-O processo legislativo é classificado em ordinário, sumário e especial. O
-primeiro se refere a elaboração de leis ordinárias, o sumário se diferencia por
-apresentar prazo máximo para apreciação \cite[art. 64]{CF1988}, e o especial se
-refere às outras normas jurídicas (e.x.: emendas constitucionais, medidas
-provisórias, etc.). De acordo com \citeonline{Carneiro2013}, o processo
-legislativo ordinário engloba três fases: 
-
-\begin{description}
-\item[Introdutória ou de iniciativa] \hfill \\
-É onde se inicia o processo legislativo\footnote{O artigo 61 da Constituição
-Federal define quem pode iniciar o processo legislativo. Exceto quando iniciado
-por um Senador, o processo começa com a Câmara dos Deputados como Casa
-Iniciadora e, consequentemente, o Senado Federal como Casa Revisora.}, com o
-projeto entrando em uma das Casas legislativas, denominada Casa iniciadora. Com
-exceção dos projetos iniciados por Senadores, a Casa iniciadora é a Câmara dos
-Deputados.
-
-\item[Constitutiva] \hfill \\
-A Casa iniciadora discutirá o projeto e poderá rejeitá-lo, enviando-o para o
-arquivo, ou aprová-lo integralmente ou com emendas, caso em que passará para a
-Casa revisora.
-
-Igualmente, a Casa revisora poderá rejeitar o projeto e encaminhá-lo para o
-arquivo, aprová-lo com emendas e devolvê-lo à Casa iniciadora para análise das
-emendas sugeridas, ou aprová-lo integralmente e enviá-lo para sanção ou veto do
-presidente. O projeto só passa para o presidente quando ambas as casas o
-aprovam integralmente.
-
-Uma vez o projeto estando com o presidente, ele poderá sancioná-lo e enviá-lo
-para promulgação e publicação, ou vetá-lo parcial ou integralmente. Caso haja
-um veto, ele será apreciado pelo Congresso Nacional dentro de trinta dias
-corridos do seu recebimento, só podendo ser rejeitado pelo voto da maioria
-absoluta dos deputados federais e senadores. Caso esse prazo se esgote, ele
-será incluído na Ordem do Dia da próxima sessão do Congresso Nacional, se
-sobrepondo às demais proposições até ser votado.
-
-\item[Complementar] \hfill \\
-É composta pela promulgação, instrumento do Poder Legislativo similar à
-sanção do Poder Executivo, que atesta a existência da lei, e a subsequente
-publicação no Diário Oficial da União. A lei entrará em vigor em 45 dias após
-sua publicação ou em outra data definida nela própria. O intervalo entre sua
-publicação e a entrada em vigor é conhecido como \emph{vacatio legis}.
-\end{description}
-
-Em linhas gerais, o projeto é iniciado em uma das casas legislativas
-(normalmente a Câmara), que passa a ser conhecida como Casa Iniciadora. Ele é
-discutido e, caso aprovado, passa para a outra casa legislativa, chamada de
-Casa Revisora, que pode aceitá-lo integralmente (o que o faz seguir para sanção
-ou veto pelo presidente da República); aceitá-lo com emendas e devolvê-lo à
-Casa Iniciadora para apreciação das emendas sugeridas, ou; rejeitá-lo e
-encaminhá-lo ao arquivo. Caso o presidente vete parcial ou integralmente o
-projeto, o Congresso Nacional apreciará o veto, podendo mantê-lo e arquivar o
-projeto, ou rejeitá-lo (por maioria absoluta) e devolvê-lo ao presidente para
-promulgação \cite{Carneiro2013}.
-
-Existem dois tipos de votação: ostensiva e secreta. A votação ostensiva é
-utilizada nas proposições em geral, e é a regra na Câmara dos Deputados. Ela
-pode ocorrer pelos processos simbólico ou nominal. No processo simbólico, o
-presidente da casa, ao anunciar a votação, convida os deputados a favor da
-matéria a permanecerem sentados, devendo os contrários manifestarem-se
-(normalmente levantando um braço). No processo nominal, os parlamentares votam
-usando um meio eletrônico ou, em caso de falha, por chamada nominal
-\cite{Carneiro2013}.
-
-Na Câmara dos Deputados, o processo nominal é utilizado nos casos em que seja
-exigido quórum especial de votação (como nas emendas constitucionais); por
-deliberação do Plenário, a requerimento de qualquer deputado, e; quando houve
-pedido de verificação de votação por 6\% dos membros da Casa (31 deputados), ou
-líder que represente esse número \cite[art. 186]{RICD2015}. No geral, as
-votações nominais compreendem o subconjunto de decisões mais importantes e
-polêmicas \cite{Figueiredo2001}.
-
 \section{Considerações Finais}
 
 O objetivo deste capítulo foi fornecer um conjunto mínimo de conhecimento
 necessário para a compreensão do restante deste trabalho. Para isso, foram
 descritos o processo de desenvolvimento e avaliação de modelos preditivos,
 focando em modelos de classificação. Em seguida, foi explicada brevemente a
-teoria espacial do voto, em especial a técnica W-NOMINATE. Por fim, o processo
-legislativo brasileiro a nível federal foi descrito, com ênfase nos tipos de
-votação.
+teoria espacial do voto, em especial a técnica W-NOMINATE.
 
 No próximo capítulo, serão apresentados alguns trabalhos relacionados aos temas
 desta dissertação, analisando suas metodologias e resultados em comparação com
