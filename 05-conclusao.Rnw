@@ -27,19 +27,19 @@ perguntas de pesquisa:
 \item \emph{É possível detectar a mudança de posicionamento de um deputado federal,
 com ele entrando ou saindo da coalizão governamental, a partir de uma mudança
 no seu padrão de votação?}
-\item \emph{Os deputados federais mudam seu padrão de votação antes de mudar de
-posicionamento?}
+\item \emph{Os deputados federais mudam seu padrão de votação antes de mudarem
+de posicionamento?}
 \end{enumerate}
 
 Com a performance alcançada pelo modelo, mostramos que é possível detectar
 mudanças de posicionamento a partir de mudanças de comportamento. Apesar da
 segunda pergunta não ter sido testada diretamente, considero essa performance
 como sendo um forte indicador que os deputados federais mudam de comportamento
-antes de mudar de posicionamento.
+antes de mudarem de posicionamento.
 
 Foi tomado um cuidado redobrado em tornar os resultados dessa pesquisa
 facilmente replicáveis com, além da própria dissertação, todos os dados e
-códigos-fonte dos programas desenvolvidos sendo disponibilizados na Internet.
+códigos-fonte dos programas desenvolvidos estando disponíveis na Internet.
 Eles foram licenciados livremente, permitindo que sejam usados de qualquer
 forma, inclusive comercial, com a única exigência sendo a citação da fonte.
 Assim, espero que esses resultados sejam usados na melhoria ou criação de novas
@@ -47,9 +47,9 @@ ferramentas de monitoramento legislativo.
 
 \section{Contribuições}
 
-A principal contribuição desse trabalho é a metodologia seguida para o
+A principal contribuição deste trabalho é a metodologia criada para o
 desenvolvimento de um modelo que detecte as mudanças de posicionamento de
-parlamentares. Além de propôr uma divisão de dados que tenta resolver problemas
+parlamentares. Além de propor uma divisão de dados que tenta resolver problemas
 no treinamento do modelo em dados especialmente desafiadores, por serem
 temporais e desbalanceados, descrevo problemas como a definição dos períodos de
 análise e o ``raio de influência'' das mudanças de posicionamento, que não
@@ -68,17 +68,18 @@ Internet\footnote{Disponível em
 
 Por fim, na análise dos dados na Seção
 \ref{cap:desenvolvimento:aspectos-temporais} foram encontrados padrões
-temporais nas mudanças de posicionamento. Esses padrões foram seguidos somente
-pelos parlamentares que mudam de posicionamento através da migração partidária,
-e não os cujo próprio partido entra ou sai da coalizão. Isso reforça o que já
-é sabido na ciência política: migrações partidárias possuem aspectos temporais.
+temporais nas mudanças de posicionamento. Esses padrões foram encontrados
+somente nos parlamentares que mudaram de posicionamento através da migração
+partidária, e não pelos parlamentares cujo próprio partido entrou ou saiu da
+coalizão. Isso reforça o que já é sabido na ciência política: migrações
+partidárias possuem aspectos temporais.  
 
 \section{Limitações}
 \label{cap:conclusao:limitacoes}
 
 Alguns problemas na modelagem não puderam ser solucionados por exigirem uma
-análise mais aprofundada e não serem o foco do trabalho. Eles serão descritos
-nesta seção.
+análise mais aprofundada e não serem o foco deste trabalho. Eles serão
+descritos nesta seção.
 
 \subsection{Períodos de análise}
 
@@ -91,7 +92,7 @@ critérios definidos, estimar os pontos ideais.
 \subsection{Critérios de inclusão de parlamentares e votações}
 
 Neste trabalho, segui os critérios de inclusão padrão do W-NOMINATE, definido
-como ao menos 20 votações cuja maioria foi responsável por, no máximo, 97,5\%
+como ao menos 20 votações, cuja maioria foi responsável por, no máximo, 97,5\%
 dos votos. Manter os mesmos critérios é importante em análises para permitir
 que os resultados sejam comparáveis com outros trabalhos. Como o objetivo do
 modelo não é a análise, é possível que critérios mais (ou menos) restritivos
@@ -101,17 +102,17 @@ usando critérios distintos.
 
 \subsection{Raio de influência da mudança de posicionamento}
 
-Uma das hipóteses básicas desse trabalho é que os parlamentares mudam de
+Uma das hipóteses básicas deste trabalho é que os parlamentares mudam de
 comportamento antes de mudarem oficialmente de posicionamento, permitindo assim
 a previsão de um a partir do outro. Baseado nisso, foi preciso definir em
-quanto tempo antes de oficializada a mudança de posicionamento o parlamentar
+quanto tempo, antes de oficializada a mudança de posicionamento, o parlamentar
 mudava de comportamento. Neste trabalho, esse período foi definido
 arbitrariamente como sendo 6 meses.
 
 Uma forma de encontrar o ``raio de influência'' real é buscando o dia em que os
 pontos ideais nos períodos antes e depois dele estão mais distantes. É provável
-que esse valor varie bastante dependendo do parlamentar e do momento, o que
-seria um complicador. Nesse caso, poderia se buscar o valor mais comum.
+que esse valor varie bastante, dependendo do parlamentar e do momento, o que
+seria um complicador. Nesse caso, poder-se-ia buscar o valor mais comum.
 
 \subsection{Número de repetições para estimar o erro}
 
@@ -135,8 +136,8 @@ relativamente inexplorada. Dessa forma, existem diversos trabalhos possíveis.
 Além da resolução das limitações apresentadas na Seção
 \ref{cap:conclusao:limitacoes}, o processo de modelagem descrito nesta
 dissertação poderia ser replicado em outra casa legislativa, como o Senado
-Federal ou casas de outras esferas. Inclusive, seria interessante testar se os
-indicadores de mudanças de posicionamento sejam parecidos em casas distintas,
+Federal ou casas de outras esferas. Inclusive, é interessante testar se os
+indicadores de mudanças de posicionamento são parecidos em casas distintas,
 analisando a performance de um modelo treinado com os dados de uma casa nos
 dados de outra. É possível que um modelo único treinado com os dados de
 diversas casas legislativas apresente uma performance superior do que
@@ -149,12 +150,12 @@ método ao mesmo tempo, deixando a tarefa de descobrir qual é o mais
 significativo para o próprio modelo.
 
 Neste trabalho, focamos no comportamento do parlamentar individualmente, mas é
-trivial expandir o modelo para detectar mudanças no posicionamento dos
+simples expandir o modelo para detectar mudanças no posicionamento dos
 partidos. Para isso, basta analisar o partido dos deputados que têm uma maior
-probabilidade de ter mudado de posicionamento. Um percentual grande de
-parlamentares de um mesmo partido terem sido detectado pode ser um indicador de
-uma mudança organizada. Essa análise pode ser expandida não só para os
-partidos, mas também para grupos intrapartidários como as bancadas.
+probabilidade de ter mudado de posicionamento. Um grande percentual, sendo
+de um mesmo partido, pode indicar uma mudança organizada. Esse tipo de análise
+pode ser expandida não só para os partidos, mas também para grupos
+intrapartidários como as bancadas.
 
 Apesar dos códigos-fonte de todos os programas desenvolvidos estarem
 disponíveis, seu uso exige conhecimentos de computação. Integrar o modelo a

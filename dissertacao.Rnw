@@ -283,7 +283,7 @@ knit_hooks$set(inline = format_inline)
 \bibliography{ref} % arquivos com as entradas bib.
 
 %Faz aparecer a referencia bibliografica no indice
-\addcontentsline{toc}{section}{\numberline{}Referências Bibliográficas}
+\addcontentsline{toc}{section}{\numberline{}Referências bibliográficas}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Apendice

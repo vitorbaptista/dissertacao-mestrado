@@ -19,10 +19,10 @@ como ferramenta para extrair modelos estatísticos a partir de dados relativos a
 uma área fim, como a ciência política.
 
 Por ser uma área interdisciplinar e relativamente recente (especialmente no
-Brasil) a distinção do que é ciência de dados e não estatística, matemática ou
+Brasil), a distinção do que é ciência de dados e não estatística, matemática ou
 computação pode ainda não ser muito clara \cite{Porto2014}. Para facilitar essa
 diferenciação, \citeonline{Conway2013} criou o diagrama de Venn da Figura
-\ref{fig:ciencia-de-dados-venn} que mostra onde está a ciência de dados em
+\ref{fig:ciencia-de-dados-venn}, que mostra onde se situa a ciência de dados em
 relação às outras áreas. Nela, vemos que a ciência de dados está na intersecção
 entre computação, estatística e uma área fim (por exemplo, ciência política). A
 pesquisa tradicional, segundo ele, estaria na intersecção da estatística com a
@@ -72,8 +72,8 @@ execução, entre outras. Aqui consideramos que a única diferença entre os
 modelos seja o resultado previsto.}. Já ao avaliar modelos que classifiquem
 imagens dos dígitos 0 a 9, só nos interessamos na classificação correta; dois
 modelos que identifiquem a imagem do número 1 como sendo do número 3 e 8 estão
-igualmente errados. O que classificou como 3 não está ``menos errado'' do que o
-que classificou como 8 \cite{Kuhn2013,Zumel2014}. O foco deste trabalho é em
+igualmente errados. O que classificou a imagem como 3 não está ``menos errado''
+do que a classificou como 8 \cite{Kuhn2013,Zumel2014}. O foco deste trabalho é
 classificação. A seguir, apresentarei os modelos utilizados.
 
 \subsubsection{Modelo Linear Generalizado (GLM)}
@@ -86,37 +86,37 @@ binárias, por exemplo \cite{Kuhn2013}.
 
 \subsubsection{\emph{Support Vector Machine} (SVM)}
 
+% FIXME: Esse parágrafo está confuso.
 O \gls{SVM} é um modelo de aprendizagem supervisionada. Ele funciona mapeando
-as observações em um espaço n-dimensional e encontrando o hiperplano que divide
-as classes estando a distância máxima de todos os pontos. A função que define
-esse mapeamento se chama ``kernel''. Dependendo da escolha do kernel, o
+as observações em um espaço n-dimensional, e encontrando o hiperplano que divide
+as classes e está na distância máxima de todos os pontos. A função que
+define esse mapeamento se chama ``kernel''. Dependendo da escolha do kernel, o
 \gls{SVM} pode aprender relações lineares ou não-lineares \cite{Kuhn2013}.
 
 \subsubsection{Árvore de decisão}
 
-Árvores de decisão podem ser pensados como fluxogramas. Em cada nó da árvore há
-uma pergunta como, por exemplo, ``o paciente está com febre?'' ou ``qual a
-nacionalidade da pessoa?''. Essas perguntas vão sendo respondidas até chegar
-numa folha, onde estará o valor de previsão \cite{Kuhn2013}.
+Árvores de decisão podem ser pensadas como fluxogramas. Em cada nó da árvore há
+uma pergunta como, por exemplo: ``qual a nacionalidade da pessoa?''. Essas
+perguntas vão sendo respondidas até chegar a uma folha, onde estará o valor
+previsto \cite{Kuhn2013}.
 
 \subsubsection{\emph{Random Forest} (RF)}
 
 O \gls{RF} é um modelo de aprendizagem supervisionada que pode ser usado tanto
-para regressão quanto classificação. Ele funciona retornando a moda (na
-classificação) ou média (na regressão) dos resultados de um conjunto de
-árvores de decisão, cada uma treinada em um subconjunto aleatório das variáveis
+para regressão, quanto para classificação. Ele funciona retornando a moda (na
+classificação) ou média (na regressão) dos resultados de um conjunto de árvores
+de decisão, cada uma treinada em um subconjunto aleatório das variáveis
 independentes.
 
-Ao usar diversas árvores de decisão treinadas com subconjuntos diferentes dos
+Ao usar diversas árvores de decisão, treinadas com subconjuntos diferentes dos
 preditores, o \gls{RF} diminui a chance do modelo se tornar \emph{overfit},
 aumentando sua performance \cite{Kuhn2013}.
 
 \subsubsection{\emph{Stochastic Gradient Boosting} (GBM)}
 
 O \gls{GBM} é um modelo que une um conjunto de modelos de baixa performance
-(normalmente árvores de decisão) em um único de alta performance. Cada
-submodelo $m$ é treinado a partir dos resíduos do modelo $m - 1$. Formalmente,
-temos:
+(normalmente árvores de decisão) a um único de alta performance. Cada submodelo
+$m$ é treinado a partir dos resíduos do modelo $m - 1$. Formalmente, temos:
 
 Seja $F$ o modelo final, composto por $M$ submodelos, que preveja os valores
 $\hat{y} = F(x)$. A cada etapa $1 \le m \le M$, um modelo imperfeito $F_m$ é
@@ -135,15 +135,16 @@ decisão pelas técnicas usadas para diminuir a complexidade das árvores,
 diminuindo a probabilidade de se tornar \emph{overfit}. À semelhança do
 \gls{GBM}, ele também usa técnicas de \emph{boosting}.
 
-Regras de decisão se diferenciam de árvores ao permitir múltiplos critérios em
-cada etapa. Por exemplo, uma regra poderia ser ``o paciente está com febre
+% FIXME: É isso mesmo?
+Regras de decisão se diferenciam de árvores ao permitirem múltiplos critérios
+em cada etapa. Por exemplo, uma regra poderia ser: ``o paciente está com febre
 \emph{e} dor de cabeça?'' \cite{Kuhn2013}.
 
 \subsubsection{Rede neural (NNET)}
 
 Uma \gls{NNET} é um modelo inspirado no funcionamento do cérebro dos animais.
 Ele é dividido em camadas com um conjunto de ``neurônios''. Os neurônios
-recebem um valor da camada anterior, fazem algum processamento, e passam o novo
+recebem um valor da camada anterior, fazem algum processamento e passam o novo
 valor para todos os neurônios da camada posterior. Na primeira camada, as
 entradas são as variáveis independentes, e na última, as saídas são as
 previsões do modelo.
@@ -179,28 +180,28 @@ podemos extrair diversas métricas, como:
 \end{table}
 
 \begin{description}
-\item[Número de amostras positivas]
+\item[Número de amostras positivas:]
 \begin{equation}
 \label{eq:positive-rate}
 P = VP + FN
 \end{equation}
-\item[Número de amostras negativas]
+\item[Número de amostras negativas:]
 \begin{equation}
 \label{eq:negative-rate}
 N = VN + FP
 \end{equation}
-\item[Acurácia] Proporção de predições corretas
+\item[Acurácia:] Proporção de predições corretas
 \begin{equation}
 \label{eq:accuracy}
 ACC = \frac{VP + VN}{P + N}
 \end{equation}
-\item[Sensibilidade] Proporção de elementos da classe positiva classificados
+\item[Sensibilidade:] Proporção de elementos da classe positiva classificados
 corretamente em relação ao total de elementos positivos
 \begin{equation}
 \label{eq:sensitivity}
 SENS = \frac{VP}{VP + FN}
 \end{equation}
-\item[Especificidade] Proporção de elementos da classe negativa classificados
+\item[Especificidade:] Proporção de elementos da classe negativa classificados
 corretamente em relação ao total de elementos negativos
 \begin{equation}
 \label{eq:specificity}
@@ -214,7 +215,7 @@ ela tem algumas limitações. Primeiramente, ela não leva em consideração o t
 do erro. Em diversos problemas, o custo de um falso positivo é diferente do de
 um falso negativo. Por exemplo, num sistema de classificação de
 \emph{spam}\footnote{E-mails não solicitados.}, é preferível que o usuário veja
-uma propaganda (falso negativo) do que deixe de receber um e-mail importante
+uma propaganda (falso negativo) a que deixe de receber um e-mail importante
 (falso positivo). Além disso, ela também não considera a frequência natural de
 cada classe. Se, por exemplo, 90\% dos e-mails que eu receba não sejam
 \emph{spam}, um modelo que simplesmente classifique todo e-mail como não sendo
@@ -236,10 +237,10 @@ Em geral, o resultado do uso de modelos de classificação é a probabilidade de
 pertencer a cada categoria. Por exemplo, um modelo pode, ao analisar um e-mail,
 determinar que ele tem 75\% de chances de ser \emph{spam} e, consequentemente,
 25\% de chances de não ser. Para transformar essa probabilidade em uma
-categoria define-se um ponto de corte \cite{Kuhn2013}.
+categoria, define-se um ponto de corte \cite{Kuhn2013}.
 
 Grande parte das ferramentas usa 50\% por padrão, que geralmente é uma escolha
-interessante caso o custo de um falso positivo e falso negativo seja o mesmo e
+interessante, caso o custo de um falso positivo e falso negativo seja o mesmo, e
 as categorias sejam balanceadas. Caso contrário, é recomendável testar outros
 valores. Uma ferramenta para analisar a sensibilidade e especificidade de um
 modelo usando diferentes pontos de corte é a curva \gls{ROC}
@@ -274,7 +275,7 @@ roc0 = roc(tmp.testing$Class,
 Além de auxiliar na escolha do ponto de corte, a curva \gls{ROC} também pode
 ser usada para avaliar e comparar modelos desenhando-os num mesmo gráfico ou
 comparando a área sob suas curvas (\acrshort{AUC}). O modelo na Figura
-\ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próximo a curva está
+\ref{fig:exemplo-roc} possui \acrshort{AUC} 0,787. Quanto mais próxima a curva está
 do canto superior esquerdo, maior é seu \acrshort{AUC} e, em geral, maior é sua
 performance.  O modelo perfeito tem \acrshort{AUC} 1, já um modelo aleatório
 tem \acrshort{AUC} 0,5 e segue na diagonal do gráfico. O que caracteriza um
@@ -320,13 +321,14 @@ As dimensões desse espaço correspondem às áreas temáticas relevantes para o
 atores, que podem ser muitas. Por exemplo, proteção do meio ambiente, comércio
 exterior, distribuição de renda, etc.
 
-Considere um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em um
-projeto de Lei que propõe a redução da maioridade penal de
-\Sexpr{max(maioridade_penal)} para \Sexpr{min(maioridade_penal)} anos. Suponha
-que cada um tem uma única preferência (do inglês, \emph{single-peakedness}),
-que é o seu ponto ideal, e vota sinceramente de acordo com ela, e que suas
-preferências são simétricas. Isto é, dado duas escolhas a uma mesma distância
-do ponto ideal de um parlamentar, ele será indiferente a qualquer uma delas.
+Consideremos um exemplo onde \Sexpr{nrow(parlamentares)} parlamentares votam em
+um projeto de Lei que propõe a redução da maioridade penal de
+\Sexpr{max(maioridade_penal)} para \Sexpr{min(maioridade_penal)} anos.
+Suponhamos também que cada um tem uma única preferência (do inglês,
+\emph{single-peakedness}), que é o seu ponto ideal, e vota sinceramente de
+acordo com ela, e que suas preferências são simétricas. Isto é, dadas duas
+escolhas a uma mesma distância do ponto ideal de um parlamentar, ele será
+indiferente a qualquer uma delas.
 
 Graficamente, temos a Figura \ref{fig:modelo-espacial-votacao}, onde as curvas
 representam as preferências dos legisladores sobre o assunto dessa votação, com
@@ -358,7 +360,7 @@ p = p +
   geom_vline(data = cutlines, aes(xintercept = xintercept, colour = label), show_guide = TRUE) +
   scale_colour_manual(name = "", values = c("Alternativa sim" = "blue",
                                             "Alternativa não" = "red",
-                                             "Linha de corte" = "black")) +
+                                            "Linha de corte" = "black")) +
   scale_x_continuous("Maioridade penal", limits = c(12, 22),
                      breaks = c(12, 14, 16, 17, 18, 20, 22))
 p
@@ -366,11 +368,11 @@ p
 
 Há diversos modelos criados para estimar esses valores, como o NOMINATE,
 W-NOMINATE, DW-NOMINATE, que são paramétricos; o \emph{Optimal Classification},
-que é não-paramétrico, e; modelos baseados em estatística Bayesiana, como o
+que é não-paramétrico, e modelos baseados em estatística Bayesiana, como o
 IDEAL. O foco deste trabalho é o W-NOMINATE.
 \cite{Poole1985,Poole2000,Poole2005,Jackman2000,Clinton2004}
 
-O W-NOMINATE faz parte da família de modelos NOMINATE desenvolvidos por
+O W-NOMINATE faz parte da família de modelos NOMINATE, desenvolvidos por
 \citeonline{Poole1985}. Eles são baseados no modelo de utilidade aleatória de
 \citeonline{McFadden1976}, que define que a utilidade para um legislador em
 votar de certa forma é formada por dois componentes: um determinístico e outro
@@ -427,11 +429,11 @@ $w_k$.
 \subsection{Comparando pontos ideais ao longo do tempo}
 \label{cap:fundamentacao:comparando-pontos-ideais-no-tempo}
 
-O principal desafio em comparar mudanças nos pontos ideais ao longo do tempo é
-distinguir alterações causadas por mudanças na agenda legislativa das causadas
-por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em outras
-palavras, se o ponto ideal de um deputado federal passa de 0,3 para -0,2 de um ano
-para o outro, como descobrir se isso representa uma mudança real de
+O principal desafio, ao comparar mudanças nos pontos ideais ao longo do tempo,
+é distinguir alterações causadas por mudanças na agenda legislativa das
+causadas por mudanças no posicionamento dos parlamentares \cite{Bailey2007}. Em
+outras palavras, se o ponto ideal de um deputado federal passa de 0,3 para -0,2
+de um ano para o outro, como descobrir se isso representa uma mudança real de
 posicionamento ou é somente reflexo da diferença na agenda legislativa dos dois
 períodos?
 
@@ -455,27 +457,27 @@ parlamentares-ponte, que possuem um registro único, em uma tabela individual e
 executamos o algoritmo de estimação dos pontos ideais. Ao final, teremos dois
 pontos para cada parlamentar de interesse e um ponto para os pontes. Na
 segunda forma, que \citeonline{Shor2010} chamam de \emph{linear mapping},
-estimamos os pontos ideais separadamente em cada período e os conectamos usando
-uma regressão entre os conjuntos de pontos dos parlamentares-ponte. Ambas
-formas devem gerar resultados similares, mas a segunda é computacionalmente
-mais simples, o que pode ser essencial, dependendo da quantidade de
-parlamentares e votações e votos em estudo.
+os pontos ideais são estimados separadamente em cada período e conectados com
+o conjunto de pontos dos parlamentares-ponte através de uma regressão.
+Ambas formas devem gerar resultados similares, mas a segunda é
+computacionalmente mais simples, o que pode ser essencial, dependendo da
+quantidade de parlamentares e votações e votos em estudo.
 
 \citeonline{Poole2005} ainda descreve uma terceira forma, similar a
 \emph{pooled scaling} descrita acima, que usa para testar se os senadores
-norte-americanos mudam de comportamento nos últimos dois anos de seus mandatos,
-antes de concorrer à reeleição. Neste caso, ele quer calcular a mudança de
-comportamento de todos os legisladores em dois momentos numa mesma legislatura.
-Se usássemos o \emph{pooled scaling} diretamente, precisaríamos escolher alguns
-parlamentares como pontes que, por definição, não teriam mudado de
-comportamento. Ao invés disso, ele segue o seguinte processo:
+norte-americanos mudaram de comportamento nos últimos dois anos de seus
+mandatos, antes de concorrer à reeleição. Neste caso, ele quer calcular a
+mudança de comportamento de todos os legisladores em dois momentos, numa mesma
+legislatura. Se usássemos o \emph{pooled scaling} diretamente, precisaríamos
+escolher alguns parlamentares como pontes que, por definição, não teriam mudado
+de comportamento. Ao invés disso, ele segue o seguinte processo:
 
 \begin{enumerate}
   \item Para cada parlamentar, faça:
     \begin{enumerate}
       \item Transforme-o em dois parlamentares ``virtuais'', um com o conjunto
 de votos antes, e outro com os depois da data de interesse;
-      \item Calcule os pontos ideais usando o conjunto de todos parlamentares,
+      \item Calcule os pontos ideais, usando o conjunto de todos parlamentares,
 com a linha referente ao parlamentar dessa iteração substituída pelos dois
 parlamentares ``virtuais'' definidos no passo anterior;
       \item Guarde os resultados dos dois parlamentares ``virtuais''. A
@@ -490,14 +492,15 @@ nos primeiros 4, e o outro nos últimos 2 anos da legislatura. Note que, como as
 matrizes de votações usadas para gerar os mapas espaciais são diferentes, eles
 não são estritamente comparáveis. Apesar disso, \citeonline{Poole2005}
 considera que é seguro compará-los, já que eles possuem o mesmo conjunto de
-votos, com a única diferença sendo qual parlamentar foi dividido em dois.
+votos, com uma única diferença: em cada um dos mapas, um parlamentar distinto
+é dividido em dois.
 
-\section{Considerações Finais}
+\section{Considerações finais}
 
 O objetivo deste capítulo foi fornecer um conjunto mínimo de conhecimento
 necessário para a compreensão do restante deste trabalho. Para isso, foram
 descritos o processo de desenvolvimento e avaliação de modelos preditivos,
-focando em modelos de classificação. Em seguida, foi explicada brevemente a
+com ênfase em modelos de classificação. Em seguida, foi explicada brevemente a
 teoria espacial do voto, em especial a técnica W-NOMINATE.
 
 No próximo capítulo, serão apresentados alguns trabalhos relacionados aos temas

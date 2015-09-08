@@ -7,11 +7,11 @@ knitr::read_chunk('code/04-miolo.R')
 
 \chapter{Desenvolvimento do modelo preditivo}\label{cap:desenvolvimento}
 
-Neste capítulo apresentaremos o processo de criação do modelo preditivo,
+Neste capítulo, apresentaremos o processo de criação do modelo preditivo,
 partindo da coleta e preparação dos dados, onde serão estimadas as mudanças de
-comportamento, passando pela análise dos dados visando definir os preditores
-(variáveis independentes). Ao final, treinaremos 6 tipos de modelos diferentes,
-escolhendo o final de acordo com a \glsfirst{AUC}.
+comportamento, passando pela análise dos dados com objetivo de definir os
+preditores (variáveis independentes). Ao final, treinaremos 6 tipos de modelos
+diferentes, escolhendo o final de acordo com a \glsfirst{AUC}.
 
 \section{Coleta dos dados}
 
@@ -65,7 +65,7 @@ ministério passa a não ter nenhum, ou quando se inicia um novo governo.
 Esses critérios foram definidos por \citeonline{Figueiredo2007}, inspirada no
 trabalho de \citeonline{Muller2000}.
 
-<<mudancas-mensais-de-coalizao, fig.cap="Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agrupados mês a mês.">>=
+<<mudancas-mensais-de-coalizao, fig.cap="Número de deputados federais que mudaram de posicionamento, entrando ou saindo da coalizão entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas, agrupados mês a mês.">>=
 coalition_changes_by_month = table(format(coalition_changes$date, "%Y-%m-01"))
 coalition_changes_by_month = data.frame(date = as.Date(names(coalition_changes_by_month)),
                                         count = as.vector(coalition_changes_by_month))
@@ -98,7 +98,6 @@ modelo, mais especificamente na divisão dos dados, tratada na Seção
 
 % Universo de votações
 
-% FIXME: Confirmar uso da crase
 O período de análise deste trabalho é composto pela 50\textordfeminine{},
 51\textordfeminine{}, 52\textordfeminine{}, 53\textordfeminine{} e
 54\textordfeminine{} legislaturas, compreendendo os 20 anos de 1995 até o
@@ -106,46 +105,47 @@ início de 2015, entre o primeiro mandato de Fernando Henrique Cardoso até o
 início do segundo mandato de Dilma Rousseff. As 48\textordfeminine{} e
 49\textordfeminine{} legislaturas, iniciadas respectivamente em 1987 e 1991,
 foram excluídas pois, segundo \citeonline{Freitas2008}, elas ocorreram em um
-período onde parlamentares ainda estavam se acomodando às novas regras advindas
-da transição à democracia.
+período em que parlamentares ainda estavam se acomodando às novas regras
+advindas da transição à democracia.
 
 % Universo de parlamentares
 
-A análise se restringe à Câmara dos Deputados por três razões: facilidade na
-obtenção dos dados, e; maior número de parlamentares (513 contra 81 no Senado
+A análise se restringe à Câmara dos Deputados por duas razões: facilidade na
+obtenção dos dados e maior número de parlamentares (513 contra 81 no Senado
 Federal) \cite{Vicente2012}.
 
-A unidade de análise usada é o parlamentar, pois, apesar da literatura apontar o
+A unidade de análise usada é o parlamentar. Apesar da literatura apontar o
 papel fundamental dos partidos no comportamento dos parlamentares
 \cite{Figueiredo2001,Santos2003,Freitas2008}, trabalhar com os dados
-desagregados nos permite perceber movimentações como quando um parlamentar
-deixa um partido governista para entrar em um de oposição (ou vice-versa).
-Considerei todos os parlamentares que votaram ao menos uma vez na Câmara, por
-isso o número é maior do que os 513 eleitos por legislatura.
+desagregados nos permite perceber movimentações individuais. Por exemplo,
+quando um parlamentar deixa um partido governista para entrar em um de oposição
+(ou vice-versa). Considerei todos os parlamentares que votaram ao menos uma
+vez na Câmara, inclusive os suplentes, por isso o número é maior do que os 513
+eleitos por legislatura.  
 
 % Universo de votos
 
-Os deputados podem votar sim, não, nulo, branco, se abster ou obstruir
-\cite{Carneiro2013}, mas o método W-NOMINATE usado neste trabalho só considera
-votos sim ou não. Isso nos dá duas opções: mapear os outros tipos de votos como
-sendo a favor ou contra (por exemplo, considerando abstenções como votos
-contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos ao
-criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
+Os deputados podem votar sim, não, nulo, branco, se absterem ou obstruirem
+\cite{Carneiro2013}, mas o método W-NOMINATE, usado neste trabalho, só
+considera votos sim ou não. Isso nos dá duas opções: mapear os outros tipos de
+votos como sendo a favor ou contra (por exemplo, considerando abstenções como
+votos contrários), ou ignorá-los. Para evitar possíveis problemas metodológicos
+ao criar critérios desse tipo, desconsidero votos diferentes de sim ou não.
 
 \subsection{Estimando a mudança de comportamento}
 \label{cap:desenvolvimento:estimando-mudanca-comportamento}
 
-Para estimar a mudança de comportamento, seguirei a metodologia de
-\citeonline{Poole2005} descrita na Seção
-\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo} usando o modelo
-W-NOMINATE \cite{Poole1985}. Esse modelo foi escolhido pois, apesar de
-diversos outros modelos terem sido desenvolvidos nos 30 anos desde sua criação,
-ele continua sendo um dos modelos mais usados \cite{Poole2011}, inclusive no
-Brasil \cite{Leoni2002,Desposato2005b,Zucco2009,Freitas2012,Bernabel2015}.
+Para estimar a mudança de comportamento, seguiremos a metodologia de
+\citeonline{Poole2005} usando o modelo W-NOMINATE \cite{Poole1985} (ver Secão
+\ref{cap:fundamentacao:comparando-pontos-ideais-no-tempo}). Esse modelo foi
+escolhido porque, apesar de diversos outros modelos terem sido desenvolvidos
+nos 30 anos desde sua criação, ele continua sendo um dos modelos mais usados
+\cite{Poole2011}, inclusive no Brasil
+\cite{Leoni2002,Desposato2005b,Zucco2009,Freitas2012,Bernabel2015}.
 
-Ao estimar os pontos ideais usando esse modelo, precisamos definir 5
+Ao estimar os pontos ideais, usando o W-NOMINATE, precisamos definir 5
 parâmetros: número de dimensões; polaridade(s); critérios de inclusão de
-parlamentares e votações; número de repetições para estimar o erro, e; período
+parlamentares e votações; número de repetições para estimar o erro; período
 de análise. Eles serão definidos nas próximas subseções.
 
 \subsubsection{Número de dimensões}
@@ -175,14 +175,14 @@ filiados a ele como polaridade.
 O deputado José Genoíno foi usado nas 50\textordfeminine{},
 51\textordfeminine{} e 53\textordfeminine{} legislaturas, Arlindo Chinaglia na
 52\textordfeminine{} e Luiz Couto na 54\textordfeminine{}. Eles foram
-escolhidos pois nunca trocaram de partido, ocuparam cargos de liderança e
+escolhidos porque nunca trocaram de partido, ocuparam cargos de liderança e
 participaram de um grande número de votações nas legislaturas em que foram
 escolhidos.
 
 \subsubsection{Critérios de inclusão de parlamentares e votações}
 \label{cap:desenvolvimento:criterios-de-inclusao}
 
-Incluímos parlamentares que participaram de no mínimo 20 votações cujo lado
+Incluímos parlamentares que participaram de, no mínimo, 20 votações, cujo lado
 minoritário foi responsável por 2,5\% ou mais dos votos. Esses são os critérios
 padrão do W-NOMINATE, seguidos nos trabalhos de
 \citeonline{Leoni2002,Zucco2009,Freitas2012}.
@@ -191,11 +191,11 @@ padrão do W-NOMINATE, seguidos nos trabalhos de
 \label{cap:desenvolvimento:periodos-de-analise}
 
 Na análise de uma mudança de comportamento, é preciso definir ao menos dois
-períodos: um anterior e outro posterior a data de interesse. Por exemplo, para
+períodos: um anterior e outro posterior à data de interesse. Por exemplo, para
 analisar o efeito da saída do PSB da coalizão em outubro de 2013 no
 comportamento dos parlamentares, poderíamos definir o período inicial como
-sendo do início da legislatura até a data da saída do PSB, e o período final
-como sendo da saída do PSB até o final da legislatura. Como o objetivo deste
+sendo do início da legislatura até à data da saída do PSB, e o período final
+como sendo da saída do PSB até ao final da legislatura. Como o objetivo deste
 trabalho não é analisar um período específico, mas criar um modelo que detecte
 mudanças na coalizão, não basta definir um, mas sim um conjunto de
 períodos.
@@ -204,17 +204,17 @@ Ao definir esses períodos, é preciso levar em consideração diversos fatores.
 Períodos muito curtos, como uma semana antes e uma semana depois, podem sofrer
 com a falta de votações suficientes ou serem demasiadamente influenciados por
 votações anômalas. Já períodos muito longos, como 5 anos antes e 5 anos depois,
-dificultam a interpretação dos resultados pois podem conter diversas mudanças
+dificultam a interpretação dos resultados, pois podem conter diversas mudanças
 de comportamento. No mínimo, precisamos de um período que contenha votações
 suficientes de acordo com nossos critérios de inclusão definidos na Seção
 \ref{cap:desenvolvimento:criterios-de-inclusao}.
 
-Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura
-divididos em duas partes de mesmo tamanho. Eles iniciam no primeiro dia de cada
-mês, partindo de 01/Fev no primeiro ano da legislatura até o do último. Por
+Baseado nisso, defini períodos de 12 meses dentro de uma mesma legislatura,
+divididos em duas partes do mesmo tamanho. Eles iniciam no primeiro dia de cada
+mês, partindo de 01/fev do primeiro ano da legislatura até ao do último. Por
 exemplo, na 54\textordfeminine{} legislatura, o primeiro período vai de
-01/Fev/2011 até 01/Fev/2012 (dividido em 01/Ago/2011), e o último vai de
-01/Fev/2014 até 01/Fev/2015. Existem 37 desses períodos por legislatura, 185
+01/fev/2011 até 01/fev/2012 (dividido em 01/ago/2011), e o último vai de
+01/fev/2014 até 01/fev/2015. Existem 37 desses períodos por legislatura, 185
 nas 5 legislaturas estudadas neste trabalho. A arbitrariedade dessa escolha é
 uma limitação deste trabalho, que será melhor analisada na Seção
 \ref{cap:conclusao:limitacoes}.
@@ -226,7 +226,7 @@ uma limitação deste trabalho, que será melhor analisada na Seção
 estimativas 101 vezes para calcular seu erro. Entretanto, o volume de dados que
 estamos trabalhando inviabiliza esse número de repetições com os recursos
 computacionais disponíveis para esta pesquisa\footnote{Por exemplo, usando um
-núcleo de um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz o
+núcleo de um processador AMD Opteron\texttrademark{} 6238 com 2,6 GHz, o
 processamento dos pontos ideais de um parlamentar em um período demora cerca de
 1h45m. Considerando somente os 513 deputados eleitos por legislatura, o
 cálculo de todos os 37 períodos levaria aproximadamente 18 meses. Todas as 5
@@ -239,20 +239,20 @@ necessário em cerca de 90\%.
 \subsection{``Raio de influência'' de uma mudança de posicionamento}
 \label{cap:desenvolvimento:raio-de-influencia}
 
-Até esse momento, temos uma tabela onde cada linha representa um parlamentar em
+Até este momento, temos uma tabela onde cada linha representa um parlamentar em
 um período, e nas colunas temos seus pontos ideais e as respectivas estimativas
 de erro. Em outras palavras, temos nossas variáveis independentes, agora
 precisamos determinar a variável dependente: se o parlamentar mudou de
 posicionamento, entrando ou saindo da coalizão, ou se manteve como estava.
 
 Para isso, precisamos definir qual o período antes de uma mudança de
-posicionamento que o parlamentar começa a mudar de comportamento. Por exemplo,
-considere que detectamos que um parlamentar que está fora da coalizão se
-aproximou do governo entre o primeiro e o segundo semestre de 2011, mas só
-entrou na coalizão em 2014. Devemos considerar que essa aproximação em 2011 foi
-indício da sua entrada em 2014? E se ela tivesse ocorrido em 2012?  Em outras
-palavras, precisamos definir qual o ``raio de influência'' de uma entrada ou
-saída da coalizão.
+posicionamento no qual o parlamentar começa a mudar de comportamento. Por
+exemplo, considere que detectamos que um parlamentar, que está fora da
+coalizão, se aproximou do governo entre o primeiro e o segundo semestres de
+2011, mas só entrou na coalizão em 2014. Devemos considerar que essa
+aproximação em 2011 foi indício da sua entrada em 2014? E se ela tivesse
+ocorrido em 2012?  Em outras palavras, precisamos definir qual o ``raio de
+influência'' de uma entrada ou saída da coalizão.
 
 Não há uma resposta única. Alguns parlamentares podem mudar de comportamento
 anos antes de mudarem de posicionamento, enquanto outros podem não mudar em
@@ -263,9 +263,9 @@ data de entrada ou saída da coalizão, $Data_{inicial}$ e $Data_{final}$ as
 datas iniciais e finais do período analisado, $Data_{m\acute{e}dia}$ a data que
 divide o período analisado em dois, ``antes'' e ``depois'', e $P =
 Data_{m\acute{e}dia} - Data_{inicial} = Data_{final} -
-Data_{m\acute{e}dia}$ a distância da data inicial até a data média, que é igual
-a da data média até a data final, então o período em que consideramos que uma
-mudança de comportamento esteja relacionada a mudança de posicionamento
+Data_{m\acute{e}dia}$ a distância da data inicial até à data média, que é igual
+à da data média até a data final, então o período em que consideramos que uma
+mudança de comportamento esteja relacionada à mudança de posicionamento
 compreende $\left[Data_{m\acute{e}dia} - \frac{P}{2}, Data_{m\acute{e}dia} +
 \frac{P}{2}\right]$. Precisamos definir $P$.
 
@@ -293,7 +293,7 @@ $\left[Data_{m\acute{e}dia}, Data_{final}\right]$. Na última figura, a
 \ref{fig:raio-de-influencia-coalizao5}, o comportamento nos dois momentos do
 período de estudo se igualam.
 
-<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c("A data final do período de análise é igual ao dia em que o parlamentar mudou de comportamento por causa da futura mudança de posicionamento. Como, dentro desse período atual, supomos que o parlamentar manteve o mesmo comportamento, ainda não consideramos que houve uma mudança.", "O raio de influência da coalizão chega a metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento, pois o parlamentar esteve com outro comportamento em mais da metade da segunda parte do período.", "A $Data_{media}$ se iguala a data de mudança. Este é o período onde esperamos encontrar a maior mudança de comportamento.", "A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.", "O comportamento nos dois períodos se iguala.  Esperamos que a diferença entre os pontos ideais dos dois momentos volte aos níveis da segunda figura.")>>=
+<<raio-de-influencia-coalizao, dev='tikz', fig.height=1, fig.cap='Diversos períodos de análise de um parlamentar que mudou de comportamento em $Data_{coalizao} - P$, representado pela mudança da região branca para a verde.', fig.subcap=c("A data final do período de análise é igual ao dia em que o parlamentar mudou de comportamento por causa da futura mudança de posicionamento. Como, dentro desse período atual, supomos que o parlamentar manteve o mesmo comportamento, ainda não consideramos que houve uma mudança.", "O raio de influência da coalizão chega à metade do segundo período. A partir daqui começamos a considerar que houve uma mudança de posicionamento, pois o parlamentar esteve com outro comportamento em mais da metade da segunda parte do período.", "A $Data_{media}$ se iguala à data de mudança. Este é o período onde esperamos encontrar a maior mudança de comportamento.", "A partir daqui, o comportamento começa a se igualar nos dois momentos de análise. Este é o último período em que consideramos que houve uma mudança de posicionamento.", "O comportamento nos dois períodos se iguala.  Esperamos que a diferença entre os pontos ideais dos dois momentos volte aos níveis da segunda figura.")>>=
 plot_data = function(data) {
   p = ggplot(data, aes(x = x, y = c(0))) +
         theme(axis.text.y = element_blank(),
@@ -366,13 +366,13 @@ temporais.
 @
 
 O conjunto de dados gerado possui \Sexpr{num_mudancas} estimativas de mudança
-de comportamento em \Sexpr{num_periodos} períodos de 12 meses divididos em dois
+de comportamento em \Sexpr{num_periodos} períodos de 12 meses, divididos em dois
 subperíodos de mesma duração. Não foi possível estimar o ponto ideal em um ou
 ambos subperíodos em \Sexpr{format_percent(nrow(data_null) / num_mudancas)}
-(\Sexpr{nrow(data_null)}) períodos, pois o parlamentar não participou de
-votações o suficiente, ou as que ele participou não passaram nos critérios de
-inclusão definidos na Seção \ref{cap:desenvolvimento:criterios-de-inclusao}. Esses casos
-foram excluídos, sobrando ao final \Sexpr{nrow(data)} observações.
+(\Sexpr{nrow(data_null)}) períodos, pois ou parlamentar não participou de
+votações o suficiente, ou as de que ele participou não passaram nos critérios de
+inclusão (ver Seção \ref{cap:desenvolvimento:criterios-de-inclusao}). Esses
+casos foram excluídos, restando ao final \Sexpr{nrow(data)} observações.
 
 Desses valores, \Sexpr{format_percent(num_changes / nrow(data))}
 (\Sexpr{num_changes}) são de períodos em que houve uma mudança de
@@ -396,12 +396,12 @@ kable(coalition_changes_per_legislature)
 \end{table}
 
 A Figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
-dos pontos ideais em cada legislatura, com o PT estando a direita do gráfico.
+dos pontos ideais em cada legislatura, com o PT estando à direita do gráfico.
 Na 50\textordfeminine{} e 51\textordfeminine{} legislaturas, durante o governo
-do PSDB, a maior parte dos deputados federais encontram-se ao lado esquerdo.
+do PSDB, a maior parte dos deputados federais encontra-se ao lado esquerdo.
 Esse quadro muda a partir da eleição de Lula em 2003, na 52\textordfeminine{}
-legislatura, com a maioria dos parlamentares estando mais a direita do gráfico.
-Na 53\textordfeminine{} legislatura as posições se tornam mais polarizadas, com
+legislatura, com a maioria dos parlamentares estando mais à direita do gráfico.
+Na 53\textordfeminine{} legislatura, as posições se tornam mais polarizadas, com
 dois picos claros, um na direita do gráfico e outro, menor, na esquerda. Por
 fim, durante o primeiro governo de Dilma Rousseff, na 54\textordfeminine{}
 legislatura, os pontos ideais se concentram no centro.
@@ -454,7 +454,7 @@ deputados federais que mudaram de posicionamento entre a 50\textordfeminine{} e
 março, abril e outubro, concentram
 \Sexpr{format_percent(sum(coalition_changes_per_month_percent[c(1, 3, 4, 10)]))}
 (\Sexpr{sum(coalition_changes_per_month[c(1, 3, 4, 10)])}) das mudanças, o que pode
-ser um indício que as mudanças de posicionamento seguem um padrão temporal.
+ser um indício de que as mudanças de posicionamento sigam um padrão temporal.
 
 <<mudancas-de-posicionamento-geral, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por mês.">>=
 ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", date_month, "-01")))) +
@@ -492,7 +492,7 @@ ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", date_month, "-01")))) 
 
 Separamos os dados por legislatura na Figura
 \ref{fig:mudancas-de-posicionamento-por-migrantes-por-legislatura}. Os
-migrantes continuam com um padrão parecido, com em média
+migrantes continuam com um padrão parecido com, em média,
 \Sexpr{format_percent(mean(migrators_per_month_per_legislature_percent[10,]))}
 das mudanças ocorrendo em outubro,
 \Sexpr{format_percent(mean(migrators_per_month_per_legislature_percent[3,]))}
@@ -515,7 +515,7 @@ Na Figura \ref{fig:mudancas-de-posicionamento-por-ano-da-legislatura},
 agregamos por ano da legislatura ao invés de mês. A grande maioria das
 mudanças dos migrantes,
 \Sexpr{format_percent(sum(migrators_per_legislature_year_percent[c(1, 3)]))}
-(\Sexpr{sum(migrators_per_legislature_year[c(1, 3)])}), estão concentradas no
+(\Sexpr{sum(migrators_per_legislature_year[c(1, 3)])}), está concentrada no
 primeiro e terceiro anos, seguindo o padrão temporal de migração descrito por
 \citeonline{Freitas2008}. Já os não-migrantes continuam sem um padrão claro.
 Como só consideramos mudanças dentro da mesma legislatura, só uma ocorreu no
@@ -524,7 +524,7 @@ coalizão em abril de 2007. As outras mudanças estão razoavelmente bem
 espalhadas do segundo ao último ano das legislaturas, com a maioria ocorrendo
 no segundo ano.
 
-<<mudancas-de-posicionamento-por-ano-da-legislatura, fig.cap="Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por ano da legislatura.">>=
+<<mudancas-de-posicionamento-por-ano-da-legislatura, fig.cap="Número de deputados migrantes e não-migrantes que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas, agregados por ano da legislatura.">>=
 ggplot(coalition_changes, aes(x = as.factor(legislature_year))) +
   facet_wrap(~ migrated_label, ncol = 1) +
   geom_histogram(binwidth = 1) +
@@ -540,7 +540,7 @@ em outubro do terceiro ano, o limite para se filiar a um partido para concorrer
 nas eleições seguintes \cite{Lei9504/1997}. Os não-migrantes continuam sem um
 padrão claro.
 
-<<mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas agregados por mês e ano da legislatura.">>=
+<<mudancas-de-posicionamento-por-migrantes-por-ano-da-legislatura, fig.cap="Número de deputados que mudaram de posicionamento entre a 50\\textordfeminine{} e 54\\textordfeminine{} legislaturas, agregados por mês e ano da legislatura.">>=
 ggplot(coalition_changes, aes(x = as.Date(paste0("2014-", date_month, "-01")))) +
   facet_grid(legislature_year ~ migrated_label) +
   geom_histogram(binwidth = 10) +
@@ -562,24 +562,24 @@ sem migrar de partido não têm um padrão claro.
 @
 
 Esta seção trata do desenvolvimento do modelo preditivo. Para isto,
-inicialmente definirei as variáveis dependente e independentes e as divisões do
-conjunto de dados e, em seguida, treinarei modelos de diversos tipos, buscando
-o que possui a maior \gls{AUC}. Encontrado esse modelo,
-definirei o ponto de corte para classificação das categorias, e estimarei sua
-performance final.
+inicialmente definiremos as variáveis dependente e independentes e as divisões
+do conjunto de dados e, em seguida, treinaremos modelos de diversos tipos,
+buscando o que possui a maior \gls{AUC}. Encontrado esse modelo, definiremos o
+ponto de corte para classificação das categorias e estimaremos sua performance
+final.
 
 \subsection{Variável dependente}
 
-Como variável dependente, que é o que queremos prever, usei a mudança ou não de
-comportamento do parlamentar no período. Ela foi definida a partir dos períodos
-e ``raio de influência'' apresentados na Seção
-\ref{cap:desenvolvimento:raio-de-influencia}, e toma o valor ``S'', quando
+Como variável dependente, que é o que queremos prever, usaremos a mudança ou
+não de comportamento do parlamentar no período. Ela foi definida a partir dos
+períodos e ``raio de influência'' apresentados na Seção
+\ref{cap:desenvolvimento:raio-de-influencia} e toma o valor ``S'', quando
 houve uma mudança de posicionamento, e ``N'', quando não houve. Como já visto
 anteriormente, das \Sexpr{nrow(data)} observações,
-\Sexpr{format_percent(data_proportions["S"])}
-(\Sexpr{data_proportions["S"] * nrow(data)}) são relativas a mudanças
-de posicionamento, e \Sexpr{format_percent(data_proportions["N"])}
-(\Sexpr{data_proportions["N"] * nrow(data)}) não.
+\Sexpr{format_percent(data_proportions["S"])} (\Sexpr{data_proportions["S"] *
+nrow(data)}) são relativas a mudanças de posicionamento, e
+\Sexpr{format_percent(data_proportions["N"])} (\Sexpr{data_proportions["N"] *
+nrow(data)}) não.
 
 \subsection{Variáveis independentes}
 \label{cap:desenvolvimento:variaveis-independentes}
@@ -625,9 +625,9 @@ data[data$changed_coalition == "S",]$after)}, enquanto os outros continuam com
 correlação \Sexpr{cor(data[data$changed_coalition == "N",]$before,
 data[data$changed_coalition == "N",]$after)}. Essa diferença faz sentido, já
 que esperamos que quem mudou de posicionamento tenha alterado seus pontos
-ideais, enquanto os de quem não mudou tenham se mantido constantes.
+ideais, enquanto os de quem não mudou tenham-se mantido constantes.
 
-<<variaveis-independentes, fig.cap="Densidade das variáveis independentes dos parlamentares em períodos que mudaram de posicionamento e dos que mantiveram.">>=
+<<variaveis-independentes, fig.cap="Densidade das variáveis independentes dos parlamentares em períodos que mudaram ou não de posicionamento.">>=
 variaveis_independentes = data.frame(value = c(data$before, data$before.sd,
                                              data$after, data$after.sd,
                                              data$mid_vote_month,
@@ -664,14 +664,14 @@ o que gera a questão sobre como dividir os dados \cite{Kuhn2013}.
 
 A forma mais simples é dividir aleatoriamente o conjunto de dados em dois
 subconjuntos, um para treino e outro para teste. Divisões aleatórias partem do
-princípio de que o padrão dos dados é uniforme, logo não há diferença na
+princípio de que o padrão dos dados é uniforme; logo, não há diferença na
 escolha. Visto que estamos trabalhando com um período longo, inclusive com uma
 alteração nas regras para mudança de partido, essa é uma suposição improvável.
 Como é mais importante que o modelo tenha uma boa performance nos anos mais
-recentes, segui a seguinte estratégia \cite{Kuhn2013}:
+recentes, seguimos a seguinte estratégia \cite{Kuhn2013}:
 
 \begin{enumerate}
-\item Treina o modelo com os dados anteriores a 54\textordfeminine{}
+\item Treina o modelo com os dados anteriores à 54\textordfeminine{}
 legislatura, chamado conjunto de treino, ajustando seus parâmetros a partir
 da performance em 60\% dos dados da 54\textordfeminine{} legislatura, chamado
 conjunto de validação;
@@ -679,7 +679,7 @@ conjunto de validação;
 modelo teve a melhor performance e treina um novo modelo, usando esses mesmos
 parâmetros, nos conjuntos de treino e validação juntos. Isso vai permitir ao
 modelo aprender os padrões da 54\textordfeminine{} legislatura;
-\item Define o ponto de corte para classificação usando metade dos 40\%
+\item Define o ponto de corte para classificação, usando metade dos 40\%
 restantes dos dados da 54\textordfeminine{} legislatura, que não foram usados
 para validação;
 \item Usa o restante dos dados da 54\textordfeminine{} legislatura, chamado
@@ -703,30 +703,30 @@ Aqui percebemos outro problema: as classes dos dados são desbalanceadas, com
 \Sexpr{format_percent(data_proportions["N"])} de todas as observações sendo de
 parlamentares que não mudaram de posicionamento no período. Isso pode fazer com
 que, ao treinar os modelos nesses dados, eles priorizem a detecção da classe da
-maioria a revelia da minoria. Por exemplo, um modelo que simplesmente
-classificasse todas observações como não sendo de mudanças de posicionamento
-conseguiria \Sexpr{format_percent(data_proportions["N"])} de acurácia.  Para
-diminuir o impacto desse desbalanceamento, alguns modelos permitem a definição
-do custo para cada tipo de erro (falso positivo e falso negativo). Entretanto,
-como usaremos modelos que não permitem isso, preferi usar uma técnica mais
-simples: o \emph{downsampling}.
+maioria à revelia da minoria. Por exemplo, um modelo conseguiria
+\Sexpr{format_percent(data_proportions["N"])} de acurácia simplesmente
+classificando todas observações como não sendo de mudanças de posicionamento.
+Para diminuir o impacto desse desbalanceamento, alguns modelos permitem a
+definição do custo para cada tipo de erro (falso positivo e falso negativo).
+Entretanto, como usaremos modelos que não permitem isso, preferi usar uma
+técnica mais simples: o \emph{downsampling}.
 
 No \emph{downsampling}, todas as observações da categoria mais rara (mudanças de
 posicionamento) são selecionadas, juntamente com uma amostragem sem repetição,
 de tamanho similar, da categoria mais comum. Essa amostra deve manter os padrões
 das variáveis independentes do conjunto original. Por definição, o
-\emph{downsampling} altera a distribuição real das categorias, por isso ela só
-deve ser usada com os dados de treino. Caso fosse usada nos os de validação ou
+\emph{downsampling} altera a distribuição real das categorias; por isso, ela só
+deve ser usada com os dados de treino. Caso fosse usada com os de validação ou
 teste, as estimativas de performance do modelo estariam enviesadas, não
-refletindo sua performance em dados reais.
+refletindo sua performance em dados reais.  
 
 Ao final, das \Sexpr{nrow(training.original)} observações no conjunto de
 treino, \Sexpr{format_percent(nrow(training.downsampled) /
 nrow(training.original))} (\Sexpr{nrow(training.downsampled)}) foram usadas,
 sendo \Sexpr{format_percent(training_downsampled_proportions["S"])} de mudanças
 de posicionamento. Os conjuntos de validação e teste não foram modificados,
-mantendo-se com \Sexpr{nrow(validation)} e \Sexpr{nrow(testing)} observações
-cada sendo, respectivamente,
+mantendo-se com \Sexpr{nrow(validation)} e \Sexpr{nrow(testing)} observações,
+sendo, respectivamente,
 \Sexpr{format_percent(validation_proportions["S"])} e
 \Sexpr{format_percent(testing_proportions["S"])} de mudanças de posicionamento.
 
@@ -739,14 +739,14 @@ cada sendo, respectivamente,
 \citeonline{Wolpert1996} afirma em seu teorema ``No Free Lunch''\footnote{Em
 tradução livre, ``não existe almoço grátis''.} que não há uma técnica única de
 modelagem que seja melhor em todos casos. Por isso, \citeonline{Kuhn2013}
-sugerem testar diversos tipos de modelos antes de definir em qual focar. Nesta
+sugerem testar diversos tipos de modelos antes de definir o que focar. Nesta
 seção, usarei \Sexpr{length(models)} tipos: \gls{GLM}, SVM com kernel
 radial, \gls{RF}, \gls{GBM}, C5.0 e \gls{NNET} (Tabela
 \ref{table:tipos-de-modelos}). Cada um deles será treinado e validado nos
-conjuntos de dados descritos na Seção \ref{cap:desenvolvimento:divisao-dados} usando todas
+conjuntos de dados descritos na Seção \ref{cap:desenvolvimento:divisao-dados}, usando todas
 as permutações dos parâmetros definidos no apêndice
 \ref{apendice:parametros-modelos}. Os preditores utilizados serão as variáveis
-independentes definidas em \ref{cap:desenvolvimento:variaveis-independentes} e suas
+independentes, definidas em \ref{cap:desenvolvimento:variaveis-independentes}, e suas
 interações\footnote{As interações são definidas como a multiplicação entre cada
 permutação das variáveis. Isso permite ao modelo usar preditores mais complexos
 como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
@@ -838,14 +838,14 @@ mudanças de posicionamento e
 (\Sexpr{length(which(training.final$changed_coalition == "N"))}) não. O último
 passo é definir o ponto de corte para a classificação das categorias.
 
-Como explicado na Seção
-\ref{cap:fundamentacao:avaliando-modelos-de-classificacao}, a maioria das
-ferramentas de aprendizagem de máquina definem como ponto de corte padrão 0,5.
-Entretanto, especialmente em casos onde as categorias não estão balanceadas ou
-onde o custo de um falso positivo é diferente de um falso negativo, é útil
-analisar pontos de corte alternativos. Para este modelo, meu objetivo é
-minimizar o número de falsos positivos\footnote{Parlamentares que não mudaram
-de posicionamento sendo classificados como se tivessem mudado.}, dado que
+A maioria das ferramentas de aprendizagem de máquina define como ponto de
+corte padrão 0,5 (ver Seção
+\ref{cap:fundamentacao:avaliando-modelos-de-classificacao}). Entretanto,
+especialmente em casos onde as categorias não estão balanceadas ou onde o custo
+de um falso positivo é diferente de um falso negativo, é útil analisar pontos
+de corte alternativos. Para este modelo, meu objetivo é minimizar o número de
+falsos positivos\footnote{Parlamentares que não mudaram de posicionamento,
+sendo classificados como se o tivessem feito.}, dado que
 \Sexpr{format_percent(data_proportions["N"])} das observações são de
 parlamentares que não mudaram de posicionamento. Considere o seguinte exemplo:
 
@@ -897,8 +897,8 @@ escolhidos buscando os máximos locais da curva \gls{ROC}
 
 O modelo final alcançou uma \gls{AUC} \Sexpr{ci(rocs.testing$final)[[2]]}
 (\Sexpr{ci(rocs.testing$final)[[1]]}, \Sexpr{ci(rocs.testing$final)[[3]]}),
-como visto na Figura \ref{fig:roc-final-model}. Considerando o ponto de corte
-em \Sexpr{cutoffPoint}, o modelo possui Kappa
+como visto na Figura \ref{fig:roc-final-model}. Considerando o ponto de
+corte em \Sexpr{cutoffPoint}, o modelo possui Kappa
 \Sexpr{confMatrix$overall[["Kappa"]]} e
 \Sexpr{format_percent(confMatrix$byClass[["Sensitivity"]])} das mudanças
 (sensibilidade) e \Sexpr{format_percent(confMatrix$byClass[["Specificity"]])}
@@ -934,22 +934,22 @@ invisible(plot(ci.thresholds(rocs.testing$final, thresholds = cutoffPoint)))
 \label{table:confusion-matrix-final-model}
 \end{table}
 
-\section{Considerações Finais}
+\section{Considerações finais}
 
 Na primeira parte desta seção, foram apresentadas as etapas seguidas para
 coleta e preparação dos dados, descrevendo os parâmetros usados na estimação
-dos pontos ideais, e a definição do ``raio de influência'' das mudanças de
+dos pontos ideais e a definição do ``raio de influência'' das mudanças de
 posicionamento. Após isso, os dados foram analisados, identificando suas
 características e aspectos temporais.
 
 Ao final, o processo de modelagem foi apresentado, com a definição das
-variáveis dependente e independentes e divisão da base de dados, e o teste de 6
-tipos de modelos preditivos: \gls{GLM}, SVM com kernel radial, \gls{RF},
-\gls{GBM}, C5.0 e \gls{NNET}. Com base na \glsfirst{AUC}, o modelo que usou
-C5.0 foi escolhido. Após a definição do ponto de corte, ele alcançou um
-\gls{AUC} \Sexpr{ci(rocs.testing$final)[[2]]} no conjunto de teste, tendo um
-poder de discriminação excelente de acordo com a classificação de
-\citeonline{HosmerJr2013}.
+variáveis dependente e independentes e a divisão da base de dados. Diante
+disso, seis tipos de modelos preditivos foram testados: \gls{GLM}, SVM com
+kernel radial, \gls{RF}, \gls{GBM}, C5.0 e \gls{NNET}. Com base na
+\glsfirst{AUC}, o modelo que usou C5.0 foi escolhido. Após a definição do ponto
+de corte, ele alcançou um \gls{AUC} \Sexpr{ci(rocs.testing$final)[[2]]} no
+conjunto de teste, tendo um poder de discriminação excelente de acordo com a
+classificação de \citeonline{HosmerJr2013}.
 
 Na próxima seção, apresentarei as conclusões da pesquisa, descrevendo os
 resultados obtidos, suas limitações e possíveis trabalhos futuros.

@@ -24,40 +24,40 @@ análise demanda bastante tempo, ela acaba se restringindo aos temas mais
 polêmicos, que atingem um maior número de pessoas. Esses temas são muito
 importantes, mas não suficientes: se eu trabalho numa ONG de preservação do
 meio ambiente, por exemplo, meu maior interesse é em projetos de lei que versem
-nessa área.
+sobre essa área.
 
 Percebendo essa necessidade, empresas como o \gls{ELLO} no Brasil e a
 FiscalNote nos Estados Unidos, criaram ferramentas que facilitam esse
 monitoramento personalizado. Seus produtos permitem que o usuário defina suas
 áreas de interesse (por exemplo, meio ambiente ou mobilidade urbana),
-recebendo resumos periódicos do que afeta essas áreas, inclusive com previsões
-da probabilidade de aprovação dos projetos de lei relacionados. Apesar disso,
-por serem ferramentas pagas, seu uso ainda é restrito.
+recebendo resumos periódicos do que as afeta, inclusive com previsões da
+probabilidade de aprovação dos projetos de lei relacionados a elas. Apesar
+disso, por serem ferramentas pagas, seu uso ainda é restrito.
 
 % Explica importância do monitoramento do comportamento dos legisladores
 Um dos fatores mais importantes no comportamento dos parlamentares é o conflito
-governo/oposição \cite{Leoni2002,Desposato2005b,Freitas2012,Izumi2013}. Dessa
-forma, quando um parlamentar muda de lado, seja migrando de partido ou quando
+governo/oposição \cite{Leoni2002,Desposato2005b,Freitas2012,Izumi2013}. Diante
+disso, quando um parlamentar muda de lado, seja migrando de partido ou quando
 seu próprio partido se une (ou deixa) à coalizão governamental, é de se esperar
 que seu comportamento também mude. Como, no geral, os partidos são capazes de
-disciplinar seus filiados a votar de certa forma, essa mudança de forças pode
+disciplinar seus filiados a votarem de certa forma, essa mudança de forças pode
 definir a aprovação ou não de um projeto de lei. Assim, é essencial monitorar
 essas mudanças para entender as chances que um projeto tem de ser aprovado.
 
 Entretanto, o grande volume de dados gera um desafio. Considerando somente o
 nível federal, 513 deputados federais e 81 senadores participam de centenas de
-votações a cada legislatura, tornando difícil o entendimento dos seus padrões
+votações em cada legislatura, tornando difícil o entendimento dos seus padrões
 de votação. Algumas ferramentas, como o Basômetro e o Radar Parlamentar, foram
 criadas para tentar diminuir esse problema \cite{Estadao2012,Trento2013}.
 
 Elas são ferramentas gratuitas que permitem o acompanhamento da taxa de
 governismo (no caso do Basômetro) ou das posições relativas dos parlamentares
-(no caso do Radar Parlamentar), sendo um grande avanço para auxiliar o cidadão
-comum a se aproximar do processo legislativo \cite{Dantas2014}. Entretanto,
-mesmo facilitando bastante, não é fácil analisar um gráfico com 513 pontos (no
-caso da Câmara) e visualizar o que está mudando ou não. Para diminuir esse
-desafio, as análises acabam sendo feitas baseados no comportamento agregado dos
-partidos, e não dos parlamentares individualmente.
+(no caso do Radar Parlamentar), auxiliando o cidadão comum a se aproximar do
+processo legislativo \cite{Dantas2014}. Entretanto, mesmo facilitando bastante,
+não é fácil analisar um gráfico com 513 pontos (no caso da Câmara) e visualizar
+o que está mudando ou não. Para diminuir esse desafio, as análises acabam sendo
+feitas baseadas no comportamento agregado dos partidos, e não dos parlamentares
+individualmente.
 
 Os partidos são capazes de influenciar o comportamento dos seus parlamentares,
 mantendo taxas de disciplina, em sua maioria, acima de 75\%
@@ -114,7 +114,7 @@ Os partidos e as coalizões governamentais são capazes de influenciar o
 comportamento dos parlamentares \cite{Figueiredo2001,Santos2003}. Partindo
 disso, \citeonline{Izumi2013} mostrou que o comportamento dos senadores muda ao
 entrar ou sair da coalizão, mas não sabemos se ele muda antes ou depois da
-oficialização dessa mudança. A pergunta que buscamos responder neste trabalho
+oficialização dessa mudança. A pergunta a que buscamos responder neste trabalho
 é:
 
 \emph{É possível detectar a mudança de posicionamento de um deputado federal,
@@ -124,19 +124,17 @@ no seu padrão de votação?}
 A premissa básica deste trabalho é que, além de ser possível detectar mudanças
 de posicionamento, essa detecção ocorra antes da oficialização da mudança. Em
 outras palavras, que o modelo seja capaz de detectar uma mudança de
-posicionamento antes que ela seja de conhecimento público. Para isto,
-precisaremos também responder a pergunta:
+posicionamento antes que ela seja do conhecimento público. Para isto,
+precisaremos também responder à pergunta:
 
-\emph{Os deputados federais mudam seu padrão de votação antes de mudar de
+\emph{Os deputados federais mudam seu padrão de votação antes de mudarem de
 posicionamento?}
 
-No levantamento bibliográfico feito no Capítulo
-\ref{cap:trabalhos-relacionados} mostraremos que, apesar de alguns autores
-descobrirem que os parlamentares mudam de comportamento ao mudarem de
-posicionamento, não foram encontrados trabalhos que discorram sobre se essa
-mudança de comportamento ocorre antes ou depois da efetiva mudança de
-posicionamento. Dessa forma, responder essa pergunta é uma outra contribuição
-deste trabalho.
+Alguns autores mostraram que os parlamentares mudam de comportamento ao mudarem
+de posicionamento (ver Capítulo \ref{cap:trabalhos-relacionados}). Apesar
+disso, não foram encontrados trabalhos que discorram sobre se tal mudança de
+comportamento ocorre antes ou depois da efetiva mudança de posicionamento.
+Assim, responder a essa pergunta é uma outra contribuição deste trabalho.
 
 \section{Objetivos}
 
@@ -168,7 +166,7 @@ Para o desenvolvimento desta pesquisa, foram seguidos os seguintes passos:
   \item Extração dos dados de votos e votações a partir da página da Câmara dos
     Deputados, e da listagem de coalizões a partir do banco de dados
     legislativo do \gls{CEBRAP};
-  \item Definição da forma para representação desses dados usando a teoria
+  \item Definição da forma para representação desses dados, usando a teoria
     espacial do voto;
   \item Análise dos padrões gerais e temporais dos pontos ideais estimados;
   \item Definição de variáveis independentes capazes de serem usadas para
@@ -212,17 +210,17 @@ do parlamentar.
 
 No Capítulo \ref{cap:trabalhos-relacionados},
 \nameref{cap:trabalhos-relacionados}, serão resumidos alguns trabalhos,
-encontrados durante a revisão bibliográfica feita nessa pesquisa, que versam
-sobre a análise do comportamento parlamentar, a da mudança de comportamento e o
+encontrados durante a revisão bibliográfica feita nesta pesquisa, que versam
+sobre a análise do comportamento parlamentar, a mudança de comportamento e o
 uso de técnicas de aprendizagem de máquina na Ciência Política.
 
-Explicadas, até esse momento, as ferramentas usadas no trabalho e a literatura
+Explicadas, até este momento, as ferramentas usadas no trabalho e a literatura
 da área, no Capítulo \ref{cap:desenvolvimento}, \nameref{cap:desenvolvimento},
 será descrito o processo de criação do modelo, partindo da definição do
 universo de estudo, coleta e preparação dos dados, gerando estimativas dos
-pontos ideais dos parlamentares, passando para a análise das características
-gerais e temporais dos dados para, finalmente, o desenvolvimento e validação do
-modelo é descrito na Seção \ref{cap:desenvolvimento:modelagem},
+pontos ideais dos parlamentares, passando pela análise das características
+gerais e temporais dos dados para, finalmente, descrever o desenvolvimento e
+validação do modelo na Seção \ref{cap:desenvolvimento:modelagem},
 \nameref{cap:desenvolvimento:modelagem}.
 
 Por fim, o Capítulo \ref{cap:conclusao}, \nameref{cap:conclusao}, apresenta as

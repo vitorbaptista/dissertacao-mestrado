@@ -8,14 +8,13 @@ No final da década de 80 e na de 90, diversos autores viam o sistema político
 brasileiro como sendo altamente instável, com um Poder Executivo fraco,
 obrigado a negociar com cada parlamentar individualmente para executar seu
 plano de governo. Os parlamentares, preocupados somente com seus interesses
-individuais e regionalistas, seriam indisciplinados, levando a
-ingovernabilidade do país
-\cite{Abranches1988,Lamounier1994,Mainwaring2001,Ames2003}.
+individuais e regionalistas, seriam indisciplinados, levando o país à
+ingovernabilidade \cite{Abranches1988,Lamounier1994,Mainwaring2001,Ames2003}.
 
 Contrários a esse diagnóstico, \citeonline{Limongi1995} descreveram um cenário
 muito diferente. O Executivo, por ter domínio sobre a agenda legislativa,
-seria capaz de executar seu plano de governo negociando diretamente com os partidos
-políticos, que seriam capazes de disciplinar seus parlamentares a votar
+seria capaz de executar seu plano de governo, negociando diretamente com os partidos
+políticos, que seriam capazes de disciplinar seus parlamentares a votarem
 conforme suas indicações. Esse diagnóstico foi feito a partir da análise das
 votações nominais na Câmara dos Deputados no período de 1989 a 1994. Nessa
 análise, os autores calcularam a disciplina interna de cada partido, usando o
@@ -29,14 +28,14 @@ o PDS, atingindo um \gls{IR} 75,70, e o mais disciplinado, o PT, com \gls{IR} 95
 Essas duas correntes foram tão distintas que \citeonline{Power2010} as dividiu
 em ``pessimistas'' e ``otimistas''.
 
-Figueiredo e Limongi continuaram analisando dados relacionados ao mesmo tempo,
-focando em períodos e características distintos, que confirmaram o prognóstico.
+Figueiredo e Limongi continuaram analisando dados relacionados ao mesmo tema,
+focando períodos e características distintos, que confirmaram o prognóstico.
 A coletânea desses artigos gerou o livro ``Executivo e Legislativo na nova
 ordem constitucional'' \cite{Figueiredo2001}.
 
 Também usando métricas de disciplina, \citeonline{Cheibub2009} concluem que o
 Congresso brasileiro, ao contrário do previsto pelos pessimistas, é altamente
-centralizado, com partidos e seus líderes capazes de disciplinar seus
+centralizado, com partidos e seus líderes capazes de disciplinarem seus
 parlamentares, evitando que estes ajam somente em busca de benefícios para si
 mesmo e seus redutos eleitorais.
 
@@ -52,7 +51,7 @@ que os parlamentares votaram de acordo com a posição do governo.} dos partidos
 e parlamentares, mostrando suas flutuações em cada mês \cite{Estadao2012}.
 
 \citeonline{Dantas2014} organizaram uma coletânea de artigos escritos baseados
-em análises feitas com o Basômetro gerando o livro ``Análise política \&
+em análises feitas com o Basômetro, gerando o livro ``Análise política \&
 jornalismo de dados''.
 
 Apesar de serem de interpretação e cálculo mais simples, métricas de disciplina têm
@@ -71,45 +70,45 @@ autores usam modelos espaciais de votação (ver Seção
 \ref{cap:fundamentacao:teoria-espacial-do-voto}).
 
 No Brasil, o primeiro autor a usar esses modelos foi \citeonline{Leoni2002},
-que analisou o posicionamento dos deputados federais entre 1991 e 1998 usando o
-W-NOMINATE. \citeonline{Desposato2005b} usou o mesmo método para analisar o
-efeito da mudança partidária no comportamento dos parlamentares.
+que analisou o posicionamento dos deputados federais entre 1991 e 1998, usando
+o W-NOMINATE. \citeonline{Desposato2005b} recorreu ao mesmo método para
+analisar o efeito da mudança partidária no comportamento dos parlamentares.
 \citeonline{Zucco2009} também usa o W-NOMINATE, dessa vez para entender os
-fatores que influenciam o comportamento dos parlamentares, encontrando
-que a ideologia não explica completamente seus comportamentos, e indicativos
-que o presidente da República é um importante influenciador, especialmente
-através da distribuição de cargos e recursos.
+fatores que influenciam o comportamento dos parlamentares, constatando que a
+ideologia não explica completamente seus comportamentos. Ele encontrou
+indicativos de que o presidente da República é um importante influenciador,
+especialmente através da distribuição de cargos e recursos.
 
 \citeonline{Freitas2012} analisam o significado da primeira dimensão, estimada
 usando W-NOMINATE, na Câmara dos Deputados e no Senado Federal, concluindo que
 ela está ligada ao conflito governo e oposição. \citeonline{Izumi2013} repete
 essa análise no Senado Federal usando outro modelo, o \emph{Optimal
-Classification}, chegando a mesma conclusão.
+Classification}, chegando à mesma conclusão.
 
 Além de técnicas específicas para gerar mapas espaciais de votação, alguns
 autores usaram técnicas de redução de dimensionalidade mais gerais.
 \citeonline{Trento2013} analisaram os dados da Câmara dos Deputados, Senado
-Federal e Câmara Municipal de São Paulo usando \gls{ACP}\footnote{Do inglês,
-\emph{Principal Component Analysis} (PCA).}, uma técnica estatística de redução
-de dimensionalidade. Eles mapeiam um voto sim ou não nos valores 1 e 0, e
-transformam o conjunto de votos dos parlamentares em pontos em um espaço
+Federal e Câmara Municipal de São Paulo, usando \gls{ACP}\footnote{Do inglês,
+\emph{Principal Component Analysis} (PCA).}, que é uma técnica estatística de
+redução de dimensionalidade. Eles mapeiam um voto sim ou não com os valores 1 e
+0 e transformam o conjunto de votos dos parlamentares em pontos em um espaço
 n-dimensional, onde cada dimensão representa uma votação. Como o número de
 votações é alto, é difícil visualizar esses pontos. Assim, usam o \gls{ACP}
-para colocar esses pontos em um espaço bidimensional, mantendo ao máximo suas
+para reduzir esses pontos a um espaço bidimensional, mantendo ao máximo suas
 posições relativas. Dessa forma, quanto mais próximo estiverem dois
 parlamentares (ou partidos), mais vezes eles votaram da mesma forma. O
 resultado dessa pesquisa foi o Radar Parlamentar\footnote{Disponível em
 \url{http://radarparlamentar.polignu.org}}, um site interativo no qual é
 possível visualizar os diversos gráficos gerados, com as posições dos
-legisladores e partidos a cada ano.
+legisladores e partidos em cada ano.
 
 Usando uma técnica semelhante, a \gls{MCA}, \citeonline{Andrade2015} colocam os
-deputados federais em um espaço bidimensional, mostrando aonde estaria o
+deputados federais em um espaço bidimensional, e mostram onde estaria o
 presidente da Câmara dos Deputados, Eduardo Cunha (PMDB/RJ). Como ele não vota,
 consideraram seu posicionamento como sendo igual ao do líder do PMDB na Câmara
-no período. Eles também analisaram a similaridade dos deputados com o Eduardo
-Cunha através do percentual de votos que deram iguais a ele, batizando essa
-métrica de ``Cunhômetro''.
+no período em questão. Eles também analisaram a similaridade dos deputados com
+o Eduardo Cunha através do percentual de votos que deram iguais a ele,
+batizando essa métrica de ``Cunhômetro''.
 
 Apesar dessas técnicas estatísticas como a \gls{ACP} e \gls{MCA} serem
 similares a técnicas como o W-NOMINATE, não encontramos trabalhos que validem
@@ -120,32 +119,34 @@ resultados.
 
 \subsection{Análise da mudança de comportamento parlamentar}
 
-O problema básico em comparar mudanças de comportamento ao longo do tempo é
-distinguir alterações por causa de uma mudança de agenda das causadas por uma
-real mudança das preferências dos parlamentares \cite{Bailey2007}. Em outras
-palavras, se em um momento dois parlamentares votaram 90\% das vezes da mesma
-forma, e em outro momento eles votaram 50\% das vezes, como definir se essa
-mudança se deu porque eles mudaram seus posicionamentos, ou simplesmente porque
-eles concordavam nas votações do primeiro momento, mas não nas do segundo?
+O problema básico ao comparar mudanças de comportamento ao longo do tempo é
+distinguir as alterações causadas por mudanças na agenda legislativa, das
+causadas por uma real mudança das preferências dos parlamentares
+\cite{Bailey2007}. Em outras palavras, se, em um momento, dois parlamentares
+votaram 90\% das vezes da mesma forma e, em outro momento, eles votaram 50\% das
+vezes, como definir se essa mudança se deu porque eles mudaram seus
+posicionamentos, ou simplesmente porque eles concordavam nas votações do
+primeiro momento, mas não nas do segundo?
 
 Segundo \citeonline{Shor2010}, todos os esforços para resolver esse problema
-usam ``pontes'', que são parlamentares que estiveram presentes em ambos
-momentos e cujo posicionamento se assume ter se mantido estável. Podemos citar
-como exemplos parlamentares que foram eleitos para mais de uma legislatura, ou
-que mudaram de Casa (deputados federais que se tornam senadores). Projetos de
-Lei também podem ser usados como ponte, caso eles tenham sido votados nas
-instituições ou períodos de interesse.
+usam ``pontes'', que são parlamentares que estiveram presentes em ambos os
+momentos, e que o analista assume que não mudaram de comportamento nesses
+momentos. Podemos citar como exemplos parlamentares que foram eleitos para mais
+de uma legislatura, ou que mudaram de Casa (deputados federais que se tornam
+senadores). Projetos de Lei também podem ser usados como ponte, caso eles
+tenham sido votados nas instituições ou períodos de interesse.
 
-No artigo, \citeonline{Shor2010} usam três tipos de pontes para colocar
-parlamentares que serviram no nível estadual em ambas as casas\footnote{O
-sistema legislativo norte-americano, ao contrário do brasileiro, é bicameral
-tanto a nível federal quanto estadual (exceto o estado de Nebrasca, que só
-possui um Senado estadual)}, federal em ambas as casas, e no tempo.
-Parlamentares que serviram por múltiplas legislaturas tanto a nível estadual
-quanto federal servem de ponte entre as legislaturas; legisladores que passam
-da casa baixa para a casa alta (ou vice-versa) em nível estadual conectam as
-respectivas casas, e; parlamentares que passam do nível estadual para atuar no
-nível federal conectam o estado com o Congresso.
+% FIXME: Rever ponto e vírgula
+Nesse artigo, \citeonline{Shor2010} usam três tipos de pontes para colocar
+parlamentares que serviram no nível estadual e federal, em ambas as
+casas\footnote{O sistema legislativo norte-americano, ao contrário do
+brasileiro, é bicameral tanto a nível federal quanto estadual (exceto o estado
+de Nebrasca, que só possui um Senado estadual).} e no tempo. Parlamentares que
+serviram por múltiplas legislaturas tanto a nível estadual quanto federal
+servem de ponte entre as legislaturas; legisladores que passam da casa baixa
+para a casa alta (ou vice-versa) em nível estadual conectam as respectivas
+casas; e parlamentares que passam do nível estadual para atuar no nível
+federal conectam o estado com o Congresso.
 
 No Brasil, \citeonline{Leoni2002} analisa as posições dos deputados federais na
 49\textordfeminine{} e 50\textordfeminine{} legislaturas não usando pontes, mas
@@ -182,13 +183,13 @@ autor, e os que analisam projetos de lei tentando prever seus resultados.
 
 Dos que fazem análise textual, \citeonline{Thomas2006} criaram um modelo que
 classifica os discursos em debates sobre projetos de lei no congresso
-estadunidense como sendo contrários ou favoráveis ao mesmo.
+estadunidense como sendo contrários ou favoráveis a eles.
 \citeonline{Quinn2006} criaram um modelo que extrai tópicos do texto de
 discursos, validando-o nos dados do 105\textordmasculine{} ao
 107\textordmasculine{} senado dos Estados Unidos. \citeonline{Yu2008}
 determinam a filiação partidária dos parlamentares estadunidense a partir dos
 seus discursos. \citeonline{Somasundaran2010} classificam autores de textos
-publicados na Internet identificando seu posicionamento político a partir de
+publicados na Internet, identificando seu posicionamento político a partir de
 suas argumentações. Já \citeonline{Conover2011} fazem o mesmo com os usuários do
 Twitter\footnote{Disponível em \url{http://twitter.com}.}, mas a partir da
 frequência do uso de certas palavras.
@@ -196,11 +197,11 @@ frequência do uso de certas palavras.
 Já na previsão do sucesso de projetos de lei, \citeonline{Gerrish2011} e
 \citeonline{Goldblatt2012} desenvolveram modelos que acertaram mais de 90\% dos
 resultados nos períodos estudados. \citeonline{Yano2012} fizeram uma análise
-semelhante, mas focando em prever os projetos de lei que conseguirão passar das
+semelhante, mas focando prever os projetos de lei que conseguirão passar das
 discussões ocorridas em comissões e ser postos em votação.
 \citeonline{Wang2012} preveem os resultados através de uma caminhada aleatória
 em 3 grafos heterogêneos interconectados, sendo dois representando os
-legisladores e um representando projetos de lei. Os legisladores estão
+legisladores, e um representando projetos de lei. Os legisladores estão
 interligados caso tenham escrito ao menos um projeto juntos\footnote{Do inglês,
 \emph{co-sponsorship}.}, e os projetos de lei interligados pela análise da
 similaridade textual. Quando um legislador vota em um projeto de lei, um
@@ -215,7 +216,7 @@ monitoramento legislativo usando técnicas de ciência de dados. Uma delas, a
 prevê o resultado de projetos de lei com 94\% de acurácia. No Brasil, o
 \gls{ELLO}, empresa ligada ao \gls{CEBRAP}, possui um produto similar.
 
-\section{Considerações Finais}
+\section{Considerações finais}
 
 Como visto na Seção \ref{cap:trabalhos-relacionados:analise-comportamento}, o
 foco da literatura encontrada é na análise e interpretação do comportamento dos
@@ -229,8 +230,8 @@ Nesse levantamento bibliográfico, não foi encontrado nenhum autor que
 desenvolva o objetivo deste trabalho: a detecção de mudanças de posicionamento
 dos legisladores. O que parece ser mais próximo é a pesquisa feita pela empresa
 americana \citeonline{FiscalNote2015} para o desenvolvimento do produto
-\emph{Prophecy}, mas não foi possível analisar as semelhanças mais a fundo pois
-o processo usado por eles não é divulgado.
+\emph{Prophecy}, mas não foi possível analisar as semelhanças mais a fundo,
+pois o processo usado por eles não é divulgado.
 
 Nesse sentido, considero a definição da metodologia para o desenvolvimento de
 um modelo de detecção de mudança de posicionamento dos deputados federais
