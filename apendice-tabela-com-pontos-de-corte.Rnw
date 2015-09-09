@@ -13,11 +13,11 @@ tmp.rows = apply(tmp.rows, 1, function (x) {
 @
 
 \begin{longtable}{l l l l l l l}
+\caption{Especificidade e sensibilidade em diversos pontos de corte do modelo
+final usando o conjunto de dados para definição do ponto de corte.} \\
 \centering
   Threshold & \multicolumn{3}{c}{Especificidade} & \multicolumn{3}{c}{Sensibilidade} \\ \cline{2-7}
             & \multicolumn{1}{|l}{Mínimo} & Mediano & Máximo & \multicolumn{1}{|l}{Mínimo} & Mediano & \multicolumn{1}{l|}{Máximo} \\
   \hline
   \Sexpr{paste(tmp.rows, collapse = "\n")}
-\caption{Especificidade e sensibilidade em diversos pontos de corte do modelo
-final usando o conjunto de dados para definição do ponto de corte.}
 \end{longtable}

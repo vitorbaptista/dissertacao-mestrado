@@ -964,10 +964,10 @@ invisible(plot(ci.thresholds(rocs.testing$final, thresholds = cutoffPoint)))
 @
 
 \begin{table}
-\centering
-\Sexpr{format_confusion_matrix(confMatrix)}
 \caption{Matriz de confusão do modelo final no conjunto de dados de teste com ponto de corte em \Sexpr{cutoffPoint}.}
 \label{table:confusion-matrix-final-model}
+\centering
+\Sexpr{format_confusion_matrix(confMatrix)}
 \end{table}
 
 \section{Considerações finais}

@@ -40,6 +40,8 @@ generateRows = function(modelParams, label, modelName = "") {
 @
 
 \begin{longtable}{l l l}
+\caption{Lista dos parâmetros usados no treinamento dos modelos. Em modelos com
+mais de um parâmetro, foram testadas todas suas permutações.} \\
 \centering
   Modelo & Parâmetro & Valores \\
   \hline
@@ -61,6 +63,4 @@ generateRows = function(modelParams, label, modelName = "") {
   \Sexpr{generateRows(models$svmRadial$results$C, "Custo", "SVM Radial")} \\
   \Sexpr{generateRows(models$svmRadial$results$sigma, "Sigma")} \\
   GLM & --- & --- \\
-\caption{Lista dos parâmetros usados no treinamento dos modelos. Em modelos com
-mais de um parâmetro, foram testadas todas suas permutações.}
 \end{longtable}
