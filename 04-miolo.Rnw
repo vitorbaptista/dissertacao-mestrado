@@ -34,14 +34,14 @@ parlamentares e \Sexpr{sum(num_votos) / sum(num_votacoes)} votos em
 \Sexpr{mean(num_votacoes)} votações a cada legislatura.
 
 \begin{table}
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
 \centering
 <<>>=
 kable(stats_legislaturas,
       row.names = FALSE,
       col.names = c("Legislatura", "Deputados Federais", "Votações", "Votos"))
 @
-\caption{Número de deputados federais e votações por legislatura}
-\label{table:estatisticas-legislaturas}
 \end{table}
 
 % Coalizão
@@ -387,12 +387,12 @@ Tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
 \begin{table}
+\caption{Percentual de deputados que mudaram de posicionamento por legislatura.}
+\label{table:coalition-changes-per-legislature}
 \centering
 <<>>=
 kable(coalition_changes_per_legislature)
 @
-\caption{Percentual de deputados que mudaram de posicionamento por legislatura.}
-\label{table:coalition-changes-per-legislature}
 \end{table}
 
 A Figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
@@ -592,6 +592,8 @@ temporais descritos na Seção \ref{cap:desenvolvimento:aspectos-temporais}. A T
 delas.
 
 \begin{table}
+\caption{Variáveis independentes usadas na criação dos modelos preditivos.}
+\label{table:variaveis-independentes}
 \centering
 \begin{tabular}{l l c}
   Variável & Descrição & Natureza \\
@@ -603,8 +605,6 @@ delas.
   mês & Mês na data média do período & Ordinal \\
   ano da legislatura & Ano da legislatura na data média do período & Ordinal \\
 \end{tabular}
-\caption{Variáveis independentes usadas na criação dos modelos preditivos.}
-\label{table:variaveis-independentes}
 \end{table}
 
 A Figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
@@ -779,6 +779,8 @@ como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
 modelos é a \glsfirst{AUC}.
 
 \begin{table}
+\caption{Tipos de modelos preditivos testados.}
+\label{table:tipos-de-modelos}
 \centering
 \begin{tabular}{l l c}
   Natureza & Sigla & Nome \\
@@ -790,8 +792,6 @@ modelos é a \glsfirst{AUC}.
   Não-linear & C5.0 & C5.0 \\
   Não-linear & NNET & \Glsfirst{NNET} \\
 \end{tabular}
-\caption{Tipos de modelos preditivos testados.}
-\label{table:tipos-de-modelos}
 \end{table}
 
 A Tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
@@ -810,6 +810,9 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
 
 % FIXME: O sigma do SVM Radial não pode ser arredondado
 \begin{table}
+\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
+no conjunto de validação.}
+\label{table:resultados-validacao}
 \centering
 \begin{tabular}{l l c c c c}
   Modelo & \multicolumn{2}{c}{Parâmetros} & \multicolumn{3}{c}{AUC} \\ \cline{2-6}
@@ -829,9 +832,6 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
              & Sigma & \Sexpr{models$svmRadial$bestTune$sigma} & & & \\
   GLM & --- & --- & \Sexpr{paste(lapply(ci(rocs.validation$glm), format_inline), collapse = "&")} \\
 \end{tabular}
-\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
-no conjunto de validação.}
-\label{table:resultados-validacao}
 \end{table}
 
 <<rocs-validation, fig.height=3, fig.cap="Área sob a curva ROC (AUC) dos modelos no conjunto de validação.">>=

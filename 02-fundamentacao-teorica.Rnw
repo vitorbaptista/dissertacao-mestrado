@@ -165,6 +165,9 @@ os valores classificados corretamente, e fora dela estão os erros. Dessa matriz
 podemos extrair diversas métricas, como:
 
 \begin{table}
+\caption{Matriz de confusão para um problema com duas classes: ``positivo'' e
+``negativo''.}
+\label{table:exemplo-matriz-de-confusao}
 \centering
 \begin{tabular}{c c c}
   Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
@@ -174,9 +177,6 @@ podemos extrair diversas métricas, como:
   \multicolumn{1}{|c|}{Negativo} & Falso negativo (FN) & \multicolumn{1}{c|}{Verdadeiro negativo (VN)} \\
   \hline
 \end{tabular}
-\caption{Matriz de confusão para um problema com duas classes: ``positivo'' e
-``negativo''.}
-\label{table:exemplo-matriz-de-confusao}
 \end{table}
 
 \begin{description}
@@ -284,6 +284,8 @@ definiram uma regra geral para avaliação descrita na Tabela
 \ref{table:valores-auc}.
 
 \begin{table}
+\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
+\label{table:valores-auc}
 \centering
 \begin{tabular}{c l}
   \acrshort{AUC} & \multicolumn{1}{c}{Valor} \\
@@ -293,8 +295,6 @@ definiram uma regra geral para avaliação descrita na Tabela
   Entre 0,8 e 0,9 & Discriminação excelente \\
   Acima de 0,9 & Discriminação excepcional \\
 \end{tabular}
-\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
-\label{table:valores-auc}
 \end{table}
 
 \section{Teoria espacial do voto}

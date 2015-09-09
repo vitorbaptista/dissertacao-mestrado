@@ -60,6 +60,8 @@ de cada parlamentar, podemos determinar se a mudança é significante ou não.
 
 \begin{table}
   \begin{minipage}{\textwidth}
+    \caption{Dados originais de votação}
+    \label{table:exemplo-mudanca-de-comportamento}
     \centering
     \begin{tabular}{ l l l l l }
       nome & votação1 & votação2 & votação3 & votação4 \\
@@ -68,10 +70,10 @@ de cada parlamentar, podemos determinar se a mudança é significante ou não.
       Pedro & Sim & Sim & Sim & Sim \\
       Maria & Não & Não & Não & Não \\
     \end{tabular}
-    \caption{Dados originais de votação}
-    \label{table:exemplo-mudanca-de-comportamento}
   \end{minipage}
   \begin{minipage}{\textwidth}
+    \caption{Dados de votação com Romário dividido no meio}
+    \label{table:exemplo-parlamentar-virtual}
     \centering
     \begin{tabular}{ l l l l l }
       nome & votação1 & votação2 & votação3 & votação4 \\
@@ -81,8 +83,6 @@ de cada parlamentar, podemos determinar se a mudança é significante ou não.
       Pedro & Sim & Sim & Sim & Sim \\
       Maria & Não & Não & Não & Não \\
     \end{tabular}
-    \caption{Dados de votação com Romário dividido no meio}
-    \label{table:exemplo-parlamentar-virtual}
   \end{minipage}
 \end{table}
 
@@ -263,6 +263,9 @@ afastamento do governo.
 \end{description}
 
 \begin{table}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:top-10-diffs}
 \centering
 <<>>=
 table_columns = c("name", "party", "changed_coalition", "before", "after", "diff")
@@ -273,9 +276,6 @@ kable(table_data,
       row.names = FALSE,
       col.names = table_columns_labels)
 @
-\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
-antes e depois da saída do PSB da base do governo.}
-\label{table:top-10-diffs}
 \end{table}
 
 \subsection{Os deputados do PSB mudaram de comportamento?}
@@ -328,6 +328,9 @@ TODO: Explicar melhor}. No final, teremos uma tabela como a
 \ref{table:clean-data}.
 
 \begin{table}
+\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
+antes e depois da saída do PSB da base do governo.}
+\label{table:clean-data}
 \centering
 <<>>=
 cols = c("before", "before.sd", "after", "after.sd", "diff", "changed_coalition")
@@ -343,9 +346,6 @@ kable(table_data,
       row.names = FALSE,
       col.names = table_columns_labels)
 @
-\caption{Os dez parlamentares com maior diferença absoluta entre suas posições
-antes e depois da saída do PSB da base do governo.}
-\label{table:clean-data}
 \end{table}
 
 Com os dados nesse formato, agora precisamos dividí-lo em dois grupos: um para
@@ -421,6 +421,8 @@ roc0 = invisible(roc(resultTest$changed_coalition,
 @
 
 \begin{table}
+\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
+\label{table:roc}
 \centering
 <<>>=
 ci0 = as.data.frame(ci(roc0, of="thresholds", thresholds="local maxima"))
@@ -433,6 +435,4 @@ kable(ci0[2:nrow(ci0), table_columns],
       row.names = FALSE,
       col.names = table_columns_labels)
 @
-\caption{Especificidade e sensibilidade nos máximos locais da curva ROC}
-\label{table:roc}
 \end{table}

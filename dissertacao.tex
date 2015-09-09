@@ -436,6 +436,9 @@ os valores classificados corretamente, e fora dela estão os erros. Dessa matriz
 podemos extrair diversas métricas, como:
 
 \begin{table}
+\caption{Matriz de confusão para um problema com duas classes: ``positivo'' e
+``negativo''.}
+\label{table:exemplo-matriz-de-confusao}
 \centering
 \begin{tabular}{c c c}
   Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
@@ -445,9 +448,6 @@ podemos extrair diversas métricas, como:
   \multicolumn{1}{|c|}{Negativo} & Falso negativo (FN) & \multicolumn{1}{c|}{Verdadeiro negativo (VN)} \\
   \hline
 \end{tabular}
-\caption{Matriz de confusão para um problema com duas classes: ``positivo'' e
-``negativo''.}
-\label{table:exemplo-matriz-de-confusao}
 \end{table}
 
 \begin{description}
@@ -543,6 +543,8 @@ definiram uma regra geral para avaliação descrita na Tabela
 \ref{table:valores-auc}.
 
 \begin{table}
+\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
+\label{table:valores-auc}
 \centering
 \begin{tabular}{c l}
   \acrshort{AUC} & \multicolumn{1}{c}{Valor} \\
@@ -552,8 +554,6 @@ definiram uma regra geral para avaliação descrita na Tabela
   Entre 0,8 e 0,9 & Discriminação excelente \\
   Acima de 0,9 & Discriminação excepcional \\
 \end{tabular}
-\caption{Regra geral para avaliação da \glsfirst{AUC} de \citeonline{HosmerJr2013}.}
-\label{table:valores-auc}
 \end{table}
 
 \section{Teoria espacial do voto}
@@ -778,6 +778,8 @@ parlamentares e 332 votos em
 478 votações a cada legislatura.
 
 \begin{table}
+\caption{Número de deputados federais e votações por legislatura}
+\label{table:estatisticas-legislaturas}
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -799,8 +801,6 @@ Legislatura & Deputados Federais & Votações & Votos\\
 
 
 \end{knitrout}
-\caption{Número de deputados federais e votações por legislatura}
-\label{table:estatisticas-legislaturas}
 \end{table}
 
 % Coalizão
@@ -1096,6 +1096,8 @@ Tabela \ref{table:coalition-changes-per-legislature} mostra esses dados em
 todas as legislaturas estudadas.
 
 \begin{table}
+\caption{Percentual de deputados que mudaram de posicionamento por legislatura.}
+\label{table:coalition-changes-per-legislature}
 \centering
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -1111,8 +1113,6 @@ N & 0.96 & 0.96 & 0.93 & 0.98 & 0.97\\
 
 
 \end{knitrout}
-\caption{Percentual de deputados que mudaram de posicionamento por legislatura.}
-\label{table:coalition-changes-per-legislature}
 \end{table}
 
 A Figura \ref{fig:pontos-ideais-por-legislatura} mostra a densidade dos valores
@@ -1303,6 +1303,8 @@ temporais descritos na Seção \ref{cap:desenvolvimento:aspectos-temporais}. A T
 delas.
 
 \begin{table}
+\caption{Variáveis independentes usadas na criação dos modelos preditivos.}
+\label{table:variaveis-independentes}
 \centering
 \begin{tabular}{l l c}
   Variável & Descrição & Natureza \\
@@ -1314,8 +1316,6 @@ delas.
   mês & Mês na data média do período & Ordinal \\
   ano da legislatura & Ano da legislatura na data média do período & Ordinal \\
 \end{tabular}
-\caption{Variáveis independentes usadas na criação dos modelos preditivos.}
-\label{table:variaveis-independentes}
 \end{table}
 
 A Figura \ref{fig:variaveis-independentes} mostra a distribuição dos valores das
@@ -1457,6 +1457,8 @@ como ``fevereiro do terceiro ano da legislatura''.}. O critério de escolha dos
 modelos é a \glsfirst{AUC}.
 
 \begin{table}
+\caption{Tipos de modelos preditivos testados.}
+\label{table:tipos-de-modelos}
 \centering
 \begin{tabular}{l l c}
   Natureza & Sigla & Nome \\
@@ -1468,8 +1470,6 @@ modelos é a \glsfirst{AUC}.
   Não-linear & C5.0 & C5.0 \\
   Não-linear & NNET & \Glsfirst{NNET} \\
 \end{tabular}
-\caption{Tipos de modelos preditivos testados.}
-\label{table:tipos-de-modelos}
 \end{table}
 
 A Tabela \ref{table:resultados-validacao} mostra o conjunto de parâmetros de
@@ -1488,6 +1488,9 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
 
 % FIXME: O sigma do SVM Radial não pode ser arredondado
 \begin{table}
+\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
+no conjunto de validação.}
+\label{table:resultados-validacao}
 \centering
 \begin{tabular}{l l c c c c}
   Modelo & \multicolumn{2}{c}{Parâmetros} & \multicolumn{3}{c}{AUC} \\ \cline{2-6}
@@ -1507,9 +1510,6 @@ possível visualizar mais facilmente a diferença do \gls{AUC} entre os modelos.
              & Sigma & 0,14 & & & \\
   GLM & --- & --- & 0,38&0,41&0,43 \\
 \end{tabular}
-\caption{Lista de parâmetros dos modelos com sua respectiva \glsfirst{AUC}
-no conjunto de validação.}
-\label{table:resultados-validacao}
 \end{table}
 
 \begin{knitrout}
