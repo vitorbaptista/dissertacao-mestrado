@@ -267,6 +267,19 @@ is_date = function(x) {
 }
 
 knit_hooks$set(inline = format_inline)
+
+format_confusion_matrix = function(confMatrix) {
+  paste(
+    "\\begin{tabular}{c c c}
+    Previsto & \\multicolumn{2}{c}{Observado} \\\\  \\cline{2-3}
+    & \\multicolumn{1}{|c}{Sim} & \\multicolumn{1}{c|}{Não} \\\\
+    \\hline
+    \\multicolumn{1}{|c|}{Sim} &", confMatrix$table[1, 1], "& \\multicolumn{1}{c|}{", confMatrix$table[1, 2], "} \\\\
+    \\multicolumn{1}{|c|}{Não} &", confMatrix$table[2, 1], "& \\multicolumn{1}{c|}{", confMatrix$table[2, 2], "} \\\\
+    \\hline
+    \\end{tabular}"
+  )
+}
 @
 
 \input{01-introducao}

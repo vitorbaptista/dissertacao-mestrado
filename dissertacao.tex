@@ -1554,22 +1554,59 @@ parlamentares que mudaram de posicionamento (o que é improvável), eles estarã
 em meio a um conjunto de 120 pessoas, o que pode inviabilizar a análise
 individual.
 
+\begin{table}
+\caption{Matrizes de confusão do modelo no conjunto de dados de escolha do
+ponto de corte.}
+\label{table:confusion-matrixes-cutoff-point}
+\begin{subtable}{.5\linewidth}
+\centering
+\caption{Matriz de confusão com ponto de corte 0,5.}
+\begin{tabular}{c c c}
+    Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
+    & \multicolumn{1}{|c}{Sim} & \multicolumn{1}{c|}{Não} \\
+    \hline
+    \multicolumn{1}{|c|}{Sim} & 66 & \multicolumn{1}{c|}{ 858 } \\
+    \multicolumn{1}{|c|}{Não} & 12 & \multicolumn{1}{c|}{ 1958 } \\
+    \hline
+    \end{tabular}
+\end{subtable}%
+\begin{subtable}{.5\linewidth}
+\centering
+\caption{Matriz de confusão com ponto de corte 0,65.}
+\begin{tabular}{c c c}
+    Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
+    & \multicolumn{1}{|c}{Sim} & \multicolumn{1}{c|}{Não} \\
+    \hline
+    \multicolumn{1}{|c|}{Sim} & 36 & \multicolumn{1}{c|}{ 244 } \\
+    \multicolumn{1}{|c|}{Não} & 42 & \multicolumn{1}{c|}{ 2572 } \\
+    \hline
+    \end{tabular}
+\end{subtable}
+\end{table}
 
 
-A Figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
-dados de definição do ponto de corte com dois pontos em destaque: o padrão 0,5
-e o escolhido 0,65. Considerando o corte em 0,5, no exemplo
-acima 166 parlamentares seriam classificados como
-tendo mudado de posicionamento, sendo 87.35\% (145) falsos positivos e
-4 falsos negativos. Já com o corte em 0,65,
-53 seriam classificados como tendo mudado de
-posicionamento, sendo 77.36\% (41) falsos positivos e 13
-falsos negativos.  Em outras palavras, ao mudar o ponto de corte de 0,5 para
-0,65, estamos trocando 104 falsos
-positivos a menos por 9 falsos negativos a mais.
-No apêndice \ref{apendice:lista-pontos-de-corte}, há uma tabela com os pontos
-de corte, e suas respectivas sensibilidades e especificidades. Eles foram
-escolhidos buscando os máximos locais da curva \gls{ROC}
+
+A Figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto
+de dados de definição do ponto de corte com dois pontos em destaque: o padrão
+0,5 e o escolhido 0,65. Considerando o corte 0,5,
+924 parlamentares seriam classificados como tendo mudado de
+posicionamento 7.14\%
+(66) verdadeiros positivos e 1.970 seriam
+classificados como não tendo mudado de posicionamento, sendo
+99.39\% (1.958) verdadeiros
+negativos. Já com o corte em 0,65, 280
+parlamentares seriam classificados como tendo mudado de posicionamento, sendo
+12.86\% (36)
+verdadeiros positivos e 2.614 seriam classificados como não
+tendo mudado de posicionamento, sendo 98.39\% (2.572) verdadeiros negativos. Em outras palavras,
+ao mudar o ponto de corte de 0,5 para 0,65, estamos trocando
+30 verdadeiros positivos a menos por
+614 verdadeiros negativos a mais. A Tabela
+\ref{table:confusion-matrixes-cutoff-point} mostra as matrizes de confusão nos
+dois pontos de corte. No apêndice \ref{apendice:lista-pontos-de-corte}, há uma
+lista com os pontos de corte e suas respectivas sensibilidades e
+especificidades. Eles foram escolhidos buscando os máximos locais da curva
+\gls{ROC}.
 
 
 
@@ -1597,13 +1634,13 @@ discriminação excelente.
 \begin{table}
 \centering
 \begin{tabular}{c c c}
-  Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
-  & \multicolumn{1}{|c}{Sim} & \multicolumn{1}{c|}{Não} \\
-  \hline
-  \multicolumn{1}{|c|}{Sim} & 50 & \multicolumn{1}{c|}{252} \\
-  \multicolumn{1}{|c|}{Não} & 46 & \multicolumn{1}{c|}{2.697} \\
-  \hline
-\end{tabular}
+    Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
+    & \multicolumn{1}{|c}{Sim} & \multicolumn{1}{c|}{Não} \\
+    \hline
+    \multicolumn{1}{|c|}{Sim} & 50 & \multicolumn{1}{c|}{ 252 } \\
+    \multicolumn{1}{|c|}{Não} & 46 & \multicolumn{1}{c|}{ 2697 } \\
+    \hline
+    \end{tabular}
 \caption{Matriz de confusão do modelo final no conjunto de dados de teste com ponto de corte em 0,65.}
 \label{table:confusion-matrix-final-model}
 \end{table}
@@ -1942,28 +1979,10 @@ final usando o conjunto de dados para definição do ponto de corte.}
 
 \chapter{Versões dos softwares utilizados}
 
-\begin{itemize}\raggedright
-  \item R version 3.2.1 (2015-06-18), \verb|x86_64-pc-linux-gnu|
-  \item Locale: \verb|LC_CTYPE=en_US.UTF-8|, \verb|LC_NUMERIC=C|, \verb|LC_TIME=pt_BR.UTF-8|, \verb|LC_COLLATE=en_US.UTF-8|, \verb|LC_MONETARY=pt_BR.UTF-8|, \verb|LC_MESSAGES=en_US.UTF-8|, \verb|LC_PAPER=pt_BR.UTF-8|, \verb|LC_NAME=C|, \verb|LC_ADDRESS=C|, \verb|LC_TELEPHONE=C|, \verb|LC_MEASUREMENT=pt_BR.UTF-8|, \verb|LC_IDENTIFICATION=C|
-  \item Base packages: base, datasets, graphics, grDevices,
-    methods, parallel, splines, stats, utils
-  \item Other packages: C50~0.1.0-24, caret~6.0-47,
-    data.table~1.9.4, doParallel~1.0.8, foreach~1.4.2, gbm~2.1.1,
-    ggplot2~1.0.1, ggthemes~2.2.1, iterators~1.0.7,
-    kernlab~0.9-20, knitr~1.9, lattice~0.20-33, nnet~7.3-10,
-    plyr~1.8.2, pROC~1.8, randomForest~4.6-10, scales~0.2.4,
-    survival~2.38-3, tikzDevice~0.8.1
-  \item Loaded via a namespace (and not attached):
-    BradleyTerry2~1.0-6, brglm~0.5-9, car~2.0-25, chron~2.3-45,
-    codetools~0.2-11, colorspace~1.2-4, digest~0.6.8,
-    evaluate~0.5.5, filehash~2.2-2, formatR~1.2, grid~3.2.1,
-    gtable~0.1.2, gtools~3.4.2, highr~0.5, lme4~1.1-7,
-    MASS~7.3-43, Matrix~1.2-2, mgcv~1.8-7, minqa~1.2.4,
-    munsell~0.4.2, nlme~3.1-121, nloptr~1.0.4, partykit~1.0-2,
-    pbkrtest~0.4-2, proto~0.3-10, quantreg~5.11, Rcpp~0.11.4,
-    reshape2~1.4.1, SparseM~1.6, stringr~0.6.2, tools~3.2.1
-\end{itemize}
+\begin{kframe}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in system(paste(which, shQuote(names[i])), intern = TRUE, ignore.stderr = TRUE): cannot popen '/usr/bin/which 'uname' 2>/dev/null', probable reason 'Cannot allocate memory'}}\end{kframe}
 
 %\input{apendice-b}
 %\input{apendice-c}

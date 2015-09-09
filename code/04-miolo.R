@@ -168,8 +168,9 @@ models$final = train(changed_coalition ~ before * after * before.sd * after.sd *
 
 ## ---- find-cutoff ----
 set.seed(1)
+tmp.predictions_cutoff = predict(models$final, newdata = testing.roc, type = "prob")[,1]
 roc.finding_cutoff = roc(testing.roc$changed_coalition,
-               predict(models$final, newdata = testing.roc, type = "prob")[,1],
+               tmp.predictions_cutoff,
                levels = c("N", "S"),
                plot = FALSE,
                ci = TRUE,
@@ -178,8 +179,15 @@ roc.finding_cutoff = roc(testing.roc$changed_coalition,
 cutoffPoint = roc.finding_cutoff$ci$specificity[which(roc.finding_cutoff$ci$specificity[,1] >= 0.9),]
 cutoffPoint = as.numeric(rownames(cutoffPoint)[[1]])
 
-invisible(plot(roc.finding_cutoff, print.auc = TRUE, ci = FALSE, print.thres =
-               c(0.5, cutoffPoint),
+tmp.predictions_05 = factor(ifelse(tmp.predictions_cutoff > 0.5, "S", "N"),
+                            levels = levels(testing$changed_coalition))
+tmp.predictions_best = factor(ifelse(tmp.predictions_cutoff > cutoffPoint, "S", "N"),
+                              levels = levels(testing$changed_coalition))
+confMatrix.roc_05 = confusionMatrix(tmp.predictions_05, testing.roc$changed_coalition)
+confMatrix.roc_best = confusionMatrix(tmp.predictions_best, testing.roc$changed_coalition)
+
+invisible(plot(roc.finding_cutoff, print.auc = TRUE, ci = FALSE,
+               print.thres = c(0.5, cutoffPoint),
                print.thres.pattern = "%.3f (Espec = %.3f, Sens = %.3f)",
                print.auc.y = 0.25,
                xlab = "Especificidade",

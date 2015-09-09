@@ -858,39 +858,56 @@ parlamentares que mudaram de posicionamento (o que é improvável), eles estarã
 em meio a um conjunto de 120 pessoas, o que pode inviabilizar a análise
 individual.
 
-<<>>=
-tmp.negative = 475
-tmp.positive = 25
-tmp.total = tmp.positive + tmp.negative
-spec_05 = thresholds$specificity[[1, 2]]
-sens_05 = thresholds$sensitivity[[1, 2]]
-tmp.tp_05 = round(sens_05 * tmp.positive)
-tmp.fp_05 = round((1 - spec_05) * tmp.negative)
-tmp.fn_05 = round((1 - sens_05) * tmp.positive)
+\begin{table}
+\caption{Matrizes de confusão do modelo no conjunto de dados de escolha do
+ponto de corte.}
+\label{table:confusion-matrixes-cutoff-point}
+\begin{subtable}{.5\linewidth}
+\centering
+\caption{Matriz de confusão com ponto de corte 0,5.}
+\Sexpr{format_confusion_matrix(confMatrix.roc_05)}
+\end{subtable}%
+\begin{subtable}{.5\linewidth}
+\centering
+\caption{Matriz de confusão com ponto de corte \Sexpr{cutoffPoint}.}
+\Sexpr{format_confusion_matrix(confMatrix.roc_best)}
+\end{subtable}
+\end{table}
 
-spec_best = thresholds$specificity[[2, 2]]
-sens_best = thresholds$sensitivity[[2, 2]]
-tmp.tp_best = round(sens_best * tmp.positive)
-tmp.fp_best = round((1 - spec_best) * tmp.negative)
-tmp.fn_best = round((1 - sens_best) * tmp.positive)
+<<stats-model-on-testing-cutoff-dataset>>=
+tmp.pos_05 = sum(confMatrix.roc_05$table[1,])
+tmp.tp_05 = confMatrix.roc_05$table[[1, 1]]
+tmp.neg_05 = sum(confMatrix.roc_05$table[2,])
+tmp.tn_05 = confMatrix.roc_05$table[[2, 2]]
+
+tmp.pos_best = sum(confMatrix.roc_best$table[1,])
+tmp.tp_best = confMatrix.roc_best$table[[1, 1]]
+tmp.neg_best = sum(confMatrix.roc_best$table[2,])
+tmp.tn_best = confMatrix.roc_best$table[[2, 2]]
 @
 
-A Figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto de
-dados de definição do ponto de corte com dois pontos em destaque: o padrão 0,5
-e o escolhido \Sexpr{cutoffPoint}. Considerando o corte em 0,5, no exemplo
-acima \Sexpr{tmp.tp_05 + tmp.fp_05} parlamentares seriam classificados como
-tendo mudado de posicionamento, sendo \Sexpr{format_percent(tmp.fp_05 /
-(tmp.tp_05 + tmp.fp_05))} (\Sexpr{tmp.fp_05}) falsos positivos e
-\Sexpr{tmp.fn_05} falsos negativos. Já com o corte em \Sexpr{cutoffPoint},
-\Sexpr{tmp.tp_best + tmp.fp_best} seriam classificados como tendo mudado de
-posicionamento, sendo \Sexpr{format_percent(tmp.fp_best / (tmp.tp_best +
-tmp.fp_best))} (\Sexpr{tmp.fp_best}) falsos positivos e \Sexpr{tmp.fn_best}
-falsos negativos.  Em outras palavras, ao mudar o ponto de corte de 0,5 para
-\Sexpr{cutoffPoint}, estamos trocando \Sexpr{tmp.fp_05 - tmp.fp_best} falsos
-positivos a menos por \Sexpr{tmp.fn_best - tmp.fn_05} falsos negativos a mais.
-No apêndice \ref{apendice:lista-pontos-de-corte}, há uma tabela com os pontos
-de corte, e suas respectivas sensibilidades e especificidades. Eles foram
-escolhidos buscando os máximos locais da curva \gls{ROC}
+A Figura \ref{fig:find-cutoff} mostra a curva \gls{ROC} do modelo no conjunto
+de dados de definição do ponto de corte com dois pontos em destaque: o padrão
+0,5 e o escolhido \Sexpr{cutoffPoint}. Considerando o corte 0,5,
+\Sexpr{tmp.pos_05} parlamentares seriam classificados como tendo mudado de
+posicionamento \Sexpr{format_percent(tmp.tp_05 / tmp.pos_05)}
+(\Sexpr{tmp.tp_05}) verdadeiros positivos e \Sexpr{tmp.neg_05} seriam
+classificados como não tendo mudado de posicionamento, sendo
+\Sexpr{format_percent(tmp.tn_05 / tmp.neg_05)} (\Sexpr{tmp.tn_05}) verdadeiros
+negativos. Já com o corte em \Sexpr{cutoffPoint}, \Sexpr{tmp.pos_best}
+parlamentares seriam classificados como tendo mudado de posicionamento, sendo
+\Sexpr{format_percent(tmp.tp_best / tmp.pos_best)} (\Sexpr{tmp.tp_best})
+verdadeiros positivos e \Sexpr{tmp.neg_best} seriam classificados como não
+tendo mudado de posicionamento, sendo \Sexpr{format_percent(tmp.tn_best /
+tmp.neg_best)} (\Sexpr{tmp.tn_best}) verdadeiros negativos. Em outras palavras,
+ao mudar o ponto de corte de 0,5 para \Sexpr{cutoffPoint}, estamos trocando
+\Sexpr{tmp.tp_05 - tmp.tp_best} verdadeiros positivos a menos por
+\Sexpr{tmp.tn_best - tmp.tn_05} verdadeiros negativos a mais. A Tabela
+\ref{table:confusion-matrixes-cutoff-point} mostra as matrizes de confusão nos
+dois pontos de corte. No apêndice \ref{apendice:lista-pontos-de-corte}, há uma
+lista com os pontos de corte e suas respectivas sensibilidades e
+especificidades. Eles foram escolhidos buscando os máximos locais da curva
+\gls{ROC}.
 
 <<bootstrap-roc-and-confusion-matrix-final-model>>=
 @
@@ -922,14 +939,7 @@ invisible(plot(ci.thresholds(rocs.testing$final, thresholds = cutoffPoint)))
 
 \begin{table}
 \centering
-\begin{tabular}{c c c}
-  Previsto & \multicolumn{2}{c}{Observado} \\  \cline{2-3}
-  & \multicolumn{1}{|c}{Sim} & \multicolumn{1}{c|}{Não} \\
-  \hline
-  \multicolumn{1}{|c|}{Sim} & \Sexpr{confMatrix$table[1, 1]} & \multicolumn{1}{c|}{\Sexpr{confMatrix$table[1, 2]}} \\
-  \multicolumn{1}{|c|}{Não} & \Sexpr{confMatrix$table[2, 1]} & \multicolumn{1}{c|}{\Sexpr{confMatrix$table[2, 2]}} \\
-  \hline
-\end{tabular}
+\Sexpr{format_confusion_matrix(confMatrix)}
 \caption{Matriz de confusão do modelo final no conjunto de dados de teste com ponto de corte em \Sexpr{cutoffPoint}.}
 \label{table:confusion-matrix-final-model}
 \end{table}
