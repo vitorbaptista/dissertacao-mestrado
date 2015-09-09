@@ -670,6 +670,31 @@ alteração nas regras para mudança de partido, essa é uma suposição improv�
 Como é mais importante que o modelo tenha uma boa performance nos anos mais
 recentes, seguimos a seguinte estratégia \cite{Kuhn2013}:
 
+<<dataset-split-graphs, fig.cap="Divisões do conjunto de dados usadas.", fig.subcap=c("Divisão do conjunto de dados usada para definir o tipo do modelo final e seus parâmetros.", "Divisão do conjunto de dados usado para treinar o modelo final, definir seu o ponto de corte e estimar sua performance.")>>=
+aux = data.frame(Dataset = c(rep("Treino", 4), "Validação"),
+                 x = 50:54,
+                 y = c(rep(1, 4), 0.6))
+aux$Dataset = factor(aux$Dataset, levels = unique(aux$Dataset), ordered = TRUE)
+ggplot(aux, aes(x = x, y = y)) +
+  theme(panel.border = element_blank(),
+        panel.grid = element_blank()) +
+  geom_bar(aes(fill = Dataset), stat = "identity") +
+  scale_y_continuous(labels = percent_format()) +
+  labs(x = "Legislatura", y = "Percentual", fill = "Conjunto de dados")
+
+aux = data.frame(Dataset = c(rep("Treino", 5), "Definição do ponto de corte",
+"Teste"),
+                 x = c(50:54, 54, 54),
+                 y = c(rep(1, 4), 0.6, 0.2, 0.2))
+aux$Dataset = factor(aux$Dataset, levels = unique(aux$Dataset), ordered = TRUE)
+ggplot(aux, aes(x = x, y = y)) +
+  theme(panel.border = element_blank(),
+        panel.grid = element_blank()) +
+  geom_bar(aes(fill = Dataset), stat = "identity") +
+  scale_y_continuous(labels = percent_format()) +
+  labs(x = "Legislatura", y = "Percentual", fill = "Conjunto de dados")
+@
+
 \begin{enumerate}
 \item Treina o modelo com os dados anteriores à 54\textordfeminine{}
 legislatura, chamado conjunto de treino, ajustando seus parâmetros a partir
@@ -686,7 +711,8 @@ para validação;
 conjunto de teste, para estimar a performance final do modelo.
 \end{enumerate}
 
-Assim, os \Sexpr{nrow(data)} dados serão separados em
+A Figura \ref{fig:dataset-split-graphs} mostra, graficamente, as divisões
+feitas. Seguindo essa estratégia, os \Sexpr{nrow(data)} dados serão separados em
 \Sexpr{format_percent(nrow(training.original) / nrow(data))}
 (\Sexpr{nrow(training.original)}) para treino,
 \Sexpr{format_percent(nrow(validation) / nrow(data))}

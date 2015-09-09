@@ -1366,6 +1366,15 @@ alteração nas regras para mudança de partido, essa é uma suposição improv�
 Como é mais importante que o modelo tenha uma boa performance nos anos mais
 recentes, seguimos a seguinte estratégia \cite{Kuhn2013}:
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\subfloat[Divisão do conjunto de dados usada para definir o tipo do modelo final e seus parâmetros.\label{fig:dataset-split-graphs1}]{\includegraphics[width=\maxwidth]{figure/tmp/dataset-split-graphs-1} }
+\subfloat[Divisão do conjunto de dados usado para treinar o modelo final, definir seu o ponto de corte e estimar sua performance.\label{fig:dataset-split-graphs2}]{\includegraphics[width=\maxwidth]{figure/tmp/dataset-split-graphs-2} }\caption[Divisões do conjunto de dados usadas]{Divisões do conjunto de dados usadas.}\label{fig:dataset-split-graphs}
+\end{figure}
+
+
+\end{knitrout}
+
 \begin{enumerate}
 \item Treina o modelo com os dados anteriores à 54\textordfeminine{}
 legislatura, chamado conjunto de treino, ajustando seus parâmetros a partir
@@ -1382,7 +1391,8 @@ para validação;
 conjunto de teste, para estimar a performance final do modelo.
 \end{enumerate}
 
-Assim, os 78.576 dados serão separados em
+A Figura \ref{fig:dataset-split-graphs} mostra, graficamente, as divisões
+feitas. Seguindo essa estratégia, os 78.576 dados serão separados em
 80.67\%
 (63.386) para treino,
 11.77\%

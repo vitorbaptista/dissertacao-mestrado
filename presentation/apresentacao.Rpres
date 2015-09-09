@@ -258,39 +258,32 @@ ggplot(aux, aes(x = tipo, y = quantidade)) +
 Divisão da base de dados
 ========================================================
 ```{r}
-aux = data.frame(Dataset = c("Treino", "Validação"),
-                 value = c(54, 0.6))
-aux$Dataset = factor(aux$Dataset, levels = aux$Dataset, ordered = TRUE)
-aux$x = rep("foo", nrow(aux))
-ggplot(aux, aes(x = x, y = value)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.line = element_line(),
-        axis.line.y = element_blank(),
-        panel.border = element_blank(),
+aux = data.frame(Dataset = c(rep("Treino", 4), "Validação"),
+                 x = 50:54,
+                 y = c(rep(1, 4), 0.6))
+aux$Dataset = factor(aux$Dataset, levels = unique(aux$Dataset), ordered = TRUE)
+ggplot(aux, aes(x = x, y = y)) +
+  theme(panel.border = element_blank(),
         panel.grid = element_blank()) +
   geom_bar(aes(fill = Dataset), stat = "identity") +
-  coord_flip(ylim = c(50, 55)) +
-  labs(x = "", y = "Legislatura")
+  scale_y_continuous(labels = percent_format()) +
+  labs(x = "Legislatura", y = "Percentual", fill = "Conjunto de dados")
 ```
 
 Divisão da base de dados
 ========================================================
 ```{r}
-aux = data.frame(Dataset = c("Treino", "Definição do ponto de corte", "Teste"),
-                 value = c(54.6, 0.2, 0.2))
-aux$Dataset = factor(aux$Dataset, levels = aux$Dataset, ordered = TRUE)
-aux$x = rep("foo", nrow(aux))
-ggplot(aux, aes(x = x, y = value)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.line = element_line(),
-        axis.line.y = element_blank(),
-        panel.border = element_blank(),
+aux = data.frame(Dataset = c(rep("Treino", 5), "Definição do ponto de corte",
+"Teste"),
+                 x = c(50:54, 54, 54),
+                 y = c(rep(1, 4), 0.6, 0.2, 0.2))
+aux$Dataset = factor(aux$Dataset, levels = unique(aux$Dataset), ordered = TRUE)
+ggplot(aux, aes(x = x, y = y)) +
+  theme(panel.border = element_blank(),
         panel.grid = element_blank()) +
   geom_bar(aes(fill = Dataset), stat = "identity") +
-  coord_flip(ylim = c(50, 55)) +
-  labs(x = "", y = "Legislatura")
+  scale_y_continuous(labels = percent_format()) +
+  labs(x = "Legislatura", y = "Percentual", fill = "Conjunto de dados")
 ```
 
 Modelos
