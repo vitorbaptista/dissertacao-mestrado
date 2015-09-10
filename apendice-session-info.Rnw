@@ -1,5 +1,5 @@
 \chapter{Versões dos softwares utilizados}
 
-<<results="asis">>=
+<<session-info, results="asis">>=
 utils::toLatex(sessionInfo())
 @
